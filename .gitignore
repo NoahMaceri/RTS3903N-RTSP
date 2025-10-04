@@ -2,3 +2,5 @@
 cmake-build-*/
 third-party/live555/live
 third-party/rsdk/*/
+# Drop alsa headers
+libs/asound/include/alsa/**

@@ -57,6 +57,13 @@ target_link_libraries(imager_streamer
         extern_libs
 )
 
+add_executable(rmm_handler
+        src/rmm_handler/rmm_handler.c
+)
+target_link_libraries(rmm_handler
+        extern_libs
+)
+
 # -- PACKAGING --
 add_custom_target(package_${PROJECT_NAME} COMMAND
         # if out folder exists, remove it
@@ -118,7 +125,7 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         COMMAND tar -cf ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-${PROJECT_VERSION}.tar -C ${CMAKE_BINARY_DIR}/out .
 
         # Clean up
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out
+        # COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out
 
         # Print a message indicating the package is ready
         COMMAND ${CMAKE_COMMAND} -E echo "Package created at ${CMAKE_BINARY_DIR}/out/${PROJECT_NAME}-${PROJECT_VERSION}.tar"
