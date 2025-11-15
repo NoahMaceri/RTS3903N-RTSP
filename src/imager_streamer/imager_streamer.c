@@ -30,7 +30,7 @@ static void terminate() {
 uint8_t set_c_vbr(const int h264_ch, const uint32_t max_bitrate, const uint32_t min_bitrate) {
     struct rts_video_h264_ctrl *h264_ctl = NULL;
 
-    int ret = rts_av_query_h264_ctrl(h264_ch, &h264_ctl);
+    const int ret = rts_av_query_h264_ctrl(h264_ch, &h264_ctl);
     if (h264_ctl == NULL)
         return RTS_FALSE;
     rts_av_get_h264_ctrl(h264_ctl);
@@ -47,27 +47,26 @@ uint8_t set_c_vbr(const int h264_ch, const uint32_t max_bitrate, const uint32_t 
 }
 
 void set_fps(const uint8_t fps) {
-    uint32_t id = RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY;
     struct rts_video_control ctrl;
 
-    rts_av_get_isp_ctrl(id, &ctrl);
+    rts_av_get_isp_ctrl(RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY, &ctrl);
     if (fps) {
         ctrl.current_value = RTS_ISP_AE_PRIORITY_MANUAL;
-        rts_av_set_isp_ctrl(id, &ctrl);
+        rts_av_set_isp_ctrl(RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY, &ctrl);
 
-        uint8_t tmp = rts_av_get_isp_dynamic_fps();
+        const uint8_t tmp = rts_av_get_isp_dynamic_fps();
         rts_av_set_isp_dynamic_fps(fps);
 
         zlog_info(vid_c, "Changed sensor fps from %d to %d", tmp, rts_av_get_isp_dynamic_fps());
     } else {
         ctrl.current_value = RTS_ISP_AE_PRIORITY_AUTO;
-        rts_av_set_isp_ctrl(id, &ctrl);
+        rts_av_set_isp_ctrl(RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY, &ctrl);
         zlog_info(vid_c, "Sensor fps is %d", rts_av_get_isp_dynamic_fps());
     }
 }
 
-int change_ir_cut(int action) {
-    int driver = open("/dev/cpld_periph", O_RDWR);
+int change_ir_cut(const int action) {
+    const int driver = open("/dev/cpld_periph", O_RDWR);
     if (action == 0) {
         ioctl(driver, _IOC(_IOC_NONE, 0x70, 0x15, 0), 0);
     } else {
@@ -98,7 +97,7 @@ static void check_ir_mode(const int32_t cutoff_inverted, const int32_t cutoff, c
     adc_value_2 = adc_value_2 / ADC_ITERATIONS;
     adc_value_3 = adc_value_3 / ADC_ITERATIONS;
 
-    uint32_t adc_value = (adc_value_0 + adc_value_1 + adc_value_2 + adc_value_3) / 4;
+    const uint32_t adc_value = (adc_value_0 + adc_value_1 + adc_value_2 + adc_value_3) / 4;
 
     if ((invert && adc_value > cutoff_inverted) || (adc_value < cutoff)) {
         if (g_ir_cut_mode != 0) {
@@ -135,11 +134,10 @@ static void ir_ctrl_thread(void *arg) {
 }
 
 void* unlock_fifo_thread(void *data) {
-    int fd;
     const char* fifo_name = (const char *) data;
     unsigned char buffer_fifo[1024];
 
-    fd = open(fifo_name, O_RDONLY);
+    const int fd = open(fifo_name, O_RDONLY);
     read(fd, buffer_fifo, 1024);
     close(fd);
 

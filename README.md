@@ -40,7 +40,7 @@ _This range is based on my camera, it might be different for yours!_
 ; Adjust the settings below to configure the ISP parameters.
 noise_reduction=4 ; Adjusts the noise reduction strength [0-7,1]
 ldc=1 ; Lens distorion correction [0-1,1]
-detail_enhancement=4 ; Adjusts the detail enhancement strenth [0-7,1]
+detail_enhancement=4 ; Adjusts the detail enhancement strength [0-7,1]
 three_dnr=1 ; 3D noise reduction [0-1,1]
 mirror=1 ; Mirror image [0-1,1]
 flip=1 ; Flip image [0-1,1]
@@ -49,7 +49,7 @@ dehaze=0 ; Dehaze [0-1,1]
 ; The adc_cutoff value is used to adjust when night mode is activated.
 adc_cutoff=400 ; Lit values start around 200 and lower
 adc_cutoff_inverted=2750 ; Lit values start around 3000 and higher
-invert_ir_cut=0 ; Invert the IR cut logic
+invert_ir_cut=0 ; Invert the IR cut logic (i.e. use adc_cutoff_inverted instead of adc_cutoff) [0-1,1]
 
 [encoder]
 ; This section contains settings for the video encoder.

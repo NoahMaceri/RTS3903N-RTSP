@@ -9,10 +9,6 @@
 #include <rtsvideo.h>
 #include <zlog.h>
 
-static uint8_t is_valid_value(const int value, const struct rts_video_control *ctrl) {
-    return (value >= ctrl->minimum && value <= ctrl->maximum && (value - ctrl->minimum) % ctrl->step == 0);
-}
-
 static uint8_t change_isp_setting(const enum enum_rts_video_ctrl_id type, int value, zlog_category_t *logger) {
     struct rts_video_control ctrl;
     int ret = rts_av_get_isp_ctrl(type, &ctrl);
@@ -20,7 +16,7 @@ static uint8_t change_isp_setting(const enum enum_rts_video_ctrl_id type, int va
         zlog_error(logger, "Failed to change get control for %s", ctrl.name);
         return RTS_FALSE;
     }
-    if (!is_valid_value(value, &ctrl)) {
+    if (value >= ctrl.minimum && value <= ctrl.maximum && (value - ctrl.minimum) % ctrl.step == 0) {
         zlog_error(logger, "Invalid value %d for %s (min: %d, max: %d, step: %d)", value, ctrl.name, ctrl.minimum, ctrl.maximum, ctrl.step);
         zlog_warn(logger, "Setting to default value %d", ctrl.default_value);
         value = ctrl.default_value;
@@ -53,7 +49,7 @@ static int32_t parse_int(const char *str, zlog_category_t *logger) {
     /* parse numeric value once with error checking */
     char *endptr;
     errno = 0;
-    const long val = strtol(str, &endptr, 10);
+    long val = strtol(str, &endptr, 10);
     if (str[0] == '\0' || *endptr != '\0' || (errno == ERANGE && (val == LONG_MAX || val == LONG_MIN))) {
         zlog_warn(logger, "Invalid numeric value '%s'",str);
         return 0;
