@@ -72,9 +72,12 @@ name=ch0_0.h264 ; URL for RTSP server (rtsp://[YOUR_CAMERA_IP]/[name])
 The RTS3903N uses an ADC for sensing light. On some cameras the logic is inverted and must be set in the `streamer.ini`
 
 ## Version history
+### 0.4.0
+- Created ISP adjustment tool
+- Update config parsing
+- Updated default streamer.ini
 ### 0.3.1
 - Added more parameters to `streamer.ini`, updated README
-
 ### 0.3.0
 - Forked from source repo, INI configuration support added, build system changed to CMake + Ninja, tweaked imager streamer for better stability
 

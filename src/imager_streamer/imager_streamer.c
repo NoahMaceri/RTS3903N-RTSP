@@ -15,7 +15,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../include/imager_streamer.h"
+#include "imager_streamer.h"
 
 uint8_t g_exit = RTS_FALSE;
 // This is used for "debouncing" the IR mode changes
@@ -66,47 +66,6 @@ void set_fps(const uint8_t fps) {
     }
 }
 
-static uint8_t is_valid_value(int value, const struct rts_video_control *ctrl) {
-    return (value >= ctrl->minimum && value <= ctrl->maximum && (value - ctrl->minimum) % ctrl->step == 0);
-}
-
-uint8_t change_isp_setting(enum enum_rts_video_ctrl_id type, int value) {
-    struct rts_video_control ctrl;
-    int ret;
-    ret = rts_av_get_isp_ctrl(type, &ctrl);
-    if (ret) {
-        zlog_error(vid_c, "Failed to change get control for %s", ctrl.name);
-        return RTS_FALSE;
-    }
-    if (!is_valid_value(value, &ctrl)) {
-        zlog_error(vid_c, "Invalid value %d for %s (min: %d, max: %d, step: %d)", value, ctrl.name, ctrl.minimum, ctrl.maximum, ctrl.step);
-        zlog_warn(vid_c, "Setting to default value %d", ctrl.default_value);
-        value = ctrl.default_value;
-    }
-    ctrl.current_value = value;
-    ret = rts_av_set_isp_ctrl(type, &ctrl);
-    if (ret) {
-        zlog_error(vid_c, "Failed to set new value for %d: ret = %d", type, ret);
-        return RTS_FALSE;
-    }
-    zlog_info(vid_c, "Changed %s to %d", ctrl.name, value);
-
-    return RTS_TRUE;
-}
-
-void get_all_isp_options() {
-    struct rts_video_control ctrl;
-
-    fprintf(stdout, "Name,Min,Max,Step,Default,Current\n");
-
-    for (int i = 1; i < RTS_VIDEO_CTRL_ID_RESERVED; i++) {
-        int ret = rts_av_get_isp_ctrl(i, &ctrl);
-        if (ret)
-            continue;
-        fprintf(stdout, "%s,%d,%d,%d,%d,%d\n", ctrl.name, ctrl.minimum, ctrl.maximum, ctrl.step, ctrl.default_value, ctrl.current_value);
-    }
-}
-
 int change_ir_cut(int action) {
     int driver = open("/dev/cpld_periph", O_RDWR);
     if (action == 0) {
@@ -145,8 +104,8 @@ static void check_ir_mode(const int32_t cutoff_inverted, const int32_t cutoff, c
         if (g_ir_cut_mode != 0) {
             zlog_debug(vid_c, "IR control: ADC_tot=%d, ADC_0=%d, ADC_1=%d, ADC_2=%d, ADC_3=%d cutoff=%d", adc_value, adc_value_0, adc_value_1, adc_value_2, adc_value_3, invert ? cutoff_inverted : cutoff);
             zlog_info(vid_c, "Switching to day mode");
-            change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 0);
-            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, 0);
+            change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 0, vid_c);
+            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, 0, vid_c);
             change_ir_cut(0);
             g_ir_cut_mode = 0;
         }
@@ -154,8 +113,8 @@ static void check_ir_mode(const int32_t cutoff_inverted, const int32_t cutoff, c
         if (g_ir_cut_mode != 1) {
             zlog_debug(vid_c, "IR control: ADC_tot=%d, ADC_0=%d, ADC_1=%d, ADC_2=%d, ADC_3=%d cutoff=%d", adc_value, adc_value_0, adc_value_1, adc_value_2, adc_value_3, invert ? cutoff_inverted : cutoff);
             zlog_info(vid_c, "Switching to night mode");
-            change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 1);
-            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, 1);
+            change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 1, vid_c);
+            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, 1, vid_c);
             change_ir_cut(1);
             g_ir_cut_mode = 1;
         }
@@ -301,32 +260,32 @@ int start_stream(streamer_settings config) {
 
     rts_av_enable_chn(h.vid_cap);
     rts_av_enable_chn(h.vid_enc);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_NOISE_REDUCTION, config.noise_reduction);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_LDC, config.ldc);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_DETAIL_ENHANCEMENT, config.detail_enhancement);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_3DNR, config.three_dnr);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_MIRROR, config.mirror);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_FLIP, config.flip);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_IN_OUT_DOOR_MODE, config.in_out_door_mode);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_DEHAZE, config.dehaze);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_BRIGHTNESS, config.brightness);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_CONTRAST, config.contrast);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_HUE, config.hue);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_SATURATION, config.saturation);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_SHARPNESS, config.sharpness);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_GAMMA, config.gamma);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_BLC, config.backlight_compensation);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_PWR_FREQUENCY, config.power_line_frequency);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_EXPOSURE_MODE, config.exposure_auto);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY, config.exposure_auto_priority);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_ZOOM, config.zoom_absolute);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_WDR_MODE, config.wdr_mode);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_WDR_LEVEL, config.wdr_level);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_GREEN_BALANCE, config.wb_green);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_BLUE_BALANCE, config.wb_blue);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_RED_BALANCE, config.wb_red);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_SMART_IR_MODE, config.smart_ir_mode);
-    change_isp_setting(RTS_VIDEO_CTRL_ID_SMART_IR_MANUAL_LEVEL, config.smart_ir_manual_level);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_NOISE_REDUCTION, config.noise_reduction, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_LDC, config.ldc, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_DETAIL_ENHANCEMENT, config.detail_enhancement, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_3DNR, config.three_dnr, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_MIRROR, config.mirror, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_FLIP, config.flip, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_IN_OUT_DOOR_MODE, config.in_out_door_mode, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_DEHAZE, config.dehaze, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_BRIGHTNESS, config.brightness, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_CONTRAST, config.contrast, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_HUE, config.hue, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SATURATION, config.saturation, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SHARPNESS, config.sharpness, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_GAMMA, config.gamma, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_BLC, config.backlight_compensation, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_PWR_FREQUENCY, config.power_line_frequency, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_EXPOSURE_MODE, config.exposure_auto, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY, config.exposure_auto_priority, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_ZOOM, config.zoom_absolute, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_WDR_MODE, config.wdr_mode, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_WDR_LEVEL, config.wdr_level, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_GREEN_BALANCE, config.wb_green, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_BLUE_BALANCE, config.wb_blue, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_RED_BALANCE, config.wb_red, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SMART_IR_MODE, config.smart_ir_mode, vid_c);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SMART_IR_MANUAL_LEVEL, config.smart_ir_manual_level, vid_c);
 
     h.tpool = rts_pthreadpool_init(1);
     if (!h.tpool) {
@@ -361,12 +320,12 @@ int start_stream(streamer_settings config) {
     while (g_exit == RTS_FALSE) {
         // Handle video
         if (rts_av_poll(h.vid_enc)) {
-            usleep(1000);
+            usleep(250);
             continue;
         }
 
         if (rts_av_recv(h.vid_enc, &vid_buffer)) {
-            usleep(1000);
+            usleep(250);
             continue;
         }
 
@@ -379,7 +338,7 @@ int start_stream(streamer_settings config) {
             // Release the video buffer
             RTS_SAFE_RELEASE(vid_buffer, rts_av_put_buffer);
         }
-        usleep(1000); // Iterate every 1ms
+        usleep(250); // Iterate every 1ms
     }
 
     kill_stream(&h);
@@ -389,75 +348,84 @@ int start_stream(streamer_settings config) {
 
 static int parse_ini(void *user, const char *section, const char *name, const char *value) {
     streamer_settings *config = (streamer_settings *) user;
+    const int32_t val = parse_int(value, vid_c);
 
-    if (MATCH("isp", "noise_reduction")) {
-        sscanf(value, "%d", &config->noise_reduction);
-    } else if (MATCH("isp", "ldc")) {
-        sscanf(value, "%d", &config->ldc);
-    } else if (MATCH("isp", "detail_enhancement")) {
-        sscanf(value, "%d", &config->detail_enhancement);
-    } else if (MATCH("isp", "three_dnr")) {
-        sscanf(value, "%d", &config->three_dnr);
-    } else if (MATCH("isp", "mirror")) {
-        sscanf(value, "%d", &config->mirror);
-    } else if (MATCH("isp", "flip")) {
-        sscanf(value, "%d", &config->flip);
-    } else if (MATCH("isp", "adc_cutoff_inverted")) {
-        sscanf(value, "%d", &config->adc_cutoff_inverted);
-    } else if (MATCH("isp", "adc_cutoff")) {
-        sscanf(value, "%d", &config->adc_cutoff);
-    }  else if (MATCH("isp", "brightness")) {
-        sscanf(value, "%d", &config->brightness);
-    } else if (MATCH("isp", "contrast")) {
-        sscanf(value, "%d", &config->contrast);
-    } else if (MATCH("isp", "hue")) {
-        sscanf(value, "%d", &config->hue);
-    } else if (MATCH("isp", "saturation")) {
-        sscanf(value, "%d", &config->saturation);
-    } else if (MATCH("isp", "sharpness")) {
-        sscanf(value, "%d", &config->sharpness);
-    } else if (MATCH("isp", "gamma")) {
-        sscanf(value, "%d", &config->gamma);
-    } else if (MATCH("isp", "backlight_compensation")) {
-        sscanf(value, "%d", &config->backlight_compensation);
-    } else if (MATCH("isp", "power_line_frequency")) {
-        sscanf(value, "%d", &config->power_line_frequency);
-    } else if (MATCH("isp", "exposure_auto")) {
-        sscanf(value, "%d", &config->exposure_auto);
-    } else if (MATCH("isp", "exposure_auto_priority")) {
-        sscanf(value, "%d", &config->exposure_auto_priority);
-    } else if (MATCH("isp", "zoom_absolute")) {
-        sscanf(value, "%d", &config->zoom_absolute);
-    } else if (MATCH("isp", "wdr_mode")) {
-        sscanf(value, "%d", &config->wdr_mode);
-    } else if (MATCH("isp", "wdr_level")) {
-        sscanf(value, "%d", &config->wdr_level);
-    } else if (MATCH("isp", "wb_green")) {
-        sscanf(value, "%d", &config->wb_green);
-    } else if (MATCH("isp", "wb_blue")) {
-        sscanf(value, "%d", &config->wb_blue);
-    } else if (MATCH("isp", "wb_red")) {
-        sscanf(value, "%d", &config->wb_red);
-    } else if (MATCH("isp", "smart_ir_mode")) {
-        sscanf(value, "%d", &config->smart_ir_mode);
-    } else if (MATCH("isp", "smart_ir_manual_level")) {
-        sscanf(value, "%d", &config->smart_ir_manual_level);
-    } else if (MATCH("encoder", "min_bitrate")) {
-        sscanf(value, "%d", &config->min_bitrate);
-    } else if (MATCH("encoder", "max_bitrate")) {
-        sscanf(value, "%d", &config->max_bitrate);
-    } else if (MATCH("encoder", "width")) {
-        sscanf(value, "%d", &config->width);
-    } else if (MATCH("encoder", "height")) {
-        sscanf(value, "%d", &config->height);
-    } else if (MATCH("encoder", "fps")) {
-        sscanf(value, "%d", &config->fps);
-    } else if (MATCH("isp", "invert_ir_cut")) {
-        sscanf(value, "%d", &config->invert_ir_cut);
-    } else if (MATCH("isp", "in_out_door_mode")) {
-        sscanf(value, "%d", &config->in_out_door_mode);
-    } else if (MATCH("isp", "dehaze")) {
-        sscanf(value, "%d", &config->dehaze);
+    if (strcmp(section, "isp") == 0) {
+        if (strcmp(name, "noise_reduction") == 0) {
+            config->noise_reduction = val;
+        } else if (strcmp(name, "mirror") == 0) {
+            config->mirror = val;
+        } else if (strcmp(name, "flip") == 0) {
+            config->flip = val;
+        } else if (strcmp(name, "adc_cutoff_inverted") == 0) {
+            config->adc_cutoff_inverted = val;
+        } else if (strcmp(name, "adc_cutoff") == 0) {
+            config->adc_cutoff = val;
+        } else if (strcmp(name, "in_out_door_mode") == 0) {
+            config->in_out_door_mode = val;
+        } else if (strcmp(name, "dehaze") == 0) {
+            config->dehaze = val;
+        } else if (strcmp(name, "ldc") == 0) {
+            config->ldc = val;
+        } else if (strcmp(name, "detail_enhancement") == 0) {
+            config->detail_enhancement = val;
+        } else if (strcmp(name, "three_dnr") == 0) {
+            config->three_dnr = val;
+        } else if (strcmp(name, "brightness") == 0) {
+            config->brightness = val;
+        } else if (strcmp(name, "contrast") == 0) {
+            config->contrast = val;
+        } else if (strcmp(name, "hue") == 0) {
+            config->hue = val;
+        } else if (strcmp(name, "saturation") == 0) {
+            config->saturation = val;
+        } else if (strcmp(name, "sharpness") == 0) {
+            config->sharpness = val;
+        } else if (strcmp(name, "gamma") == 0) {
+            config->gamma = val;
+        } else if (strcmp(name, "backlight_compensation") == 0) {
+            config->backlight_compensation = val;
+        } else if (strcmp(name, "power_line_frequency") == 0) {
+            config->power_line_frequency = val;
+        } else if (strcmp(name, "exposure_auto") == 0) {
+            config->exposure_auto = val;
+        } else if (strcmp(name, "exposure_auto_priority") == 0) {
+            config->exposure_auto_priority = val;
+        } else if (strcmp(name, "zoom_absolute") == 0) {
+            config->zoom_absolute = val;
+        } else if (strcmp(name, "wdr_mode") == 0) {
+            config->wdr_mode = val;
+        } else if (strcmp(name, "wdr_level") == 0) {
+            config->wdr_level = val;
+        } else if (strcmp(name, "wb_green") == 0) {
+            config->wb_green = val;
+        } else if (strcmp(name, "wb_blue") == 0) {
+            config->wb_blue = val;
+        } else if (strcmp(name, "wb_red") == 0) {
+            config->wb_red = val;
+        } else if (strcmp(name, "smart_ir_mode") == 0) {
+            config->smart_ir_mode = val;
+        } else if (strcmp(name, "smart_ir_manual_level") == 0) {
+            config->smart_ir_manual_level = val;
+        } else {
+            return 0;  // unknown name
+        }
+    } else if (strcmp(section, "encoder") == 0) {
+        if (strcmp(name, "min_bitrate") == 0) {
+            config->min_bitrate = (uint32_t) val;
+        } else if (strcmp(name, "max_bitrate") == 0) {
+            config->max_bitrate = (uint32_t) val;
+        } else if (strcmp(name, "width") == 0) {
+            config->width = (uint32_t) val;
+        } else if (strcmp(name, "height") == 0) {
+            config->height = (uint32_t) val;
+        } else if (strcmp(name, "fps") == 0) {
+            config->fps = (uint32_t) val;
+        } else {
+            return 0;  // unknown name
+        }
+    } else {
+        return 0;  // unknown section
     }
 
     return 1;
@@ -465,7 +433,6 @@ static int parse_ini(void *user, const char *section, const char *name, const ch
 
 
 int main(int argc, char *argv[]) {
-    // setpriority(PRIO_PROCESS, getpid(), -5);
     signal(SIGINT, terminate);
     signal(SIGTERM, terminate);
 
@@ -488,27 +455,6 @@ int main(int argc, char *argv[]) {
         zlog_fatal(vid_c, "Failed to initialize RTS AV");
         return -1;
     }
-
-    // zlog_debug(c, "Streamer settings:");
-    // zlog_debug(c, "  Noise reduction: %d", config.noise_reduction);
-    // zlog_debug(c, "  LDC: %d", config.ldc);
-    // zlog_debug(c, "  Detail enhancement: %d", config.detail_enhancement);
-    // zlog_debug(c, "  3DNR: %d", config.three_dnr);
-    // zlog_debug(c, "  Mirror: %d", config.mirror);
-    // zlog_debug(c, "  Flip: %d", config.flip);
-    // zlog_debug(c, "  ADC cutoff: %d", config.adc_cutoff);
-    // zlog_debug(c, "  ADC cutoff (inverted): %d", config.adc_cutoff_inverted);
-    // zlog_debug(c, "  Min bitrate: %d", config.min_bitrate);
-    // zlog_debug(c, "  Max bitrate: %d", config.max_bitrate);
-    // zlog_debug(c, "  Width: %d", config.width);
-    // zlog_debug(c, "  Height: %d", config.height);
-    // zlog_debug(c, "  FPS: %d", config.fps);
-    // zlog_debug(c, "  Invert IR Cut: %d", config.invert_ir_cut);
-    // zlog_debug(c, "  In/Out Door Mode: %d", config.in_out_door_mode);
-    // zlog_debug(c, "  Dehaze: %d", config.dehaze);
-
-    // Uncomment to get all possible ISP options printed to stdout
-    // get_all_isp_options();
 
     start_stream(config);
 

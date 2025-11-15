@@ -35,16 +35,26 @@ typedef struct {
 static int parse_ini(void *user, const char *section, const char *name, const char *value) {
     auto *config = static_cast<rtsp_settings *>(user);
 
-    if (MATCH("rtsp", "username")) {
-        config->user = strdup(value);
-    } else if (MATCH("rtsp", "password")) {
-        config->pwd = strdup(value);
-    } else if (MATCH("rtsp", "port")) {
-        config->port = strtoul(value, nullptr, 10);
-    } else if (MATCH("rtsp", "name")) {
-        config->name = strdup(value);
-    } else if (MATCH("encoder", "height")) {
-        config->resolution = strtoul(value, nullptr, 10);
+    if (strcmp(section, "rtsp") == 0) {
+        if (strcmp(name, "username") == 0) {
+            config->user = value;
+        } else if (strcmp(name, "password") == 0) {
+            config->pwd = value;
+        } else if (strcmp(name, "port") == 0) {
+            config->port = static_cast<uint16_t>(strtoul(value, nullptr, 10));
+        } else if (strcmp(name, "name") == 0) {
+            config->name = value;
+        } else {
+            return 0;  // unknown name
+        }
+    } else if (strcmp(section, "encoder") == 0) {
+        if (strcmp(name, "height") == 0) {
+            config->resolution = static_cast<uint16_t>(strtoul(value, nullptr, 10));
+        } else {
+            return 0;  // unknown name
+        }
+    } else {
+        return 0;  // unknown section
     }
 
     return 1;

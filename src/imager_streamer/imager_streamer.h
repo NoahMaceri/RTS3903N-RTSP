@@ -1,5 +1,5 @@
-#ifndef RTS3903N_RTSP_IMAGER_STREAMER_H
-#define RTS3903N_RTSP_IMAGER_STREAMER_H
+#ifndef IMAGER_STREAMER_H
+#define IMAGER_STREAMER_H
 
 #include <stdio.h>
 #include <unistd.h>
@@ -20,6 +20,7 @@
 #include <ini.h>
 #include <ver.h>
 #include <globals.h>
+#include <isp_funcs.h>
 
 #define ADC_ITERATIONS 15
 
@@ -66,4 +67,4 @@ typedef struct {
     int32_t vid_enc;
 } handlers;
 
-#endif //RTS3903N_RTSP_IMAGER_STREAMER_H
+#endif //IMAGER_STREAMER_H

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # PreLoad.cmake should have ran before this file, load the cross-compiler toolchain
 include(third-party/rsdk/enable_mips_uclibc.cmake)
 
-project(RTS3903N_RTSP VERSION 0.3.1 LANGUAGES C CXX)
+project(RTS3903N_RTSP VERSION 0.4.0 LANGUAGES C CXX)
 
 # handle ver.h.in
 configure_file(
@@ -28,12 +28,24 @@ add_subdirectory(libs)
 # -- EXECUTABLES --
 include_directories(
         ${CMAKE_BINARY_DIR}
-        src/includes
-        src/rtsp_server/include
+        src/include
 )
+# imager_streamer
+add_executable(imager_streamer
+        src/imager_streamer/imager_streamer.c
+        src/imager_streamer/imager_streamer.h
+        src/include/globals.h
+        src/include/isp_funcs.h
+)
+target_link_libraries(imager_streamer
+        inih
+        zlog
+        extern_libs
+)
+
 # rtsp_server
 add_executable(rtsp_server
-    src/rtsp_server/src/rtsp_server.cpp
+    src/rtsp_server/rtsp_server.cpp
 )
 target_link_libraries(rtsp_server
     groupsock
@@ -45,15 +57,16 @@ target_link_libraries(rtsp_server
     extern_libs
 )
 
-# imager_streamer
-add_executable(imager_streamer
-        src/imager_streamer/src/imager_streamer.c
+# isp_adjustment
+add_executable(isp_adjustment
+    src/isp_adjustment/isp_adjustment.c
 )
-target_link_libraries(imager_streamer
-        inih
-        zlog
-        extern_libs
+
+target_link_libraries(isp_adjustment
+    extern_libs
+    zlog
 )
+
 
 # -- PACKAGING --
 add_custom_target(package_${PROJECT_NAME} COMMAND
@@ -107,6 +120,10 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         COMMAND ${CMAKE_COMMAND} -E rename
             ${CMAKE_BINARY_DIR}/out/lib/libopencore-amrnb.so
             ${CMAKE_BINARY_DIR}/out/lib/libopencore-amrnb.so.0
+        # -- isp_adjustment --
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/isp_adjustment
+            ${CMAKE_BINARY_DIR}/out
         # -- sd_card payload --
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_SOURCE_DIR}/sd_payload/
