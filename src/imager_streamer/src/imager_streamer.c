@@ -15,58 +15,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <signal.h>
-#include <rtsisp.h>
-#include <rtscamkit.h>
-#include <rtsavapi.h>
-#include <rtsvideo.h>
-#include <rts_pthreadpool.h>
-#include <sys/stat.h>
-#include <sys/ioctl.h>
-#include <rts_io_adc.h>
-#include <sys/resource.h>
-#include <pthread.h>
-#include <zlog.h>
-#include <ini.h>
-#include <ver.h>
-#include <globals.h>
+#include "../include/imager_streamer.h"
 
 uint8_t g_exit = RTS_FALSE;
 // This is used for "debouncing" the IR mode changes
 int8_t g_ir_cut_mode = -1; // 0 = day, 1 = night
 
 zlog_category_t *vid_c = NULL;
-
-typedef struct {
-    int32_t noise_reduction;
-    int32_t ldc;
-    int32_t detail_enhancement;
-    int32_t three_dnr;
-    int32_t mirror;
-    int32_t flip;
-    int32_t adc_cutoff_inverted;
-    int32_t adc_cutoff;
-    int32_t in_out_door_mode;
-    int32_t dehaze;
-    uint32_t min_bitrate;
-    uint32_t max_bitrate;
-    uint32_t width;
-    uint32_t height;
-    uint32_t fps;
-    uint8_t invert_ir_cut;
-} streamer_settings;
-
-typedef struct {
-    PthreadPool tpool;
-    int32_t vid_cap;
-    int32_t vid_enc;
-} handlers;
-
-#define ADC_ITERATIONS 15
 
 static void terminate() {
     g_exit = RTS_TRUE;
@@ -354,6 +309,24 @@ int start_stream(streamer_settings config) {
     change_isp_setting(RTS_VIDEO_CTRL_ID_FLIP, config.flip);
     change_isp_setting(RTS_VIDEO_CTRL_ID_IN_OUT_DOOR_MODE, config.in_out_door_mode);
     change_isp_setting(RTS_VIDEO_CTRL_ID_DEHAZE, config.dehaze);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_BRIGHTNESS, config.brightness);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_CONTRAST, config.contrast);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_HUE, config.hue);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SATURATION, config.saturation);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SHARPNESS, config.sharpness);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_GAMMA, config.gamma);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_BLC, config.backlight_compensation);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_PWR_FREQUENCY, config.power_line_frequency);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_EXPOSURE_MODE, config.exposure_auto);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_EXPOSURE_PRIORITY, config.exposure_auto_priority);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_ZOOM, config.zoom_absolute);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_WDR_MODE, config.wdr_mode);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_WDR_LEVEL, config.wdr_level);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_GREEN_BALANCE, config.wb_green);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_BLUE_BALANCE, config.wb_blue);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_RED_BALANCE, config.wb_red);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SMART_IR_MODE, config.smart_ir_mode);
+    change_isp_setting(RTS_VIDEO_CTRL_ID_SMART_IR_MANUAL_LEVEL, config.smart_ir_manual_level);
 
     h.tpool = rts_pthreadpool_init(1);
     if (!h.tpool) {
@@ -433,6 +406,42 @@ static int parse_ini(void *user, const char *section, const char *name, const ch
         sscanf(value, "%d", &config->adc_cutoff_inverted);
     } else if (MATCH("isp", "adc_cutoff")) {
         sscanf(value, "%d", &config->adc_cutoff);
+    }  else if (MATCH("isp", "brightness")) {
+        sscanf(value, "%d", &config->brightness);
+    } else if (MATCH("isp", "contrast")) {
+        sscanf(value, "%d", &config->contrast);
+    } else if (MATCH("isp", "hue")) {
+        sscanf(value, "%d", &config->hue);
+    } else if (MATCH("isp", "saturation")) {
+        sscanf(value, "%d", &config->saturation);
+    } else if (MATCH("isp", "sharpness")) {
+        sscanf(value, "%d", &config->sharpness);
+    } else if (MATCH("isp", "gamma")) {
+        sscanf(value, "%d", &config->gamma);
+    } else if (MATCH("isp", "backlight_compensation")) {
+        sscanf(value, "%d", &config->backlight_compensation);
+    } else if (MATCH("isp", "power_line_frequency")) {
+        sscanf(value, "%d", &config->power_line_frequency);
+    } else if (MATCH("isp", "exposure_auto")) {
+        sscanf(value, "%d", &config->exposure_auto);
+    } else if (MATCH("isp", "exposure_auto_priority")) {
+        sscanf(value, "%d", &config->exposure_auto_priority);
+    } else if (MATCH("isp", "zoom_absolute")) {
+        sscanf(value, "%d", &config->zoom_absolute);
+    } else if (MATCH("isp", "wdr_mode")) {
+        sscanf(value, "%d", &config->wdr_mode);
+    } else if (MATCH("isp", "wdr_level")) {
+        sscanf(value, "%d", &config->wdr_level);
+    } else if (MATCH("isp", "wb_green")) {
+        sscanf(value, "%d", &config->wb_green);
+    } else if (MATCH("isp", "wb_blue")) {
+        sscanf(value, "%d", &config->wb_blue);
+    } else if (MATCH("isp", "wb_red")) {
+        sscanf(value, "%d", &config->wb_red);
+    } else if (MATCH("isp", "smart_ir_mode")) {
+        sscanf(value, "%d", &config->smart_ir_mode);
+    } else if (MATCH("isp", "smart_ir_manual_level")) {
+        sscanf(value, "%d", &config->smart_ir_manual_level);
     } else if (MATCH("encoder", "min_bitrate")) {
         sscanf(value, "%d", &config->min_bitrate);
     } else if (MATCH("encoder", "max_bitrate")) {

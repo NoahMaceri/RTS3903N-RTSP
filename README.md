@@ -1,31 +1,11 @@
-# RTSP server for RTS3903N based YI Cameras
-*While this repo is focused on Yi based cameras, it should compile and run on any RTS3903N based camera!*
-
-## Background
+# RTSP server for RTS3903N based Cameras
 This work is based on Colin Jensen's [Yi-RTS3903N-RTSPServer](https://github.com/cjj25/Yi-RTS3903N-RTSPServer)
 
+## Background
 **Important**: This method doesn't overwrite the existing flash, simply remove the SD card, and the 'hack' will be disabled.
 
-## Known Compatible Firmware
-- `7.1.00.25A_202002271051`
-- `7.1.00.17A_201909271014`
-- `7.0.00.73a_201812031453`
-
 ## Getting Started
-- Download the latest tar from the [releases page](https://github.com/NoahMaceri/RTS3903N-RTSP/releases)
-- Extract the contents to the root of a MicroSD card (minimum 2GB) that is FAT32 partitioned
-- If you're using WiFi
-  - This method will use the already stored WiFi credentials in the camera
-  - You can overwrite the saved config by editing `wpa_supplicant_sample.conf` and renaming to `wpa_supplicant.conf` 
-    - **Only replace SSID_NAME_OF_WIFI and WIFI_SECRET_KEY, unless you're using WEP encryption or open**
-      
-  1. Insert the SD and turn on
-  2. If you have a pan/tilt camera, it _should_ perform the usual calibration
-  3. A telnet server is started (if not already done so by Yi) with username `root` and no password
-  4. The imager streamer will automatically start up along with the RTSP server
-  6. You'll probably have a pinkish tint on the picture, the IR cut will be performed after ***30 seconds*** to ensure any other binaries have finished taking control of the GPIO
-     > If the image isn't quite right (grey / too much pink), place your finger over the sensor on the front (make it very dark) and see what happens. Modify the _invert_adc_ parameter in the streamer.ini
-  7. Connect to RTSP via `rtsp://[YOUR_CAMERA_IP]/[rtsp_name]`
+_TODO_
 
 ## Features
 - H264 encoded stream via `rtsp://[YOUR_CAMERA_IP]/[rtsp_name]`
@@ -34,10 +14,8 @@ This work is based on Colin Jensen's [Yi-RTS3903N-RTSPServer](https://github.com
 
 ### In-progress
 - Add audio to the feed
-- Better documentation
 
 ### Planned
-- Control PTZ (pan/tilt) based cameras
 - ONVIF
 
 ## Compiling
@@ -92,6 +70,13 @@ name=ch0_0.h264 ; URL for RTSP server (rtsp://[YOUR_CAMERA_IP]/[name])
 
 ## Troubleshooting
 The RTS3903N uses an ADC for sensing light. On some cameras the logic is inverted and must be set in the `streamer.ini`
+
+## Version history
+### 0.3.1
+- Added more parameters to `streamer.ini`, updated README
+
+### 0.3.0
+- Forked from source repo, INI configuration support added, build system changed to CMake + Ninja, tweaked imager streamer for better stability
 
 ## Credit
 - rtsp_server

@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # PreLoad.cmake should have ran before this file, load the cross-compiler toolchain
 include(third-party/rsdk/enable_mips_uclibc.cmake)
 
-project(RTS3903N_RTSP VERSION 0.3.0 LANGUAGES C CXX)
+project(RTS3903N_RTSP VERSION 0.3.1 LANGUAGES C CXX)
 
 # handle ver.h.in
 configure_file(
@@ -32,10 +32,8 @@ include_directories(
         src/rtsp_server/include
 )
 # rtsp_server
-# glob for all cpp
-file(GLOB_RECURSE rtsp_server_srcs ${CMAKE_SOURCE_DIR}/src/rtsp_server/src/*.cpp)
 add_executable(rtsp_server
-    ${rtsp_server_srcs}
+    src/rtsp_server/src/rtsp_server.cpp
 )
 target_link_libraries(rtsp_server
     groupsock
@@ -54,13 +52,6 @@ add_executable(imager_streamer
 target_link_libraries(imager_streamer
         inih
         zlog
-        extern_libs
-)
-
-add_executable(rmm_handler
-        src/rmm_handler/rmm_handler.c
-)
-target_link_libraries(rmm_handler
         extern_libs
 )
 
@@ -125,7 +116,7 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         COMMAND tar -cf ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-${PROJECT_VERSION}.tar -C ${CMAKE_BINARY_DIR}/out .
 
         # Clean up
-        # COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out
 
         # Print a message indicating the package is ready
         COMMAND ${CMAKE_COMMAND} -E echo "Package created at ${CMAKE_BINARY_DIR}/out/${PROJECT_NAME}-${PROJECT_VERSION}.tar"

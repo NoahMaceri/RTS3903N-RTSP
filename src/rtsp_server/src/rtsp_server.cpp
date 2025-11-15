@@ -19,10 +19,6 @@
 #include <liveMedia.hh>
 #include <BasicUsageEnvironment.hh>
 
-#include <ServerMediaSubsession.h>
-#include <record_audio.h>
-#include <AlsaDeviceSource.h>
-
 #include <zlog.h>
 #include <ini.h>
 #include <ver.h>
@@ -103,49 +99,13 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
-    // AlsaDeviceSource *es = nullptr;
-    // audio *ac = audio_new(nullptr, nullptr);
-    // if (ac) {
-    //     zlog_info(c, "Audio source created");
-    //     if((rc = audio_start(ac))) {
-    //         zlog_fatal(c, "Failed to start audio source: %s", strerror(rc));
-    //     }
-    //     zlog_info(c, "Audio source started");
-    //     es = AlsaDeviceSource::createNew(*env, -1, 10, true);
-    //     if (es == nullptr) {
-    //         zlog_fatal(c, "Failed to create audio dev_src \n");
-    //     } else {
-    //         ac->dev_src = es;
-    //     }
-    //     zlog_info(c, "Audio dev_src created");
-    // } else {
-    //     zlog_fatal(c, "Failed to create audio source: %s", strerror(errno));
-    //     exit(EXIT_FAILURE);
-    // }
-    //
-    // StreamReplicator *audio_replicator = nullptr;
-    // audio_replicator = StreamReplicator::createNew(*env, es, false);
-    // if (audio_replicator == nullptr) {
-    //     zlog_fatal(c, "Failed to create audio replicator: %s", env->getResultMsg());
-    //     exit(EXIT_FAILURE);
-    // }
-    // zlog_info(c, "Audio replicator created");
-
     OutPacketBuffer::maxSize = 300000;
     ServerMediaSession *sms = ServerMediaSession::createNew(*env, config.name, "", "");
     sms->addSubsession(H264VideoFileServerMediaSubsession::createNew(*env, VIDEO_FIFO, True));
-    // ServerMediaSubsession *sms_aud = UnicastServerMediaSubsession::createNew(*env, audio_replicator);
-    // sms->addSubsession(sms_aud);
     rtspServer->addServerMediaSession(sms);
     zlog_info(c, "ServerMediaSession added");
     zlog_info(c, "RTSP server is running on %s", rtspServer->rtspURL(sms));
     env->taskScheduler().doEventLoop(); // does not return
-
-    // if ((rc = audio_stop(ac))) {
-    //     zlog_fatal(c, "Failed to stop audio source: %s", strerror(rc));
-    // }
-    // audio_free(ac);
-    // ac = nullptr;
 
     return EXIT_SUCCESS;
 }
