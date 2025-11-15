@@ -5,7 +5,7 @@ Hue,-180,180,1,0,0
 Saturation,0,100,1,50,50
 Sharpness,0,100,1,50,50
 Gamma,100,500,1,300,300
-White Balance Temperature, Auto,0,2,1,1,1
+"White Balance Temperature, Auto",0,2,1,1,1
 White Balance Temperature,2800,6500,10,4600,4227
 Backlight Compensation,0,2,1,1,1
 Power Line Frequency,0,3,1,1,1
