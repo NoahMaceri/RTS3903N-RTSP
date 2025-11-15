@@ -37,13 +37,13 @@ static int parse_ini(void *user, const char *section, const char *name, const ch
 
     if (strcmp(section, "rtsp") == 0) {
         if (strcmp(name, "username") == 0) {
-            config->user = value;
+            config->user = strdup(value);
         } else if (strcmp(name, "password") == 0) {
-            config->pwd = value;
+            config->pwd = strdup(value);
         } else if (strcmp(name, "port") == 0) {
             config->port = static_cast<uint16_t>(strtoul(value, nullptr, 10));
         } else if (strcmp(name, "name") == 0) {
-            config->name = value;
+            config->name = strdup(value);
         } else {
             return 0;  // unknown name
         }
