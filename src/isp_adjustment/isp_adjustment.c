@@ -22,8 +22,6 @@
 #include <rtsvideo.h>
 #include <zlog.h>
 #include <isp_funcs.h>
-#include <errno.h>
-#include <limits.h>
 
 zlog_category_t *isp_adj = NULL;
 

@@ -1,0 +1,350 @@
+<!doctype html>
+<html data-bs-theme="dark" lang="en">
+<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+<script crossorigin="anonymous" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>RTS3903N - ISP Controls</title>
+</head>
+<body>
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <strong>RTS3903N - ISP Parameters</strong>
+        <button class="btn btn-secondary btn-sm" id="refreshBtn">Refresh</button>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-sm mb-0">
+                <thead class="table-dark">
+                <tr>
+                    <th scope="col">Parameter</th>
+                    <th scope="col">Value</th>
+                    <th scope="col">Update</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Noise reduction level</td>
+                    <td>
+                        <input class="form-control" data-key="noise_reduction" id="isp-noise_reduction" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('noise_reduction')">Update
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Lens distortion correction</td>
+                    <td>
+                        <input aria-label="ldc" class="form-check-input" data-key="ldc" id="isp-ldc" type="checkbox">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('ldc')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Detail enhancement level</td>
+                    <td>
+                        <input class="form-control" data-key="detail_enhancement" id="isp-detail_enhancement" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('detail_enhancement')">
+                            Update
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3D noise reduction</td>
+                    <td>
+                        <input aria-label="three_dnr" class="form-check-input" data-key="three_dnr" id="isp-three_dnr" type="checkbox">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('three_dnr')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Mirror</td>
+                    <td>
+                        <input aria-label="mirror" class="form-check-input" data-key="mirror" id="isp-mirror" type="checkbox">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('mirror')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Flip</td>
+                    <td>
+                        <input aria-label="flip" class="form-check-input" data-key="flip" id="isp-flip" type="checkbox">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('flip')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>In/Outdoor more</td>
+                    <td>
+                        <input class="form-control" data-key="in_out_door_mode" id="isp-in_out_door_mode" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('in_out_door_mode')">Update
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Dehaze</td>
+                    <td>
+                        <input aria-label="dehaze" class="form-check-input" data-key="dehaze" id="isp-dehaze" type="checkbox">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('dehaze')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Brightness</td>
+                    <td>
+                        <input class="form-control" data-key="brightness" id="isp-brightness" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('brightness')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contrast</td>
+                    <td><input class="form-control" data-key="contrast" id="isp-contrast" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('contrast')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hue</td>
+                    <td><input class="form-control" data-key="hue" id="isp-hue" type="number" value=""></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('hue')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Saturation</td>
+                    <td>
+                        <input class="form-control" data-key="saturation" id="isp-saturation" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('saturation')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Sharpness</td>
+                    <td><input class="form-control" data-key="sharpness" id="isp-sharpness" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('sharpness')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gamma</td>
+                    <td><input class="form-control" data-key="gamma" id="isp-gamma" type="number" value=""></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('gamma')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Backlight compensation</td>
+                    <td>
+                        <input aria-label="backlight_compensation" class="form-check-input" data-key="backlight_compensation" id="isp-backlight_compensation" type="checkbox">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('backlight_compensation')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Power line frequency</td>
+                    <td>
+                        <input class="form-control" data-key="power_line_frequency" id="isp-power_line_frequency" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('power_line_frequency')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Exposure mode</td>
+                    <td>
+                        <input class="form-control" data-key="exposure_mode" id="isp-exposure_mode" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('exposure_mode')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Exposure priority</td>
+                    <td>
+                        <input class="form-control" data-key="exposure_priority" id="isp-exposure_priority" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('exposure_priority')">Update
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Zoom</td>
+                    <td><input class="form-control" data-key="zoom" id="isp-zoom" type="number" value=""></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('zoom')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wide dynamic range mode</td>
+                    <td><input class="form-control" data-key="wdr_mode" id="isp-wdr_mode" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wdr_mode')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wide dynamic range level</td>
+                    <td><input class="form-control" data-key="wdr_level" id="isp-wdr_level" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wdr_level')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>White balance - Green component</td>
+                    <td><input class="form-control" data-key="wb_green" id="isp-wb_green" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wb_green')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>White balance - Blue component</td>
+                    <td><input class="form-control" data-key="wb_blue" id="isp-wb_blue" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wb_blue')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>White balance - Red component</td>
+                    <td><input class="form-control" data-key="wb_red" id="isp-wb_red" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wb_red')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Smart IR mode</td>
+                    <td>
+                        <input class="form-control" data-key="smart_ir_mode" id="isp-smart_ir_mode" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('smart_ir_mode')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Smart IR - Manual level</td>
+                    <td>
+                        <input class="form-control" data-key="smart_ir_manual_level" id="isp-smart_ir_manual_level" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('smart_ir_manual_level')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Gray mode</td>
+                    <td><input class="form-control" data-key="gray_mode" id="isp-gray_mode" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('gray_mode')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>IR mode</td>
+                    <td><input class="form-control" data-key="ir_mode" id="isp-ir_mode" type="number" value=""></td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('ir_mode')">Update</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Auto white balance mode</td>
+                    <td><input class="form-control" data-key="awb_mode" id="isp-awb_mode" type="number" value="">
+                    </td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="updateSetting('awb_mode')">Update</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Example helper to read current settings as key->value map
+    function readIspSettings() {
+        const elems = document.querySelectorAll('[data-key^=""]');
+        const out = {};
+        elems.forEach(el => {
+            const key = el.getAttribute('data-key');
+            if (el.type === 'checkbox') {
+                out[key] = el.checked ? 1 : 0;
+            } else {
+                out[key] = el.value;
+            }
+        });
+        return out;
+    }
+
+    function updateSetting(key) {
+        const elem = document.querySelector(`[data-key="${key}"]`);
+        let value;
+        if (elem.type === 'checkbox') {
+            value = elem.checked ? 1 : 0;
+        } else {
+            value = elem.value;
+        }
+        // ensure value is an integer
+        value = parseInt(value, 10);
+        // Call ./isp_adjustment <parameter> <value> to update the setting
+        fetch('/cgi-bin/isp_ctrl', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({command: "SET_PARAMETER", param_name: key, param_value: value})
+        })
+            .then(response => response.json())
+            .then(data => console.log('Response:', data))
+            .catch(error => console.error('Error:', error));
+    }
+
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+        // Fetch updated settings from the server using JSON-READ command
+        // will return JSON like
+        // {"parameters":"{\"\":1349,\"awb_mode\":1,\"blc\":1,\"brightness\":1,\"contrast\":50,\"dehaze\":1,\"detail_enhancement\":4,\"exposure_mode\":0,\"exposure_priority\":0,\"flip\":1,\"gamma\":300,\"gray_mode\":1,\"hue\":0,\"in_out_door_mode\":2,\"ir_mode\":1,\"ldc\":1,\"mirror\":1,\"noise_reduction\":4,\"pwr_frequency\":1,\"saturation\":50,\"sharpness\":50,\"smart_ir_manual_level\":50,\"smart_ir_mode\":0,\"three_dnr\":1,\"wb_blue\":256,\"wb_green\":256,\"wb_red\":256,\"wdr_level\":40,\"wdr_mode\":0,\"zoom\":0}","status":"success"}
+        fetch('/cgi-bin/isp_ctrl', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({command: "READ_PARAMETERS"})
+        })
+            .then(response => response.json())
+            .then(data => {
+                const params = JSON.parse(data.parameters);
+                for (const [key, value] of Object.entries(params)) {
+                    const elem = document.querySelector(`[data-key="${key}"]`);
+                    if (elem) {
+                        if (elem.type === 'checkbox') {
+                            elem.checked = value === 1;
+                        } else {
+                            elem.value = value;
+                        }
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>

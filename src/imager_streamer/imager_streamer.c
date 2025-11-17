@@ -104,7 +104,7 @@ static void check_ir_mode(const int32_t cutoff_inverted, const int32_t cutoff, c
             zlog_debug(vid_c, "IR control: ADC_tot=%d, ADC_0=%d, ADC_1=%d, ADC_2=%d, ADC_3=%d cutoff=%d", adc_value, adc_value_0, adc_value_1, adc_value_2, adc_value_3, invert ? cutoff_inverted : cutoff);
             zlog_info(vid_c, "Switching to day mode");
             change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 0, vid_c);
-            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, 0, vid_c);
+            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, RTS_ISP_IR_DAY, vid_c);
             change_ir_cut(0);
             g_ir_cut_mode = 0;
         }
@@ -113,7 +113,7 @@ static void check_ir_mode(const int32_t cutoff_inverted, const int32_t cutoff, c
             zlog_debug(vid_c, "IR control: ADC_tot=%d, ADC_0=%d, ADC_1=%d, ADC_2=%d, ADC_3=%d cutoff=%d", adc_value, adc_value_0, adc_value_1, adc_value_2, adc_value_3, invert ? cutoff_inverted : cutoff);
             zlog_info(vid_c, "Switching to night mode");
             change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 1, vid_c);
-            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, 1, vid_c);
+            change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, RTS_ISP_IR_NIGHT, vid_c);
             change_ir_cut(1);
             g_ir_cut_mode = 1;
         }
@@ -359,6 +359,8 @@ static int parse_ini(void *user, const char *section, const char *name, const ch
             config->adc_cutoff_inverted = val;
         } else if (strcmp(name, "adc_cutoff") == 0) {
             config->adc_cutoff = val;
+        } else if (strcmp(name, "invert_ir_cut") == 0) {
+            config->invert_ir_cut = val;
         } else if (strcmp(name, "in_out_door_mode") == 0) {
             config->in_out_door_mode = val;
         } else if (strcmp(name, "dehaze") == 0) {

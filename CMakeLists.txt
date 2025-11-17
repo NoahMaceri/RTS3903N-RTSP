@@ -57,12 +57,32 @@ target_link_libraries(rtsp_server
     extern_libs
 )
 
+# pcre2 for lighttpd
+set(BUILD_SHARED_LIBS ON CACHE BOOL "Build PCRE2 as shared libraries")
+set(BUILD_STATIC_LIBS OFF CACHE BOOL "Do not build PCRE2 static libraries")
+add_subdirectory(third-party/pcre2)
+include_directories(${CMAKE_BINARY_DIR}/third-party/pcre2/interface)
+link_directories(${CMAKE_BINARY_DIR}/third-party/pcre2)
+
+# lighttpd
+set(HAVE_PCRE2_H 1 CACHE INTERNAL "Have PCRE2 library")
+set(HAVE_PCRE 1 CACHE INTERNAL "Have PCRE2 library")
+add_subdirectory(third-party/lighttpd1.4)
+
 # isp_adjustment
 add_executable(isp_adjustment
-    src/isp_adjustment/isp_adjustment.c
+        src/isp_adjustment/isp_adjustment.c
+)
+target_link_libraries(isp_adjustment
+    extern_libs
+    zlog
 )
 
-target_link_libraries(isp_adjustment
+# isp_ctrl
+add_executable(isp_ctrl
+        src/isp_ctrl/isp_ctrl.cpp
+)
+target_link_libraries(isp_ctrl
     extern_libs
     zlog
 )
