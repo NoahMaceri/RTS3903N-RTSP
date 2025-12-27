@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(extern_libs)
+project(rtscore)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/h1_encoder)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/aacenc)

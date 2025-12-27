@@ -1,9 +1,6 @@
 [submodule "third-party/zlog"]
 	path = third-party/zlog
 	url = https://github.com/HardySimpson/zlog.git
-[submodule "third-party/inih/inih"]
-	path = third-party/inih/inih
-	url = https://github.com/benhoyt/inih.git
 [submodule "third-party/pcre2"]
 	path = third-party/pcre2
 	url = https://github.com/PCRE2Project/pcre2.git

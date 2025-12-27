@@ -27,11 +27,11 @@ cd /var/tmp/sd/
 # Try load the load_cpld_ssp used in newer firmware to assist with IR CUT
 rm -rf /var/tmp/sd/localko 
 cp -R /home/app/localko .
-mkdir -p /home/app/localko # If it fails
+#mkdir -p /home/app/localko # If it fails
 
-cp /var/tmp/sd/Yi/ko/* /home/app/localko
-mount --bind /var/tmp/sd/localko /home/app/localko
-/var/tmp/sd/Yi/load_cpld_ssp
+#cp /var/tmp/sd/Yi/ko/* /home/app/localko
+#mount --bind /var/tmp/sd/localko /home/app/localko
+#/var/tmp/sd/Yi/load_cpld_ssp
 
 # Start the imager streamer and RTSP server
 ./imager_streamer &

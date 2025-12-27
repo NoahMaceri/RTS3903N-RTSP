@@ -4,15 +4,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(live)
 
-# First download the zip
-set(SOURCE_VER "2025.05.24")
-
 # if the zip is not present, download it
-if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/live.${SOURCE_VER}.tar.gz")
+if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/live555-master.zip")
     message(STATUS "Downloading live source version ${SOURCE_VER}")
     file(DOWNLOAD
-            "https://download.videolan.org/pub/contrib/live555/live.${SOURCE_VER}.tar.gz"
-            "${CMAKE_CURRENT_BINARY_DIR}/live.${SOURCE_VER}.tar.gz"
+            "https://github.com/rgaufman/live555/archive/refs/heads/master.zip"
+            "${CMAKE_CURRENT_BINARY_DIR}/live555-master.zip"
+            SHOW_PROGRESS
     )
     message(STATUS "Download complete")
 endif()
@@ -21,8 +19,9 @@ endif()
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/live")
     message(STATUS "Extracting live source")
     file(ARCHIVE_EXTRACT
-            INPUT "${CMAKE_CURRENT_BINARY_DIR}/live.${SOURCE_VER}.tar.gz"
+            INPUT "${CMAKE_CURRENT_BINARY_DIR}/live555-master.zip"
             DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}"
+            STRIP_COMPONENTS 1
     )
     message(STATUS "Extraction complete")
 endif()
@@ -40,6 +39,7 @@ target_compile_definitions(compiler_flags INTERFACE
     -D_FILE_OFFSET_BITS=64
     -DNO_OPENSSL=1
     -DNEWLOCALE_NOT_USED
+    -DALLOW_RTSP_SERVER_PORT_REUSE=1
 )
 
 set(all_include_dirs
@@ -68,3 +68,15 @@ file(GLOB LIVEMEDIA_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/live/liveMedia/*.cpp ${CMAK
 add_library(liveMedia SHARED ${LIVEMEDIA_SRCS})
 target_include_directories(liveMedia PUBLIC ${all_include_dirs})
 target_link_libraries(liveMedia PUBLIC compiler_flags)
+
+add_executable(openRTSP
+        ${CMAKE_CURRENT_SOURCE_DIR}/live/testProgs/playCommon.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/live/testProgs/openRTSP.cpp
+)
+target_link_libraries(openRTSP
+        liveMedia
+        groupsock
+        UsageEnvironment
+        BasicUsageEnvironment
+        compiler_flags
+)

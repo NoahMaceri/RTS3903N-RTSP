@@ -1,7 +1,7 @@
 #!/bin/bash
 #  get parent dir
-if [ "$#" -ne 2 ]; then
-    echo "Usage: $0 <executable> <core_file>"
+if [ "$#" -ne 4 ]; then
+    echo "Usage: $0 <executable> <core_file> <path_to_rsdk> <solib_path>"
     exit 1
 fi
 if [ ! -f "$1" ]; then
@@ -12,16 +12,19 @@ if [ ! -f "$2" ]; then
     echo "Core file $2 does not exist."
     exit 1
 fi
+if [ ! -d "$4" ]; then
+    echo "Solib path $4 does not exist."
+    exit 1
+fi
 
-parent_dir=$(dirname "$0")
-parent_dir="$(realpath "$parent_dir/..")"
-solib_path="$parent_dir/cmake-build-debug/RTS3903N_RTSP-0.3.0/lib"
-sysroot="$parent_dir/third-party/rsdk/rsdk-4.8.5-5281-EL-3.10-u0.9.33-m32fut-161202/mips-linux-uclibc"
 
-echo "Using solib path: $solib_path"
+sysroot="$3/mips-linux-uclibc"
+gdb_path="$3bin/mips-linux-uclibc-gdb"
+
+echo "Using solib path: $4"
 echo "Using sysroot: $sysroot"
 
-./../third-party/rsdk/rsdk-4.8.5-5281-EL-3.10-u0.9.33-m32fut-161202/bin/mips-linux-uclibc-gdb \
- --init-eval-command="set solib-search-path $solib_path" \
+$gdb_path \
+ --init-eval-command="set solib-search-path $3" \
  --init-eval-command="set sysroot $sysroot" \
  --se=$1 --core=$2 --batch

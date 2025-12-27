@@ -15,55 +15,35 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 #include <cstdint>
+#include <fstream>
 #include <fcntl.h>
-#include <liveMedia.hh>
-#include <BasicUsageEnvironment.hh>
+#include <csignal>
+#include <atomic>
 
 #include <zlog.h>
-#include <ini.h>
 #include <ver.h>
-#include <globals.h>
+#include <json.hpp>
+#include <BasicUsageEnvironment.hh>
 
-typedef struct {
-    const char* user;
-    const char* pwd;
-    uint16_t port;
-    const char* name;
-    uint16_t resolution;
-} rtsp_settings;
+#include "H264LiveFifoSubsession.h"
 
-static int parse_ini(void *user, const char *section, const char *name, const char *value) {
-    auto *config = static_cast<rtsp_settings *>(user);
+#define VIDEO_FIFO "/tmp/video.h264"
 
-    if (strcmp(section, "rtsp") == 0) {
-        if (strcmp(name, "username") == 0) {
-            config->user = strdup(value);
-        } else if (strcmp(name, "password") == 0) {
-            config->pwd = strdup(value);
-        } else if (strcmp(name, "port") == 0) {
-            config->port = static_cast<uint16_t>(strtoul(value, nullptr, 10));
-        } else if (strcmp(name, "name") == 0) {
-            config->name = strdup(value);
-        } else {
-            return 0;  // unknown name
-        }
-    } else if (strcmp(section, "encoder") == 0) {
-        if (strcmp(name, "height") == 0) {
-            config->resolution = static_cast<uint16_t>(strtoul(value, nullptr, 10));
-        } else {
-            return 0;  // unknown name
-        }
-    } else {
-        return 0;  // unknown section
-    }
+static volatile sig_atomic_t g_got_sigint = 0;
+static char g_eventLoopWatchVariable = 0;
 
-    return 1;
+static void onSignal(int /*signum*/) {
+    g_got_sigint = 1;
+    g_eventLoopWatchVariable = 1;  // makes doEventLoop return
 }
 
 int main(int argc, char *argv[]) {
+    // setup signal handlers
+    signal(SIGINT, onSignal);
+    signal(SIGTERM, onSignal);
     // init zlog
-    int rc;
-    if ((rc = zlog_init("zlog.conf") < 0)) {
+    int rc = zlog_init("zlog.conf");
+    if (rc < 0) {
         fprintf(stderr, "Failed to initialize zlog: %d\n", rc);
         return rc;
     }
@@ -72,50 +52,86 @@ int main(int argc, char *argv[]) {
 
     zlog_info(c, "rRTSPServer v%d.%d.%d started", VER_MAJOR, VER_MINOR, VER_PATCH);
 
-    rtsp_settings config;
-    if (ini_parse("streamer.ini", parse_ini, &config) < 0) {
-        zlog_fatal(c, "Failed to load streamer.ini");
+    // load config
+    nlohmann::json cfg;
+    std::ifstream cfg_file("settings.json");
+    if (cfg_file.is_open()) {
+        try {
+            cfg_file >> cfg;
+        } catch (nlohmann::json::parse_error &e) {
+            zlog_fatal(c, "Failed to parse settings.json: %s", e.what());
+            return EXIT_FAILURE;
+        }
+        cfg_file.close();
+    } else {
+        zlog_fatal(c, "settings.json not found!");
         return EXIT_FAILURE;
     }
 
-    // if the strings are empty strings set them to nullptr
-    if (config.user && strcmp(config.user, "") == 0) {
-        config.user = nullptr;
-    }
-    if (config.pwd && strcmp(config.pwd, "") == 0) {
-        config.pwd = nullptr;
-    }
 
     zlog_debug(c, "RTSP settings:");
-    zlog_debug(c, "  Username: %s", config.user ? config.user : "None");
-    zlog_debug(c, "  Password: %s", config.pwd ? config.pwd : "None");
-    zlog_debug(c, "  Port: %u", config.port);
-    zlog_debug(c, "  Stream Name: %s", config.name);
+    zlog_debug(c, "  Port: %d", cfg["rtsp"]["port"].get<uint16_t>());
+    zlog_debug(c, "  Stream name: %s", cfg["rtsp"]["name"].get<std::string>().c_str());
+    if (!cfg["rtsp"]["username"].get<std::string>().empty()) {
+        zlog_debug(c, "  User: %s", cfg["rtsp"]["username"].get<std::string>().c_str());
+    } else {
+        zlog_debug(c, "  User: (none)");
+    }
+    if (!cfg["rtsp"]["password"].get<std::string>().empty()) {
+        zlog_debug(c, "  Password: (set)");
+    } else {
+        zlog_debug(c, "  Password: (none)");
+    }
 
     // Begin by setting up our usage environment:
     TaskScheduler *scheduler = BasicTaskScheduler::createNew();
     BasicUsageEnvironment *env = BasicUsageEnvironment::createNew(*scheduler);
 
     UserAuthenticationDatabase *authDB = nullptr;
-    if ((config.user != nullptr) && (config.pwd != nullptr)) {
+    if (!cfg["rtsp"]["username"].get<std::string>().empty() && !cfg["rtsp"]["password"].get<std::string>().empty()) {
         authDB = new UserAuthenticationDatabase;
-        authDB->addUserRecord(config.user, config.pwd);
+        authDB->addUserRecord(
+            cfg["rtsp"]["username"].get<std::string>().c_str(),
+            cfg["rtsp"]["password"].get<std::string>().c_str()
+        );
+        zlog_info(c, "RTSP authentication enabled");
     }
 
-    // Create the RTSP server:
-    RTSPServer *rtspServer = RTSPServer::createNew(*env, config.port, authDB);
+    RTSPServer *rtspServer = RTSPServer::createNew(*env,
+                                                   cfg["rtsp"]["port"].get<uint16_t>(),
+                                                   authDB);
     if (rtspServer == nullptr) {
         zlog_fatal(c, "Failed to create RTSP server: %s", env->getResultMsg());
         exit(EXIT_FAILURE);
     }
 
-    OutPacketBuffer::maxSize = 300000;
-    ServerMediaSession *sms = ServerMediaSession::createNew(*env, config.name, "", "");
-    sms->addSubsession(H264VideoFileServerMediaSubsession::createNew(*env, VIDEO_FIFO, True));
+    ServerMediaSession *sms = ServerMediaSession::createNew(*env,
+                                                            cfg["rtsp"]["name"].get<std::string>().c_str(),
+                                                            cfg["rtsp"]["name"].get<std::string>().c_str(),
+                                                            "Session streamed by rRTSPServer");
+    OutPacketBuffer::maxSize = 500000; // safe maximum
+    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, False));;
     rtspServer->addServerMediaSession(sms);
     zlog_info(c, "ServerMediaSession added");
-    zlog_info(c, "RTSP server is running on %s", rtspServer->rtspURL(sms));
-    env->taskScheduler().doEventLoop(); // does not return
+    char* url = rtspServer->rtspURL(sms);
+    zlog_info(c, "RTSP server is running on %s", url);
+    delete[] url;
+    env->taskScheduler().doEventLoop(&g_eventLoopWatchVariable);  // returns when set to non-zero
+
+    zlog_info(c, "Shutdown requested, cleaning up...");
+
+    rtspServer->closeAllClientSessionsForServerMediaSession(sms);
+    rtspServer->removeServerMediaSession(sms);
+
+    Medium::close(sms); // closes subsessions too
+
+    Medium::close(rtspServer);
+
+    delete authDB; // only if you allocated it
+    env->reclaim();
+    delete scheduler;
+
+    zlog_fini();
 
     return EXIT_SUCCESS;
 }
