@@ -25,7 +25,7 @@
 
 #include <zlog.h>
 
-zlog_category_t *isp_adj = nullptr;
+zlog_category_t *logger = nullptr;
 
 static const std::map<std::string, enum enum_rts_video_ctrl_id> param_setting_map = {
     {"noise_reduction", RTS_VIDEO_CTRL_ID_NOISE_REDUCTION},
@@ -129,15 +129,15 @@ static void get_all_isp_options() {
 }
 
 int main(int argc, char *argv[]) {
-    if (zlog_init("zlog.conf") < 0 || (isp_adj = zlog_get_category("isp_adj")) == NULL) {
+    if (zlog_init("zlog.conf") < 0 || (logger = zlog_get_category("isp_adj")) == NULL) {
         fprintf(stderr, "Failed to initialize zlog\n");
         return -1;
     }
 
-    zlog_info(isp_adj, "Started ISP adjustment utility");
+    zlog_info(logger, "Started ISP adjustment utility");
 
     if (rts_av_init()) {
-        zlog_fatal(isp_adj, "Failed to initialize RTS AV");
+        zlog_fatal(logger, "Failed to initialize RTS AV");
         return -1;
     }
 
@@ -146,27 +146,27 @@ int main(int argc, char *argv[]) {
 
         if (param_setting_map.count(argv[1])) {
             const enum enum_rts_video_ctrl_id ctrl_type = param_setting_map.at(argv[1]);
-            if (change_isp_setting(ctrl_type, val, isp_adj)) {
-                const int32_t new_val = get_isp_setting(ctrl_type, isp_adj);
-                zlog_info(isp_adj, "Parameter '%s' is now set to %d", argv[1], new_val);
+            if (change_isp_setting(ctrl_type, val, logger)) {
+                const int32_t new_val = get_isp_setting(ctrl_type, logger);
+                zlog_info(logger, "Parameter '%s' is now set to %d", argv[1], new_val);
             } else {
-                zlog_error(isp_adj, "Failed to change parameter '%s'", argv[1]);
+                zlog_error(logger, "Failed to change parameter '%s'", argv[1]);
             }
         } else {
-            zlog_warn(isp_adj, "Unknown parameter '%s'\n", argv[1]);
+            zlog_warn(logger, "Unknown parameter '%s'\n", argv[1]);
             get_all_isp_options();
         }
     } else if (argc == 2) {
         if (param_setting_map.count(argv[1])) {
             const enum enum_rts_video_ctrl_id ctrl_type = param_setting_map.at(argv[1]);
-            const int32_t cur_val = get_isp_setting(ctrl_type, isp_adj);
-            zlog_info(isp_adj, "Parameter '%s' is currently set to %d", argv[1], cur_val);
+            const int32_t cur_val = get_isp_setting(ctrl_type, logger);
+            zlog_info(logger, "Parameter '%s' is currently set to %d", argv[1], cur_val);
         } else {
-            zlog_warn(isp_adj, "Unknown parameter '%s'\n", argv[1]);
+            zlog_warn(logger, "Unknown parameter '%s'\n", argv[1]);
             get_all_isp_options();
         }
     } else {
-        zlog_info(isp_adj, "Usage: %s <parameter>", argv[0]);
+        zlog_info(logger, "Usage: %s <parameter>", argv[0]);
         get_all_isp_options();
         return 1;
     }

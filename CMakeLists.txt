@@ -28,11 +28,11 @@ include_directories(${CMAKE_SOURCE_DIR}/third-party/zlog/src)
 add_subdirectory(third-party/rtscore)
 
 # -- EXECUTABLES --
-# imager_streamer
 add_subdirectory(src/imager_streamer)
 add_subdirectory(src/isp_ctrl)
 add_subdirectory(src/isp_tool)
 add_subdirectory(src/rtsp_server)
+add_subdirectory(src/ptz_tool)
 
 # pcre2 for lighttpd
 set(BUILD_SHARED_LIBS ON CACHE BOOL "Build PCRE2 as shared libraries")
@@ -112,5 +112,5 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
 )
 
 add_custom_target(${PROJECT_NAME}_tools COMMAND
-    DEPENDS rtsp_server imager_streamer isp_tool
+    DEPENDS rtsp_server imager_streamer isp_tool ptz_tool
 )
