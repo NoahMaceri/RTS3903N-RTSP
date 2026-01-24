@@ -2,7 +2,7 @@
 
 #include "cpld.h"
 
-day_night_ctrl::day_night_ctrl(const int32_t cutoff, const int32_t cutoff_inverted, const bool inverted, zlog_category_t* vid_c) : vid_c(vid_c) {
+day_night_ctrl::day_night_ctrl(const int32_t cutoff, const int32_t cutoff_inverted, const bool inverted, zlog_category_t* vid_c) : vid_c(vid_c), running(false) {
     st = ir_ctrl_state();
     st.stable_needed = 3;
     st.ema_alpha = 0.75;   // 0..1 higher = faster response
@@ -37,9 +37,10 @@ bool day_night_ctrl::begin() {
 }
 
 void day_night_ctrl::stop() {
-    if (thread == 0 || st.running == false) return;
-    st.running = false;
+    if (thread == 0 || !running.load()) return;
+    running.store(false);
     pthread_join(thread, nullptr);
+    thread = 0;
 }
 
 void* day_night_ctrl::ir_ctrl_thread(void* arg) {
@@ -47,9 +48,9 @@ void* day_night_ctrl::ir_ctrl_thread(void* arg) {
     zlog_info(ctrl->st.vid_c, "Starting IR control thread");
     sleep(15);
 
-    ctrl->st.running = true;
+    ctrl->running.store(true);
 
-    while (ctrl->st.running) {
+    while (ctrl->running.load()) {
         ctrl->check_light_level(ctrl->st);
         sleep(2); // check every 2s; tuning happens via EMA + stable_needed
     }

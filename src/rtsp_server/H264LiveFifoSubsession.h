@@ -2,6 +2,10 @@
 #define H264LIVEFIFOSUBSESSION_H
 
 #include <liveMedia.hh>
+#include <ctime>
+
+// Maximum time to wait for SPS/PPS in seconds
+#define SDP_ACQUISITION_TIMEOUT_SEC 10
 
 class H264LiveFifoSubsession : public OnDemandServerMediaSubsession {
 public:
@@ -15,17 +19,26 @@ protected:
           fifoPath_(strDup(fifoPath)) {}
 
     ~H264LiveFifoSubsession() override {
+        if (nextTask_ != nullptr) {
+            envir().taskScheduler().unscheduleDelayedTask(nextTask_);
+            nextTask_ = nullptr;
+        }
         delete[] fifoPath_;
         delete[] auxSDPLine_;
     }
 
 protected:
     FramedSource* createNewStreamSource(unsigned /*clientSessionId*/, unsigned& estBitrate) override {
-        estBitrate = 2000; // kbps estimate; adjust as desired
+        // 1024000 bps = 1024 kbps
+        estBitrate = 1024; // kbps estimate; adjust as desired
 
         // ByteStreamFileSource works with FIFOs/pipes.
-        FramedSource* fileSource = ByteStreamFileSource::createNew(envir(), fifoPath_);
+        // Use a small buffer to reduce latency
+        FramedSource* fileSource = ByteStreamFileSource::createNew(envir(), fifoPath_,
+                                                                    0,      // preferredFrameSize (0 = default)
+                                                                    20000); // playTimePerFrame in microseconds
         if (fileSource == nullptr) {
+            envir() << "Failed to create ByteStreamFileSource for " << fifoPath_ << "\n";
             return nullptr;
         }
 
@@ -46,23 +59,49 @@ protected:
 
         if (dummyRTPSink_ == nullptr) {
             dummyRTPSink_ = rtpSink;
+            sdpStartTime_ = time(nullptr);
+            sdpCheckCount_ = 0;
             dummyRTPSink_->startPlaying(*inputSource, afterPlayingDummy, this);
             checkForAuxSDPLine(this);
         }
 
-        envir().taskScheduler().doEventLoop(&doneFlag_); // until auxSDPLine_ is ready
+        envir().taskScheduler().doEventLoop(&doneFlag_); // until auxSDPLine_ is ready or timeout
         doneFlag_ = 0;
+
+        // If we timed out and still don't have SDP, return a minimal default
+        if (auxSDPLine_ == nullptr) {
+            envir() << "Warning: SDP acquisition timed out, using default\n";
+            // Return empty string rather than nullptr to prevent crash
+            auxSDPLine_ = strDup("");
+        }
+
         return auxSDPLine_;
     }
 
 private:
     static void afterPlayingDummy(void* clientData) {
         auto* self = static_cast<H264LiveFifoSubsession*>(clientData);
+        // Cancel any pending check task
+        if (self->nextTask_ != nullptr) {
+            self->envir().taskScheduler().unscheduleDelayedTask(self->nextTask_);
+            self->nextTask_ = nullptr;
+        }
         self->doneFlag_ = 1;
     }
 
     static void checkForAuxSDPLine(void* clientData) {
         auto* self = static_cast<H264LiveFifoSubsession*>(clientData);
+        self->nextTask_ = nullptr; // Task has fired
+
+        // Check for timeout
+        time_t now = time(nullptr);
+        if (now - self->sdpStartTime_ > SDP_ACQUISITION_TIMEOUT_SEC) {
+            self->envir() << "SDP acquisition timeout after " << SDP_ACQUISITION_TIMEOUT_SEC << " seconds\n";
+            self->doneFlag_ = 1;
+            return;
+        }
+
+        self->sdpCheckCount_++;
 
         if (self->auxSDPLine_) {
             self->doneFlag_ = 1;
@@ -88,6 +127,10 @@ private:
     char* auxSDPLine_{nullptr};
     char doneFlag_{0};
     TaskToken nextTask_{nullptr};
+
+    // Timeout tracking
+    time_t sdpStartTime_{0};
+    unsigned sdpCheckCount_{0};
 };
 
 #endif // H264LIVEFIFOSUBSESSION_H

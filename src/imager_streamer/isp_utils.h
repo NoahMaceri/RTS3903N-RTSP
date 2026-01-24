@@ -3,6 +3,10 @@
 
 #include <cstdint>
 #include <map>
+#include <mutex>
+
+// Mutex to protect ISP control access from multiple threads
+static std::mutex g_isp_mutex;
 
 static const std::map<std::string, enum enum_rts_video_ctrl_id> param_setting_map = {
     {"noise_reduction", RTS_VIDEO_CTRL_ID_NOISE_REDUCTION},
@@ -53,6 +57,8 @@ static const std::map<std::string, enum enum_rts_video_ctrl_id> param_setting_ma
 };
 
 static bool change_isp_setting(const enum enum_rts_video_ctrl_id type, int32_t value, zlog_category_t *logger) {
+    std::lock_guard<std::mutex> lock(g_isp_mutex);
+
     rts_video_control ctrl{};
     int ret = rts_av_get_isp_ctrl(type, &ctrl);
     if (ret) {
@@ -81,6 +87,8 @@ static bool change_isp_setting(const enum enum_rts_video_ctrl_id type, int32_t v
 }
 
 static int32_t get_isp_setting(const enum enum_rts_video_ctrl_id type, zlog_category_t *logger) {
+    std::lock_guard<std::mutex> lock(g_isp_mutex);
+
     rts_video_control ctrl{};
     const int ret = rts_av_get_isp_ctrl(type, &ctrl);
     if (ret) {

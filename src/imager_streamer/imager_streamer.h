@@ -2,12 +2,16 @@
 #define IMAGER_STREAMER_H
 
 #include <cstdint>
+#include <climits>
 #include <cerrno>
+#include <cstring>
+#include <ctime>
 #include <unistd.h>
 #include <fcntl.h>
 #include <csignal>
 #include <sys/stat.h>
 #include <sys/ioctl.h>
+#include <poll.h>
 #include <pthread.h>
 #include <fstream>
 #include <atomic>
@@ -27,11 +31,13 @@
 
 #define VIDEO_FIFO "/tmp/video.h264"
 #define STREAMING_FAILURE_THRESHOLD 100
+#define FIFO_WRITE_TIMEOUT_MS 100
+#define FIFO_RECOVERY_INTERVAL_MS 5000
 
 typedef struct {
     int32_t isp;
     int32_t h264;
-    FILE* fifo;
+    int fifo_fd;  // Changed from FILE* to raw fd for non-blocking I/O
     day_night_ctrl *ir_control;
 } handlers;
 

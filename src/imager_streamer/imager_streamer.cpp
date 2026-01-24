@@ -18,9 +18,16 @@
 
 #include "imager_streamer.h"
 
+static std::atomic<bool> g_fifo_broken(false);
+
 static void terminate() {
     zlog_info(vid_c, "Termination signal received, exiting...");
     g_exit = true;
+}
+
+static void sigpipe_handler(int /*signum*/) {
+    // Mark FIFO as broken - will be handled in main loop
+    g_fifo_broken.store(true);
 }
 
 uint8_t config_h264_chn(const int h264_ch, const uint32_t max_bitrate, const uint32_t min_bitrate, const uint32_t target_bitrate) {
@@ -69,52 +76,169 @@ void set_fps(const uint8_t fps) {
     zlog_info(vid_c, "Changed sensor fps from %d to %d", tmp, rts_av_get_isp_dynamic_fps());
 }
 
-void sigpipe_handler(int signum) {
-    usleep(1000);
-}
 
 void *unlock_fifo_threadfn(void *data) {
     const char *fifo_name = static_cast<const char *>(data);
     unsigned char buffer_fifo[1024];
-    const int fd = open(fifo_name, O_RDONLY);
-    read(fd, buffer_fifo, 1024);
-    close(fd);
+    // Open for reading with O_NONBLOCK to prevent blocking forever if writer dies
+    const int fd = open(fifo_name, O_RDONLY | O_NONBLOCK);
+    if (fd >= 0) {
+        // Read in a loop until the main thread signals exit
+        while (!g_exit.load()) {
+            ssize_t n = read(fd, buffer_fifo, sizeof(buffer_fifo));
+            if (n <= 0) {
+                usleep(10000); // 10ms sleep if no data
+            }
+        }
+        close(fd);
+    }
     return nullptr;
 }
 
-uint8_t create_sink(FILE **sink, const char *path) {
-    // Override SIGPIPE to prevent crashes on broken pipe
+// Non-blocking write to FIFO with timeout - writes ENTIRE buffer or drops frame
+// Returns: count on success, -1 on error, 0 if timeout (frame dropped)
+static ssize_t write_to_fifo(int fd, const void *buf, size_t count) {
+    if (fd < 0) return -1;
+
+    const uint8_t *data = static_cast<const uint8_t *>(buf);
+    size_t remaining = count;
+    size_t total_written = 0;
+
+    // Calculate deadline for entire frame write (use longer timeout for large frames)
+    // Allow ~500ms total for frame write to handle large I-frames
+    const int frame_timeout_ms = 500;
+    struct timespec start_time;
+    clock_gettime(CLOCK_MONOTONIC, &start_time);
+    const int64_t deadline_ms = (start_time.tv_sec * 1000) + (start_time.tv_nsec / 1000000) + frame_timeout_ms;
+
+    while (remaining > 0) {
+        // Calculate remaining timeout
+        struct timespec now;
+        clock_gettime(CLOCK_MONOTONIC, &now);
+        int64_t now_ms = (now.tv_sec * 1000) + (now.tv_nsec / 1000000);
+        int timeout_remaining = static_cast<int>(deadline_ms - now_ms);
+
+        if (timeout_remaining <= 0) {
+            // Timeout - couldn't write entire frame
+            // If we wrote nothing, return 0 (drop). If partial, return -1 (error/corruption)
+            if (total_written == 0) return 0;
+            return -1; // Partial write is an error condition
+        }
+
+        // Use poll to wait for write availability
+        struct pollfd pfd;
+        pfd.fd = fd;
+        pfd.events = POLLOUT;
+        pfd.revents = 0;
+
+        int poll_ret = poll(&pfd, 1, timeout_remaining);
+
+        if (poll_ret < 0) {
+            if (errno == EINTR) continue; // Interrupted, retry
+            return -1; // Real error
+        }
+
+        if (poll_ret == 0) {
+            // Timeout
+            if (total_written == 0) return 0;
+            return -1;
+        }
+
+        if (pfd.revents & (POLLERR | POLLHUP | POLLNVAL)) {
+            // Pipe error - reader disconnected
+            g_fifo_broken.store(true);
+            return -1;
+        }
+
+        if (pfd.revents & POLLOUT) {
+            ssize_t written = write(fd, data + total_written, remaining);
+            if (written < 0) {
+                if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                    // Would block, try again after next poll
+                    continue;
+                }
+                if (errno == EPIPE) {
+                    g_fifo_broken.store(true);
+                }
+                return -1;
+            }
+            total_written += written;
+            remaining -= written;
+        }
+    }
+
+    return static_cast<ssize_t>(total_written);
+}
+
+// Desired pipe buffer size (256KB to handle large I-frames)
+#define FIFO_BUFFER_SIZE (256 * 1024)
+
+// Create or recreate the FIFO
+static int create_fifo(const char *path) {
+    // Remove any existing fifo file
+    unlink(path);
+
+    // Create a new fifo file
+    if (mkfifo(path, 0666) < 0 && errno != EEXIST) {
+        zlog_error(vid_c, "Failed to create fifo file %s: %s", path, strerror(errno));
+        return -1;
+    }
+
+    // Open for writing with O_NONBLOCK and O_RDWR
+    // O_RDWR prevents ENXIO when no reader is connected yet
+    int fd = open(path, O_WRONLY | O_NONBLOCK);
+    if (fd < 0) {
+        if (errno == ENXIO) {
+            // No reader yet - this is expected, try O_RDWR as fallback
+            fd = open(path, O_RDWR | O_NONBLOCK);
+        }
+        if (fd < 0) {
+            zlog_error(vid_c, "Failed to open fifo %s for writing: %s", path, strerror(errno));
+            return -1;
+        }
+    }
+
+    // Increase pipe buffer size to handle large I-frames without multiple write cycles
+    int pipe_size = fcntl(fd, F_SETPIPE_SZ, FIFO_BUFFER_SIZE);
+    if (pipe_size < 0) {
+        zlog_warn(vid_c, "Failed to set pipe buffer size: %s (continuing with default)", strerror(errno));
+    } else {
+        zlog_debug(vid_c, "Set pipe buffer size to %d bytes", pipe_size);
+    }
+
+    zlog_debug(vid_c, "Created FIFO sink at %s (fd=%d)", path, fd);
+    return fd;
+}
+
+uint8_t create_sink(int *sink_fd, const char *path) {
+    // Install SIGPIPE handler to prevent crashes on broken pipe
     signal(SIGPIPE, sigpipe_handler);
-    // remove any existing fifo file
-    if (unlink(path) == 0) {
-        zlog_debug(vid_c, "Removed existing fifo file %s", path);
-    }
-    // create a new fifo file
-    if (mkfifo(path, 0777) < 0) {
-        zlog_fatal(vid_c, "Failed to create fifo file %s", path);
-        return false;
-    }
-    // Unlock the fifo by starting a thread that opens it for reading
+
+    // Start the unlock/reader thread first
     pthread_t unlock_thread;
     if (pthread_create(&unlock_thread, nullptr, unlock_fifo_threadfn, const_cast<char *>(path)) != 0) {
         zlog_fatal(vid_c, "Failed to create fifo unlock thread");
         return false;
     }
     pthread_detach(unlock_thread);
-    zlog_info(vid_c, "Started fifo unlock thread");
+    zlog_info(vid_c, "Started fifo reader thread");
 
-    // open the fifo file for writing with O_NONBLOCK
-    *sink = fopen(path, "wb");
-    if (!*sink) {
-        zlog_fatal(vid_c, "Failed to open fifo file %s for writing", path);
+    // Give the reader thread a moment to open the FIFO
+    usleep(50000); // 50ms
+
+    // Now create the FIFO for writing
+    *sink_fd = create_fifo(path);
+    if (*sink_fd < 0) {
+        zlog_fatal(vid_c, "Failed to create fifo sink");
         return false;
     }
-    zlog_info(vid_c, "Created sink at %s", path);
 
+    zlog_info(vid_c, "Video FIFO ready at %s", path);
+    g_fifo_broken.store(false);
     return true;
 }
 
-void kill_stream(const handlers *h) {
+void kill_stream(handlers *h) {
     zlog_info(vid_c, "Stopping and destroying RTS channels");
     g_exit = true;
 
@@ -123,6 +247,7 @@ void kill_stream(const handlers *h) {
     if (h->ir_control) {
         h->ir_control->stop();
         delete h->ir_control;
+        h->ir_control = nullptr;
     }
     zlog_info(vid_c, "IR control stopped");
 
@@ -137,12 +262,14 @@ void kill_stream(const handlers *h) {
         zlog_debug(vid_c, "Stopping H264 receive and destroying channel");
         rts_av_disable_chn(h->h264);
         rts_av_destroy_chn(h->h264);
+        h->h264 = -1;
         zlog_debug(vid_c, "H264 channel stopped and destroyed");
     }
     if (h->isp >= 0) {
         zlog_debug(vid_c, "Stopping ISP receive and destroying channel");
         rts_av_disable_chn(h->isp);
         rts_av_destroy_chn(h->isp);
+        h->isp = -1;
         zlog_debug(vid_c, "ISP channel stopped and destroyed");
     }
     zlog_info(vid_c, "Stopped and destroyed RTS channels");
@@ -151,8 +278,9 @@ void kill_stream(const handlers *h) {
     zlog_info(vid_c, "RTS AV released");
 
     // Teardown FIFO
-    if (h->fifo) {
-        fclose(h->fifo);
+    if (h->fifo_fd >= 0) {
+        close(h->fifo_fd);
+        h->fifo_fd = -1;
     }
     unlink(VIDEO_FIFO);
     zlog_info(vid_c, "Video sink closed and FIFO unlinked");
@@ -171,7 +299,7 @@ int start_stream(nlohmann::json &cfg) {
     handlers h = {
         .isp = -1,
         .h264 = -1,
-        .fifo = nullptr,
+        .fifo_fd = -1,
         .ir_control = nullptr
     };
 
@@ -183,6 +311,7 @@ int start_stream(nlohmann::json &cfg) {
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.isp))) {
         zlog_fatal(vid_c, "Failed to create ISP channel with error %d", h.isp);
         kill_stream(&h);
+        return -1;
     }
     zlog_debug(vid_c, "ISP channel created: chn %d, isp_id %d, isp_buf_num %d", h.isp, isp_attr.isp_id, isp_attr.isp_buf_num);
 
@@ -197,6 +326,7 @@ int start_stream(nlohmann::json &cfg) {
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
         zlog_fatal(vid_c, "Failed to set AV profile with error %d", ret);
         kill_stream(&h);
+        return -1;
     }
 
     rts_h264_attr h264_attr{};
@@ -210,6 +340,7 @@ int start_stream(nlohmann::json &cfg) {
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.h264))) {
         zlog_fatal(vid_c, "Failed to create H264 channel with error %d", h.h264);
         kill_stream(&h);
+        return -1;
     }
     zlog_debug(vid_c, "H264 channel created: chn %d, level %d, qp %d, bps %d, gop %d, videostab %d, rotation %d", h.h264, h264_attr.level, h264_attr.qp, h264_attr.bps, h264_attr.gop, h264_attr.videostab, h264_attr.rotation);
 
@@ -232,18 +363,21 @@ int start_stream(nlohmann::json &cfg) {
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
         zlog_fatal(vid_c, "Failed to bind ISP & H264 encoder to RTS AV API with error %d", ret);
         kill_stream(&h);
+        return -1;
     }
 
     ret = rts_av_enable_chn(h.isp);
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
         zlog_fatal(vid_c, "Failed to enable ISP channel with error %d", ret);
         kill_stream(&h);
+        return -1;
     }
 
     ret = rts_av_enable_chn(h.h264);
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
         zlog_fatal(vid_c, "Failed to enable H264 channel with error %d", ret);
         kill_stream(&h);
+        return -1;
     }
 
     // H264 control can ONLY be applied after the channel is enabled
@@ -256,12 +390,13 @@ int start_stream(nlohmann::json &cfg) {
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
         zlog_fatal(vid_c, "Failed to start H264 receive with error %d", ret);
         kill_stream(&h);
+        return -1;
     }
 
-
-    if (!create_sink(&h.fifo, VIDEO_FIFO)) {
-        zlog_fatal(vid_c, "Failed to create video sink with error %d", ret);
+    if (!create_sink(&h.fifo_fd, VIDEO_FIFO)) {
+        zlog_fatal(vid_c, "Failed to create video sink");
         kill_stream(&h);
+        return -1;
     }
 
     // Check channel status once before starting main loop
@@ -280,6 +415,7 @@ int start_stream(nlohmann::json &cfg) {
     if (!h.ir_control->begin()) {
         zlog_fatal(vid_c, "Failed to start IR control thread");
         kill_stream(&h);
+        return -1;
     }
 
     zlog_info(vid_c, "Starting main loop");
@@ -287,15 +423,53 @@ int start_stream(nlohmann::json &cfg) {
 
     uint8_t failed_polls = 0;
     uint8_t failed_captures = 0;
-    uint8_t failed_writes = 0;
-    int poll_ret = 0;
-    int recv_ret = 0;
+    uint8_t consecutive_fifo_errors = 0;
+    uint64_t last_fifo_recovery_time = 0;
 
-    uint32_t frame_count = 0;
+    // Frame statistics
+    struct {
+        uint32_t total_frames;
+        uint32_t keyframes;
+        uint32_t dropped_frames;
+        uint32_t dropped_keyframes;
+        size_t total_bytes;
+        size_t max_frame_size;
+        size_t min_frame_size;
+        uint32_t last_keyframe_interval;
+        uint32_t frames_since_keyframe;
+    } stats = {0, 0, 0, 0, 0, 0, SIZE_MAX, 0, 0};
 
-    // In your capture loop:
-    while (!g_exit) {
-        poll_ret = rts_av_poll(h.h264);
+    // Standby mode: when no reader is connected, we silently drop frames
+    bool standby_mode = false;
+    uint32_t standby_recovery_attempts = 0;
+
+    // Main capture loop
+    while (!g_exit.load()) {
+        // Check if FIFO needs recovery
+        if (g_fifo_broken.load()) {
+            uint64_t now = static_cast<uint64_t>(time(nullptr)) * 1000;
+            if (now - last_fifo_recovery_time > FIFO_RECOVERY_INTERVAL_MS) {
+                // Only log recovery attempts if not already in standby mode
+                if (!standby_mode) {
+                    zlog_info(vid_c, "No reader connected, entering standby mode (frames will be dropped)");
+                    standby_mode = true;
+                }
+
+                if (h.fifo_fd >= 0) {
+                    close(h.fifo_fd);
+                }
+                h.fifo_fd = create_fifo(VIDEO_FIFO);
+                if (h.fifo_fd >= 0) {
+                    g_fifo_broken.store(false);
+                    consecutive_fifo_errors = 0;
+                    standby_recovery_attempts++;
+                    // Don't log every recovery attempt, just count them
+                }
+                last_fifo_recovery_time = now;
+            }
+        }
+
+        int poll_ret = rts_av_poll(h.h264);
         if (RTS_IS_ERR_VALUE(RTS_ERRNO(poll_ret))) {
             zlog_error(vid_c, "Error polling H264 channel: %d", poll_ret);
             failed_polls++;
@@ -303,11 +477,12 @@ int start_stream(nlohmann::json &cfg) {
                 zlog_fatal(vid_c, "Too many polling errors, exiting main loop");
                 break;
             }
+            usleep(1000); // Brief sleep on error
             continue;
         }
         failed_polls = 0;
 
-        recv_ret = rts_av_recv(h.h264, &vid_buffer);
+        int recv_ret = rts_av_recv(h.h264, &vid_buffer);
         if (RTS_IS_ERR_VALUE(RTS_ERRNO(recv_ret))) {
             zlog_error(vid_c, "Error receiving H264 buffer: %d", recv_ret);
             failed_captures++;
@@ -315,6 +490,7 @@ int start_stream(nlohmann::json &cfg) {
                 zlog_fatal(vid_c, "Too many capture errors, exiting main loop");
                 break;
             }
+            usleep(1000); // Brief sleep on error
             continue;
         }
         failed_captures = 0;
@@ -323,44 +499,96 @@ int start_stream(nlohmann::json &cfg) {
             continue;
         }
 
-        // if ((frame_count % 100) == 0) {
-        //     zlog_info(vid_c, "Streaming frame %d, size %zu bytes", frame_count, vid_buffer->bytesused);
-        //     // check and print all flags
-        //     if (vid_buffer->flags & RTSTREAM_PKT_FLAG_KEY) {
-        //         zlog_info(vid_c, "  Frame is a keyframe");
-        //     }
-        //     if (vid_buffer->flags & RTSTREAM_PKT_FLAG_NO_OUTPUT) {
-        //         zlog_info(vid_c, "  Frame has NO_OUTPUT flag set");
-        //     }
-        //     if (vid_buffer->flags & RTSTREAM_PKT_FLAG_SP) {
-        //         zlog_info(vid_c, "  Frame has SUPER P flag set");
-        //     }
-        //     if (vid_buffer->flags & RTSTREAM_PKT_FLAG_END) {
-        //         zlog_info(vid_c, "  Frame has END flag set");
-        //     }
-        // }
         if (!(vid_buffer->flags & RTSTREAM_PKT_FLAG_NO_OUTPUT)) {
-            const size_t written = fwrite(vid_buffer->vm_addr, 1, vid_buffer->bytesused, h.fifo);
-            if (written != vid_buffer->bytesused) {
-                zlog_error(vid_c, "Error writing to video sink FIFO: wrote %zu of %zu bytes", written, vid_buffer->bytesused);
-                failed_writes++;
-                if (failed_writes >= STREAMING_FAILURE_THRESHOLD) {
-                    zlog_fatal(vid_c, "Too many write errors, exiting main loop");
+            const size_t frame_size = vid_buffer->bytesused;
+            const bool is_keyframe = (vid_buffer->flags & RTSTREAM_PKT_FLAG_KEY) != 0;
+
+            // Update frame size statistics
+            if (frame_size > stats.max_frame_size) stats.max_frame_size = frame_size;
+            if (frame_size < stats.min_frame_size) stats.min_frame_size = frame_size;
+            stats.total_bytes += frame_size;
+
+            // Track keyframes
+            if (is_keyframe) {
+                stats.keyframes++;
+                stats.last_keyframe_interval = stats.frames_since_keyframe;
+                stats.frames_since_keyframe = 0;
+            } else {
+                stats.frames_since_keyframe++;
+            }
+
+            // Use non-blocking write - will drop frame if FIFO is full
+            ssize_t written = write_to_fifo(h.fifo_fd, vid_buffer->vm_addr, frame_size);
+
+            if (written < 0) {
+                // Error writing to FIFO - likely no reader or pipe broken
+                consecutive_fifo_errors++;
+                if (!standby_mode && consecutive_fifo_errors == 1) {
+                    // Only log if not already in standby mode
+                    zlog_debug(vid_c, "FIFO write error, will enter standby mode");
+                }
+                g_fifo_broken.store(true);
+
+                // In standby mode, don't count toward fatal threshold
+                if (!standby_mode && consecutive_fifo_errors >= STREAMING_FAILURE_THRESHOLD) {
+                    zlog_fatal(vid_c, "Too many consecutive FIFO errors before standby, exiting main loop");
                     rts_av_put_buffer(vid_buffer);
                     vid_buffer = nullptr;
                     break;
                 }
+            } else if (written == 0) {
+                // Frame dropped due to full FIFO (timeout waiting for space)
+                stats.dropped_frames++;
+                // Only log keyframe drops, and only if not in standby (in standby, all drops are expected)
+                if (is_keyframe && !standby_mode) {
+                    stats.dropped_keyframes++;
+                    zlog_warn(vid_c, "Dropped KEYFRAME #%u (size=%zu) - stream may glitch until next keyframe!",
+                              stats.dropped_keyframes, frame_size);
+                }
+                consecutive_fifo_errors = 0; // Reset - dropping frames is not a fatal error
+            } else if (static_cast<size_t>(written) != frame_size) {
+                // Partial write - shouldn't happen anymore, but handle it
+                if (!standby_mode) {
+                    zlog_warn(vid_c, "Partial write to FIFO: wrote %zd of %zu bytes", written, frame_size);
+                }
+                consecutive_fifo_errors++;
             } else {
-                failed_writes = 0;
+                // Successful write - reader is active
+                if (standby_mode) {
+                    zlog_info(vid_c, "Reader connected, exiting standby mode (recovery attempts: %u)",
+                              standby_recovery_attempts);
+                    standby_mode = false;
+                    standby_recovery_attempts = 0;
+                }
+                consecutive_fifo_errors = 0;
             }
         }
+
         rts_av_put_buffer(vid_buffer);
         vid_buffer = nullptr;
-        frame_count++;
+        stats.total_frames++;
+
+        // Periodic status log (every ~2.5 minutes at 20fps)
+        if ((stats.total_frames % 3000) == 0) {
+            size_t avg_frame_size = stats.total_frames > 0 ? stats.total_bytes / stats.total_frames : 0;
+            zlog_info(vid_c, "Stats: frames=%u, keyframes=%u (interval=%u), dropped=%u (keyframes=%u), "
+                             "size avg=%zu min=%zu max=%zu bytes",
+                      stats.total_frames, stats.keyframes, stats.last_keyframe_interval,
+                      stats.dropped_frames, stats.dropped_keyframes,
+                      avg_frame_size, stats.min_frame_size == SIZE_MAX ? 0 : stats.min_frame_size,
+                      stats.max_frame_size);
+        }
     }
-    zlog_info(vid_c, "Main loop exited, cleaning up");
+
+    // Final statistics
+    size_t avg_frame_size = stats.total_frames > 0 ? stats.total_bytes / stats.total_frames : 0;
+    zlog_info(vid_c, "Main loop exited. Final stats: frames=%u, keyframes=%u, dropped=%u (keyframes=%u), "
+                     "size avg=%zu min=%zu max=%zu bytes",
+              stats.total_frames, stats.keyframes, stats.dropped_frames, stats.dropped_keyframes,
+              avg_frame_size, stats.min_frame_size == SIZE_MAX ? 0 : stats.min_frame_size,
+              stats.max_frame_size);
     kill_stream(&h);
-    return ret;
+    return 0;
 }
 
 int main(int argc, char *argv[]) {

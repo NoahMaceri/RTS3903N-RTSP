@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <cmath>
 #include <pthread.h>
+#include <atomic>
 
 #include <rtsvideo.h>
 
@@ -27,6 +28,7 @@ private:
     pthread_t thread;
     zlog_category_t* vid_c;
     uint8_t current_ir_mode = RTS_ISP_IR_DAY; // initial state
+    std::atomic<bool> running{false};  // Thread-safe running flag
 
     struct ir_ctrl_state {
         double ema_alpha;
@@ -37,7 +39,6 @@ private:
         uint32_t cutoff;
         bool invert;
         zlog_category_t* vid_c;
-        bool running;
     } st{};
 
     uint16_t get_adc_value(uint8_t channel) const;

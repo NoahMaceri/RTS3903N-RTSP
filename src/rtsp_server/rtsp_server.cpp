@@ -109,8 +109,8 @@ int main(int argc, char *argv[]) {
                                                             cfg["rtsp"]["name"].get<std::string>().c_str(),
                                                             cfg["rtsp"]["name"].get<std::string>().c_str(),
                                                             "Session streamed by rRTSPServer");
-    OutPacketBuffer::maxSize = 500000; // safe maximum
-    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, False));;
+    OutPacketBuffer::maxSize = 2000000; // safe maximum
+    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, True));;
     rtspServer->addServerMediaSession(sms);
     zlog_info(c, "ServerMediaSession added");
     char* url = rtspServer->rtspURL(sms);
