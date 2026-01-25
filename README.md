@@ -1,4 +1,4 @@
-# Yi-RTS3903N RTSP Server
+# Realtek RTS3903N based IP camera RTSP server
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Platform](https://img.shields.io/badge/platform-MIPS-orange.svg)]()
