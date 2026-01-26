@@ -17,8 +17,135 @@
  */
 
 #include "imager_streamer.h"
+#include <mutex>
+#include <condition_variable>
+#include <vector>
+#include <netinet/in.h>
 
 static std::atomic<bool> g_fifo_broken(false);
+
+// Snapshot handling globals
+static int g_mjpeg_chn = -1;
+static std::mutex g_snapshot_mutex;
+static std::condition_variable g_snapshot_cv;
+static std::vector<uint8_t> g_snapshot_data;
+static std::atomic<bool> g_snapshot_ready(false);
+static std::atomic<bool> g_snapshot_requested(false);
+static int g_snapshot_socket = -1;
+
+// Callback for MJPEG snapshot capture
+static void snapshot_callback(void *priv, rts_av_profile *profile, rts_av_buffer *buffer) {
+    if (buffer && buffer->bytesused > 0) {
+        std::lock_guard<std::mutex> lock(g_snapshot_mutex);
+        g_snapshot_data.assign(
+            static_cast<uint8_t*>(buffer->vm_addr),
+            static_cast<uint8_t*>(buffer->vm_addr) + buffer->bytesused
+        );
+        g_snapshot_ready.store(true);
+        g_snapshot_cv.notify_all();
+        zlog_debug(vid_c, "Snapshot captured: %u bytes", buffer->bytesused);
+    }
+}
+
+// Thread to handle snapshot socket requests
+static void *snapshot_server_thread(void *arg) {
+    int server_fd = -1;
+    sockaddr_un addr{};
+
+    // Remove old socket file if exists
+    unlink(SNAPSHOT_SOCKET);
+
+    // Create Unix domain socket
+    server_fd = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (server_fd < 0) {
+        zlog_error(vid_c, "Failed to create snapshot socket: %s", strerror(errno));
+        return nullptr;
+    }
+
+    memset(&addr, 0, sizeof(addr));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, SNAPSHOT_SOCKET, sizeof(addr.sun_path) - 1);
+
+    if (bind(server_fd, reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr)) < 0) {
+        zlog_error(vid_c, "Failed to bind snapshot socket: %s", strerror(errno));
+        close(server_fd);
+        return nullptr;
+    }
+
+    if (listen(server_fd, 5) < 0) {
+        zlog_error(vid_c, "Failed to listen on snapshot socket: %s", strerror(errno));
+        close(server_fd);
+        return nullptr;
+    }
+
+    // Make socket non-blocking for clean shutdown
+    fcntl(server_fd, F_SETFL, O_NONBLOCK);
+    g_snapshot_socket = server_fd;
+
+    zlog_info(vid_c, "Snapshot server listening on %s", SNAPSHOT_SOCKET);
+
+    while (!g_exit.load()) {
+        struct pollfd pfd = {server_fd, POLLIN, 0};
+        int ret = poll(&pfd, 1, 500);  // 500ms timeout
+
+        if (ret <= 0) continue;
+
+        int client_fd = accept(server_fd, nullptr, nullptr);
+        if (client_fd < 0) continue;
+
+        zlog_debug(vid_c, "Snapshot client connected");
+
+        // Request a snapshot via callback
+        if (g_mjpeg_chn >= 0) {
+            g_snapshot_ready.store(false);
+            g_snapshot_requested.store(true);
+
+            rts_av_callback cb{};
+            cb.func = snapshot_callback;
+            cb.start = 0;
+            cb.times = 1;
+            cb.interval = 0;
+            cb.type = RTS_AV_CB_TYPE_ASYNC;
+            cb.priv = nullptr;
+
+            ret = rts_av_set_callback(g_mjpeg_chn, &cb, 0);
+            if (ret) {
+                zlog_error(vid_c, "Failed to set snapshot callback: %d", ret);
+                close(client_fd);
+                continue;
+            }
+
+            // Wait for snapshot with timeout
+            {
+                std::unique_lock<std::mutex> lock(g_snapshot_mutex);
+                if (g_snapshot_cv.wait_for(lock, std::chrono::seconds(5),
+                    []{ return g_snapshot_ready.load(); })) {
+                    // Send snapshot size first (4 bytes, network order)
+                    uint32_t size = htonl(g_snapshot_data.size());
+                    write(client_fd, &size, sizeof(size));
+                    // Send snapshot data
+                    write(client_fd, g_snapshot_data.data(), g_snapshot_data.size());
+                    zlog_debug(vid_c, "Sent snapshot: %zu bytes", g_snapshot_data.size());
+                } else {
+                    zlog_warn(vid_c, "Snapshot timeout");
+                    uint32_t size = 0;
+                    write(client_fd, &size, sizeof(size));
+                }
+            }
+        } else {
+            uint32_t size = 0;
+            write(client_fd, &size, sizeof(size));
+        }
+
+        close(client_fd);
+        g_snapshot_requested.store(false);
+    }
+
+    close(server_fd);
+    unlink(SNAPSHOT_SOCKET);
+    zlog_info(vid_c, "Snapshot server stopped");
+    return nullptr;
+}
 
 static void terminate() {
     zlog_info(vid_c, "Termination signal received, exiting...");
@@ -78,7 +205,7 @@ void set_fps(const uint8_t fps) {
 
 
 void *unlock_fifo_threadfn(void *data) {
-    const char *fifo_name = static_cast<const char *>(data);
+    auto fifo_name = static_cast<const char *>(data);
     unsigned char buffer_fifo[1024];
     // Open for reading with O_NONBLOCK to prevent blocking forever if writer dies
     const int fd = open(fifo_name, O_RDONLY | O_NONBLOCK);
@@ -100,20 +227,20 @@ void *unlock_fifo_threadfn(void *data) {
 static ssize_t write_to_fifo(int fd, const void *buf, size_t count) {
     if (fd < 0) return -1;
 
-    const uint8_t *data = static_cast<const uint8_t *>(buf);
+    const auto *data = static_cast<const uint8_t *>(buf);
     size_t remaining = count;
     size_t total_written = 0;
 
     // Calculate deadline for entire frame write (use longer timeout for large frames)
     // Allow ~500ms total for frame write to handle large I-frames
     const int frame_timeout_ms = 500;
-    struct timespec start_time;
+    timespec start_time{};
     clock_gettime(CLOCK_MONOTONIC, &start_time);
     const int64_t deadline_ms = (start_time.tv_sec * 1000) + (start_time.tv_nsec / 1000000) + frame_timeout_ms;
 
     while (remaining > 0) {
         // Calculate remaining timeout
-        struct timespec now;
+        timespec now{};
         clock_gettime(CLOCK_MONOTONIC, &now);
         int64_t now_ms = (now.tv_sec * 1000) + (now.tv_nsec / 1000000);
         int timeout_remaining = static_cast<int>(deadline_ms - now_ms);
@@ -126,12 +253,12 @@ static ssize_t write_to_fifo(int fd, const void *buf, size_t count) {
         }
 
         // Use poll to wait for write availability
-        struct pollfd pfd;
+        pollfd pfd{};
         pfd.fd = fd;
         pfd.events = POLLOUT;
         pfd.revents = 0;
 
-        int poll_ret = poll(&pfd, 1, timeout_remaining);
+        const int poll_ret = poll(&pfd, 1, timeout_remaining);
 
         if (poll_ret < 0) {
             if (errno == EINTR) continue; // Interrupted, retry
@@ -151,7 +278,7 @@ static ssize_t write_to_fifo(int fd, const void *buf, size_t count) {
         }
 
         if (pfd.revents & POLLOUT) {
-            ssize_t written = write(fd, data + total_written, remaining);
+            const ssize_t written = write(fd, data + total_written, remaining);
             if (written < 0) {
                 if (errno == EAGAIN || errno == EWOULDBLOCK) {
                     // Would block, try again after next poll
@@ -199,7 +326,7 @@ static int create_fifo(const char *path) {
     }
 
     // Increase pipe buffer size to handle large I-frames without multiple write cycles
-    int pipe_size = fcntl(fd, F_SETPIPE_SZ, FIFO_BUFFER_SIZE);
+    const int pipe_size = fcntl(fd, F_SETPIPE_SZ, FIFO_BUFFER_SIZE);
     if (pipe_size < 0) {
         zlog_warn(vid_c, "Failed to set pipe buffer size: %s (continuing with default)", strerror(errno));
     } else {
@@ -258,6 +385,19 @@ void kill_stream(handlers *h) {
         rts_av_unbind(h->isp, h->h264);
         zlog_debug(vid_c, "ISP and H264 channels unbound");
     }
+    if (h->isp >= 0 && h->mjpeg >= 0) {
+        zlog_debug(vid_c, "Unbinding ISP and MJPEG channels");
+        rts_av_unbind(h->isp, h->mjpeg);
+        zlog_debug(vid_c, "ISP and MJPEG channels unbound");
+    }
+    if (h->mjpeg >= 0) {
+        zlog_debug(vid_c, "Disabling and destroying MJPEG channel");
+        rts_av_disable_chn(h->mjpeg);
+        rts_av_destroy_chn(h->mjpeg);
+        h->mjpeg = -1;
+        g_mjpeg_chn = -1;
+        zlog_debug(vid_c, "MJPEG channel destroyed");
+    }
     if (h->h264 >= 0) {
         zlog_debug(vid_c, "Stopping H264 receive and destroying channel");
         rts_av_disable_chn(h->h264);
@@ -271,6 +411,12 @@ void kill_stream(handlers *h) {
         rts_av_destroy_chn(h->isp);
         h->isp = -1;
         zlog_debug(vid_c, "ISP channel stopped and destroyed");
+    }
+    // Close snapshot socket
+    if (g_snapshot_socket >= 0) {
+        close(g_snapshot_socket);
+        g_snapshot_socket = -1;
+        unlink(SNAPSHOT_SOCKET);
     }
     zlog_info(vid_c, "Stopped and destroyed RTS channels");
 
@@ -299,6 +445,7 @@ int start_stream(nlohmann::json &cfg) {
     handlers h = {
         .isp = -1,
         .h264 = -1,
+        .mjpeg = -1,
         .fifo_fd = -1,
         .ir_control = nullptr
     };
@@ -344,6 +491,18 @@ int start_stream(nlohmann::json &cfg) {
     }
     zlog_debug(vid_c, "H264 channel created: chn %d, level %d, qp %d, bps %d, gop %d, videostab %d, rotation %d", h.h264, h264_attr.level, h264_attr.qp, h264_attr.bps, h264_attr.gop, h264_attr.videostab, h264_attr.rotation);
 
+    // Create MJPEG encoder for snapshots
+    struct rts_jpgenc_attr mjpeg_attr{};
+    mjpeg_attr.rotation = RTS_AV_ROTATION_0;
+    h.mjpeg = rts_av_create_mjpeg_chn(&mjpeg_attr);
+    if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.mjpeg))) {
+        zlog_warn(vid_c, "Failed to create MJPEG channel with error %d - snapshots disabled", h.mjpeg);
+        h.mjpeg = -1;
+    } else {
+        zlog_debug(vid_c, "MJPEG channel created: chn %d", h.mjpeg);
+        g_mjpeg_chn = h.mjpeg;
+    }
+
     // use nlohmann::json to load ISP settings
     if (cfg.contains("isp")) {
         for (auto &json_item: cfg["isp"].items()) {
@@ -366,6 +525,17 @@ int start_stream(nlohmann::json &cfg) {
         return -1;
     }
 
+    // Bind MJPEG encoder to ISP for snapshots
+    if (h.mjpeg >= 0) {
+        ret = rts_av_bind(h.isp, h.mjpeg);
+        if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
+            zlog_warn(vid_c, "Failed to bind ISP & MJPEG encoder with error %d - snapshots disabled", ret);
+            rts_av_destroy_chn(h.mjpeg);
+            h.mjpeg = -1;
+            g_mjpeg_chn = -1;
+        }
+    }
+
     ret = rts_av_enable_chn(h.isp);
     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
         zlog_fatal(vid_c, "Failed to enable ISP channel with error %d", ret);
@@ -378,6 +548,20 @@ int start_stream(nlohmann::json &cfg) {
         zlog_fatal(vid_c, "Failed to enable H264 channel with error %d", ret);
         kill_stream(&h);
         return -1;
+    }
+
+    // Enable MJPEG channel for snapshots
+    if (h.mjpeg >= 0) {
+        ret = rts_av_enable_chn(h.mjpeg);
+        if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
+            zlog_warn(vid_c, "Failed to enable MJPEG channel with error %d - snapshots disabled", ret);
+            rts_av_unbind(h.isp, h.mjpeg);
+            rts_av_destroy_chn(h.mjpeg);
+            h.mjpeg = -1;
+            g_mjpeg_chn = -1;
+        } else {
+            zlog_info(vid_c, "MJPEG encoder enabled for snapshots");
+        }
     }
 
     // H264 control can ONLY be applied after the channel is enabled
@@ -416,6 +600,17 @@ int start_stream(nlohmann::json &cfg) {
         zlog_fatal(vid_c, "Failed to start IR control thread");
         kill_stream(&h);
         return -1;
+    }
+
+    // Start snapshot server thread if MJPEG is available
+    pthread_t snapshot_thread;
+    if (h.mjpeg >= 0) {
+        if (pthread_create(&snapshot_thread, nullptr, snapshot_server_thread, nullptr) != 0) {
+            zlog_warn(vid_c, "Failed to start snapshot server thread");
+        } else {
+            pthread_detach(snapshot_thread);
+            zlog_info(vid_c, "Snapshot server started");
+        }
     }
 
     zlog_info(vid_c, "Starting main loop");

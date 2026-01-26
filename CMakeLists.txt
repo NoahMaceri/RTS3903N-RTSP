@@ -33,6 +33,7 @@ add_subdirectory(src/isp_ctrl)
 add_subdirectory(src/isp_tool)
 add_subdirectory(src/rtsp_server)
 add_subdirectory(src/ptz_tool)
+add_subdirectory(src/snapshot_server)
 
 # pcre2 for lighttpd
 set(BUILD_SHARED_LIBS ON CACHE BOOL "Build PCRE2 as shared libraries")
@@ -96,6 +97,18 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_BINARY_DIR}/src/imager_streamer/imager_streamer
             ${CMAKE_BINARY_DIR}/out
+        # -- isp_ctrl (for CGI) --
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/src/isp_ctrl/isp_ctrl
+            ${CMAKE_BINARY_DIR}/out
+        # -- snapshot (for CGI) --
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/src/snapshot_server/snapshot
+            ${CMAKE_BINARY_DIR}/out
+        # -- lighttpd (HTTP server) --
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/src/lighttpd
+            ${CMAKE_BINARY_DIR}/out
         # -- sd_payload --
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_SOURCE_DIR}/sd_payload/
@@ -108,9 +121,9 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
 
         # Print a message indicating the package is ready
         COMMAND ${CMAKE_COMMAND} -E echo "Package created at ${CMAKE_BINARY_DIR}/out/${PROJECT_NAME}-${PROJECT_VERSION}.tar"
-        DEPENDS rtsp_server imager_streamer
+        DEPENDS rtsp_server imager_streamer isp_ctrl snapshot lighttpd
 )
 
 add_custom_target(${PROJECT_NAME}_tools COMMAND
-    DEPENDS rtsp_server imager_streamer isp_tool ptz_tool
+    DEPENDS rtsp_server imager_streamer isp_tool ptz_tool snapshot isp_ctrl
 )

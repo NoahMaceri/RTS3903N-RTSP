@@ -1,351 +1,608 @@
-<!doctype html>
-<html data-bs-theme="dark" lang="en">
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
-<script crossorigin="anonymous" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>RTS3903N - ISP Controls</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RTS3903N Camera Control</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        :root {
+            --pico-font-size: 16px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--pico-muted-border-color);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            background: var(--pico-primary-background);
+            color: var(--pico-primary-inverse);
+        }
+
+        .status-badge.warning {
+            background: #f0ad4e;
+            color: #000;
+        }
+
+        .status-badge.success {
+            background: #5cb85c;
+        }
+
+        .preview-container {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--pico-card-background-color);
+            border-radius: var(--pico-border-radius);
+            padding: 1rem;
+        }
+
+        .preview-container img {
+            max-width: 100%;
+            border-radius: var(--pico-border-radius);
+        }
+
+        .preview-placeholder {
+            padding: 4rem 2rem;
+            color: var(--pico-muted-color);
+            border: 2px dashed var(--pico-muted-border-color);
+            border-radius: var(--pico-border-radius);
+        }
+
+        details {
+            margin-bottom: 1rem;
+        }
+
+        details summary {
+            font-weight: 600;
+        }
+
+        .setting-row {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--pico-muted-border-color);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 500;
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .setting-control input[type="range"] {
+            flex: 1;
+            margin: 0;
+        }
+
+        .setting-control .value-display {
+            min-width: 3rem;
+            text-align: right;
+            font-family: monospace;
+        }
+
+        .setting-control select {
+            margin: 0;
+            width: 100%;
+        }
+
+        /* Toggle switch styling */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--pico-muted-border-color);
+            transition: 0.3s;
+            border-radius: 28px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background-color: var(--pico-primary);
+        }
+
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(22px);
+        }
+
+        .unsaved-warning {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            background: #f0ad4e;
+            color: #000;
+            text-align: center;
+            display: none;
+            z-index: 100;
+        }
+
+        .unsaved-warning.visible {
+            display: block;
+        }
+
+        .unsaved-warning button {
+            margin-left: 1rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .toast {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: var(--pico-border-radius);
+            background: var(--pico-primary);
+            color: var(--pico-primary-inverse);
+            z-index: 1000;
+            display: none;
+        }
+
+        .toast.error {
+            background: #d9534f;
+        }
+
+        .toast.visible {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .setting-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<header class="d-flex justify-content-center py-3"> <ul class="nav nav-pills"> <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li> <li class="nav-item"><a href="#" class="nav-link">Features</a></li> <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li> <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li> <li class="nav-item"><a href="#" class="nav-link">About</a></li> </ul> </header>
-<div class="card">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <strong>RTS3903N - ISP Parameters</strong>
-        <button class="btn btn-secondary btn-sm" id="refreshBtn">Refresh</button>
-    </div>
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover table-sm mb-0">
-                <thead class="table-dark">
-                <tr>
-                    <th scope="col">Parameter</th>
-                    <th scope="col">Value</th>
-                    <th scope="col">Update</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>Noise reduction level</td>
-                    <td>
-                        <input class="form-control" data-key="noise_reduction" id="isp-noise_reduction" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('noise_reduction')">Update
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Lens distortion correction</td>
-                    <td>
-                        <input aria-label="ldc" class="form-check-input" data-key="ldc" id="isp-ldc" type="checkbox">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('ldc')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Detail enhancement level</td>
-                    <td>
-                        <input class="form-control" data-key="detail_enhancement" id="isp-detail_enhancement" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('detail_enhancement')">
-                            Update
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3D noise reduction</td>
-                    <td>
-                        <input aria-label="three_dnr" class="form-check-input" data-key="three_dnr" id="isp-three_dnr" type="checkbox">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('three_dnr')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Mirror</td>
-                    <td>
-                        <input aria-label="mirror" class="form-check-input" data-key="mirror" id="isp-mirror" type="checkbox">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('mirror')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Flip</td>
-                    <td>
-                        <input aria-label="flip" class="form-check-input" data-key="flip" id="isp-flip" type="checkbox">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('flip')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>In/Outdoor more</td>
-                    <td>
-                        <input class="form-control" data-key="in_out_door_mode" id="isp-in_out_door_mode" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('in_out_door_mode')">Update
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Dehaze</td>
-                    <td>
-                        <input aria-label="dehaze" class="form-check-input" data-key="dehaze" id="isp-dehaze" type="checkbox">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('dehaze')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Brightness</td>
-                    <td>
-                        <input class="form-control" data-key="brightness" id="isp-brightness" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('brightness')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Contrast</td>
-                    <td><input class="form-control" data-key="contrast" id="isp-contrast" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('contrast')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Hue</td>
-                    <td><input class="form-control" data-key="hue" id="isp-hue" type="number" value=""></td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('hue')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Saturation</td>
-                    <td>
-                        <input class="form-control" data-key="saturation" id="isp-saturation" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('saturation')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Sharpness</td>
-                    <td><input class="form-control" data-key="sharpness" id="isp-sharpness" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('sharpness')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gamma</td>
-                    <td><input class="form-control" data-key="gamma" id="isp-gamma" type="number" value=""></td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('gamma')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Backlight compensation</td>
-                    <td>
-                        <input aria-label="backlight_compensation" class="form-check-input" data-key="backlight_compensation" id="isp-backlight_compensation" type="checkbox">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('backlight_compensation')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Power line frequency</td>
-                    <td>
-                        <input class="form-control" data-key="power_line_frequency" id="isp-power_line_frequency" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('power_line_frequency')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Exposure mode</td>
-                    <td>
-                        <input class="form-control" data-key="exposure_mode" id="isp-exposure_mode" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('exposure_mode')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Exposure priority</td>
-                    <td>
-                        <input class="form-control" data-key="exposure_priority" id="isp-exposure_priority" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('exposure_priority')">Update
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Zoom</td>
-                    <td><input class="form-control" data-key="zoom" id="isp-zoom" type="number" value=""></td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('zoom')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Wide dynamic range mode</td>
-                    <td><input class="form-control" data-key="wdr_mode" id="isp-wdr_mode" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wdr_mode')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Wide dynamic range level</td>
-                    <td><input class="form-control" data-key="wdr_level" id="isp-wdr_level" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wdr_level')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>White balance - Green component</td>
-                    <td><input class="form-control" data-key="wb_green" id="isp-wb_green" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wb_green')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>White balance - Blue component</td>
-                    <td><input class="form-control" data-key="wb_blue" id="isp-wb_blue" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wb_blue')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>White balance - Red component</td>
-                    <td><input class="form-control" data-key="wb_red" id="isp-wb_red" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('wb_red')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Smart IR mode</td>
-                    <td>
-                        <input class="form-control" data-key="smart_ir_mode" id="isp-smart_ir_mode" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('smart_ir_mode')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Smart IR - Manual level</td>
-                    <td>
-                        <input class="form-control" data-key="smart_ir_manual_level" id="isp-smart_ir_manual_level" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('smart_ir_manual_level')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Gray mode</td>
-                    <td><input class="form-control" data-key="gray_mode" id="isp-gray_mode" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('gray_mode')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>IR mode</td>
-                    <td><input class="form-control" data-key="ir_mode" id="isp-ir_mode" type="number" value=""></td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('ir_mode')">Update</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Auto white balance mode</td>
-                    <td><input class="form-control" data-key="awb_mode" id="isp-awb_mode" type="number" value="">
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="updateSetting('awb_mode')">Update</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+    <main class="container">
+        <div class="header">
+            <h1>RTS3903N Camera Control</h1>
+            <span class="status-badge" id="statusBadge">Loading...</span>
         </div>
-    </div>
-</div>
 
-<script>
-    // Example helper to read current settings as key->value map
-    function readIspSettings() {
-        const elems = document.querySelectorAll('[data-key^=""]');
-        const out = {};
-        elems.forEach(el => {
-            const key = el.getAttribute('data-key');
-            if (el.type === 'checkbox') {
-                out[key] = el.checked ? 1 : 0;
+        <div class="actions">
+            <button id="refreshBtn" class="outline">Refresh</button>
+            <button id="saveBtn" class="primary" disabled>Save All</button>
+            <button id="resetBtn" class="outline secondary">Reset to Defaults</button>
+        </div>
+
+        <div class="preview-container">
+            <div class="preview-placeholder" id="previewPlaceholder">
+                Live Preview<br>
+                <small>Loading snapshot...</small>
+            </div>
+            <img id="previewImage" style="display: none;" alt="Live Preview">
+        </div>
+
+        <div id="settingsContainer">
+            <!-- Settings will be dynamically generated here -->
+        </div>
+    </main>
+
+    <div class="unsaved-warning" id="unsavedWarning">
+        You have unsaved changes
+        <button onclick="saveSettings()" class="primary">Save Now</button>
+        <button onclick="discardChanges()" class="outline secondary">Discard</button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // State
+        let parameters = {};
+        let originalValues = {};
+        let isDirty = false;
+        let snapshotAvailable = false;
+        let snapshotInterval = null;
+
+        // Group display names
+        const groupNames = {
+            'image_quality': 'Image Quality',
+            'exposure': 'Exposure',
+            'white_balance': 'White Balance',
+            'day_night': 'Day/Night Mode',
+            'orientation': 'Orientation',
+            'other': 'Other'
+        };
+
+        // Group order
+        const groupOrder = ['image_quality', 'exposure', 'white_balance', 'day_night', 'orientation', 'other'];
+
+        // API calls
+        async function apiCall(command, data = {}) {
+            const response = await fetch('/cgi-bin/isp_ctrl', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ command, ...data })
+            });
+            return response.json();
+        }
+
+        // Load parameters
+        async function loadParameters() {
+            document.body.classList.add('loading');
+            document.getElementById('statusBadge').textContent = 'Loading...';
+
+            try {
+                const result = await apiCall('GET_PARAMETER_INFO');
+                if (result.status === 'success') {
+                    parameters = result.parameters;
+                    originalValues = {};
+                    for (const [key, param] of Object.entries(parameters)) {
+                        originalValues[key] = param.current;
+                    }
+                    renderSettings();
+                    document.getElementById('statusBadge').textContent = 'Connected';
+                    document.getElementById('statusBadge').className = 'status-badge success';
+                } else {
+                    showToast('Failed to load parameters: ' + result.message, true);
+                    document.getElementById('statusBadge').textContent = 'Error';
+                    document.getElementById('statusBadge').className = 'status-badge warning';
+                }
+            } catch (e) {
+                showToast('Connection error: ' + e.message, true);
+                document.getElementById('statusBadge').textContent = 'Offline';
+                document.getElementById('statusBadge').className = 'status-badge warning';
+            }
+
+            document.body.classList.remove('loading');
+        }
+
+        // Render settings UI
+        function renderSettings() {
+            const container = document.getElementById('settingsContainer');
+            container.innerHTML = '';
+
+            // Group parameters
+            const groups = {};
+            for (const [key, param] of Object.entries(parameters)) {
+                const group = param.group || 'other';
+                if (!groups[group]) groups[group] = [];
+                groups[group].push({ key, ...param });
+            }
+
+            // Render each group
+            for (const groupKey of groupOrder) {
+                if (!groups[groupKey] || groups[groupKey].length === 0) continue;
+
+                const details = document.createElement('details');
+                details.open = true;
+
+                const summary = document.createElement('summary');
+                summary.textContent = groupNames[groupKey] || groupKey;
+                details.appendChild(summary);
+
+                const content = document.createElement('div');
+                for (const param of groups[groupKey]) {
+                    content.appendChild(createSettingRow(param));
+                }
+                details.appendChild(content);
+
+                container.appendChild(details);
+            }
+        }
+
+        // Create a setting row
+        function createSettingRow(param) {
+            const row = document.createElement('div');
+            row.className = 'setting-row';
+
+            const label = document.createElement('div');
+            label.className = 'setting-label';
+            label.textContent = param.display_name;
+            row.appendChild(label);
+
+            const control = document.createElement('div');
+            control.className = 'setting-control';
+
+            if (param.type === 'boolean') {
+                control.appendChild(createToggle(param));
+            } else if (param.type === 'enum') {
+                control.appendChild(createSelect(param));
             } else {
-                out[key] = el.value;
+                const slider = createSlider(param);
+                control.appendChild(slider.input);
+                control.appendChild(slider.display);
+            }
+
+            row.appendChild(control);
+            return row;
+        }
+
+        // Create toggle switch
+        function createToggle(param) {
+            const label = document.createElement('label');
+            label.className = 'toggle-switch';
+
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.id = 'param-' + param.key;
+            input.checked = param.current === 1;
+            input.addEventListener('change', () => {
+                setParameter(param.key, input.checked ? 1 : 0);
+            });
+
+            const slider = document.createElement('span');
+            slider.className = 'toggle-slider';
+
+            label.appendChild(input);
+            label.appendChild(slider);
+            return label;
+        }
+
+        // Create select dropdown
+        function createSelect(param) {
+            const select = document.createElement('select');
+            select.id = 'param-' + param.key;
+
+            for (const option of param.options) {
+                const opt = document.createElement('option');
+                opt.value = option.value;
+                opt.textContent = option.label;
+                if (option.value === param.current) opt.selected = true;
+                select.appendChild(opt);
+            }
+
+            select.addEventListener('change', () => {
+                setParameter(param.key, parseInt(select.value));
+            });
+
+            return select;
+        }
+
+        // Create slider
+        function createSlider(param) {
+            const input = document.createElement('input');
+            input.type = 'range';
+            input.id = 'param-' + param.key;
+            input.min = param.min;
+            input.max = param.max;
+            input.step = param.step;
+            input.value = param.current;
+
+            const display = document.createElement('span');
+            display.className = 'value-display';
+            display.textContent = param.current;
+
+            input.addEventListener('input', () => {
+                display.textContent = input.value;
+            });
+
+            input.addEventListener('change', () => {
+                setParameter(param.key, parseInt(input.value));
+            });
+
+            return { input, display };
+        }
+
+        // Set a parameter (apply to ISP immediately)
+        async function setParameter(key, value) {
+            try {
+                const result = await apiCall('SET_PARAMETER', {
+                    param_name: key,
+                    param_value: value
+                });
+
+                if (result.status === 'success') {
+                    parameters[key].current = value;
+                    checkDirty();
+                } else {
+                    showToast('Failed to set ' + key + ': ' + result.message, true);
+                    // Revert UI
+                    revertParameter(key);
+                }
+            } catch (e) {
+                showToast('Error: ' + e.message, true);
+                revertParameter(key);
+            }
+        }
+
+        // Revert a parameter UI to its current value
+        function revertParameter(key) {
+            const el = document.getElementById('param-' + key);
+            if (!el) return;
+
+            const param = parameters[key];
+            if (param.type === 'boolean') {
+                el.checked = param.current === 1;
+            } else if (param.type === 'enum') {
+                el.value = param.current;
+            } else {
+                el.value = param.current;
+                el.nextElementSibling.textContent = param.current;
+            }
+        }
+
+        // Check if there are unsaved changes
+        function checkDirty() {
+            isDirty = false;
+            for (const [key, param] of Object.entries(parameters)) {
+                if (param.current !== originalValues[key]) {
+                    isDirty = true;
+                    break;
+                }
+            }
+
+            document.getElementById('saveBtn').disabled = !isDirty;
+            document.getElementById('unsavedWarning').classList.toggle('visible', isDirty);
+        }
+
+        // Save settings to file
+        async function saveSettings() {
+            document.body.classList.add('loading');
+
+            try {
+                const result = await apiCall('SAVE_SETTINGS');
+                if (result.status === 'success') {
+                    // Update original values
+                    for (const [key, param] of Object.entries(parameters)) {
+                        originalValues[key] = param.current;
+                    }
+                    isDirty = false;
+                    checkDirty();
+                    showToast('Settings saved successfully!');
+                } else {
+                    showToast('Failed to save: ' + result.message, true);
+                }
+            } catch (e) {
+                showToast('Error: ' + e.message, true);
+            }
+
+            document.body.classList.remove('loading');
+        }
+
+        // Discard changes
+        function discardChanges() {
+            for (const [key, value] of Object.entries(originalValues)) {
+                if (parameters[key].current !== value) {
+                    setParameter(key, value);
+                }
+            }
+        }
+
+        // Reset to defaults
+        async function resetToDefaults() {
+            if (!confirm('Reset all settings to factory defaults?')) return;
+
+            document.body.classList.add('loading');
+
+            const params = {};
+            for (const [key, param] of Object.entries(parameters)) {
+                params[key] = param.default;
+            }
+
+            try {
+                const result = await apiCall('SET_PARAMETERS', { parameters: params });
+                if (result.status === 'success' || result.status === 'partial') {
+                    showToast('Settings reset to defaults');
+                    await loadParameters();
+                } else {
+                    showToast('Failed to reset: ' + result.message, true);
+                }
+            } catch (e) {
+                showToast('Error: ' + e.message, true);
+            }
+
+            document.body.classList.remove('loading');
+        }
+
+        // Show toast notification
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast visible' + (isError ? ' error' : '');
+            setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 3000);
+        }
+
+        // Check for snapshot endpoint
+        async function checkSnapshot() {
+            try {
+                const response = await fetch('/cgi-bin/snapshot', { method: 'HEAD' });
+                if (response.ok) {
+                    snapshotAvailable = true;
+                    document.getElementById('previewPlaceholder').style.display = 'none';
+                    document.getElementById('previewImage').style.display = 'block';
+                    startSnapshotRefresh();
+                }
+            } catch (e) {
+                // Snapshot not available
+            }
+        }
+
+        // Start snapshot refresh
+        function startSnapshotRefresh() {
+            if (snapshotInterval) clearInterval(snapshotInterval);
+            refreshSnapshot();
+            snapshotInterval = setInterval(refreshSnapshot, 2000);
+        }
+
+        // Refresh snapshot
+        function refreshSnapshot() {
+            if (!snapshotAvailable) return;
+            const img = document.getElementById('previewImage');
+            img.src = '/cgi-bin/snapshot?' + Date.now();
+        }
+
+        // Warn on page unload if dirty
+        window.addEventListener('beforeunload', (e) => {
+            if (isDirty) {
+                e.preventDefault();
+                e.returnValue = '';
             }
         });
-        return out;
-    }
 
-    function updateSetting(key) {
-        const elem = document.querySelector(`[data-key="${key}"]`);
-        let value;
-        if (elem.type === 'checkbox') {
-            value = elem.checked ? 1 : 0;
-        } else {
-            value = elem.value;
-        }
-        // ensure value is an integer
-        value = parseInt(value, 10);
-        // Call ./isp_adjustment <parameter> <value> to update the setting
-        fetch('/cgi-bin/isp_ctrl', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({command: "SET_PARAMETER", param_name: key, param_value: value})
-        })
-            .then(response => response.json())
-            .then(data => console.log('Response:', data))
-            .catch(error => console.error('Error:', error));
-    }
+        // Event listeners
+        document.getElementById('refreshBtn').addEventListener('click', loadParameters);
+        document.getElementById('saveBtn').addEventListener('click', saveSettings);
+        document.getElementById('resetBtn').addEventListener('click', resetToDefaults);
 
-    document.getElementById('refreshBtn').addEventListener('click', () => {
-        // Fetch updated settings from the server using JSON-READ command
-        // will return JSON like
-        // {"parameters":"{\"\":1349,\"awb_mode\":1,\"blc\":1,\"brightness\":1,\"contrast\":50,\"dehaze\":1,\"detail_enhancement\":4,\"exposure_mode\":0,\"exposure_priority\":0,\"flip\":1,\"gamma\":300,\"gray_mode\":1,\"hue\":0,\"in_out_door_mode\":2,\"ir_mode\":1,\"ldc\":1,\"mirror\":1,\"noise_reduction\":4,\"pwr_frequency\":1,\"saturation\":50,\"sharpness\":50,\"smart_ir_manual_level\":50,\"smart_ir_mode\":0,\"three_dnr\":1,\"wb_blue\":256,\"wb_green\":256,\"wb_red\":256,\"wdr_level\":40,\"wdr_mode\":0,\"zoom\":0}","status":"success"}
-        fetch('/cgi-bin/isp_ctrl', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({command: "READ_PARAMETERS"})
-        })
-            .then(response => response.json())
-            .then(data => {
-                const params = JSON.parse(data.parameters);
-                for (const [key, value] of Object.entries(params)) {
-                    const elem = document.querySelector(`[data-key="${key}"]`);
-                    if (elem) {
-                        if (elem.type === 'checkbox') {
-                            elem.checked = value === 1;
-                        } else {
-                            elem.value = value;
-                        }
-                    }
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    });
-</script>
+        // Initialize
+        loadParameters();
+        checkSnapshot();
+    </script>
 </body>
 </html>

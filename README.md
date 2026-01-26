@@ -13,9 +13,12 @@ A custom RTSP streaming server for Realtek RTS3903N-based IP cameras (including 
 ## Features
 
 - **H.264 RTSP Streaming** — Standard `rtsp://` URL compatible with VLC, FFmpeg, NVRs, and home automation systems
+- **Web Control Interface** — Browser-based ISP parameter adjustment with live preview
+- **JPEG Snapshots** — HTTP endpoint for capturing still images
 - **Automatic Day/Night Switching** — IR cut filter control based on ambient light sensors
 - **Pan-Tilt-Zoom Control** — PTZ motor support via `/dev/ssp`
-- **Web Control Interface** — Browser-based ISP parameter adjustment (in development)
+  - This control has been implemented and tested on a Victure SC210. Other models may require adjustments.
+  - Control is via telnet for now, but web interface integration is planned.
 - **Configurable Parameters** — Resolution, bitrate, FPS, ISP settings via JSON config
 - **Optional Authentication** — Username/password protection for RTSP stream
 - **Telnet Access** — Remote shell access on port 23
@@ -51,72 +54,60 @@ This creates `RTS3903N-RTSP-X.X.X.tar` containing all binaries and configuration
 
 1. Extract the package to your SD card root
 2. Edit `settings.json` with your preferences
-3. Configure WiFi in `wifi/wpa_supplicant.conf`
+3. Configure WiFi in `Factory/wpa_supplicant.conf`
 4. Insert SD card into camera and power on
-5. Wait ~60 seconds for boot (includes PTZ calibration)
+5. Wait ~60 seconds for boot
 6. Access stream at `rtsp://CAMERA_IP:554/stream`
+7. Access web interface at `http://CAMERA_IP/`
+
+---
+
+## Web Interface
+
+The camera includes a modern web control interface accessible at `http://CAMERA_IP/`.
+
+![Web Interface](docs/webui.png)
+
+### Features
+
+- **Live Preview** — Auto-refreshing JPEG snapshots
+- **Save All** — Batch save changes to `settings.json` with unsaved changes warning
+
+### API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/cgi-bin/snapshot` | GET | Capture JPEG snapshot |
+| `/cgi-bin/isp_ctrl` | POST | ISP control commands |
 
 ---
 
 ## Configuration
 
-All settings are stored in `settings.json`:
-
-```json
-{
-  "ir_control": {
-    "adc_cutoff": 400,
-    "adc_cutoff_inverted": 2750,
-    "invert": false
-  },
-  "isp": {
-    "noise_reduction": 4,
-    "ldc": 1,
-    "detail_enhancement": 4,
-    "three_dnr": 1,
-    "mirror": 1,
-    "flip": 1,
-    "in_out_door_mode": 2,
-    "dehaze": 1,
-    "brightness": 1,
-    "contrast": 50,
-    "saturation": 50,
-    "sharpness": 50,
-    "gamma": 300,
-    "wdr_mode": 2,
-    "wdr_level": 40
-  },
-  "encoder": {
-    "max_bitrate": 1024000,
-    "target_bitrate": 1024000,
-    "min_bitrate": 512000,
-    "width": 1920,
-    "height": 1080,
-    "fps": 20
-  },
-  "rtsp": {
-    "username": "",
-    "password": "",
-    "port": 554,
-    "name": "stream"
-  }
-}
-```
+All settings are stored in `settings.json`
 
 ### ISP Parameters
 
 | Parameter | Range | Description |
 |-----------|-------|-------------|
+| `brightness` | 0-100 | Image brightness |
+| `contrast` | 0-100 | Image contrast |
+| `saturation` | 0-100 | Color saturation |
+| `sharpness` | 0-100 | Edge sharpness |
+| `gamma` | 0-500 | Gamma correction |
 | `noise_reduction` | 0-7 | Noise reduction strength |
 | `ldc` | 0-1 | Lens distortion correction |
 | `detail_enhancement` | 0-7 | Sharpening/detail enhancement |
 | `three_dnr` | 0-1 | 3D noise reduction (temporal) |
 | `mirror` | 0-1 | Horizontal flip |
 | `flip` | 0-1 | Vertical flip |
-| `in_out_door_mode` | 0-2 | Indoor/outdoor optimization |
+| `in_out_door_mode` | 0-2 | Indoor(1)/Outdoor(0)/Auto(2) |
 | `dehaze` | 0-1 | Haze removal filter |
-| `wdr_mode` | 0-2 | Wide dynamic range mode |
+| `wdr_mode` | 0-2 | Off(0)/Manual(1)/Auto(2) |
 | `wdr_level` | 0-100 | WDR intensity |
+| `exposure_mode` | 0-1 | Auto(0)/Manual(1) |
+| `awb_mode` | 0-2 | Temperature(0)/Auto(1)/Component(2) |
+| `gray_mode` | 0-1 | Force grayscale |
 
 ### Day/Night (IR) Control
 
@@ -139,39 +130,43 @@ Some cameras have inverted sensor logic. If your camera switches modes incorrect
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Camera Hardware                          │
-│  ┌──────────┐    ┌─────────┐    ┌──────────────┐           │
-│  │  Sensor  │───▶│   ISP   │───▶│ H.264 Encoder│           │
-│  └──────────┘    └─────────┘    └──────┬───────┘           │
-│                                         │                    │
-│  ┌──────────┐                   ┌──────▼───────┐           │
-│  │ ADC/Light│───▶ day_night ───▶│     FIFO     │           │
-│  │ Sensors  │      _ctrl        │/tmp/video.h264│           │
-│  └──────────┘                   └──────┬───────┘           │
-└─────────────────────────────────────────┼───────────────────┘
-                                          │
-                               ┌──────────▼──────────┐
-                               │    rtsp_server      │
-                               │   (Live555 lib)     │
-                               └──────────┬──────────┘
-                                          │
-                               ┌──────────▼──────────┐
-                               │  rtsp://IP:554/...  │
-                               │   VLC / NVR / etc   │
-                               └─────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                        Camera Hardware                           │
+│  ┌──────────┐    ┌─────────┐    ┌──────────────┐                │
+│  │  Sensor  │───▶│   ISP   │───▶│ H.264 Encoder├──▶ FIFO        │
+│  └──────────┘    └────┬────┘    └──────────────┘                │
+│                       │                                          │
+│                       └────────▶│ MJPEG Encoder├──▶ Snapshots   │
+│                                 └──────────────┘                │
+│  ┌──────────┐                                                    │
+│  │ ADC/Light│───▶ day_night_ctrl                                │
+│  │ Sensors  │                                                    │
+│  └──────────┘                                                    │
+└─────────────────────────────────────────────────────────────────┘
+                                  │
+            ┌─────────────────────┼─────────────────────┐
+            │                     │                     │
+            ▼                     ▼                     ▼
+    ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
+    │  rtsp_server  │    │   lighttpd    │    │    snapshot   │
+    │  (Live555)    │    │  (HTTP/CGI)   │    │    (JPEG)     │
+    └───────┬───────┘    └───────┬───────┘    └───────────────┘
+            │                    │
+            ▼                    ▼
+    rtsp://IP:554/       http://IP/
 ```
 
 ### Components
 
 | Component | Description |
 |-----------|-------------|
-| `imager_streamer` | Captures video from ISP, encodes H.264, writes to FIFO |
+| `imager_streamer` | Captures video from ISP, encodes H.264 + MJPEG, manages FIFO and snapshot socket |
 | `rtsp_server` | Reads FIFO, streams via RTSP/RTP (Live555) |
 | `day_night_ctrl` | Monitors light sensors, controls IR cut filter |
-| `isp_ctrl` | CLI tool for runtime ISP adjustment |
+| `isp_ctrl` | CGI program for runtime ISP adjustment |
+| `snapshot` | CGI program for JPEG snapshot capture |
 | `ptz_tool` | Pan-Tilt-Zoom motor control |
-| `lighttpd` | Web server for control interface |
+| `lighttpd` | Web server for control interface and CGI |
 
 ---
 
@@ -180,14 +175,18 @@ Some cameras have inverted sensor logic. If your camera switches modes incorrect
 ### RTSP Stream
 
 ```bash
-# VLC
-vlc rtsp://CAMERA_IP:554/stream
+rtsp://CAMERA_IP:554/stream
+```
 
-# FFmpeg
-ffmpeg -i rtsp://CAMERA_IP:554/stream -c copy output.mp4
+### Web Interface
 
-# FFplay
-ffplay -rtsp_transport tcp rtsp://CAMERA_IP:554/stream
+Open `http://CAMERA_IP/` in a web browser.
+
+### Snapshots
+
+```bash
+# Download a snapshot (also suitable for NVR grabs)
+curl http://CAMERA_IP/cgi-bin/snapshot -o snapshot.jpg
 ```
 
 ### Telnet Shell
@@ -199,19 +198,16 @@ telnet CAMERA_IP 23
 ### Logs
 
 ```bash
-# View streaming logs
-cat /var/log/rtsp_streamer.log
+# View boot log
+cat /var/tmp/sd/boot.log
+
+# View streaming logs (via telnet)
+tail -f /var/log/rtsp_streamer.log
 ```
 
 ---
 
 ## Troubleshooting
-
-### Stream won't connect
-
-1. Verify camera IP address
-2. Check that both `imager_streamer` and `rtsp_server` are running
-3. Try TCP transport: `ffplay -rtsp_transport tcp rtsp://...`
 
 ### Day/Night mode switching incorrectly
 
@@ -227,6 +223,16 @@ Set `"invert": true` in the `ir_control` section of `settings.json`.
 
 The camera performs a 30-second calibration on boot. Wait for calibration to complete before sending PTZ commands.
 
+### Snapshots not working
+
+Ensure `imager_streamer` is running. The snapshot service uses the same MJPEG encoder bound to the ISP.
+
+### Web interface not loading
+
+1. Check that `lighttpd` is running
+2. Verify port 80 is not blocked
+3. Check `/var/tmp/sd/boot.log` for HTTP server startup errors
+
 ---
 
 ## Development
@@ -235,13 +241,15 @@ The camera performs a 30-second calibration on boot. Wait for calibration to com
 
 ```
 ├── src/
-│   ├── imager_streamer/    # Video capture & encoding
+│   ├── imager_streamer/    # Video capture, encoding & snapshot server
 │   ├── rtsp_server/        # RTSP streaming server
-│   ├── isp_ctrl/           # ISP control CLI
+│   ├── isp_ctrl/           # ISP control CGI
+│   ├── snapshot_server/    # Snapshot CGI client
 │   ├── isp_tool/           # ISP adjustment tool
 │   └── ptz_tool/           # PTZ control
 ├── third-party/
 │   ├── live555/            # RTSP library
+│   ├── lighttpd1.4/        # HTTP server
 │   ├── zlog/               # Logging library
 │   ├── rtscore/            # Realtek SDK
 │   └── rsdk/               # MIPS toolchain
@@ -249,6 +257,9 @@ The camera performs a 30-second calibration on boot. Wait for calibration to com
 │   ├── settings.json       # Configuration
 │   ├── wifi/               # Network scripts
 │   └── http/               # Web interface
+│       ├── www/            # Static files (HTML, CSS)
+│       ├── cgi-bin/        # CGI scripts
+│       └── lighttpd.conf   # HTTP server config
 └── scripts/                # Build utilities
 ```
 
@@ -269,7 +280,9 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - [x] Automatic day/night switching
 - [x] PTZ motor control
 - [x] JSON configuration
-- [ ] Web-based ISP control (CGI integration)
+- [x] Web-based ISP control
+- [x] JPEG snapshots
+- [x] lighttpd HTTP server
 - [ ] Audio streaming
 - [ ] ONVIF compatibility
 

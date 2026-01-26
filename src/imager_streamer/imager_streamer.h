@@ -16,6 +16,8 @@
 #include <fstream>
 #include <atomic>
 #include <map>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 #include <rtsvideo.h>
 #include <rts_errno.h>
@@ -30,6 +32,7 @@
 #include "day_night_ctrl.h"
 
 #define VIDEO_FIFO "/tmp/video.h264"
+#define SNAPSHOT_SOCKET "/tmp/snapshot.sock"
 #define STREAMING_FAILURE_THRESHOLD 100
 #define FIFO_WRITE_TIMEOUT_MS 100
 #define FIFO_RECOVERY_INTERVAL_MS 5000
@@ -37,7 +40,8 @@
 typedef struct {
     int32_t isp;
     int32_t h264;
-    int fifo_fd;  // Changed from FILE* to raw fd for non-blocking I/O
+    int32_t mjpeg;  // MJPEG encoder for snapshots
+    int fifo_fd;    // Changed from FILE* to raw fd for non-blocking I/O
     day_night_ctrl *ir_control;
 } handlers;
 

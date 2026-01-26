@@ -1,0 +1,6 @@
+#!/bin/sh
+# CGI wrapper for snapshot server
+# Captures a single JPEG frame from the ISP
+
+# Execute snapshot server (outputs HTTP headers and JPEG body)
+/var/tmp/sd/snapshot
