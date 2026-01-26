@@ -95,16 +95,16 @@ int rts_get_log_enable(int priority, int enable);
 void rts_dump_data(char *data, unsigned int len, unsigned int row);
 
 #ifdef RTS_LOG_TAG
-#define _TAG	" ["RTS_LOG_TAG"] "
+#define _TAG	" [" RTS_LOG_TAG "] "
 #else
 #define _TAG	""
 #endif
 
 #define __RTS_LOG(level, fmt, arg...) \
-	rts_log(level, _TAG"<%s, %d>"fmt, __func__, __LINE__, ##arg)
+	rts_log(level, _TAG"<%s, %d>" fmt, __func__, __LINE__, ##arg)
 
 #define RTS_LOG(level, fmt, arg...) \
-	rts_log(level, _TAG""fmt, ##arg)
+	rts_log(level, _TAG"" fmt, ##arg)
 
 #define RTS_DEBUG(...) \
 	do {\

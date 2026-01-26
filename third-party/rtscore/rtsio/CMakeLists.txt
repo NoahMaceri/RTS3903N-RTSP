@@ -10,5 +10,5 @@ target_link_directories(${PROJECT_NAME} INTERFACE
     ${CMAKE_CURRENT_SOURCE_DIR}/lib
 )
 target_link_libraries(${PROJECT_NAME} INTERFACE
-    librtsio.so
+    librtsio.so.1.2.1
 )

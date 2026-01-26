@@ -1,34 +1,124 @@
-# A fix for firmware that doesn't include the config.sh executation in the init.sh script
-# Credit to @rage2dev https://github.com/rage2dev/YiOutdoor
-# Credit to @fkoteam and @lordhaer for bringing this to my attention
-# https://github.com/TheCrypt0/yi-hack-v4/issues/29#issuecomment-894222953
-# https://github.com/cjj25/yi-hack-telnet-root/issues/1
+#!/bin/sh
 
-# The calling init script has already loaded the camera firmware
-kill_cloud () {
-	# Kill all cloud related services
-	killall watch_process
-	killall watchdog
-	killall log_server
-	killall cloud
-	killall p2p_tnp
-	killall mp4record
-	killall oss
-	killall rmm
-	killall arp_test
+# Path to log file
+LOGFILE=/var/tmp/sd/boot.log
+
+# make a function to both log to the file and printk
+log () {
+    echo "[`date`] $1" >> $LOGFILE
+    # This is the serial output on the board
+    echo "$1" > /dev/ttyS1
 }
-# Check if we've made a backup of this device
-# Disabled for now
-#if [ ! -f /var/tmp/sd/backup/mtdblock0.bin  ]; then
-#     /var/tmp/sd/wifi/make_backup.sh 2>&1 &
-#     kill_cloud
-#fi
 
-# Fork our script to run in the background
-/var/tmp/sd/wifi/fork_process.sh 2>&1 &
+# if logfile exists, delete it
+if [ -f $LOGFILE ]; then
+    rm $LOGFILE
+fi
+
+# echo "[`date`] Starting config.sh..." >> $LOGFILE
+log "Starting config.sh..."
+
+# Set LD_LIBRARY_PATH for required shared libraries
+export LD_LIBRARY_PATH=/lib:/home/lib:/home/rt/lib:/home/app/locallib:/var/tmp/sd/lib:$LD_LIBRARY_PATH
+# echo "[`date`] LD_LIBRARY_PATH=$LD_LIBRARY_PATH" >> $LOGFILE
+log "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
+
+
+# Function to kill unnecessary cloud-related processes
+kill_cloud () {
+    # echo "[`date`] Killing cloud processes..." >> $LOGFILE
+    log "Killing cloud processes..."
+    killall watch_process 2>/dev/null
+    killall watchdog 2>/dev/null
+    killall log_server 2>/dev/null
+    killall cloud 2>/dev/null
+    killall p2p_tnp 2>/dev/null
+    killall mp4record 2>/dev/null
+    killall oss 2>/dev/null
+    killall rmm 2>/dev/null
+    killall arp_test 2>/dev/null
+}
+
+# Backup firmware if it doesn't already exist
+if [ ! -f /var/tmp/sd/backup/mtdblock0.bin ]; then
+    # echo "[`date`] Running firmware backup..." >> $LOGFILE
+    log "Running firmware backup..."
+    /var/tmp/sd/wifi/make_backup.sh 2>&1 >> $LOGFILE &
+    kill_cloud
+fi
+
+# Ensure cloud processes are killed
 kill_cloud
 
-# Allow PTZ to finish its cyle
+# Determine the default DHCP script location
+DEFAULT_SCRIPT=/backup/script/default.script
+if [ -f /home/app/script/default.script ]; then
+    DEFAULT_SCRIPT=/home/app/script/default.script
+fi
+
+# Static network configuration (leave empty to use DHCP)
+# To use static IP, set all three values:
+#   IP="192.168.1.100"
+#   NETMASK="255.255.255.0"
+#   GATEWAY="192.168.1.1"
+IP=""
+NETMASK=""
+GATEWAY=""
+
+# Launch wpa_supplicant if config exists
+if [ -f /var/tmp/sd/Factory/wpa_supplicant.conf ]; then
+    log "Running wpa_supplicant..."
+    wpa_supplicant -c/var/tmp/sd/Factory/wpa_supplicant.conf -g/var/tmp/wpa_supplicant-global -Dwext -iwlan0 -B
+    sleep 3s
+fi
+
+# Configure network - use static IP if all values are set, otherwise use DHCP
+if [ -n "$IP" ] && [ -n "$NETMASK" ] && [ -n "$GATEWAY" ]; then
+    log "Configuring static IP: $IP..."
+    ifconfig wlan0 $IP netmask $NETMASK up
+    route add default gw $GATEWAY wlan0
+
+    # Verify gateway is reachable
+    ping -c 3 -W 2 $GATEWAY > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        log "Static IP configured successfully, gateway reachable."
+    else
+        log "Warning: Gateway $GATEWAY not reachable, but continuing with static IP."
+    fi
+else
+    log "Using DHCP for network configuration..."
+    udhcpc -i wlan0 -b -s "$DEFAULT_SCRIPT" &
+    sleep 10
+fi
+
+# Log final IP information
+# echo "[`date`] Checking assigned IP on wlan0..." >> $LOGFILE
+log "Checking assigned IP on wlan0..."
+# ifconfig wlan0 >> $LOGFILE
+IP_ADDR=$(ifconfig wlan0 | grep 'inet ' | awk '{print $2}')
+log "Assigned IP on wlan0: $IP_ADDR"
+
+# Start Telnet server on port 23 if not already running
+log "Starting Telnet on port 23..."
+/bin/busybox telnetd -p 23 >> $LOGFILE 2>&1 &
+
+# Start HTTP server (lighttpd) for web interface
+log "Starting HTTP server on port 80..."
+/var/tmp/sd/lighttpd -f /var/tmp/sd/http/lighttpd.conf >> $LOGFILE 2>&1 &
+
+# Wait for PTZ initialization (for compatible models)
+log "Waiting 30s for PTZ movement to complete..."
 sleep 30s
-killall dispatch
-killall init.sh
+killall dispatch 2>/dev/null
+killall init.sh 2>/dev/null
+
+# Start imager streamer and RTSP server
+cd /var/tmp/sd/
+log "Starting imager_streamer..."
+./imager_streamer >> $LOGFILE 2>&1 &
+sleep 2
+
+log "Starting rtsp_server..."
+./rtsp_server >> $LOGFILE 2>&1 &
+
+log "config.sh fully executed."
