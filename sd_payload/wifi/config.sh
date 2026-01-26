@@ -56,36 +56,39 @@ if [ -f /home/app/script/default.script ]; then
     DEFAULT_SCRIPT=/home/app/script/default.script
 fi
 
-# Static network configuration
-IP="192.168.5.49"
-NETMASK="255.255.252.0"
-GATEWAY="192.168.4.1"
+# Static network configuration (leave empty to use DHCP)
+# To use static IP, set all three values:
+#   IP="192.168.1.100"
+#   NETMASK="255.255.255.0"
+#   GATEWAY="192.168.1.1"
+IP=""
+NETMASK=""
+GATEWAY=""
 
 # Launch wpa_supplicant if config exists
 if [ -f /var/tmp/sd/Factory/wpa_supplicant.conf ]; then
-    # echo "[`date`] Running wpa_supplicant..." >> $LOGFILE
     log "Running wpa_supplicant..."
     wpa_supplicant -c/var/tmp/sd/Factory/wpa_supplicant.conf -g/var/tmp/wpa_supplicant-global -Dwext -iwlan0 -B
     sleep 3s
 fi
 
-# Attempt to assign static IP
-# echo "[`date`] Assigning static IP $IP..." >> $LOGFILE
-log "Assigning static IP $IP..."
-ifconfig wlan0 $IP netmask $NETMASK up
-route add default gw $GATEWAY wlan0
+# Configure network - use static IP if all values are set, otherwise use DHCP
+if [ -n "$IP" ] && [ -n "$NETMASK" ] && [ -n "$GATEWAY" ]; then
+    log "Configuring static IP: $IP..."
+    ifconfig wlan0 $IP netmask $NETMASK up
+    route add default gw $GATEWAY wlan0
 
-# Check if the gateway is reachable
-ping -c 3 -W 2 $GATEWAY > /dev/null 2>&1
-if [ $? -eq 0 ]; then
-    # echo "[`date`] Static IP successfully assigned and gateway is reachable." >> $LOGFILE
-    log "Static IP successfully assigned and gateway is reachable."
-
+    # Verify gateway is reachable
+    ping -c 3 -W 2 $GATEWAY > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        log "Static IP configured successfully, gateway reachable."
+    else
+        log "Warning: Gateway $GATEWAY not reachable, but continuing with static IP."
+    fi
 else
-    # echo "[`date`] Static IP failed, falling back to DHCP..." >> $LOGFILE
-    log "Static IP failed, falling back to DHCP..."
+    log "Using DHCP for network configuration..."
     udhcpc -i wlan0 -b -s "$DEFAULT_SCRIPT" &
-    sleep 15
+    sleep 10
 fi
 
 # Log final IP information
@@ -98,9 +101,6 @@ log "Assigned IP on wlan0: $IP_ADDR"
 # Start Telnet server on port 23 if not already running
 log "Starting Telnet on port 23..."
 /bin/busybox telnetd -p 23 >> $LOGFILE 2>&1 &
-
-# Start FTP server
-/var/tmp/sd/proftpd_rel/proftpd -c /var/tmp/sd/proftpd_rel/proftpd.conf
 
 # Start HTTP server (lighttpd) for web interface
 log "Starting HTTP server on port 80..."
