@@ -25,6 +25,6 @@ echo "Using solib path: $4"
 echo "Using sysroot: $sysroot"
 
 $gdb_path \
- --init-eval-command="set solib-search-path $3" \
+ --init-eval-command="set solib-search-path $4" \
  --init-eval-command="set sysroot $sysroot" \
  --se=$1 --core=$2 --batch

@@ -122,7 +122,7 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         # -- mod_cgi --
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/build/mod_cgi.so
-            ${CMAKE_BINARY_DIR}/out
+            ${CMAKE_BINARY_DIR}/out/lib
         # -- sd_payload --
         COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${CMAKE_SOURCE_DIR}/sd_payload/

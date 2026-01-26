@@ -804,7 +804,6 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    vid_c = zlog_get_category("imager");
     zlog_info(vid_c, "Realtek RTS imager streamer v%d.%d.%d started", VER_MAJOR, VER_MINOR, VER_PATCH);
 
     // Ensure settings.json exists
