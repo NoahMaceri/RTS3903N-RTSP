@@ -47,6 +47,12 @@ set(HAVE_PCRE2_H 1 CACHE INTERNAL "Have PCRE2 library")
 set(HAVE_PCRE 1 CACHE INTERNAL "Have PCRE2 library")
 add_subdirectory(third-party/lighttpd1.4)
 
+add_dependencies(lighttpd pcre2-8-shared mod_cgi)
+add_custom_target(${PROJECT_NAME}_tools COMMAND
+        DEPENDS rtsp_server imager_streamer isp_tool ptz_tool snapshot isp_ctrl lighttpd
+)
+
+
 # -- PACKAGING --
 add_custom_target(package_${PROJECT_NAME} COMMAND
         # if out folder exists, remove it
@@ -105,9 +111,17 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         COMMAND ${CMAKE_COMMAND} -E copy
             ${CMAKE_BINARY_DIR}/src/snapshot_server/snapshot
             ${CMAKE_BINARY_DIR}/out
+        # -- pcre2-8-shared --
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/third-party/pcre2/libpcre2-8.so.0
+            ${CMAKE_BINARY_DIR}/out/lib
         # -- lighttpd (HTTP server) --
         COMMAND ${CMAKE_COMMAND} -E copy
-            ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/src/lighttpd
+            ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/build/lighttpd
+            ${CMAKE_BINARY_DIR}/out
+        # -- mod_cgi --
+        COMMAND ${CMAKE_COMMAND} -E copy
+            ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/build/mod_cgi.so
             ${CMAKE_BINARY_DIR}/out
         # -- sd_payload --
         COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -117,13 +131,11 @@ add_custom_target(package_${PROJECT_NAME} COMMAND
         # Create a tar
         COMMAND ${CMAKE_COMMAND} -E tar cf ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-${PROJECT_VERSION}.tar -- ${CMAKE_BINARY_DIR}/out
         # Clean up
-        COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out
+        # COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/out
 
         # Print a message indicating the package is ready
         COMMAND ${CMAKE_COMMAND} -E echo "Package created at ${CMAKE_BINARY_DIR}/out/${PROJECT_NAME}-${PROJECT_VERSION}.tar"
-        DEPENDS rtsp_server imager_streamer isp_ctrl snapshot lighttpd
+        DEPENDS ${PROJECT_NAME}_tools
 )
 
-add_custom_target(${PROJECT_NAME}_tools COMMAND
-    DEPENDS rtsp_server imager_streamer isp_tool ptz_tool snapshot isp_ctrl
-)
+
