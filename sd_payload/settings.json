@@ -2,8 +2,6 @@
   "audio": {
     "enabled": true,
     "device": "hw:0,1",
-    "sample_rate": 8000,
-    "channels": 1,
     "gain": 40
   },
   "ir_control": {

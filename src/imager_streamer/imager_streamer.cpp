@@ -364,8 +364,8 @@ static ssize_t write_to_fifo(int fd, const void *buf, size_t count) {
 
 // Desired pipe buffer size (512KB to handle large I-frames with headroom)
 #define FIFO_BUFFER_SIZE (512 * 1024)
-// Smaller buffer for audio (8KB = ~1 second at 8kHz G.711)
-#define AUDIO_FIFO_BUFFER_SIZE (8 * 1024)
+// Smaller buffer for audio (2KB = ~250ms at 8kHz G.711) - minimize latency
+#define AUDIO_FIFO_BUFFER_SIZE (2 * 1024)
 
 // Create or recreate the FIFO with specified buffer size
 static int create_fifo_with_size(const char *path, int buffer_size) {
@@ -825,8 +825,8 @@ int start_stream(nlohmann::json &cfg) {
         std::string dev_node = cfg["audio"].value("device", "hw:0,1");
         strncpy(audio_attr.dev_node, dev_node.c_str(), sizeof(audio_attr.dev_node) - 1);
         audio_attr.format = 16;  // 16-bit samples
-        audio_attr.channels = cfg["audio"].value("channels", 1);
-        audio_attr.rate = cfg["audio"].value("sample_rate", 8000);
+        audio_attr.channels = 1;     // Mono - fixed for G.711
+        audio_attr.rate = 8000;      // 8kHz - fixed for G.711 PCMU
 
         h.audio_capture = rts_av_create_audio_capture_chn(&audio_attr);
         if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.audio_capture))) {

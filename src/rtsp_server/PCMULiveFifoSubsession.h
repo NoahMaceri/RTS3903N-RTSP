@@ -21,6 +21,90 @@
 #define PCMULIVEFIFOSUBSESSION_H
 
 #include <liveMedia.hh>
+#include <fcntl.h>
+#include <unistd.h>
+#include <poll.h>
+#include <errno.h>
+
+// Custom FIFO source that doesn't treat empty reads as EOF
+class FifoAudioSource : public FramedSource {
+public:
+    static FifoAudioSource* createNew(UsageEnvironment& env, const char* fifoPath) {
+        int fd = open(fifoPath, O_RDONLY | O_NONBLOCK);
+        if (fd < 0) {
+            env << "FifoAudioSource: Failed to open " << fifoPath << ": " << strerror(errno) << "\n";
+            return nullptr;
+        }
+        return new FifoAudioSource(env, fd);
+    }
+
+protected:
+    FifoAudioSource(UsageEnvironment& env, int fd)
+        : FramedSource(env), fFd(fd) {}
+
+    ~FifoAudioSource() override {
+        if (fFd >= 0) {
+            ::close(fFd);
+            fFd = -1;
+        }
+    }
+
+    void doGetNextFrame() override {
+        doReadFromFifo();
+    }
+
+    void doStopGettingFrames() override {
+        envir().taskScheduler().unscheduleDelayedTask(fNextReadTask);
+        fNextReadTask = nullptr;
+        FramedSource::doStopGettingFrames();
+    }
+
+private:
+    void doReadFromFifo() {
+        if (fFd < 0) {
+            handleClosure();
+            return;
+        }
+
+        // Read 160 bytes = 20ms of audio at 8kHz G.711
+        unsigned const bytesToRead = fMaxSize < 160 ? fMaxSize : 160;
+
+        ssize_t bytesRead = read(fFd, fTo, bytesToRead);
+
+        if (bytesRead > 0) {
+            fFrameSize = bytesRead;
+            fNumTruncatedBytes = 0;
+
+            // Use current time
+            gettimeofday(&fPresentationTime, nullptr);
+
+            // Set duration so sink paces delivery correctly
+            // G.711 at 8kHz: 1 byte = 1 sample = 125 microseconds
+            fDurationInMicroseconds = bytesRead * 125;
+
+            FramedSource::afterGetting(this);
+        } else if (bytesRead == 0 || (bytesRead < 0 && errno == EAGAIN)) {
+            // No data - retry quickly
+            fNextReadTask = envir().taskScheduler().scheduleDelayedTask(
+                2000, // 2ms - faster polling
+                (TaskFunc*)readAvailableHandler,
+                this
+            );
+        } else {
+            envir() << "FifoAudioSource: read error: " << strerror(errno) << "\n";
+            handleClosure();
+        }
+    }
+
+    static void readAvailableHandler(FifoAudioSource* source) {
+        source->fNextReadTask = nullptr;
+        source->doReadFromFifo();
+    }
+
+private:
+    int fFd;
+    TaskToken fNextReadTask{nullptr};
+};
 
 class PCMULiveFifoSubsession : public OnDemandServerMediaSubsession {
 public:
@@ -42,18 +126,14 @@ protected:
         // G.711 u-law: 8kHz * 8 bits = 64 kbps
         estBitrate = 64; // kbps
 
-        // ByteStreamFileSource works with FIFOs/pipes
-        // G.711 at 8kHz produces 8000 bytes/sec = ~125 microseconds per byte
-        // Use small preferred frame size for low latency
-        FramedSource* fileSource = ByteStreamFileSource::createNew(envir(), fifoPath_,
-                                                                    160,    // preferredFrameSize (20ms of audio at 8kHz)
-                                                                    20000); // playTimePerFrame in microseconds (20ms)
-        if (fileSource == nullptr) {
-            envir() << "Failed to create ByteStreamFileSource for audio " << fifoPath_ << "\n";
+        // Use custom FIFO source that handles live streaming properly
+        FramedSource* source = FifoAudioSource::createNew(envir(), fifoPath_);
+        if (source == nullptr) {
+            envir() << "Failed to create FifoAudioSource for " << fifoPath_ << "\n";
             return nullptr;
         }
 
-        return fileSource;
+        return source;
     }
 
     RTPSink* createNewRTPSink(Groupsock* rtpGroupsock,
