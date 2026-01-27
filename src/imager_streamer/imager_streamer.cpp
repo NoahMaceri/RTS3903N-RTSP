@@ -23,6 +23,71 @@
 #include <netinet/in.h>
 
 static std::atomic<bool> g_fifo_broken(false);
+static std::atomic<bool> g_audio_fifo_broken(false);
+
+// Audio capture globals
+static std::atomic<bool> g_audio_enabled(false);
+static int32_t g_audio_capture_chn = -1;
+static int32_t g_audio_encode_chn = -1;
+
+// Set audio capture volume using ALSA mixer API
+// gain: 0-100 percentage
+static int set_alsa_capture_volume(int gain) {
+    snd_mixer_t *mixer = nullptr;
+    snd_mixer_elem_t *elem = nullptr;
+    snd_mixer_selem_id_t *sid = nullptr;
+    int ret = -1;
+
+    // Open mixer
+    if (snd_mixer_open(&mixer, 0) < 0) {
+        zlog_warn(vid_c, "ALSA: Failed to open mixer");
+        return -1;
+    }
+
+    // Attach to default card
+    if (snd_mixer_attach(mixer, "default") < 0) {
+        zlog_warn(vid_c, "ALSA: Failed to attach mixer to default");
+        snd_mixer_close(mixer);
+        return -1;
+    }
+
+    // Register and load
+    if (snd_mixer_selem_register(mixer, nullptr, nullptr) < 0) {
+        zlog_warn(vid_c, "ALSA: Failed to register mixer");
+        snd_mixer_close(mixer);
+        return -1;
+    }
+
+    if (snd_mixer_load(mixer) < 0) {
+        zlog_warn(vid_c, "ALSA: Failed to load mixer");
+        snd_mixer_close(mixer);
+        return -1;
+    }
+
+    // Set all relevant capture gain controls for this hardware
+    const char *capture_names[] = {"Real Amic", "Front Amic", "ADC Compensate", nullptr};
+
+    snd_mixer_selem_id_alloca(&sid);
+
+    for (int i = 0; capture_names[i] != nullptr; i++) {
+        snd_mixer_selem_id_set_name(sid, capture_names[i]);
+        snd_mixer_selem_id_set_index(sid, 0);
+
+        elem = snd_mixer_find_selem(mixer, sid);
+        if (elem && snd_mixer_selem_has_capture_volume(elem)) {
+            long min, max;
+            snd_mixer_selem_get_capture_volume_range(elem, &min, &max);
+            long vol = min + (max - min) * gain / 100;
+            snd_mixer_selem_set_capture_volume_all(elem, vol);
+            zlog_info(vid_c, "ALSA: Set '%s' to %ld (range %ld-%ld)",
+                      capture_names[i], vol, min, max);
+            ret = 0;
+        }
+    }
+
+    snd_mixer_close(mixer);
+    return ret;
+}
 
 // Snapshot handling globals
 static int g_mjpeg_chn = -1;
@@ -297,11 +362,13 @@ static ssize_t write_to_fifo(int fd, const void *buf, size_t count) {
     return static_cast<ssize_t>(total_written);
 }
 
-// Desired pipe buffer size (256KB to handle large I-frames)
-#define FIFO_BUFFER_SIZE (256 * 1024)
+// Desired pipe buffer size (512KB to handle large I-frames with headroom)
+#define FIFO_BUFFER_SIZE (512 * 1024)
+// Smaller buffer for audio (8KB = ~1 second at 8kHz G.711)
+#define AUDIO_FIFO_BUFFER_SIZE (8 * 1024)
 
-// Create or recreate the FIFO
-static int create_fifo(const char *path) {
+// Create or recreate the FIFO with specified buffer size
+static int create_fifo_with_size(const char *path, int buffer_size) {
     // Remove any existing fifo file
     unlink(path);
 
@@ -325,8 +392,8 @@ static int create_fifo(const char *path) {
         }
     }
 
-    // Increase pipe buffer size to handle large I-frames without multiple write cycles
-    const int pipe_size = fcntl(fd, F_SETPIPE_SZ, FIFO_BUFFER_SIZE);
+    // Set pipe buffer size
+    const int pipe_size = fcntl(fd, F_SETPIPE_SZ, buffer_size);
     if (pipe_size < 0) {
         zlog_warn(vid_c, "Failed to set pipe buffer size: %s (continuing with default)", strerror(errno));
     } else {
@@ -335,6 +402,16 @@ static int create_fifo(const char *path) {
 
     zlog_debug(vid_c, "Created FIFO sink at %s (fd=%d)", path, fd);
     return fd;
+}
+
+// Create FIFO with default video buffer size
+static int create_fifo(const char *path) {
+    return create_fifo_with_size(path, FIFO_BUFFER_SIZE);
+}
+
+// Create FIFO with smaller audio buffer size
+static int create_audio_fifo(const char *path) {
+    return create_fifo_with_size(path, AUDIO_FIFO_BUFFER_SIZE);
 }
 
 uint8_t create_sink(int *sink_fd, const char *path) {
@@ -365,9 +442,119 @@ uint8_t create_sink(int *sink_fd, const char *path) {
     return true;
 }
 
+uint8_t create_audio_sink(int *sink_fd, const char *path) {
+    // Start the unlock/reader thread first
+    pthread_t unlock_thread;
+    if (pthread_create(&unlock_thread, nullptr, unlock_fifo_threadfn, const_cast<char *>(path)) != 0) {
+        zlog_error(vid_c, "Failed to create audio fifo unlock thread");
+        return false;
+    }
+    pthread_detach(unlock_thread);
+
+    usleep(50000); // 50ms
+
+    // Create the audio FIFO with smaller buffer
+    *sink_fd = create_audio_fifo(path);
+    if (*sink_fd < 0) {
+        zlog_error(vid_c, "Failed to create audio fifo sink");
+        return false;
+    }
+
+    zlog_info(vid_c, "Audio FIFO ready at %s", path);
+    g_audio_fifo_broken.store(false);
+    return true;
+}
+
+// Audio capture thread - runs separately from video to avoid blocking
+static void *audio_capture_thread(void *arg) {
+    auto *h = static_cast<handlers *>(arg);
+
+    zlog_info(vid_c, "Audio capture thread started");
+
+    uint32_t frames_captured = 0;
+    uint32_t frames_dropped = 0;
+    uint8_t consecutive_errors = 0;
+    bool standby_mode = false;
+
+    while (!g_exit.load() && g_audio_enabled.load()) {
+        // Check if audio FIFO needs recovery
+        if (g_audio_fifo_broken.load()) {
+            if (!standby_mode) {
+                zlog_debug(vid_c, "Audio: No reader connected, entering standby mode");
+                standby_mode = true;
+            }
+            if (h->audio_fifo_fd >= 0) {
+                close(h->audio_fifo_fd);
+            }
+            h->audio_fifo_fd = create_audio_fifo(AUDIO_FIFO);
+            if (h->audio_fifo_fd >= 0) {
+                g_audio_fifo_broken.store(false);
+            }
+            usleep(100000); // 100ms between recovery attempts
+            continue;
+        }
+
+        int poll_ret = rts_av_poll(h->audio_encode);
+        if (RTS_IS_ERR_VALUE(RTS_ERRNO(poll_ret))) {
+            consecutive_errors++;
+            if (consecutive_errors >= STREAMING_FAILURE_THRESHOLD) {
+                zlog_error(vid_c, "Audio: Too many polling errors, stopping thread");
+                break;
+            }
+            usleep(1000);
+            continue;
+        }
+        consecutive_errors = 0;
+
+        rts_av_buffer *audio_buffer = nullptr;
+        int recv_ret = rts_av_recv(h->audio_encode, &audio_buffer);
+        if (RTS_IS_ERR_VALUE(RTS_ERRNO(recv_ret))) {
+            usleep(1000);
+            continue;
+        }
+
+        if (!audio_buffer || audio_buffer->bytesused == 0) {
+            if (audio_buffer) rts_av_put_buffer(audio_buffer);
+            continue;
+        }
+
+        // Write to audio FIFO
+        ssize_t written = write_to_fifo(h->audio_fifo_fd, audio_buffer->vm_addr, audio_buffer->bytesused);
+
+        if (written < 0) {
+            g_audio_fifo_broken.store(true);
+        } else if (written == 0) {
+            frames_dropped++;
+        } else {
+            if (standby_mode) {
+                zlog_info(vid_c, "Audio: Reader connected, exiting standby mode");
+                standby_mode = false;
+            }
+            frames_captured++;
+        }
+
+        rts_av_put_buffer(audio_buffer);
+
+        // Periodic status log
+        if ((frames_captured % 8000) == 0 && frames_captured > 0) {
+            zlog_info(vid_c, "Audio stats: captured=%u, dropped=%u", frames_captured, frames_dropped);
+        }
+    }
+
+    zlog_info(vid_c, "Audio capture thread exiting (captured=%u, dropped=%u)", frames_captured, frames_dropped);
+    return nullptr;
+}
+
 void kill_stream(handlers *h) {
     zlog_info(vid_c, "Stopping and destroying RTS channels");
     g_exit = true;
+
+    // Disable audio hardware via CPLD
+    if (!set_audio(false)) {
+        zlog_warn(vid_c, "Failed to disable audio hardware via CPLD");
+    } else {
+        zlog_debug(vid_c, "Audio hardware disabled via CPLD");
+    }
 
     // IR THREAD TEAR DOWN
     zlog_info(vid_c, "Tearing down IR control");
@@ -377,6 +564,38 @@ void kill_stream(handlers *h) {
         h->ir_control = nullptr;
     }
     zlog_info(vid_c, "IR control stopped");
+
+    // AUDIO TEAR DOWN
+    g_audio_enabled.store(false);
+    if (h->audio_capture >= 0 && h->audio_encode >= 0) {
+        zlog_debug(vid_c, "Unbinding audio capture and encoder channels");
+        rts_av_stop_recv(h->audio_encode);
+        rts_av_unbind(h->audio_capture, h->audio_encode);
+        zlog_debug(vid_c, "Audio channels unbound");
+    }
+    if (h->audio_encode >= 0) {
+        zlog_debug(vid_c, "Disabling and destroying audio encoder channel");
+        rts_av_disable_chn(h->audio_encode);
+        rts_av_destroy_chn(h->audio_encode);
+        h->audio_encode = -1;
+        g_audio_encode_chn = -1;
+        zlog_debug(vid_c, "Audio encoder channel destroyed");
+    }
+    if (h->audio_capture >= 0) {
+        zlog_debug(vid_c, "Disabling and destroying audio capture channel");
+        rts_av_disable_chn(h->audio_capture);
+        rts_av_destroy_chn(h->audio_capture);
+        h->audio_capture = -1;
+        g_audio_capture_chn = -1;
+        zlog_debug(vid_c, "Audio capture channel destroyed");
+    }
+    // Close audio FIFO
+    if (h->audio_fifo_fd >= 0) {
+        close(h->audio_fifo_fd);
+        h->audio_fifo_fd = -1;
+    }
+    unlink(AUDIO_FIFO);
+    zlog_info(vid_c, "Audio channels stopped and destroyed");
 
     // VIDEO TEAR DOWN
     if (h->isp >= 0 && h->h264 >= 0) {
@@ -442,11 +661,23 @@ int start_stream(nlohmann::json &cfg) {
         return -1;
     }
 
+    // Enable audio hardware via CPLD
+    if (cfg.contains("audio") && cfg["audio"]["enabled"].get<bool>()) {
+        if (!set_audio(true)) {
+            zlog_warn(vid_c, "Failed to enable audio hardware via CPLD");
+        } else {
+            zlog_info(vid_c, "Audio hardware enabled via CPLD");
+        }
+    }
+
     handlers h = {
         .isp = -1,
         .h264 = -1,
         .mjpeg = -1,
+        .audio_capture = -1,
+        .audio_encode = -1,
         .fifo_fd = -1,
+        .audio_fifo_fd = -1,
         .ir_control = nullptr
     };
 
@@ -581,6 +812,96 @@ int start_stream(nlohmann::json &cfg) {
         zlog_fatal(vid_c, "Failed to create video sink");
         kill_stream(&h);
         return -1;
+    }
+
+    // -- AUDIO SETUP --
+    pthread_t audio_thread;
+    bool audio_thread_started = false;
+    if (cfg.contains("audio") && cfg["audio"]["enabled"].get<bool>()) {
+        zlog_info(vid_c, "Setting up audio capture");
+
+        // Create audio capture channel
+        struct rts_audio_attr audio_attr{};
+        std::string dev_node = cfg["audio"].value("device", "hw:0,1");
+        strncpy(audio_attr.dev_node, dev_node.c_str(), sizeof(audio_attr.dev_node) - 1);
+        audio_attr.format = 16;  // 16-bit samples
+        audio_attr.channels = cfg["audio"].value("channels", 1);
+        audio_attr.rate = cfg["audio"].value("sample_rate", 8000);
+
+        h.audio_capture = rts_av_create_audio_capture_chn(&audio_attr);
+        if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.audio_capture))) {
+            zlog_warn(vid_c, "Failed to create audio capture channel with error %d - audio disabled", h.audio_capture);
+            h.audio_capture = -1;
+        } else {
+            zlog_debug(vid_c, "Audio capture channel created: chn %d, dev %s, rate %u, channels %u",
+                       h.audio_capture, audio_attr.dev_node, audio_attr.rate, audio_attr.channels);
+
+            // Create audio encoder channel (G.711 u-law, 64kbps)
+            h.audio_encode = rts_av_create_audio_encode_chn(RTS_AUDIO_TYPE_ID_ULAW, 64000);
+            if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.audio_encode))) {
+                zlog_warn(vid_c, "Failed to create audio encoder channel with error %d - audio disabled", h.audio_encode);
+                rts_av_destroy_chn(h.audio_capture);
+                h.audio_capture = -1;
+                h.audio_encode = -1;
+            } else {
+                zlog_debug(vid_c, "Audio encoder channel created: chn %d (G.711 u-law)", h.audio_encode);
+
+                // Bind capture to encoder
+                ret = rts_av_bind(h.audio_capture, h.audio_encode);
+                if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
+                    zlog_warn(vid_c, "Failed to bind audio capture to encoder with error %d - audio disabled", ret);
+                    rts_av_destroy_chn(h.audio_encode);
+                    rts_av_destroy_chn(h.audio_capture);
+                    h.audio_capture = -1;
+                    h.audio_encode = -1;
+                } else {
+                    // Enable channels
+                    ret = rts_av_enable_chn(h.audio_capture);
+                    if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
+                        zlog_warn(vid_c, "Failed to enable audio capture channel with error %d", ret);
+                    }
+
+                    ret = rts_av_enable_chn(h.audio_encode);
+                    if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
+                        zlog_warn(vid_c, "Failed to enable audio encoder channel with error %d", ret);
+                    }
+
+                    ret = rts_av_start_recv(h.audio_encode);
+                    if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
+                        zlog_warn(vid_c, "Failed to start audio recv with error %d", ret);
+                    } else {
+                        // Create audio FIFO
+                        if (create_audio_sink(&h.audio_fifo_fd, AUDIO_FIFO)) {
+                            g_audio_capture_chn = h.audio_capture;
+                            g_audio_encode_chn = h.audio_encode;
+                            g_audio_enabled.store(true);
+
+                            // Set capture volume/gain (0-100%)
+                            int gain = cfg["audio"].value("gain", 80);
+                            if (gain < 0) gain = 0;
+                            if (gain > 100) gain = 100;
+                            if (set_alsa_capture_volume(gain) == 0) {
+                                zlog_info(vid_c, "Audio capture volume set to %d%%", gain);
+                            } else {
+                                zlog_warn(vid_c, "Failed to set audio capture volume");
+                            }
+
+                            // Start audio capture thread
+                            if (pthread_create(&audio_thread, nullptr, audio_capture_thread, &h) != 0) {
+                                zlog_warn(vid_c, "Failed to start audio capture thread");
+                                g_audio_enabled.store(false);
+                            } else {
+                                audio_thread_started = true;
+                                zlog_info(vid_c, "Audio streaming enabled (G.711 u-law, %u Hz, %u ch)",
+                                          audio_attr.rate, audio_attr.channels);
+                            }
+                        } else {
+                            zlog_warn(vid_c, "Failed to create audio FIFO - audio disabled");
+                        }
+                    }
+                }
+            }
+        }
     }
 
     // Check channel status once before starting main loop

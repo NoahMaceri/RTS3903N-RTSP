@@ -22,6 +22,8 @@
 #include <rtsvideo.h>
 #include <rts_errno.h>
 #include <rtsavapi.h>
+#include <rtsaudio.h>
+#include <alsa/asoundlib.h>
 
 #include <json.hpp>
 #include <zlog.h>
@@ -32,6 +34,7 @@
 #include "day_night_ctrl.h"
 
 #define VIDEO_FIFO "/tmp/video.h264"
+#define AUDIO_FIFO "/tmp/audio.ulaw"
 #define SNAPSHOT_SOCKET "/tmp/snapshot.sock"
 #define STREAMING_FAILURE_THRESHOLD 100
 #define FIFO_WRITE_TIMEOUT_MS 100
@@ -40,8 +43,11 @@
 typedef struct {
     int32_t isp;
     int32_t h264;
-    int32_t mjpeg;  // MJPEG encoder for snapshots
-    int fifo_fd;    // Changed from FILE* to raw fd for non-blocking I/O
+    int32_t mjpeg;           // MJPEG encoder for snapshots
+    int32_t audio_capture;   // Audio capture channel
+    int32_t audio_encode;    // Audio encoder channel (G.711 u-law)
+    int fifo_fd;             // Video FIFO fd for non-blocking I/O
+    int audio_fifo_fd;       // Audio FIFO fd
     day_night_ctrl *ir_control;
 } handlers;
 

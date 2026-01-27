@@ -26,8 +26,10 @@
 #include <BasicUsageEnvironment.hh>
 
 #include "H264LiveFifoSubsession.h"
+#include "PCMULiveFifoSubsession.h"
 
 #define VIDEO_FIFO "/tmp/video.h264"
+#define AUDIO_FIFO "/tmp/audio.ulaw"
 
 static volatile sig_atomic_t g_got_sigint = 0;
 static char g_eventLoopWatchVariable = 0;
@@ -110,7 +112,14 @@ int main(int argc, char *argv[]) {
                                                             cfg["rtsp"]["name"].get<std::string>().c_str(),
                                                             "Session streamed by rRTSPServer");
     OutPacketBuffer::maxSize = 2000000; // safe maximum
-    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, True));;
+    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, True));
+
+    // Add audio subsession if enabled in config
+    if (cfg.contains("audio") && cfg["audio"]["enabled"].get<bool>()) {
+        sms->addSubsession(PCMULiveFifoSubsession::createNew(*env, AUDIO_FIFO, True));
+        zlog_info(c, "Audio subsession added (G.711 u-law)");
+    }
+
     rtspServer->addServerMediaSession(sms);
     zlog_info(c, "ServerMediaSession added");
     char* url = rtspServer->rtspURL(sms);
