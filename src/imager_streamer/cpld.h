@@ -119,29 +119,29 @@ static bool basic_ctrl(const bool enable, const CPLD_BASIC_TYPE type) {
     return good;
 }
 
-static bool red_led(const bool enable) {
+static bool set_red_led(const bool enable) {
     // set the red/green control first then set the GPIO
     return basic_ctrl(enable, RED) && basic_ctrl(true, RG_CTRL);
 }
 
-static bool green_led(const bool enable) {
+static bool set_green_led(const bool enable) {
     // set the red/green control first then set the GPIO
     return basic_ctrl(enable, GREEN) && basic_ctrl(true, RG_CTRL);
 }
 
-static bool white_led(const bool enable) {
+static bool set_white_led(const bool enable) {
     return basic_ctrl(enable, WHITE);
 }
 
-static bool eth_led(const bool enable) {
+static bool set_eth_led(const bool enable) {
     return basic_ctrl(enable, ETH);
 }
 
-static bool audio(const bool enable) {
+static bool set_audio(const bool enable) {
     return basic_ctrl(enable, AUDIO);
 }
 
-static bool ir_cut(const bool enable) {
+static bool set_ir_cut(const bool enable) {
     return basic_ctrl(enable, IR_CUT);
 }
 

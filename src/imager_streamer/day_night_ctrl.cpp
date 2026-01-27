@@ -19,7 +19,7 @@ day_night_ctrl::day_night_ctrl(const int32_t cutoff, const int32_t cutoff_invert
         st.cutoff = cutoff;
     }
     // init to day mode
-    ir_cut(false);
+    set_ir_cut(false);
     change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 0, vid_c);
     change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, RTS_ISP_IR_DAY, vid_c);
 
@@ -147,14 +147,14 @@ void day_night_ctrl::check_light_level(ir_ctrl_state &st_thread) {
         zlog_info(vid_c, "Switching to day mode");
         change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 0, vid_c);
         change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, RTS_ISP_IR_DAY, vid_c);
-        ir_cut(false);
+        set_ir_cut(false);
         st.want_day_count = st.want_night_count = 0;
     } else if (st.want_night_count >= st.stable_needed && current_ir_mode != RTS_ISP_IR_NIGHT) {
         zlog_debug(vid_c, "IR control: adc_raw=%u adc_ema=%u cutoff=%d hyst=%u invert=%u", adc, adc_s, st.cutoff, hyst, st.invert);
         zlog_info(vid_c, "Switching to night mode");
         change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 1, vid_c);
         change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, RTS_ISP_IR_NIGHT, vid_c);
-        ir_cut(true);
+        set_ir_cut(true);
         st.want_day_count = st.want_night_count = 0;
     }
 }

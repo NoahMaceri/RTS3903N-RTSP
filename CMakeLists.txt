@@ -10,7 +10,7 @@ project(RTS3903N_RTSP VERSION 0.4.0)
 
 # handle ver.h.in
 configure_file(
-    ${CMAKE_SOURCE_DIR}/ver.h.in
+    ${CMAKE_SOURCE_DIR}/include/ver.h.in
     ${CMAKE_BINARY_DIR}/ver.h
 )
 include_directories(
