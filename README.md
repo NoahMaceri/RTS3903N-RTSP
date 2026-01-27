@@ -202,7 +202,7 @@ telnet CAMERA_IP 23
 cat /var/tmp/sd/boot.log
 
 # View streaming logs (via telnet)
-tail -f /var/log/rtsp_streamer.log
+cat /var/log/rtsp_streamer.log
 ```
 
 ---
