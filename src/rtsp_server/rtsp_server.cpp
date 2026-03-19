@@ -39,8 +39,12 @@ static void onSignal(int /*signum*/) {
 
 int main(int argc, char *argv[]) {
     // setup signal handlers
-    signal(SIGINT, onSignal);
-    signal(SIGTERM, onSignal);
+    struct sigaction sa{};
+    sa.sa_handler = onSignal;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, nullptr);
+    sigaction(SIGTERM, &sa, nullptr);
     // init zlog
     int rc = zlog_init("zlog.conf");
     if (rc < 0) {
@@ -102,7 +106,10 @@ int main(int argc, char *argv[]) {
                                                    authDB);
     if (rtspServer == nullptr) {
         zlog_fatal(c, "Failed to create RTSP server: %s", env->getResultMsg());
-        exit(EXIT_FAILURE);
+        env->reclaim();
+        delete scheduler;
+        zlog_fini();
+        return EXIT_FAILURE;
     }
 
     ServerMediaSession *sms = ServerMediaSession::createNew(*env,
@@ -110,7 +117,7 @@ int main(int argc, char *argv[]) {
                                                             cfg["rtsp"]["name"].get<std::string>().c_str(),
                                                             "Session streamed by rRTSPServer");
     OutPacketBuffer::maxSize = 2000000; // safe maximum
-    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, True));;
+    sms->addSubsession(H264LiveFifoSubsession::createNew(*env, VIDEO_FIFO, True));
     rtspServer->addServerMediaSession(sms);
     zlog_info(c, "ServerMediaSession added");
     char* url = rtspServer->rtspURL(sms);

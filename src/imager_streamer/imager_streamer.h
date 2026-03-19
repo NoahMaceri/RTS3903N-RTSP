@@ -43,10 +43,14 @@ typedef struct {
     int32_t mjpeg;  // MJPEG encoder for snapshots
     int fifo_fd;    // Changed from FILE* to raw fd for non-blocking I/O
     day_night_ctrl *ir_control;
+    pthread_t unlock_thread;
+    bool unlock_thread_started;
+    pthread_t snapshot_thread;
+    bool snapshot_thread_started;
 } handlers;
 
-std::atomic<bool> g_exit(false);
-zlog_category_t *vid_c = nullptr;
+extern std::atomic<bool> g_exit;
+extern zlog_category_t *vid_c;
 
 
 #endif // IMAGER_STREAMER_H

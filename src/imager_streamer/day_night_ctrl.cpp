@@ -2,7 +2,7 @@
 
 #include "cpld.h"
 
-day_night_ctrl::day_night_ctrl(const int32_t cutoff, const int32_t cutoff_inverted, const bool inverted, zlog_category_t* vid_c) : vid_c(vid_c), running(false) {
+day_night_ctrl::day_night_ctrl(const int32_t cutoff, const int32_t cutoff_inverted, const bool inverted, zlog_category_t* vid_c) : thread(0), thread_created(false), vid_c(vid_c), running(false) {
     st = ir_ctrl_state();
     st.stable_needed = 3;
     st.ema_alpha = 0.75;   // 0..1 higher = faster response
@@ -22,8 +22,6 @@ day_night_ctrl::day_night_ctrl(const int32_t cutoff, const int32_t cutoff_invert
     ir_cut(false);
     change_isp_setting(RTS_VIDEO_CTRL_ID_GRAY_MODE, 0, vid_c);
     change_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, RTS_ISP_IR_DAY, vid_c);
-
-    thread = 0;
 }
 
 day_night_ctrl::~day_night_ctrl() {
@@ -31,24 +29,31 @@ day_night_ctrl::~day_night_ctrl() {
 }
 
 bool day_night_ctrl::begin() {
+    running.store(true);
     const int ret = pthread_create(&thread, nullptr, ir_ctrl_thread, this);
-    if (ret != 0) return false;
+    if (ret != 0) {
+        running.store(false);
+        return false;
+    }
+    thread_created = true;
     return true;
 }
 
 void day_night_ctrl::stop() {
-    if (thread == 0 || !running.load()) return;
+    if (!thread_created) return;
     running.store(false);
     pthread_join(thread, nullptr);
-    thread = 0;
+    thread_created = false;
 }
 
 void* day_night_ctrl::ir_ctrl_thread(void* arg) {
     auto* ctrl = static_cast<day_night_ctrl*>(arg);
     zlog_info(ctrl->st.vid_c, "Starting IR control thread");
-    sleep(15);
 
-    ctrl->running.store(true);
+    // Wait for sensor to stabilize, but remain interruptible
+    for (int i = 0; i < 15 && ctrl->running.load(); ++i) {
+        sleep(1);
+    }
 
     while (ctrl->running.load()) {
         ctrl->check_light_level(ctrl->st);
