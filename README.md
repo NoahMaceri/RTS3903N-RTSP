@@ -245,7 +245,7 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 
 ## Version History
 
-### v4.1.0 (2026-03-18)
+### v0.4.1 (2026-03-18)
 
 - Bugfix: ISP mutex was per-translation-unit (`static` in header), so the IR control thread and main thread had no synchronization. Now uses a single shared mutex.
 - Bugfix: detached threads (FIFO reader, snapshot server) could access freed resources during teardown. Threads are now joined in correct dependency order before their resources are released.
@@ -256,7 +256,7 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - Bugfix: `imager_streamer` now reports failure to init systems on crash instead of always returning success.
 - Bugfix: Proper resource cleanup on server creation failure (was calling `exit()` and leaking).
 
-### v4.0.0 (2026-01-25)
+### v0.4.0 (2026-01-25)
 
 - Feature: Added live image parameter adjustment via browser
 - Feature: Added lighttpd HTTP server
