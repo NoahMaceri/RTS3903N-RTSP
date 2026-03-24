@@ -22,6 +22,9 @@
 #include <vector>
 #include <netinet/in.h>
 
+std::atomic<bool> g_exit(false);
+zlog_category_t *vid_c = nullptr;
+
 static std::atomic<bool> g_fifo_broken(false);
 static std::atomic<bool> g_audio_fifo_broken(false);
 
@@ -212,8 +215,7 @@ static void *snapshot_server_thread(void *arg) {
     return nullptr;
 }
 
-static void terminate() {
-    zlog_info(vid_c, "Termination signal received, exiting...");
+static void terminate(int /*signum*/) {
     g_exit = true;
 }
 
@@ -414,9 +416,13 @@ static int create_audio_fifo(const char *path) {
     return create_fifo_with_size(path, AUDIO_FIFO_BUFFER_SIZE);
 }
 
-uint8_t create_sink(int *sink_fd, const char *path) {
+uint8_t create_sink(int *sink_fd, const char *path, pthread_t *out_unlock_thread) {
     // Install SIGPIPE handler to prevent crashes on broken pipe
-    signal(SIGPIPE, sigpipe_handler);
+    struct sigaction sa{};
+    sa.sa_handler = sigpipe_handler;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGPIPE, &sa, nullptr);
 
     // Start the unlock/reader thread first
     pthread_t unlock_thread;
@@ -424,7 +430,7 @@ uint8_t create_sink(int *sink_fd, const char *path) {
         zlog_fatal(vid_c, "Failed to create fifo unlock thread");
         return false;
     }
-    pthread_detach(unlock_thread);
+    *out_unlock_thread = unlock_thread;
     zlog_info(vid_c, "Started fifo reader thread");
 
     // Give the reader thread a moment to open the FIFO
@@ -597,6 +603,20 @@ void kill_stream(handlers *h) {
     unlink(AUDIO_FIFO);
     zlog_info(vid_c, "Audio channels stopped and destroyed");
 
+    // Join snapshot thread before AV teardown (it uses AV callbacks)
+    if (h->snapshot_thread_started) {
+        pthread_join(h->snapshot_thread, nullptr);
+        h->snapshot_thread_started = false;
+        g_snapshot_socket = -1; // Thread already closed its socket
+        zlog_info(vid_c, "Snapshot server thread joined");
+    } else {
+        if (g_snapshot_socket >= 0) {
+            close(g_snapshot_socket);
+            g_snapshot_socket = -1;
+        }
+        unlink(SNAPSHOT_SOCKET);
+    }
+
     // VIDEO TEAR DOWN
     if (h->isp >= 0 && h->h264 >= 0) {
         zlog_debug(vid_c, "Unbinding ISP and H264 channels");
@@ -631,16 +651,17 @@ void kill_stream(handlers *h) {
         h->isp = -1;
         zlog_debug(vid_c, "ISP channel stopped and destroyed");
     }
-    // Close snapshot socket
-    if (g_snapshot_socket >= 0) {
-        close(g_snapshot_socket);
-        g_snapshot_socket = -1;
-        unlink(SNAPSHOT_SOCKET);
-    }
     zlog_info(vid_c, "Stopped and destroyed RTS channels");
 
     rts_av_release();
     zlog_info(vid_c, "RTS AV released");
+
+    // Join unlock thread before FIFO teardown (it reads from FIFO)
+    if (h->unlock_thread_started) {
+        pthread_join(h->unlock_thread, nullptr);
+        h->unlock_thread_started = false;
+        zlog_info(vid_c, "FIFO unlock thread joined");
+    }
 
     // Teardown FIFO
     if (h->fifo_fd >= 0) {
@@ -678,7 +699,11 @@ int start_stream(nlohmann::json &cfg) {
         .audio_encode = -1,
         .fifo_fd = -1,
         .audio_fifo_fd = -1,
-        .ir_control = nullptr
+        .ir_control = nullptr,
+        .unlock_thread = 0,
+        .unlock_thread_started = false,
+        .snapshot_thread = 0,
+        .snapshot_thread_started = false
     };
 
     // -- VIDEO SETUP --
@@ -808,11 +833,12 @@ int start_stream(nlohmann::json &cfg) {
         return -1;
     }
 
-    if (!create_sink(&h.fifo_fd, VIDEO_FIFO)) {
+    if (!create_sink(&h.fifo_fd, VIDEO_FIFO, &h.unlock_thread)) {
         zlog_fatal(vid_c, "Failed to create video sink");
         kill_stream(&h);
         return -1;
     }
+    h.unlock_thread_started = true;
 
     // -- AUDIO SETUP --
     pthread_t audio_thread;
@@ -924,12 +950,11 @@ int start_stream(nlohmann::json &cfg) {
     }
 
     // Start snapshot server thread if MJPEG is available
-    pthread_t snapshot_thread;
     if (h.mjpeg >= 0) {
-        if (pthread_create(&snapshot_thread, nullptr, snapshot_server_thread, nullptr) != 0) {
+        if (pthread_create(&h.snapshot_thread, nullptr, snapshot_server_thread, nullptr) != 0) {
             zlog_warn(vid_c, "Failed to start snapshot server thread");
         } else {
-            pthread_detach(snapshot_thread);
+            h.snapshot_thread_started = true;
             zlog_info(vid_c, "Snapshot server started");
         }
     }
@@ -1108,8 +1133,12 @@ int start_stream(nlohmann::json &cfg) {
 }
 
 int main(int argc, char *argv[]) {
-    signal(SIGINT, reinterpret_cast<__sighandler_t>(terminate));
-    signal(SIGTERM, reinterpret_cast<__sighandler_t>(terminate));
+    struct sigaction sa{};
+    sa.sa_handler = terminate;
+    sigemptyset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT, &sa, nullptr);
+    sigaction(SIGTERM, &sa, nullptr);
 
     // init zlog
     errno = 0;
@@ -1143,6 +1172,5 @@ int main(int argc, char *argv[]) {
         zlog_fatal(vid_c, "Failed to load settings.json: %s", e.what());
         return -1;
     }
-    const int ret = start_stream(json_cfg);
-    return 0;
+    return start_stream(json_cfg) < 0 ? EXIT_FAILURE : EXIT_SUCCESS;
 }

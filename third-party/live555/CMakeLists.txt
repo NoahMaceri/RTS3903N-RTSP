@@ -21,7 +21,10 @@ if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/live")
     file(ARCHIVE_EXTRACT
             INPUT "${CMAKE_CURRENT_BINARY_DIR}/live555-master.zip"
             DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}"
-            STRIP_COMPONENTS 1
+    )
+    file(RENAME
+            "${CMAKE_CURRENT_SOURCE_DIR}/live555-master"
+            "${CMAKE_CURRENT_SOURCE_DIR}/live"
     )
     message(STATUS "Extraction complete")
 endif()

@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 # PreLoad.cmake should have ran before this file, load the cross-compiler toolchain
 include(third-party/rsdk/enable_mips_uclibc.cmake)
 
-project(RTS3903N_RTSP VERSION 0.4.0)
+project(RTS3903N_RTSP VERSION 0.4.1)
 
 # handle ver.h.in
 configure_file(

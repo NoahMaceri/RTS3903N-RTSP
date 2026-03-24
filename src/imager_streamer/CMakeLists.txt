@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(imager_streamer
         ${CMAKE_CURRENT_SOURCE_DIR}/imager_streamer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/day_night_ctrl.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/isp_utils.cpp
 )
 target_link_libraries(imager_streamer PRIVATE
         zlog_s

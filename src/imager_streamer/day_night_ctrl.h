@@ -26,9 +26,10 @@ public:
 
 private:
     pthread_t thread;
+    bool thread_created{false};
     zlog_category_t* vid_c;
     uint8_t current_ir_mode = RTS_ISP_IR_DAY; // initial state
-    std::atomic<bool> running{false};  // Thread-safe running flag
+    std::atomic<bool> running{false};
 
     struct ir_ctrl_state {
         double ema_alpha;
@@ -49,7 +50,4 @@ private:
 
 };
 
-
-
 #endif // DAY_NIGHT_CTRL_H
-

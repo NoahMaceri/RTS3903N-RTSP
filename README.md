@@ -56,7 +56,7 @@ This creates `RTS3903N-RTSP-X.X.X.tar` containing all binaries and configuration
 2. Edit `settings.json` with your preferences
 3. Configure WiFi in `Factory/wpa_supplicant.conf`
 4. Insert SD card into camera and power on
-5. Wait ~60 seconds for boot
+5. Wait ~30 seconds for boot
 6. Access stream at `rtsp://CAMERA_IP:554/stream`
 7. Access web interface at `http://CAMERA_IP/`
 
@@ -64,14 +64,9 @@ This creates `RTS3903N-RTSP-X.X.X.tar` containing all binaries and configuration
 
 ## Web Interface
 
-The camera includes a modern web control interface accessible at `http://CAMERA_IP/`.
+The camera includes a web interface accessible at `http://CAMERA_IP/`.
 
 ![Web Interface](docs/webui.png)
-
-### Features
-
-- **Live Preview** — Auto-refreshing JPEG snapshots
-- **Save All** — Batch save changes to `settings.json` with unsaved changes warning
 
 ### API Endpoints
 
@@ -126,35 +121,6 @@ Some cameras have inverted sensor logic. If your camera switches modes incorrect
 ```
 
 ---
-
-## Architecture
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                        Camera Hardware                           │
-│  ┌──────────┐    ┌─────────┐    ┌──────────────┐                │
-│  │  Sensor  │───▶│   ISP   │───▶│ H.264 Encoder├──▶ FIFO        │
-│  └──────────┘    └────┬────┘    └──────────────┘                │
-│                       │                                          │
-│                       └────────▶│ MJPEG Encoder├──▶ Snapshots   │
-│                                 └──────────────┘                │
-│  ┌──────────┐                                                    │
-│  │ ADC/Light│───▶ day_night_ctrl                                │
-│  │ Sensors  │                                                    │
-│  └──────────┘                                                    │
-└─────────────────────────────────────────────────────────────────┘
-                                  │
-            ┌─────────────────────┼─────────────────────┐
-            │                     │                     │
-            ▼                     ▼                     ▼
-    ┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-    │  rtsp_server  │    │   lighttpd    │    │    snapshot   │
-    │  (Live555)    │    │  (HTTP/CGI)   │    │    (JPEG)     │
-    └───────┬───────┘    └───────┬───────┘    └───────────────┘
-            │                    │
-            ▼                    ▼
-    rtsp://IP:554/       http://IP/
-```
 
 ### Components
 
@@ -213,25 +179,14 @@ cat /var/log/rtsp_streamer.log
 
 Set `"invert": true` in the `ir_control` section of `settings.json`.
 
-### Video artifacts or freezing
-
-- Reduce resolution or bitrate in encoder settings
-- Ensure adequate power supply to camera
-- Check SD card for errors
-
 ### PTZ not responding
 
 The camera performs a 30-second calibration on boot. Wait for calibration to complete before sending PTZ commands.
 
-### Snapshots not working
-
-Ensure `imager_streamer` is running. The snapshot service uses the same MJPEG encoder bound to the ISP.
-
 ### Web interface not loading
 
-1. Check that `lighttpd` is running
-2. Verify port 80 is not blocked
-3. Check `/var/tmp/sd/boot.log` for HTTP server startup errors
+1. Check that `lighttpd` is running via `ps` on camera
+2. Check `/var/tmp/sd/boot.log` for HTTP server startup errors
 
 ---
 
@@ -285,6 +240,43 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - [x] lighttpd HTTP server
 - [ ] Audio streaming
 - [ ] ONVIF compatibility
+
+---
+
+## Version History
+
+### v0.4.1 (2026-03-18)
+
+- Bugfix: ISP mutex was per-translation-unit (`static` in header), so the IR control thread and main thread had no synchronization. Now uses a single shared mutex.
+- Bugfix: detached threads (FIFO reader, snapshot server) could access freed resources during teardown. Threads are now joined in correct dependency order before their resources are released.
+- Bugfix: `stop()` during the 15-second sensor warmup would skip `pthread_join`, leaving the thread running against a destroyed object. The warmup sleep is now interruptible (exits within ~1 second on shutdown).
+- Bugfix: `terminate()` had wrong signature (`void()` instead of `void(int)`), masked by `reinterpret_cast`. Undefined behavior on MIPS calling conventions. All signal handlers now use `sigaction()` instead of `signal()`.
+- Bugfix: Logs now rotate at 256KB with 3 files max (~768KB ceiling). Previously unbounded, which could exhaust RAM on the tmpfs-backed `/var/log/`.
+- Change: Production logs filtered to INFO+, dropping DEBUG noise (frame stats, FIFO debug, ADC readings).
+- Bugfix: `imager_streamer` now reports failure to init systems on crash instead of always returning success.
+- Bugfix: Proper resource cleanup on server creation failure (was calling `exit()` and leaking).
+
+### v0.4.0 (2026-01-25)
+
+- Feature: Added live image parameter adjustment via browser
+- Feature: Added lighttpd HTTP server
+- Feature: Added JPEG snapshots
+- Feature: Added PTZ motor control via `/dev/ssp`
+- Change: Replaced INI format with `settings.json`
+- Feature: Created ISP adjustment tool for live ISP tuning
+- Feature: Added H264FifoFramedSource for better stream reliability
+- Feature: Added IR control hysteresis
+
+### v0.3.1 (2025-11-14)
+
+First release after forking from [cjj25/Yi-RTS3903N-RTSPServer](https://github.com/cjj25/Yi-RTS3903N-RTSPServer).
+
+- Feature: Added cross-compilation with Ninja
+- Feature: `ninja package_RTS3903N_RTSP` creates deployment tarball
+- Feature: Added configurable ini parameters for camera parameters
+- Feature: Multiple ADC & FIFO improvements
+- Bugfix: Corrected startup state for day/night control
+- Bugfix: Resolved memory leak in streaming pipeline
 
 ---
 
