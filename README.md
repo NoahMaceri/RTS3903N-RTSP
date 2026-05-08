@@ -126,12 +126,15 @@ Some cameras have inverted sensor logic. If your camera switches modes incorrect
 
 | Component | Description |
 |-----------|-------------|
-| `imager_streamer` | Captures video from ISP, encodes H.264 + MJPEG, manages FIFO and snapshot socket |
-| `rtsp_server` | Reads FIFO, streams via RTSP/RTP (Live555) |
-| `day_night_ctrl` | Monitors light sensors, controls IR cut filter |
+| `imagerd` | Central camera daemon: captures video + audio from the ISP, encodes H.264 / MJPEG / G.711, runs the in-process Live555 RTSP server, hosts the snapshot Unix socket, and manages day/night + auto-tune ISP loops |
+| `day_night_ctrl` | Thread inside `imagerd`: monitors ADC light sensors, drives the IR cut filter |
+| `auto_tune_ctrl` | Thread inside `imagerd`: samples the ISP's AE histogram and adjusts contrast / sharpness / WDR_LEVEL to match the current scene |
 | `isp_ctrl` | CGI program for runtime ISP adjustment |
-| `snapshot` | CGI program for JPEG snapshot capture |
+| `snapshot` | CGI program that reads from `imagerd`'s snapshot socket and returns a JPEG over HTTP |
 | `ptz_tool` | Pan-Tilt-Zoom motor control |
+| `onvif_simple_server` | ONVIF SOAP services as CGI under lighttpd (Device, Media, PTZ, Events, DeviceIO) |
+| `wsd_simple_server` | WS-Discovery daemon (UDP/3702 multicast) — makes the camera auto-discoverable to NVRs |
+| `sntp` | One-shot SNTP client run at boot — sets the wall clock since the hardware has no RTC |
 | `lighttpd` | Web server for control interface and CGI |
 
 ---
@@ -198,7 +201,7 @@ Portions of this project's code, refactors, and documentation were produced in c
 
 ```
 ├── src/
-│   ├── imager_streamer/    # Video capture, encoding & snapshot server
+│   ├── imagerd/    # Video capture, encoding & snapshot server
 │   ├── rtsp_server/        # RTSP streaming server
 │   ├── isp_ctrl/           # ISP control CGI
 │   ├── snapshot_server/    # Snapshot CGI client
@@ -253,7 +256,7 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 
 - Feature: ONVIF Profile S support via vendored `onvif_simple_server` (GPLv3). SOAP services (Device/Media/PTZ/Events/DeviceIO) run as CGI under lighttpd; standalone `wsd_simple_server` handles WS-Discovery (UDP/3702 multicast). Configured under `[onvif]` in `settings.json`; `onvif_conf_gen` regenerates the INI conf at boot so the JSON stays the single source of truth.
 - Feature: G.711 u-law audio streaming. Captured at 8 kHz mono via ALSA, advertised as RTP payload type 0 (PCMU). Capture gain configurable in `settings.json`'s `audio` block.
-- Refactor: `rtsp_server` binary deleted; live555 runs in-process inside `imager_streamer` via a custom `FramedSource` reading from in-memory queues. Eliminates `/tmp/video.h264` + `/tmp/audio.ulaw` FIFOs and lets us pass per-frame metadata (PTS, keyframe flag) directly to the framer instead of re-parsing it from the byte stream.
+- Refactor: `rtsp_server` binary deleted; live555 runs in-process inside `imagerd` via a custom `FramedSource` reading from in-memory queues. Eliminates `/tmp/video.h264` + `/tmp/audio.ulaw` FIFOs and lets us pass per-frame metadata (PTS, keyframe flag) directly to the framer instead of re-parsing it from the byte stream.
 - Feature: Optional dev-tools subtree gated on `-DBUILD_DEV_TOOLS=ON`. Ships `uftpd` (writable FTP/TFTP for pushing binaries onto the camera without reflashing) and `dropbear` (SSH on port 22). Telnet on port 23 is now also gated on dev-tools presence (was always on).
 - Bugfix: dropbear's cross-compile build skipped its `/dev/ptmx` runtime check and fell back to the BSD-pty path which doesn't exist on this kernel — SSH auth would succeed but PTY allocation would fail. Forced `USE_DEV_PTMX` at compile time.
 - Refactor: Network config moved out of `config.sh` and `Factory/wpa_supplicant.conf` into a single `network.ini` at the SD card root. Sections `[wifi]` (ssid, psk) and `[network]` (ip, netmask, gateway). `config.sh` regenerates `wifi/wpa_supplicant.conf` from it on every boot. Old `wpa_supplicant_sample.conf` template removed.
@@ -264,8 +267,10 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - Bugfix: A P-frame pushed between client attach and the producer's IDR-request consumption could land at the head of the new session ahead of the forced keyframe. Queue clearing now happens atomically inside `consume_idr_request()` so the producer always wins the race.
 - Change: live555 `OutPacketBuffer::maxSize` bumped 256 KB → 1 MB so large I-frames at higher bitrates don't get silently NAL-unit-dropped.
 - Bugfix: `audio_capture_thread` was a stack-local `pthread_t`, never joined. `kill_stream` could destroy audio channels while the thread was mid-`rts_av_recv()` (UAF on shutdown). Now tracked in `handlers` and joined before channel teardown.
-- Bugfix: `imager_streamer`'s `zlog_init("zlog.conf")` used a relative path that depended on the supervisor's inherited CWD. Now uses an absolute `/var/tmp/sd/zlog.conf` — robust across `config.sh` restructurings.
+- Bugfix: `imagerd`'s `zlog_init("zlog.conf")` used a relative path that depended on the supervisor's inherited CWD. Now uses an absolute `/var/tmp/sd/zlog.conf` — robust across `config.sh` restructurings.
 - Cleanup: Root `CMakeLists.txt` reorganized into named sections (Generated headers / Third-party libraries / Project executables / Optional dev tools / Roll-up / Packaging). Per-target file lists hoisted into variables; the package step is now a short list of commands instead of a 90-line `add_custom_target` blob.
+- Rename: `imager_streamer` binary renamed to `imagerd`. The old name described an ISP-to-FIFO bridge; the binary now also runs the in-process RTSP server, the snapshot UDS, and the IR / auto-tune control loops. Cascades through the source dir (`src/imager_streamer/` → `src/imagerd/`), zlog category (`imager` → `imagerd`), `config.sh` invocation, log tag (`[Imager streamer]` → `[imagerd]`), and the startup banner.
+- Feature: scene-adaptive ISP auto-tune. New `auto_tune_ctrl` thread inside `imagerd` samples the SDK's AE histogram via `rts_av_query_isp_ae()` every few seconds and adjusts `CONTRAST` / `SHARPNESS` / `WDR_LEVEL` toward a scene-appropriate target (5-bucket lookup keyed on mean luma + a high-DR override on histogram spread). EMA-smoothed transitions, configurable period and aggressiveness under `[auto_tune]` in `settings.json`. Realtek's built-in 3A keeps running underneath; this is a policy layer on top.
 
 ### v0.4.1 (2026-03-18)
 
@@ -275,7 +280,7 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - Bugfix: `terminate()` had wrong signature (`void()` instead of `void(int)`), masked by `reinterpret_cast`. Undefined behavior on MIPS calling conventions. All signal handlers now use `sigaction()` instead of `signal()`.
 - Bugfix: Logs now rotate at 256KB with 3 files max (~768KB ceiling). Previously unbounded, which could exhaust RAM on the tmpfs-backed `/var/log/`.
 - Change: Production logs filtered to INFO+, dropping DEBUG noise (frame stats, FIFO debug, ADC readings).
-- Bugfix: `imager_streamer` now reports failure to init systems on crash instead of always returning success.
+- Bugfix: `imagerd` now reports failure to init systems on crash instead of always returning success.
 - Bugfix: Proper resource cleanup on server creation failure (was calling `exit()` and leaking).
 
 ### v0.4.0 (2026-01-25)
@@ -306,7 +311,7 @@ First release after forking from [cjj25/Yi-RTS3903N-RTSPServer](https://github.c
 
 This project builds upon the work of many contributors:
 
-### imager_streamer
+### imagerd
 - [@roleoroleo](https://github.com/roleoroleo) — Original author of rtsp_server
 - [@alienatedsec](https://github.com/alienatedsec) — Modified version of rtsp_server
 - [@cjj25](https://github.com/cjj25) — Original author of rt_stream usage

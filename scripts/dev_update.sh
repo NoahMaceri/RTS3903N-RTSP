@@ -75,12 +75,12 @@ ssh -o StrictHostKeyChecking=accept-new \
 set -u
 
 echo "  killing daemons (uftpd + telnet survive)..."
-killall imager_streamer  2>/dev/null || true
+killall imagerd  2>/dev/null || true
 killall wsd_simple_server 2>/dev/null || true
 killall lighttpd          2>/dev/null || true
 killall sntp              2>/dev/null || true
 sleep 1
-killall -9 imager_streamer  2>/dev/null || true
+killall -9 imagerd  2>/dev/null || true
 killall -9 wsd_simple_server 2>/dev/null || true
 killall -9 lighttpd          2>/dev/null || true
 

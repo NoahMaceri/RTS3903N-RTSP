@@ -91,3 +91,28 @@ int32_t get_isp_setting(const enum enum_rts_video_ctrl_id type, zlog_category_t 
     }
     return ctrl.current_value;
 }
+
+bool read_ae_stats(AeStats &out, zlog_category_t *logger) {
+    std::lock_guard<std::mutex> lock(g_isp_mutex);
+
+    rts_isp_ae_ctrl *ae = nullptr;
+    if (rts_av_query_isp_ae(&ae) != 0 || ae == nullptr) {
+        zlog_warn(logger, "rts_av_query_isp_ae failed");
+        return false;
+    }
+
+    // Trigger a stats refresh, then copy the populated struct.
+    rts_av_refresh_isp_ae_statis(ae);
+    if (rts_av_get_isp_ae(ae) != 0) {
+        zlog_warn(logger, "rts_av_get_isp_ae failed");
+        rts_av_release_isp_ae(ae);
+        return false;
+    }
+
+    out.y_mean = ae->statis.y_mean;
+    out.hist.assign(ae->statis.histogram_info,
+                    ae->statis.histogram_info + ae->histogram_num);
+
+    rts_av_release_isp_ae(ae);
+    return true;
+}

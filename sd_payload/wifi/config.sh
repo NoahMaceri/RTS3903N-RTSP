@@ -207,21 +207,21 @@ killall init.sh 2>/dev/null
 log "Starting HTTP server on port 80..."
 /var/tmp/sd/lighttpd -f /var/tmp/sd/http/lighttpd.conf >> $LOGFILE 2>&1 &
 
-# Start the imager_streamer daemon under a respawn supervisor. The RTSP
+# Start the imagerd daemon under a respawn supervisor. The RTSP
 # server is now in-process, so this single binary serves both the encoder
 # pipeline and the RTSP frontend on port 554.
 cd /var/tmp/sd/
 
 # if dev-tools is present dont allow the infinite cycle
 if [ -d /var/tmp/sd/dev-tools ]; then
-    log "Starting imager_streamer without respawn (dev-tools present)..."
-    ./imager_streamer >> $LOGFILE 2>&1 &
+    log "Starting imagerd without respawn (dev-tools present)..."
+    ./imagerd >> $LOGFILE 2>&1 &
 else
   (
       while true; do
-          log "Starting imager_streamer..."
-          ./imager_streamer
-          log "imager_streamer exited (rc=$?), restarting in 5s..."
+          log "Starting imagerd..."
+          ./imagerd
+          log "imagerd exited (rc=$?), restarting in 5s..."
           sleep 5
       done
   ) >> $LOGFILE 2>&1 &

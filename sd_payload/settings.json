@@ -48,6 +48,11 @@
     "port": 554,
     "name": "stream"
   },
+  "auto_tune": {
+    "enabled": true,
+    "period_s": 5,
+    "aggressiveness": 1
+  },
   "onvif": {
     "enabled": true,
     "port": 80,

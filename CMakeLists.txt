@@ -52,7 +52,7 @@ add_dependencies(lighttpd pcre2-8-shared mod_cgi)
 # -----------------------------------------------------------------------------
 # Project executables
 # -----------------------------------------------------------------------------
-add_subdirectory(src/imager_streamer)
+add_subdirectory(src/imagerd)
 add_subdirectory(src/isp_ctrl)
 add_subdirectory(src/isp_tool)
 add_subdirectory(src/snapshot_server)
@@ -71,7 +71,7 @@ endif()
 # Roll-up: every target that contributes to the SD tarball
 # -----------------------------------------------------------------------------
 set(SD_TARGETS
-    imager_streamer
+    imagerd
     isp_ctrl
     isp_tool
     snapshot
@@ -90,7 +90,7 @@ add_custom_target(${PROJECT_NAME}_tools DEPENDS ${SD_TARGETS})
 # =============================================================================
 # Packaging — produce ${PROJECT_NAME}-${VERSION}.tar containing:
 #
-#   /<binary>          rtsp_server, imager_streamer, lighttpd, etc.
+#   /<binary>          imagerd, isp_ctrl, snapshot, lighttpd, etc.
 #   /lib/*.so*         all required shared libs
 #   /dev-tools/        only when BUILD_DEV_TOOLS=ON
 #   /<sd_payload/*>    settings.json, http/, wifi/, Yi/, zlog.conf, ...
@@ -103,7 +103,7 @@ set(LIVE555_GLOB  ${CMAKE_BINARY_DIR}/third-party/live555/*.so)
 
 # Binaries that land at the top level of the tarball.
 set(PKG_BINARIES
-    ${CMAKE_BINARY_DIR}/src/imager_streamer/imager_streamer
+    ${CMAKE_BINARY_DIR}/src/imagerd/imagerd
     ${CMAKE_BINARY_DIR}/src/isp_ctrl/isp_ctrl
     ${CMAKE_BINARY_DIR}/src/snapshot_server/snapshot
     ${CMAKE_BINARY_DIR}/src/sntp/sntp

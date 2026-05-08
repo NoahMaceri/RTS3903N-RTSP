@@ -18,7 +18,7 @@ cmake -G Ninja -S .. -B .
 ninja
 
 # Build a single executable (faster iteration):
-ninja imager_streamer       # or rtsp_server, isp_ctrl, snapshot, isp_tool, ptz_tool, lighttpd
+ninja imagerd       # or rtsp_server, isp_ctrl, snapshot, isp_tool, ptz_tool, lighttpd
 
 # Package SD-card tarball (RTS3903N_RTSP-<version>.tar):
 ninja package_RTS3903N_RTSP
@@ -39,7 +39,7 @@ Two long-running processes plus several CGI helpers, all started by `sd_payload/
 
 ```
                 ┌──────────────────────────┐
-   ISP/H.264 ─► │       imager_streamer    │ ──► /tmp/video.h264 (FIFO)  ──┐
+   ISP/H.264 ─► │       imagerd    │ ──► /tmp/video.h264 (FIFO)  ──┐
    ISP/MJPEG ─► │  (producer; main daemon) │     /tmp/audio.ulaw (FIFO)  ──┤
    Audio/G.711─►│                          │     /tmp/snapshot.sock (UDS)─┐│
                 └──────────────────────────┘                              ││
@@ -57,14 +57,14 @@ Two long-running processes plus several CGI helpers, all started by `sd_payload/
 
 Key consequences of this layout:
 
-- **`imager_streamer` is the only process that touches RTS AV channels.** `isp_ctrl` and `isp_tool` *also* call `rts_av_init()`/`rts_av_get_isp_ctrl()`, but only as one-shot tools that exit immediately. Long-lived ISP state lives in `imager_streamer`.
-- **`rtsp_server` is a pure FIFO consumer.** It does not know about hardware. Adding a new media type requires (a) a new producer path in `imager_streamer.cpp` writing a new FIFO, and (b) a new `*LiveFifoSubsession.h` wired into `rtsp_server.cpp`.
+- **`imagerd` is the only process that touches RTS AV channels.** `isp_ctrl` and `isp_tool` *also* call `rts_av_init()`/`rts_av_get_isp_ctrl()`, but only as one-shot tools that exit immediately. Long-lived ISP state lives in `imagerd`.
+- **`rtsp_server` is a pure FIFO consumer.** It does not know about hardware. Adding a new media type requires (a) a new producer path in `imagerd.cpp` writing a new FIFO, and (b) a new `*LiveFifoSubsession.h` wired into `rtsp_server.cpp`.
 - **Standby mode**: when no RTSP client is connected, `write_to_fifo` returns -1/EPIPE; the main loop sets `g_fifo_broken`, recreates the FIFO every `FIFO_RECOVERY_INTERVAL_MS` (5s), and silently drops frames. Don't treat broken-pipe as fatal.
-- **Snapshots** flow `lighttpd → /cgi-bin/snapshot wrapper → snapshot_server (CGI client) → /tmp/snapshot.sock → snapshot_server_thread inside imager_streamer → MJPEG callback`. The snapshot path is gated on an MJPEG channel that's bound to the same ISP as the H.264 channel.
+- **Snapshots** flow `lighttpd → /cgi-bin/snapshot wrapper → snapshot_server (CGI client) → /tmp/snapshot.sock → snapshot_server_thread inside imagerd → MJPEG callback`. The snapshot path is gated on an MJPEG channel that's bound to the same ISP as the H.264 channel.
 
 ## Threading & shutdown invariants
 
-`imager_streamer` runs five+ threads (main capture, audio capture, IR control, snapshot server, per-FIFO unlock readers). The shutdown rules are non-obvious and have been the source of past bugs (see v0.4.1 changelog in README.md):
+`imagerd` runs five+ threads (main capture, audio capture, IR control, snapshot server, per-FIFO unlock readers). The shutdown rules are non-obvious and have been the source of past bugs (see v0.4.1 changelog in README.md):
 
 - **`g_exit` (atomic bool) is the cooperative shutdown flag.** Every thread loop checks it. Long sleeps must be interruptible — see how `day_night_ctrl`'s 15s sensor warmup is broken into short polls.
 - **Threads are joined, not detached, when they reference resources owned by `main`** (e.g. ISP/H264/audio channels, the snapshot socket, the FIFO fd). The teardown order in `kill_stream()` is: stop IR thread → stop audio → join snapshot thread → tear down AV channels → `rts_av_release()` → join FIFO unlock thread → close FIFO. Don't reorder without re-checking dependencies.
@@ -82,7 +82,7 @@ The camera reads `settings.json` from its current working directory at startup �
 
 There are **two** parameter→`enum_rts_video_ctrl_id` maps:
 
-1. `src/imager_streamer/isp_utils.cpp::param_setting_map` — used at boot to apply `settings.json` `isp.*` keys.
+1. `src/imagerd/isp_utils.cpp::param_setting_map` — used at boot to apply `settings.json` `isp.*` keys.
 2. `src/isp_ctrl/isp_ctrl.cpp::get_param_definitions()` — used by the web UI; richer (display name, group, type, enum options).
 
 These are intentionally separate (the web UI needs metadata the boot path doesn't), but the **canonical key names must match** — keep them in sync when adding params, or the UI will set a value that won't be persisted on next boot.
@@ -91,17 +91,17 @@ These are intentionally separate (the web UI needs metadata the boot path doesn'
 
 ## CPLD (board peripherals)
 
-`src/imager_streamer/cpld.h` is a header-only wrapper over `/dev/cpld_periph` (the kernel module shipped in `sd_payload/Yi/ko/cpld_periph.ko`). Controls IR-cut, IR LED, audio enable, status LEDs. Interface was reverse-engineered — there's no upstream driver doc, so behavior was verified empirically on a Victure SC210. New ioctls go in the `CPLD_*` defines and a corresponding `set_*()` helper.
+`src/imagerd/cpld.h` is a header-only wrapper over `/dev/cpld_periph` (the kernel module shipped in `sd_payload/Yi/ko/cpld_periph.ko`). Controls IR-cut, IR LED, audio enable, status LEDs. Interface was reverse-engineered — there's no upstream driver doc, so behavior was verified empirically on a Victure SC210. New ioctls go in the `CPLD_*` defines and a corresponding `set_*()` helper.
 
 ## Boot sequence (camera-side)
 
-`sd_payload/wifi/config.sh` runs as the SD-card hijack entry point. In order: backs up flash on first run → kills the stock cloud agents (`watchdog`, `cloud`, `p2p_tnp`, `mp4record`, `oss`, `rmm`, …) → parses `network.ini`, regenerates `wifi/wpa_supplicant.conf`, runs `wpa_supplicant` → `udhcpc` (or static IP) → lighttpd on :80 → sleeps 30s for PTZ calibration → `imager_streamer &` (under a respawn supervisor; serves both the encoder pipeline and RTSP via in-process live555) → if `dev-tools/` is in the package: `telnetd` on :23, `uftpd`, `dropbear` on :22 → `sntp pool.ntp.org &` for clock sync. Logs go to `/var/tmp/sd/boot.log` (boot) and `/var/log/rtsp_streamer.log` (rotating, 256KB × 3, configured in `sd_payload/zlog.conf`).
+`sd_payload/wifi/config.sh` runs as the SD-card hijack entry point. In order: backs up flash on first run → kills the stock cloud agents (`watchdog`, `cloud`, `p2p_tnp`, `mp4record`, `oss`, `rmm`, …) → parses `network.ini`, regenerates `wifi/wpa_supplicant.conf`, runs `wpa_supplicant` → `udhcpc` (or static IP) → lighttpd on :80 → sleeps 30s for PTZ calibration → `imagerd &` (under a respawn supervisor; serves both the encoder pipeline and RTSP via in-process live555) → if `dev-tools/` is in the package: `telnetd` on :23, `uftpd`, `dropbear` on :22 → `sntp pool.ntp.org &` for clock sync. Logs go to `/var/tmp/sd/boot.log` (boot) and `/var/log/rtsp_streamer.log` (rotating, 256KB × 3, configured in `sd_payload/zlog.conf`).
 
 Network configuration lives in `/var/tmp/sd/network.ini` (sections `[wifi]` for SSID/PSK and `[network]` for optional static IP/netmask/gateway). `config.sh` parses it via a tiny awk INI helper, regenerates `wifi/wpa_supplicant.conf` from those values on every boot (the file is marked DO-NOT-EDIT), and applies static IP if all three fields are set, else falls back to DHCP. `wpa_supplicant_sample.conf` and the `Factory/` placement are gone — `network.ini` is the only file the user touches.
 
 ## Audio constraints
 
-Audio is hard-wired to **G.711 u-law / 8 kHz / mono / 64 kbps** end-to-end. The RTSP side uses RTP payload type 0 (PCMU static), and the producer creates the encoder with `rts_av_create_audio_encode_chn(RTS_AUDIO_TYPE_ID_ULAW, 64000)`. To support a different codec/rate, all three of (a) the audio capture attrs in `imager_streamer.cpp::start_stream`, (b) the `PCMULiveFifoSubsession` RTP sink config, and (c) the audio FIFO chunk size (160 bytes = 20ms at 8 kHz) must change together.
+Audio is hard-wired to **G.711 u-law / 8 kHz / mono / 64 kbps** end-to-end. The RTSP side uses RTP payload type 0 (PCMU static), and the producer creates the encoder with `rts_av_create_audio_encode_chn(RTS_AUDIO_TYPE_ID_ULAW, 64000)`. To support a different codec/rate, all three of (a) the audio capture attrs in `imagerd.cpp::start_stream`, (b) the `PCMULiveFifoSubsession` RTP sink config, and (c) the audio FIFO chunk size (160 bytes = 20ms at 8 kHz) must change together.
 
 Capture gain is applied through ALSA mixer controls `Real Amic`, `Front Amic`, `ADC Compensate` — do not assume a single mixer element exists.
 
@@ -113,4 +113,4 @@ Capture gain is applied through ALSA mixer controls `Real Amic`, `Front Amic`, `
 
 - **Adding a new daemon/CGI binary**: add `add_subdirectory(src/<name>)` in the top-level `CMakeLists.txt` *and* a `COMMAND ${CMAKE_COMMAND} -E copy ... ${CMAKE_BINARY_DIR}/out` line in the `package_${PROJECT_NAME}` custom target — otherwise it won't end up in the tarball. Add it to the `${PROJECT_NAME}_tools` `DEPENDS` list too.
 - **Adding a new shared library dependency**: copy/rename it under the `# -- libraries --` section of the package target (Realtek libs are versioned as `.so.0`/`.so.1` on the camera even though the toolchain ships them unversioned).
-- **Logging**: use the matching zlog category — `imager` (imager_streamer), `server` (rtsp_server), `isp_adj` (isp_tool). Production rules in `zlog.conf` filter to INFO+, so DEBUG output won't appear on-camera; that's intentional (avoid frame-stat / ADC-reading noise in tmpfs-backed `/var/log`).
+- **Logging**: use the matching zlog category — `imager` (imagerd), `server` (rtsp_server), `isp_adj` (isp_tool). Production rules in `zlog.conf` filter to INFO+, so DEBUG output won't appear on-camera; that's intentional (avoid frame-stat / ADC-reading noise in tmpfs-backed `/var/log`).

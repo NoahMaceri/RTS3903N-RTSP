@@ -1,5 +1,5 @@
-#ifndef IMAGER_STREAMER_H
-#define IMAGER_STREAMER_H
+#ifndef IMAGERD_H
+#define IMAGERD_H
 
 #include <cstdint>
 #include <climits>
@@ -32,6 +32,7 @@
 #include "cpld.h"
 #include "isp_utils.h"
 #include "day_night_ctrl.h"
+#include "auto_tune_ctrl.h"
 
 #define SNAPSHOT_SOCKET "/tmp/snapshot.sock"
 #define STREAMING_FAILURE_THRESHOLD 100
@@ -43,6 +44,7 @@ typedef struct {
     int32_t audio_capture;   // Audio capture channel
     int32_t audio_encode;    // Audio encoder channel (G.711 u-law)
     day_night_ctrl *ir_control;
+    auto_tune_ctrl *auto_tune;
     pthread_t snapshot_thread;
     bool snapshot_thread_started;
     pthread_t audio_thread;
@@ -54,4 +56,4 @@ extern std::atomic<bool> g_exit;
 extern zlog_category_t *vid_c;
 
 
-#endif // IMAGER_STREAMER_H
+#endif // IMAGERD_H

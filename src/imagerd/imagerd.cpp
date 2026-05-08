@@ -16,7 +16,7 @@
  * Based on the works of Colin Jensen (Copyright (c) 2021)
  */
 
-#include "imager_streamer.h"
+#include "imagerd.h"
 #include "rtsp_worker.h"
 #include <mutex>
 #include <condition_variable>
@@ -367,15 +367,21 @@ void kill_stream(handlers *h) {
         zlog_debug(vid_c, "Audio hardware disabled via CPLD");
     }
 
-    // 1. Stop the IR control thread first. It calls into the ISP via
-    //    g_isp_mutex, so it must be joined before we destroy the ISP channel.
-    zlog_info(vid_c, "Tearing down IR control");
+    // 1. Stop the ISP-touching helper threads first (IR control + the
+    //    auto-tune loop). Both go through g_isp_mutex, so they must be
+    //    joined before we destroy the ISP channel itself.
+    zlog_info(vid_c, "Tearing down IR control + auto-tune");
+    if (h->auto_tune) {
+        h->auto_tune->stop();
+        delete h->auto_tune;
+        h->auto_tune = nullptr;
+    }
     if (h->ir_control) {
         h->ir_control->stop();
         delete h->ir_control;
         h->ir_control = nullptr;
     }
-    zlog_info(vid_c, "IR control stopped");
+    zlog_info(vid_c, "IR control + auto-tune stopped");
 
     // 2. Stop the audio capture thread. Touches audio_encode/audio_capture,
     //    so we must join BEFORE tearing those down. The thread sees
@@ -486,6 +492,7 @@ int start_stream(nlohmann::json &cfg) {
         .audio_capture = -1,
         .audio_encode = -1,
         .ir_control = nullptr,
+        .auto_tune = nullptr,
         .snapshot_thread = 0,
         .snapshot_thread_started = false,
         .audio_thread = 0,
@@ -722,6 +729,24 @@ int start_stream(nlohmann::json &cfg) {
         return -1;
     }
 
+    // init auto_tune_ctrl (optional — silently disabled if not in config).
+    // Reads AE histogram on a timer and adjusts contrast/sharpness/wdr_level
+    // to whatever the current scene calls for; the SDK's own AE/AWB keep
+    // running underneath.
+    if (cfg.contains("auto_tune")) {
+        const auto &at = cfg["auto_tune"];
+        auto_tune_ctrl::Config atc;
+        atc.enabled        = at.value("enabled", true);
+        atc.period_s       = at.value("period_s", 5);
+        atc.aggressiveness = static_cast<uint8_t>(at.value("aggressiveness", 1));
+        h.auto_tune = new auto_tune_ctrl(atc, vid_c);
+        if (!h.auto_tune->begin()) {
+            zlog_warn(vid_c, "Auto-tune failed to start; continuing without it");
+            delete h.auto_tune;
+            h.auto_tune = nullptr;
+        }
+    }
+
     // Start snapshot server thread if MJPEG is available
     if (h.mjpeg >= 0) {
         if (pthread_create(&h.snapshot_thread, nullptr, snapshot_server_thread, nullptr) != 0) {
@@ -893,13 +918,13 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    vid_c = zlog_get_category("imager");
+    vid_c = zlog_get_category("imagerd");
     if (!vid_c) {
-        fprintf(stderr, "zlog_get_category(\"imager\") returned NULL (category not defined?)\n");
+        fprintf(stderr, "zlog_get_category(\"imagerd\") returned NULL (category not defined?)\n");
         return -1;
     }
 
-    zlog_info(vid_c, "Realtek RTS imager streamer v%d.%d.%d started", VER_MAJOR, VER_MINOR, VER_PATCH);
+    zlog_info(vid_c, "Realtek RTS imagerd v%d.%d.%d started", VER_MAJOR, VER_MINOR, VER_PATCH);
 
     // Ensure settings.json exists
     struct stat buffer{};
