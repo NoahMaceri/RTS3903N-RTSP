@@ -98,10 +98,6 @@ log "Checking assigned IP on wlan0..."
 IP_ADDR=$(ifconfig wlan0 | grep 'inet ' | awk '{print $2}')
 log "Assigned IP on wlan0: $IP_ADDR"
 
-# Start Telnet server on port 23 if not already running
-log "Starting Telnet on port 23..."
-/bin/busybox telnetd -p 23 >> $LOGFILE 2>&1 &
-
 # Start HTTP server (lighttpd) for web interface
 log "Starting HTTP server on port 80..."
 /var/tmp/sd/lighttpd -f /var/tmp/sd/http/lighttpd.conf >> $LOGFILE 2>&1 &
@@ -112,13 +108,81 @@ sleep 30s
 killall dispatch 2>/dev/null
 killall init.sh 2>/dev/null
 
-# Start imager streamer and RTSP server
+# Start imager streamer and RTSP server under a respawn supervisor. If either
+# daemon exits (crash, fatal threshold), the supervisor logs and restarts it
+# after a short backoff — the camera stays usable without a reboot.
 cd /var/tmp/sd/
-log "Starting imager_streamer..."
-./imager_streamer >> $LOGFILE 2>&1 &
+
+(
+    while true; do
+        log "Starting imager_streamer..."
+        ./imager_streamer
+        log "imager_streamer exited (rc=$?), restarting in 5s..."
+        sleep 5
+    done
+) >> $LOGFILE 2>&1 &
 sleep 2
 
-log "Starting rtsp_server..."
-./rtsp_server >> $LOGFILE 2>&1 &
+(
+    while true; do
+        log "Starting rtsp_server..."
+        ./rtsp_server
+        log "rtsp_server exited (rc=$?), restarting in 5s..."
+        sleep 5
+    done
+) >> $LOGFILE 2>&1 &
+
+# Check if dev-tools folder exists
+if [ -d /var/tmp/sd/dev-tools ]; then
+    log "Dev-tools detected in /var/tmp/sd/dev-tools."
+
+    # Make sure UNIX98 PTYs are available. Without devpts mounted on /dev/pts,
+    # dropbear's open("/dev/ptmx") fails and SSH clients see "PTY allocation
+    # request failed on channel 0" right after auth. Busybox telnetd uses BSD
+    # ptys (/dev/pty* static nodes) so it works either way; that's why telnet
+    # has been fine and SSH wasn't.
+    mkdir -p /dev/pts
+    grep -q ' /dev/pts ' /proc/mounts || mount -t devpts devpts /dev/pts
+
+    # Start Telnet server on port 23 if not already running
+    log "Starting Telnet on port 23..."
+    /bin/busybox telnetd -p 23 >> $LOGFILE 2>&1 &
+    log "Starting uftpd (dev-tools) on /var/tmp/sd..."
+    /var/tmp/sd/dev-tools/sbin/uftpd -o writable /var/tmp/sd >> $LOGFILE 2>&1 &
+    # dropbear: SSH server on port 22. Everything writable lives under
+    # /var/tmp/sd (the SD card) — that's the only r/w location on this camera.
+    # Host keys persist there so they survive reboots; generated on first boot
+    # (RSA gen on this MIPS-I CPU takes ~30s; ED25519 is ~instant).
+    DROPBEAR_BIN=/var/tmp/sd/dev-tools/sbin/dropbear
+    DROPBEAR_KEYGEN=/var/tmp/sd/dev-tools/bin/dropbearkey
+    DROPBEAR_KEYDIR=/var/tmp/sd/dev-tools/etc/dropbear
+    DROPBEAR_PIDFILE=/var/tmp/sd/dev-tools/var/dropbear.pid
+    if [ -x "$DROPBEAR_BIN" ]; then
+        mkdir -p "$DROPBEAR_KEYDIR" "$(dirname "$DROPBEAR_PIDFILE")"
+        if [ ! -f "$DROPBEAR_KEYDIR/dropbear_rsa_host_key" ]; then
+            log "Generating dropbear RSA host key (one-time, ~30s)..."
+            $DROPBEAR_KEYGEN -t rsa -f "$DROPBEAR_KEYDIR/dropbear_rsa_host_key" >> $LOGFILE 2>&1
+        fi
+        if [ ! -f "$DROPBEAR_KEYDIR/dropbear_ed25519_host_key" ]; then
+            log "Generating dropbear ED25519 host key (one-time)..."
+            $DROPBEAR_KEYGEN -t ed25519 -f "$DROPBEAR_KEYDIR/dropbear_ed25519_host_key" >> $LOGFILE 2>&1
+        fi
+        log "Starting dropbear SSH on port 22..."
+        # -B  allow blank passwords (stock /etc/passwd often has empty root pwd)
+        # -P  pidfile under /var/tmp/sd; default /var/run/* is tmpfs but make it
+        #     explicit so all dropbear state stays in one r/w place.
+        # (Syslog was disabled at compile time, so dropbear logs to stderr by
+        #  default — no flag needed; -E only exists in syslog-enabled builds.)
+        $DROPBEAR_BIN \
+            -r "$DROPBEAR_KEYDIR/dropbear_rsa_host_key" \
+            -r "$DROPBEAR_KEYDIR/dropbear_ed25519_host_key" \
+            -P "$DROPBEAR_PIDFILE" \
+            -p 22 \
+            -B \
+            >> $LOGFILE 2>&1 &
+    fi
+else
+    log "Dev-tools not found in /var/tmp/sd/dev-tools; skipping Telnet and uftpd setup."
+fi
 
 log "config.sh fully executed."

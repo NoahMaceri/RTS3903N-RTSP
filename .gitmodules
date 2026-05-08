@@ -7,3 +7,15 @@
 [submodule "third-party/lighttpd1.4"]
 	path = third-party/lighttpd1.4
 	url = https://github.com/lighttpd/lighttpd1.4.git
+[submodule "dev-tools/libite"]
+	path = dev-tools/libite
+	url = https://github.com/troglobit/libite.git
+[submodule "dev-tools/libuev"]
+	path = dev-tools/libuev
+	url = https://github.com/troglobit/libuev.git
+[submodule "dev-tools/uftpd"]
+	path = dev-tools/uftpd
+	url = https://github.com/troglobit/uftpd.git
+[submodule "dev-tools/dropbear"]
+	path = dev-tools/dropbear
+	url = https://github.com/mkj/dropbear.git
