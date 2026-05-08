@@ -108,9 +108,9 @@ sleep 30s
 killall dispatch 2>/dev/null
 killall init.sh 2>/dev/null
 
-# Start imager streamer and RTSP server under a respawn supervisor. If either
-# daemon exits (crash, fatal threshold), the supervisor logs and restarts it
-# after a short backoff — the camera stays usable without a reboot.
+# Start the imager_streamer daemon under a respawn supervisor. The RTSP
+# server is now in-process, so this single binary serves both the encoder
+# pipeline and the RTSP frontend on port 554.
 cd /var/tmp/sd/
 
 (
@@ -118,16 +118,6 @@ cd /var/tmp/sd/
         log "Starting imager_streamer..."
         ./imager_streamer
         log "imager_streamer exited (rc=$?), restarting in 5s..."
-        sleep 5
-    done
-) >> $LOGFILE 2>&1 &
-sleep 2
-
-(
-    while true; do
-        log "Starting rtsp_server..."
-        ./rtsp_server
-        log "rtsp_server exited (rc=$?), restarting in 5s..."
         sleep 5
     done
 ) >> $LOGFILE 2>&1 &
@@ -184,5 +174,20 @@ if [ -d /var/tmp/sd/dev-tools ]; then
 else
     log "Dev-tools not found in /var/tmp/sd/dev-tools; skipping Telnet and uftpd setup."
 fi
+
+# Sync system time via SNTP (best-effort, async). The hardware has no RTC,
+# so without this every reboot starts the clock at the kernel epoch and
+# breaks anything wall-clock-sensitive. The stock busybox image here has
+# no ntpd / ntpdate / rdate and a stripped wget, so we ship our own tiny
+# SNTP client (./sntp) which does one UDP/123 round-trip and settimeofday.
+# Backgrounded so a network hiccup doesn't block boot.
+(
+    if /var/tmp/sd/sntp pool.ntp.org > /tmp/_sntp.out 2>&1; then
+        log "Time synced via SNTP: $(cat /tmp/_sntp.out)"
+    else
+        log "SNTP sync failed: $(cat /tmp/_sntp.out); clock will drift"
+    fi
+    rm -f /tmp/_sntp.out
+) >> $LOGFILE 2>&1 &
 
 log "config.sh fully executed."

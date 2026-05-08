@@ -33,12 +33,8 @@
 #include "isp_utils.h"
 #include "day_night_ctrl.h"
 
-#define VIDEO_FIFO "/tmp/video.h264"
-#define AUDIO_FIFO "/tmp/audio.ulaw"
 #define SNAPSHOT_SOCKET "/tmp/snapshot.sock"
 #define STREAMING_FAILURE_THRESHOLD 100
-#define FIFO_WRITE_TIMEOUT_MS 100
-#define FIFO_RECOVERY_INTERVAL_MS 5000
 
 typedef struct {
     int32_t isp;
@@ -46,13 +42,12 @@ typedef struct {
     int32_t mjpeg;           // MJPEG encoder for snapshots
     int32_t audio_capture;   // Audio capture channel
     int32_t audio_encode;    // Audio encoder channel (G.711 u-law)
-    int fifo_fd;             // Video FIFO fd for non-blocking I/O
-    int audio_fifo_fd;       // Audio FIFO fd
     day_night_ctrl *ir_control;
-    pthread_t unlock_thread;
-    bool unlock_thread_started;
     pthread_t snapshot_thread;
     bool snapshot_thread_started;
+    pthread_t audio_thread;
+    bool audio_thread_started;
+    bool rtsp_worker_started;
 } handlers;
 
 extern std::atomic<bool> g_exit;

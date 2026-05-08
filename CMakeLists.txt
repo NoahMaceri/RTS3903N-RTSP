@@ -53,11 +53,11 @@ add_dependencies(lighttpd pcre2-8-shared mod_cgi)
 # Project executables
 # -----------------------------------------------------------------------------
 add_subdirectory(src/imager_streamer)
-add_subdirectory(src/rtsp_server)
 add_subdirectory(src/isp_ctrl)
 add_subdirectory(src/isp_tool)
 add_subdirectory(src/snapshot_server)
 add_subdirectory(src/ptz_tool)
+add_subdirectory(src/sntp)
 
 # -----------------------------------------------------------------------------
 # Optional dev tools
@@ -70,12 +70,12 @@ endif()
 # Roll-up: every target that contributes to the SD tarball
 # -----------------------------------------------------------------------------
 set(SD_TARGETS
-    rtsp_server
     imager_streamer
     isp_ctrl
     isp_tool
     snapshot
     ptz_tool
+    sntp
     lighttpd
 )
 if(BUILD_DEV_TOOLS)
@@ -99,10 +99,10 @@ set(LIVE555_GLOB  ${CMAKE_BINARY_DIR}/third-party/live555/*.so)
 
 # Binaries that land at the top level of the tarball.
 set(PKG_BINARIES
-    ${CMAKE_BINARY_DIR}/src/rtsp_server/rtsp_server
     ${CMAKE_BINARY_DIR}/src/imager_streamer/imager_streamer
     ${CMAKE_BINARY_DIR}/src/isp_ctrl/isp_ctrl
     ${CMAKE_BINARY_DIR}/src/snapshot_server/snapshot
+    ${CMAKE_BINARY_DIR}/src/sntp/sntp
     ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/build/lighttpd
 )
 
