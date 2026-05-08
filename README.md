@@ -192,6 +192,8 @@ The camera performs a 30-second calibration on boot. Wait for calibration to com
 
 ## Development
 
+### AI disclosure
+Portions of this project's code, refactors, and documentation were produced in collaboration with AI coding assistants (Anthropic's Claude). Every change is fully reviewed by a human and tested on a physical RTS3903N camera before it is commited, and ultimately reaches main. If you suspect a bug originated from an AI-generated path, please file an issue and tag it.
 ### Project Structure
 
 ```
@@ -238,12 +240,15 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - [x] Web-based ISP control
 - [x] JPEG snapshots
 - [x] lighttpd HTTP server
-- [ ] Audio streaming
+- [x] Audio streaming
 - [ ] ONVIF compatibility
 
 ---
 
 ## Version History
+
+### v0.5.0 (2026-05-08)
+
 
 ### v0.4.1 (2026-03-18)
 
@@ -284,14 +289,11 @@ First release after forking from [cjj25/Yi-RTS3903N-RTSPServer](https://github.c
 
 This project builds upon the work of many contributors:
 
-### rtsp_server
-- [@roleoroleo](https://github.com/roleoroleo) — Original author
-- [@alienatedsec](https://github.com/alienatedsec) — Modified version
-- [@cjj25](https://github.com/cjj25) — Modified version
-
 ### imager_streamer
+- [@roleoroleo](https://github.com/roleoroleo) — Original author of rtsp_server
+- [@alienatedsec](https://github.com/alienatedsec) — Modified version of rtsp_server
+- [@cjj25](https://github.com/cjj25) — Original author of rt_stream usage
 - [Realtek](https://www.realtek.com/) — rt_stream examples
-- [@cjj25](https://github.com/cjj25) — Original author
 
 ### sd_payload
 - [@rage2dev](https://github.com/rage2dev/) — Original author
