@@ -241,7 +241,9 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - [x] JPEG snapshots
 - [x] lighttpd HTTP server
 - [x] Audio streaming
-- [ ] ONVIF compatibility
+- [x] ONVIF Profile S (auto-discovery, GetStreamUri, GetSnapshotUri)
+- [ ] ONVIF PTZ — URL routing exists (`/onvif/ptz_service`), but the binary's hardware-specific PTZ paths need a wrapper that translates ONVIF's normalized `[-1, 1]` velocities into our `ptz_tool` directional commands.
+- [ ] ONVIF audio backchannel — receive audio from the client and play it through the camera's speaker. Requires both an ONVIF Media-side `AudioOutput` configuration and a producer pipeline feeding the rts audio decoder.
 
 ---
 
