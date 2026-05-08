@@ -24,16 +24,14 @@ public:
         AudioFrame frame;
         if (!fQueue->try_pop(frame)) return;
 
-        if (frame.data.size() > fMaxSize) {
-            fFrameSize = fMaxSize;
-            fNumTruncatedBytes = frame.data.size() - fMaxSize;
-        } else {
-            fFrameSize = frame.data.size();
-            fNumTruncatedBytes = 0;
-        }
+        // G.711 packets from the encoder are tiny (~160 bytes per 20ms
+        // chunk). They will always fit in fMaxSize — no truncation case
+        // worth handling here.
+        fFrameSize = (frame.data.size() > fMaxSize) ? fMaxSize : frame.data.size();
+        fNumTruncatedBytes = 0;
         memcpy(fTo, frame.data.data(), fFrameSize);
 
-        fPresentationTime.tv_sec  = frame.presentation_us / 1000000ULL;
+        fPresentationTime.tv_sec = frame.presentation_us / 1000000ULL;
         fPresentationTime.tv_usec = frame.presentation_us % 1000000ULL;
 
         // Pacing for the RTP sink: G.711 at 8 kHz, 1 byte = 1 sample = 125 us.
@@ -57,7 +55,7 @@ protected:
 
 private:
     FrameQueue<AudioFrame>* fQueue;
-    PCMUQueueSource**       fBackRef;
+    PCMUQueueSource** fBackRef;
 };
 
 class PCMUQueueSubsession : public OnDemandServerMediaSubsession {
@@ -75,7 +73,8 @@ protected:
                         PCMUQueueSource** source_out,
                         Boolean reuseFirstSource)
         : OnDemandServerMediaSubsession(env, reuseFirstSource),
-          fQueue(queue), fSourceOut(source_out) {}
+          fQueue(queue), fSourceOut(source_out) {
+    }
 
     FramedSource* createNewStreamSource(unsigned /*clientSessionId*/,
                                         unsigned& estBitrate) override {
@@ -88,17 +87,17 @@ protected:
                               FramedSource* /*inputSource*/) override {
         // Static RTP payload type 0 = PCMU. 8 kHz, mono.
         return SimpleRTPSink::createNew(envir(), rtpGroupsock,
-                                        0,        // payload type
-                                        8000,     // timestamp frequency
+                                        0, // payload type
+                                        8000, // timestamp frequency
                                         "audio",
                                         "PCMU",
-                                        1,        // channels
-                                        False);   // multiple frames per packet
+                                        1, // channels
+                                        False); // multiple frames per packet
     }
 
 private:
     FrameQueue<AudioFrame>* fQueue;
-    PCMUQueueSource**       fSourceOut;
+    PCMUQueueSource** fSourceOut;
 };
 
 #endif // PCMU_QUEUE_SUBSESSION_H

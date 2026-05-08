@@ -219,7 +219,7 @@ static void terminate(int /*signum*/) {
     g_exit = true;
 }
 
-uint8_t config_h264_chn(const int h264_ch, const uint32_t max_bitrate, const uint32_t min_bitrate, const uint32_t target_bitrate) {
+uint8_t config_h264_chn(const int h264_ch, const nlohmann::json &enc) {
     rts_video_h264_ctrl *h264_ctl = nullptr;
 
     const int ret = rts_av_query_h264_ctrl(h264_ch, &h264_ctl);
@@ -229,29 +229,44 @@ uint8_t config_h264_chn(const int h264_ch, const uint32_t max_bitrate, const uin
     }
     rts_av_get_h264_ctrl(h264_ctl);
 
-    if (!ret) {
-        h264_ctl->bitrate_mode = RTS_BITRATE_MODE_CBR;
-        h264_ctl->bitrate = target_bitrate;
-        h264_ctl->max_bitrate = max_bitrate;
-        h264_ctl->min_bitrate = min_bitrate;
-        h264_ctl->qp = 30;
-        h264_ctl->max_qp = 38;
-        h264_ctl->min_qp = 22; // set QP to a fixed value for CBR
-        h264_ctl->intra_qp_delta = -2;  // (optional) slightly better IDR quality
-        h264_ctl->enable_cabac = 1;
-        h264_ctl->slice_size = 80000;
-        h264_ctl->super_p_period = 0;
-        h264_ctl->gdr = 0;
-        h264_ctl->disable_deblocking_filter = 0;
-        h264_ctl->sei_messages = 0; // no audio stream, so disable SEI messages
-        rts_av_set_h264_ctrl(h264_ctl);
-        rts_av_release_h264_ctrl(h264_ctl);
-        zlog_info(vid_c, "Set encoder to CBR mode with target bitrate %d, max bitrate %d, min bitrate %d on channel %d",
-                  target_bitrate, max_bitrate, min_bitrate, h264_ch);
-    } else {
+    if (ret) {
         zlog_error(vid_c, "Failed to get H264 control for channel %d, ret %d", h264_ch, ret);
         return false;
     }
+
+    // Required fields — settings.json must specify these.
+    const uint32_t target_bitrate = enc["target_bitrate"].get<uint32_t>();
+    const uint32_t max_bitrate    = enc["max_bitrate"].get<uint32_t>();
+    const uint32_t min_bitrate    = enc["min_bitrate"].get<uint32_t>();
+    // Optional quality knobs — fall back to the values used before they
+    // were promoted into settings.json so older config files still work.
+    //   max_qp:         hard ceiling on QP (lower = better quality but
+    //                   encoder may overshoot bitrate budget on motion).
+    //   intra_qp_delta: I-frame QP offset relative to P (negative = sharper
+    //                   keyframes; whole GOP looks better since P-frames
+    //                   reference them).
+    const int32_t  max_qp         = enc.value("max_qp",         38);
+    const int32_t  intra_qp_delta = enc.value("intra_qp_delta", -2);
+
+    h264_ctl->bitrate_mode = RTS_BITRATE_MODE_CBR;
+    h264_ctl->bitrate              = target_bitrate;
+    h264_ctl->max_bitrate          = max_bitrate;
+    h264_ctl->min_bitrate          = min_bitrate;
+    h264_ctl->qp                   = 30;
+    h264_ctl->max_qp               = max_qp;
+    h264_ctl->min_qp               = 22;
+    h264_ctl->intra_qp_delta       = intra_qp_delta;
+    h264_ctl->enable_cabac         = 1;
+    h264_ctl->slice_size           = 80000;
+    h264_ctl->super_p_period       = 0;
+    h264_ctl->gdr                  = 0;
+    h264_ctl->disable_deblocking_filter = 0;
+    h264_ctl->sei_messages         = 0;
+    rts_av_set_h264_ctrl(h264_ctl);
+    rts_av_release_h264_ctrl(h264_ctl);
+
+    zlog_info(vid_c, "Encoder: CBR target=%u max=%u min=%u, max_qp=%d, intra_qp_delta=%d (chn %d)",
+              target_bitrate, max_bitrate, min_bitrate, max_qp, intra_qp_delta, h264_ch);
     return true;
 }
 
@@ -593,9 +608,7 @@ int start_stream(nlohmann::json &cfg) {
     }
 
     // H264 control can ONLY be applied after the channel is enabled
-    config_h264_chn(h.h264, cfg["encoder"]["max_bitrate"].get<uint32_t>(),
-            cfg["encoder"]["min_bitrate"].get<uint32_t>(),
-            cfg["encoder"]["target_bitrate"].get<uint32_t>());
+    config_h264_chn(h.h264, cfg["encoder"]);
     set_fps(cfg["encoder"]["fps"].get<uint8_t>());
 
     ret = rts_av_start_recv(h.h264);

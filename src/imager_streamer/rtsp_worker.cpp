@@ -110,9 +110,10 @@ bool setup_live555(const Config& cfg) {
         return false;
     }
 
-    // Sized to comfortably hold one large I-frame at our target bitrate;
-    // see rtsp_server.cpp history for why this isn't multi-MB.
-    OutPacketBuffer::maxSize = 256 * 1024;
+    // Headroom for one large I-frame plus the RTP fragmentation overhead.
+    // Bursty encoder output during scene changes can briefly exceed the
+    // CBR target, and live555 silently drops NAL units that don't fit.
+    OutPacketBuffer::maxSize = 1024 * 1024;
 
     g->sms = ServerMediaSession::createNew(*g->env,
                                            cfg.stream_name.c_str(),
@@ -211,12 +212,6 @@ void push_video_frame(const uint8_t* data, size_t size,
                       bool is_keyframe, uint64_t pts_us) {
     if (!g) return;
 
-    // If a client is mid-attach and an IDR was requested, flush pending
-    // frames so the new viewer starts cleanly on this keyframe.
-    if (is_keyframe && g->idr_requested.load(std::memory_order_relaxed)) {
-        g->video_queue.clear();
-    }
-
     VideoFrame f;
     f.data.assign(data, data + size);
     f.is_keyframe      = is_keyframe;
@@ -246,7 +241,15 @@ void push_audio_frame(const uint8_t* data, size_t size, uint64_t pts_us) {
 
 bool consume_idr_request() {
     if (!g) return false;
-    return g->idr_requested.exchange(false, std::memory_order_acq_rel);
+    if (!g->idr_requested.exchange(false, std::memory_order_acq_rel)) {
+        return false;
+    }
+    // Drop anything that was queued before the producer noticed this
+    // request — those frames were captured before the new client attached
+    // and would arrive at the head of its session as junk before the
+    // forced IDR. The queue's mutex serializes us against producer pushes.
+    g->video_queue.clear();
+    return true;
 }
 
 bool video_active() { return g && g->h264_source != nullptr; }

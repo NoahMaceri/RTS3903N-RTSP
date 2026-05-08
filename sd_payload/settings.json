@@ -38,7 +38,9 @@
     "min_bitrate": 512000,
     "width": 1920,
     "height": 1080,
-    "fps": 20
+    "fps": 20,
+    "max_qp": 34,
+    "intra_qp_delta": -3
   },
   "rtsp": {
     "username": "",

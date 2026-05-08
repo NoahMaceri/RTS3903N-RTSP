@@ -36,6 +36,23 @@ public:
     void deliverFrame() {
         if (!isCurrentlyAwaitingData()) return;
 
+        // If the previous frame was bigger than fMaxSize we kept the tail
+        // here — drain that first before pulling a new frame. Truncating
+        // mid-NAL would hand the framer corrupted data and the client
+        // would see green/blocky decode artifacts.
+        if (!fLeftover.empty()) {
+            const size_t to_copy = (fLeftover.size() > fMaxSize) ? fMaxSize : fLeftover.size();
+            memcpy(fTo, fLeftover.data(), to_copy);
+            fFrameSize = to_copy;
+            fNumTruncatedBytes = 0;
+            fLeftover.erase(fLeftover.begin(), fLeftover.begin() + to_copy);
+            // Keep PTS pinned across fragments of the same access unit.
+            fPresentationTime.tv_sec = fLeftoverPts / 1000000ULL;
+            fPresentationTime.tv_usec = fLeftoverPts % 1000000ULL;
+            FramedSource::afterGetting(this);
+            return;
+        }
+
         VideoFrame frame;
         if (!fQueue->try_pop(frame)) {
             // Queue empty — nothing to do. The next push() in the producer
@@ -44,15 +61,19 @@ public:
         }
 
         if (frame.data.size() > fMaxSize) {
+            // Save the tail for the next call. fNumTruncatedBytes stays 0
+            // because nothing is *actually* truncated — just deferred.
             fFrameSize = fMaxSize;
-            fNumTruncatedBytes = frame.data.size() - fMaxSize;
+            memcpy(fTo, frame.data.data(), fMaxSize);
+            fLeftover.assign(frame.data.begin() + fMaxSize, frame.data.end());
+            fLeftoverPts = frame.presentation_us;
         } else {
             fFrameSize = frame.data.size();
-            fNumTruncatedBytes = 0;
+            memcpy(fTo, frame.data.data(), fFrameSize);
         }
-        memcpy(fTo, frame.data.data(), fFrameSize);
+        fNumTruncatedBytes = 0;
 
-        fPresentationTime.tv_sec  = frame.presentation_us / 1000000ULL;
+        fPresentationTime.tv_sec = frame.presentation_us / 1000000ULL;
         fPresentationTime.tv_usec = frame.presentation_us % 1000000ULL;
 
         FramedSource::afterGetting(this);
@@ -83,8 +104,14 @@ protected:
 
 private:
     FrameQueue<VideoFrame>* fQueue;
-    std::atomic<bool>*      fIdrRequested;
-    H264QueueSource**       fBackRef;
+    std::atomic<bool>* fIdrRequested;
+    H264QueueSource** fBackRef;
+
+    // Buffer for the tail of an oversized frame (frame.size > fMaxSize).
+    // Empty in the common case — H.264 access units at our bitrate fit in
+    // fMaxSize comfortably. Only matters for the rare giant I-frame.
+    std::vector<uint8_t> fLeftover;
+    uint64_t fLeftoverPts{0};
 };
 
 // Subsession boilerplate: creates the queue source, wraps it in the H.264
@@ -111,7 +138,8 @@ protected:
                         Boolean reuseFirstSource)
         : OnDemandServerMediaSubsession(env, reuseFirstSource),
           fQueue(queue), fIdrRequested(idr_requested),
-          fSourceOut(source_out) {}
+          fSourceOut(source_out) {
+    }
 
     ~H264QueueSubsession() override {
         if (nextTask_ != nullptr) {
@@ -195,14 +223,14 @@ private:
     }
 
     FrameQueue<VideoFrame>* fQueue;
-    std::atomic<bool>*      fIdrRequested;
-    H264QueueSource**       fSourceOut;
+    std::atomic<bool>* fIdrRequested;
+    H264QueueSource** fSourceOut;
 
-    RTPSink*  dummyRTPSink_{nullptr};
-    char*     auxSDPLine_{nullptr};
-    char      doneFlag_{0};
+    RTPSink* dummyRTPSink_{nullptr};
+    char* auxSDPLine_{nullptr};
+    char doneFlag_{0};
     TaskToken nextTask_{nullptr};
-    time_t    sdpStartTime_{0};
+    time_t sdpStartTime_{0};
 };
 
 #endif // H264_QUEUE_SUBSESSION_H
