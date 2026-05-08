@@ -56,34 +56,80 @@ if [ -f /home/app/script/default.script ]; then
     DEFAULT_SCRIPT=/home/app/script/default.script
 fi
 
-# Static network configuration (leave empty to use DHCP)
-# To use static IP, set all three values:
-#   IP="192.168.1.100"
-#   NETMASK="255.255.255.0"
-#   GATEWAY="192.168.1.1"
-IP=""
-NETMASK=""
-GATEWAY=""
+# Network configuration is now driven by /var/tmp/sd/network.ini — that's
+# the single file the user edits. We parse it here, regenerate
+# wifi/wpa_supplicant.conf, and (optionally) apply static IP from it.
+NETWORK_INI=/var/tmp/sd/network.ini
+WPA_CONF=/var/tmp/sd/wifi/wpa_supplicant.conf
 
-# Launch wpa_supplicant if config exists
-if [ -f /var/tmp/sd/Factory/wpa_supplicant.conf ]; then
-    log "Running wpa_supplicant..."
-    wpa_supplicant -c/var/tmp/sd/Factory/wpa_supplicant.conf -g/var/tmp/wpa_supplicant-global -Dwext -iwlan0 -B
-    sleep 3s
+# Read a value from a sectioned INI file: get_ini <section> <key> <file>
+# Pure busybox awk; ignores comments (#/;), tolerates whitespace around =.
+get_ini() {
+    awk -v section="$1" -v key="$2" '
+        /^[ \t]*[#;]/ { next }
+        /^[ \t]*\[/ {
+            sub(/^[ \t]*\[/, ""); sub(/\].*$/, "")
+            in_section = ($0 == section); next
+        }
+        in_section {
+            n = index($0, "=")
+            if (n > 0) {
+                k = substr($0, 1, n - 1); v = substr($0, n + 1)
+                gsub(/^[ \t]+|[ \t]+$/, "", k)
+                gsub(/^[ \t]+|[ \t]+$/, "", v)
+                if (k == key) { print v; exit }
+            }
+        }
+    ' "$3"
+}
+
+if [ ! -f "$NETWORK_INI" ]; then
+    log "ERROR: $NETWORK_INI is missing — copy network.ini from the SD payload"
+    log "       and edit it with your WiFi credentials before booting."
+else
+    SSID=$(get_ini wifi    ssid     "$NETWORK_INI")
+    PSK=$(get_ini  wifi    psk      "$NETWORK_INI")
+    NET_IP=$(get_ini       network  ip       "$NETWORK_INI")
+    NET_NETMASK=$(get_ini  network  netmask  "$NETWORK_INI")
+    NET_GATEWAY=$(get_ini  network  gateway  "$NETWORK_INI")
+
+    if [ -n "$SSID" ]; then
+        log "Generating $WPA_CONF from $NETWORK_INI..."
+        {
+            echo "# AUTO-GENERATED at boot from /var/tmp/sd/network.ini"
+            echo "# DO NOT EDIT — this file is overwritten on every reboot."
+            echo "ctrl_interface=/var/run/wpa_supplicant"
+            echo "update_config=1"
+            echo ""
+            echo "network={"
+            echo "    ssid=\"$SSID\""
+            if [ -n "$PSK" ]; then
+                echo "    psk=\"$PSK\""
+                echo "    key_mgmt=WPA-PSK"
+            else
+                echo "    key_mgmt=NONE"
+            fi
+            echo "    scan_ssid=1"
+            echo "}"
+        } > "$WPA_CONF"
+
+        log "Running wpa_supplicant..."
+        wpa_supplicant -c"$WPA_CONF" -g/var/tmp/wpa_supplicant-global -Dwext -iwlan0 -B
+        sleep 3s
+    else
+        log "WiFi: ssid empty in $NETWORK_INI; skipping wpa_supplicant"
+    fi
 fi
 
-# Configure network - use static IP if all values are set, otherwise use DHCP
-if [ -n "$IP" ] && [ -n "$NETMASK" ] && [ -n "$GATEWAY" ]; then
-    log "Configuring static IP: $IP..."
-    ifconfig wlan0 $IP netmask $NETMASK up
-    route add default gw $GATEWAY wlan0
-
-    # Verify gateway is reachable
-    ping -c 3 -W 2 $GATEWAY > /dev/null 2>&1
-    if [ $? -eq 0 ]; then
+# Configure addressing — static IP if all three fields were set, else DHCP.
+if [ -n "$NET_IP" ] && [ -n "$NET_NETMASK" ] && [ -n "$NET_GATEWAY" ]; then
+    log "Configuring static IP: $NET_IP..."
+    ifconfig wlan0 "$NET_IP" netmask "$NET_NETMASK" up
+    route add default gw "$NET_GATEWAY" wlan0
+    if ping -c 3 -W 2 "$NET_GATEWAY" > /dev/null 2>&1; then
         log "Static IP configured successfully, gateway reachable."
     else
-        log "Warning: Gateway $GATEWAY not reachable, but continuing with static IP."
+        log "Warning: Gateway $NET_GATEWAY not reachable, but continuing."
     fi
 else
     log "Using DHCP for network configuration..."

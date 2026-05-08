@@ -54,7 +54,7 @@ This creates `RTS3903N-RTSP-X.X.X.tar` containing all binaries and configuration
 
 1. Extract the package to your SD card root
 2. Edit `settings.json` with your preferences
-3. Configure WiFi in `Factory/wpa_supplicant.conf`
+3. Configure WiFi (and optionally static IP) in `network.ini` at the root of the SD card
 4. Insert SD card into camera and power on
 5. Wait ~30 seconds for boot
 6. Access stream at `rtsp://CAMERA_IP:554/stream`
