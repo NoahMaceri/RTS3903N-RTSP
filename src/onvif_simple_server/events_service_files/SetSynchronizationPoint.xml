@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:wsa5="http://www.w3.org/2005/08/addressing"
+                   xmlns:tev="http://www.onvif.org/ver10/events/wsdl">
+    <SOAP-ENV:Header>
+        <wsa5:Action SOAP-ENV:mustUnderstand="1">http://www.onvif.org/ver10/events/wsdl/PullPointSubscription/SetSynchronizationPointResponse</wsa5:Action>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+        <tev:SetSynchronizationPointResponse>
+        </tev:SetSynchronizationPointResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

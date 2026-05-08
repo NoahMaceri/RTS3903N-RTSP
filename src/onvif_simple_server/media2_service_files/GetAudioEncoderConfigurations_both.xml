@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetAudioEncoderConfigurationsResponse>
+            <tr2:Configurations token="Profile_0_AudioEncoderToken">
+                <tt:Name>Profile_0_AudioEncoder</tt:Name>
+                <tt:UseCount>1</tt:UseCount>
+                <tt:Encoding>%AUDIO_ENCODING_HIGH%</tt:Encoding>
+                <tt:Bitrate>50</tt:Bitrate>
+                <tt:SampleRate>16</tt:SampleRate>
+                <tt:Multicast>
+                    <tt:Address>
+                        <tt:Type>IPv4</tt:Type>
+                    </tt:Address>
+                    <tt:Port>0</tt:Port>
+                    <tt:TTL>0</tt:TTL>
+                    <tt:AutoStart>false</tt:AutoStart>
+                </tt:Multicast>
+                <tt:SessionTimeout>PT0S</tt:SessionTimeout>
+            </tr2:Configurations>
+            <tr2:Configurations token="Profile_1_AudioEncoderToken">
+                <tt:Name>Profile_1_AudioEncoder</tt:Name>
+                <tt:UseCount>1</tt:UseCount>
+                <tt:Encoding>%AUDIO_ENCODING_LOW%</tt:Encoding>
+                <tt:Bitrate>50</tt:Bitrate>
+                <tt:SampleRate>16</tt:SampleRate>
+                <tt:Multicast>
+                    <tt:Address>
+                        <tt:Type>IPv4</tt:Type>
+                    </tt:Address>
+                    <tt:Port>0</tt:Port>
+                    <tt:TTL>0</tt:TTL>
+                    <tt:AutoStart>false</tt:AutoStart>
+                </tt:Multicast>
+                <tt:SessionTimeout>PT0S</tt:SessionTimeout>
+            </tr2:Configurations>
+        </tr2:GetAudioEncoderConfigurationsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

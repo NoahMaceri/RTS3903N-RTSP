@@ -249,6 +249,21 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 
 ### v0.5.0 (2026-05-08)
 
+- Feature: ONVIF Profile S support via vendored `onvif_simple_server` (GPLv3). SOAP services (Device/Media/PTZ/Events/DeviceIO) run as CGI under lighttpd; standalone `wsd_simple_server` handles WS-Discovery (UDP/3702 multicast). Configured under `[onvif]` in `settings.json`; `onvif_conf_gen` regenerates the INI conf at boot so the JSON stays the single source of truth.
+- Feature: G.711 u-law audio streaming. Captured at 8 kHz mono via ALSA, advertised as RTP payload type 0 (PCMU). Capture gain configurable in `settings.json`'s `audio` block.
+- Refactor: `rtsp_server` binary deleted; live555 runs in-process inside `imager_streamer` via a custom `FramedSource` reading from in-memory queues. Eliminates `/tmp/video.h264` + `/tmp/audio.ulaw` FIFOs and lets us pass per-frame metadata (PTS, keyframe flag) directly to the framer instead of re-parsing it from the byte stream.
+- Feature: Optional dev-tools subtree gated on `-DBUILD_DEV_TOOLS=ON`. Ships `uftpd` (writable FTP/TFTP for pushing binaries onto the camera without reflashing) and `dropbear` (SSH on port 22). Telnet on port 23 is now also gated on dev-tools presence (was always on).
+- Bugfix: dropbear's cross-compile build skipped its `/dev/ptmx` runtime check and fell back to the BSD-pty path which doesn't exist on this kernel — SSH auth would succeed but PTY allocation would fail. Forced `USE_DEV_PTMX` at compile time.
+- Refactor: Network config moved out of `config.sh` and `Factory/wpa_supplicant.conf` into a single `network.ini` at the SD card root. Sections `[wifi]` (ssid, psk) and `[network]` (ip, netmask, gateway). `config.sh` regenerates `wifi/wpa_supplicant.conf` from it on every boot. Old `wpa_supplicant_sample.conf` template removed.
+- Feature: Tiny in-tree `sntp` client. The stock busybox lacks ntpd/ntpdate/rdate, the wget build is too stripped for the HTTP `Date:` trick, and the hardware has no RTC — so we ship our own. One UDP/123 round-trip, `settimeofday()`, exit. Called backgrounded from `config.sh` at end of boot.
+- Feature: H.264 quality knobs `max_qp` and `intra_qp_delta` promoted to `settings.json`'s `encoder` block. New defaults 34 / -3 (from hardcoded 38 / -2). `.value()` fallbacks keep the old defaults in effect for cameras with older `settings.json` files.
+- Feature: Force-IDR on every fresh RTSP client attach via `rts_av_request_h264_key_frame()`. Producer drops P-frames until the next keyframe so live555 starts each session on a clean IDR within ~1 frame instead of waiting up to a 2-second GOP boundary.
+- Bugfix: Queue source was discarding the tail of frames larger than `fMaxSize` instead of buffering for the next `doGetNextFrame()` call. Symptom was periodic decoder corruption around GOP boundaries. Now buffered in `fLeftover` and delivered across multiple calls with PTS pinned across the fragments.
+- Bugfix: A P-frame pushed between client attach and the producer's IDR-request consumption could land at the head of the new session ahead of the forced keyframe. Queue clearing now happens atomically inside `consume_idr_request()` so the producer always wins the race.
+- Change: live555 `OutPacketBuffer::maxSize` bumped 256 KB → 1 MB so large I-frames at higher bitrates don't get silently NAL-unit-dropped.
+- Bugfix: `audio_capture_thread` was a stack-local `pthread_t`, never joined. `kill_stream` could destroy audio channels while the thread was mid-`rts_av_recv()` (UAF on shutdown). Now tracked in `handlers` and joined before channel teardown.
+- Bugfix: `imager_streamer`'s `zlog_init("zlog.conf")` used a relative path that depended on the supervisor's inherited CWD. Now uses an absolute `/var/tmp/sd/zlog.conf` — robust across `config.sh` restructurings.
+- Cleanup: Root `CMakeLists.txt` reorganized into named sections (Generated headers / Third-party libraries / Project executables / Optional dev tools / Roll-up / Packaging). Per-target file lists hoisted into variables; the package step is now a short list of commands instead of a 90-line `add_custom_target` blob.
 
 ### v0.4.1 (2026-03-18)
 

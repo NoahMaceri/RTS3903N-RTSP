@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl">
+    <SOAP-ENV:Body>
+        <tmd:GetServiceCapabilitiesResponse>
+            <tmd:Capabilities DigitalInputOptions="false"
+                              DigitalInputs="0"
+                              SerialPorts="0"
+                              RelayOutputs="%RELAY_OUTPUTS%"
+                              AudioOutputs="%AUDIO_OUTPUTS%"
+                              AudioSources="%AUDIO_SOURCES%"
+                              VideoOutputs="0"
+                              VideoSources="1">
+            </tmd:Capabilities>
+        </tmd:GetServiceCapabilitiesResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

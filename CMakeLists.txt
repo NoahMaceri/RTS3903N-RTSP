@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 # get here; this file pulls in the cross-compiler settings.
 include(third-party/rsdk/enable_mips_uclibc.cmake)
 
-project(RTS3903N_RTSP VERSION 0.4.1 LANGUAGES C CXX)
+project(RTS3903N_RTSP VERSION 0.5.0 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -58,6 +58,7 @@ add_subdirectory(src/isp_tool)
 add_subdirectory(src/snapshot_server)
 add_subdirectory(src/ptz_tool)
 add_subdirectory(src/sntp)
+add_subdirectory(src/onvif_simple_server)
 
 # -----------------------------------------------------------------------------
 # Optional dev tools
@@ -76,6 +77,9 @@ set(SD_TARGETS
     snapshot
     ptz_tool
     sntp
+    onvif_simple_server
+    wsd_simple_server
+    onvif_conf_gen
     lighttpd
 )
 if(BUILD_DEV_TOOLS)
@@ -103,6 +107,9 @@ set(PKG_BINARIES
     ${CMAKE_BINARY_DIR}/src/isp_ctrl/isp_ctrl
     ${CMAKE_BINARY_DIR}/src/snapshot_server/snapshot
     ${CMAKE_BINARY_DIR}/src/sntp/sntp
+    ${CMAKE_BINARY_DIR}/src/onvif_simple_server/onvif_simple_server
+    ${CMAKE_BINARY_DIR}/src/onvif_simple_server/wsd_simple_server
+    ${CMAKE_BINARY_DIR}/src/onvif_simple_server/onvif_conf_gen
     ${CMAKE_BINARY_DIR}/third-party/lighttpd1.4/build/lighttpd
 )
 
@@ -153,6 +160,39 @@ add_custom_target(package_${PROJECT_NAME}
     # SD card payload (settings.json, http/, wifi/, etc.)
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/sd_payload/ ${PKG_OUT}
+
+    # WS-Discovery template XMLs — wsd_simple_server's -t flag points here
+    # at runtime to find Hello.xml, Bye.xml, ProbeMatches.xml.
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/wsd_files
+        ${PKG_OUT}/wsd_files
+
+    # ONVIF SOAP response templates — onvif_simple_server reads these via
+    # relative paths (e.g. "device_service_files/GetCapabilities.xml"), so
+    # they must sit alongside the binary at /var/tmp/sd/. The dispatcher
+    # scripts in /tmp/onvif/ cd into /var/tmp/sd/ before exec'ing the
+    # binary so these resolve correctly.
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/device_service_files
+        ${PKG_OUT}/device_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/media_service_files
+        ${PKG_OUT}/media_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/media2_service_files
+        ${PKG_OUT}/media2_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/ptz_service_files
+        ${PKG_OUT}/ptz_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/events_service_files
+        ${PKG_OUT}/events_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/deviceio_service_files
+        ${PKG_OUT}/deviceio_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/src/onvif_simple_server/generic_files
+        ${PKG_OUT}/generic_files
 
     # Optional dev tools
     ${PKG_DEV_TOOLS_CMD}

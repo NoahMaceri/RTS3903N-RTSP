@@ -1,0 +1,68 @@
+# Local patches against upstream `onvif_simple_server`
+
+This source tree is **vendored** from
+<https://github.com/roleoroleo/onvif_simple_server> (GPLv3, same as our
+project). The diffs from upstream are kept small and isolated so we can
+re-pull without losing them.
+
+## Patch 1 — drop json-c dependency (INI-only configuration)
+
+The upstream supports both INI and JSON config files; only JSON requires
+linking against `libjson-c`. We exclusively use INI here (generated at boot
+from `settings.json`), so the JSON code path is gated behind a compile-time
+`HAVE_JSON_CONFIG` macro that we never define. Effect: no `libjson-c`
+linkage, no submodule, no extra binary footprint.
+
+Files touched:
+| File | Change |
+|---|---|
+| `conf.c` | `#include <json-c/json.h>` and the four `get_*_from_json()` helpers + `process_json_conf_file()` body wrapped in `#ifdef HAVE_JSON_CONFIG` |
+| `conf.h` | `int process_json_conf_file(char *file);` declaration wrapped in `#ifdef HAVE_JSON_CONFIG` |
+| `onvif_simple_server.c` | filename-suffix dispatch (`.json` → `process_json_conf_file`) gated; falls through to `process_conf_file` unconditionally when the macro is undefined |
+| `onvif_notify_server.c` | same gating as `onvif_simple_server.c` |
+
+To restore JSON-config support, add `-DHAVE_JSON_CONFIG=1` to `CFLAGS` and
+link against `libjson-c` (or vendor it).
+
+## Patch 3 — replace `log.c` with a zlog adapter
+
+Upstream uses [rxi/log.c](https://github.com/rxi/log.c) (MIT) for its
+internal logging. We swap the implementation file with a thin shim that
+keeps the same `log.h` interface (`log_info`, `log_debug`, `log_set_level`,
+…) but routes every line through the project-wide `zlog` library, so
+ONVIF lines end up in `/var/log/rtsp_streamer.log` under category
+`"onvif"` alongside the imager/server/isp_adj categories.
+
+Files touched:
+| File | Change |
+|---|---|
+| `log.c` | Replaced wholesale. New body links against `<zlog.h>` and forwards `log_log()` calls to `zlog_*` of the matching level. The `log_set_level` / `log_set_quiet` / `log_add_fp` / `log_set_lock` / `log_add_callback` / `log_level_string` symbols are still provided so upstream callers compile unchanged; the level/file/quiet ones are no-ops because zlog config (`/var/tmp/sd/zlog.conf`) handles routing. |
+| `log.h` | Unchanged from upstream. |
+
+Re-pulling upstream's `log.c` would put the rxi implementation back; just
+keep our `log.c` and ignore the diff (the API is identical, so upstream
+source files don't need tweaks either way).
+
+## Patch 2 — make `<zlib.h>` include conditional on `USE_ZLIB`
+
+Upstream `utils.c` always `#include <zlib.h>` even though every actual
+zlib API call is already wrapped in `#ifdef USE_ZLIB`. We don't ship
+zlib for the target, so the unconditional include breaks the cross-build.
+Trivial fix: wrap the include in `#ifdef USE_ZLIB` to match the rest.
+
+| File | Change |
+|---|---|
+| `utils.c` | `#include <zlib.h>` (after the crypto include block) wrapped in `#ifdef USE_ZLIB` |
+
+## Re-pulling from upstream
+
+When you want to grab a newer release:
+
+```
+git clone --depth=1 https://github.com/roleoroleo/onvif_simple_server.git /tmp/onvif_recon
+diff -ruN /tmp/onvif_recon src/onvif_simple_server > /tmp/local.patch
+# inspect /tmp/local.patch — every hunk should match this document
+```
+
+Then either re-vendor and re-apply the patch, or merge upstream commits
+into the vendored tree by hand.

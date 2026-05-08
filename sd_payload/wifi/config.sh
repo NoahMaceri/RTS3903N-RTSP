@@ -144,30 +144,6 @@ log "Checking assigned IP on wlan0..."
 IP_ADDR=$(ifconfig wlan0 | grep 'inet ' | awk '{print $2}')
 log "Assigned IP on wlan0: $IP_ADDR"
 
-# Start HTTP server (lighttpd) for web interface
-log "Starting HTTP server on port 80..."
-/var/tmp/sd/lighttpd -f /var/tmp/sd/http/lighttpd.conf >> $LOGFILE 2>&1 &
-
-# Wait for PTZ initialization (for compatible models)
-log "Waiting 30s for PTZ movement to complete..."
-sleep 30s
-killall dispatch 2>/dev/null
-killall init.sh 2>/dev/null
-
-# Start the imager_streamer daemon under a respawn supervisor. The RTSP
-# server is now in-process, so this single binary serves both the encoder
-# pipeline and the RTSP frontend on port 554.
-cd /var/tmp/sd/
-
-(
-    while true; do
-        log "Starting imager_streamer..."
-        ./imager_streamer
-        log "imager_streamer exited (rc=$?), restarting in 5s..."
-        sleep 5
-    done
-) >> $LOGFILE 2>&1 &
-
 # Check if dev-tools folder exists
 if [ -d /var/tmp/sd/dev-tools ]; then
     log "Dev-tools detected in /var/tmp/sd/dev-tools."
@@ -219,6 +195,103 @@ if [ -d /var/tmp/sd/dev-tools ]; then
     fi
 else
     log "Dev-tools not found in /var/tmp/sd/dev-tools; skipping Telnet and uftpd setup."
+fi
+
+# Wait for PTZ initialization (for compatible models)
+log "Waiting 30s for PTZ movement to complete..."
+sleep 30s
+killall dispatch 2>/dev/null
+killall init.sh 2>/dev/null
+
+# Start HTTP server (lighttpd) for web interface
+log "Starting HTTP server on port 80..."
+/var/tmp/sd/lighttpd -f /var/tmp/sd/http/lighttpd.conf >> $LOGFILE 2>&1 &
+
+# Start the imager_streamer daemon under a respawn supervisor. The RTSP
+# server is now in-process, so this single binary serves both the encoder
+# pipeline and the RTSP frontend on port 554.
+cd /var/tmp/sd/
+
+# if dev-tools is present dont allow the infinite cycle
+if [ -d /var/tmp/sd/dev-tools ]; then
+    log "Starting imager_streamer without respawn (dev-tools present)..."
+    ./imager_streamer >> $LOGFILE 2>&1 &
+else
+  (
+      while true; do
+          log "Starting imager_streamer..."
+          ./imager_streamer
+          log "imager_streamer exited (rc=$?), restarting in 5s..."
+          sleep 5
+      done
+  ) >> $LOGFILE 2>&1 &
+fi
+
+# ONVIF setup. Two pieces:
+#   1. onvif_simple_server: SOAP request handler. NOT a daemon — it's a CGI
+#      program invoked per HTTP request by lighttpd. We generate small
+#      dispatcher scripts in /tmp/onvif/, one per ONVIF service. Each
+#      tail-calls the binary with the service name as its last argument
+#      (which is how onvif_simple_server selects the service handler).
+#      lighttpd.conf aliases /onvif/ → /tmp/onvif/.
+#   2. wsd_simple_server: real daemon. Listens on UDP 3702 multicast for
+#      WS-Discovery probes and broadcasts Hello/Bye. Supervised.
+#
+# The conf at /var/tmp/sd/onvif/onvif.conf is regenerated from
+# settings.json on every boot — see onvif_conf_gen.cpp.
+ONVIF_CONF_DIR=/var/tmp/sd/onvif
+mkdir -p "$ONVIF_CONF_DIR"
+if /var/tmp/sd/onvif_conf_gen /var/tmp/sd/settings.json "$ONVIF_CONF_DIR/onvif.conf" >> $LOGFILE 2>&1; then
+    log "ONVIF: regenerated $ONVIF_CONF_DIR/onvif.conf"
+
+    # CGI dispatcher scripts in tmpfs (FAT32 can't preserve exec bits or
+    # symlinks reliably). One file per service so lighttpd's alias mapping
+    # works without mod_rewrite. The `cd` is critical — onvif_simple_server
+    # opens its XML response templates ("device_service_files/*.xml" etc.)
+    # via relative paths, so it has to run with /var/tmp/sd/ as CWD where
+    # those directories live.
+    mkdir -p /tmp/onvif
+    for svc in device_service media_service media2_service ptz_service events_service deviceio_service; do
+        cat > /tmp/onvif/$svc <<EOF
+#!/bin/sh
+cd /var/tmp/sd
+exec /var/tmp/sd/onvif_simple_server -c $ONVIF_CONF_DIR/onvif.conf $svc
+EOF
+        chmod +x /tmp/onvif/$svc
+    done
+    log "ONVIF: CGI dispatcher scripts written to /tmp/onvif/"
+
+    # WS-Discovery daemon. Its CLI is positional (no -c): we have to pass
+    # interface, XAddr URL, model, manufacturer, pidfile, and the XML
+    # template directory ourselves. Most values come from the onvif.conf
+    # we just generated (flat key=value, simple awk extract); the XAddr
+    # URL needs the camera's runtime IP so we compose it here.
+    ONVIF_IFS=$(awk -F= '/^ifs=/{print $2; exit}' "$ONVIF_CONF_DIR/onvif.conf")
+    ONVIF_PORT=$(awk -F= '/^port=/{print $2; exit}' "$ONVIF_CONF_DIR/onvif.conf")
+    ONVIF_MODEL=$(awk -F= '/^model=/{print $2; exit}' "$ONVIF_CONF_DIR/onvif.conf")
+    ONVIF_MANUF=$(awk -F= '/^manufacturer=/{print $2; exit}' "$ONVIF_CONF_DIR/onvif.conf")
+    if [ "$ONVIF_PORT" = "80" ]; then
+        ONVIF_XADDR="http://$IP_ADDR/onvif/device_service"
+    else
+        ONVIF_XADDR="http://$IP_ADDR:$ONVIF_PORT/onvif/device_service"
+    fi
+    WSD_ARGS="-i $ONVIF_IFS -x $ONVIF_XADDR -m $ONVIF_MODEL -n $ONVIF_MANUF -p /tmp/wsd_simple_server.pid -t /var/tmp/sd/wsd_files -f"
+
+    if [ -d /var/tmp/sd/dev-tools ]; then
+        log "Starting wsd_simple_server without respawn (dev-tools present)..."
+        /var/tmp/sd/wsd_simple_server $WSD_ARGS >> $LOGFILE 2>&1 &
+    else
+      (
+          while true; do
+              log "Starting wsd_simple_server (xaddr=$ONVIF_XADDR)..."
+              /var/tmp/sd/wsd_simple_server $WSD_ARGS
+              log "wsd_simple_server exited (rc=$?), restarting in 5s..."
+              sleep 5
+          done
+      ) >> $LOGFILE 2>&1 &
+    fi
+else
+    log "ONVIF: conf generation failed, skipping ONVIF services"
 fi
 
 # Sync system time via SNTP (best-effort, async). The hardware has no RTC,

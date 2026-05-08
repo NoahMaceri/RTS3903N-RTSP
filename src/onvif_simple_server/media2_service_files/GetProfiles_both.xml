@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetProfilesResponse>
+            <tr2:Profiles token="Profile_0"
+                          fixed="true">
+                <tr2:Name>Profile_0</tr2:Name>
+            </tr2:Profiles>
+            <tr2:Profiles token="Profile_1"
+                          fixed="true">
+                <tr2:Name>Profile_1</tr2:Name>
+            </tr2:Profiles>
+        </tr2:GetProfilesResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

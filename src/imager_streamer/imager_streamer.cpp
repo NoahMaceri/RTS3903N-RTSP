@@ -883,9 +883,11 @@ int main(int argc, char *argv[]) {
     sigemptyset(&sigpipe_sa.sa_mask);
     sigaction(SIGPIPE, &sigpipe_sa, nullptr);
 
-    // init zlog
+    // init zlog using an absolute path — config.sh cd's into /var/tmp/sd/
+    // before launching us, but the supervisor's subshell relies on inherited
+    // CWD which has bitten us before. Absolute is robust regardless.
     errno = 0;
-    int rc = zlog_init("zlog.conf");
+    int rc = zlog_init("/var/tmp/sd/zlog.conf");
     if (rc != 0) {
         fprintf(stderr, "zlog_init rc=%d errno=%d (%s)\n", rc, errno, strerror(errno));
         return -1;

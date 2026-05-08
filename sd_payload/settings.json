@@ -47,5 +47,17 @@
     "password": "",
     "port": 554,
     "name": "stream"
+  },
+  "onvif": {
+    "enabled": true,
+    "port": 80,
+    "interface": "wlan0",
+    "manufacturer": "RTS3903N",
+    "model": "IP Camera",
+    "firmware_ver": "0.5.0",
+    "hardware_id": "RTS3903N",
+    "serial_num": "SN0001",
+    "username": "",
+    "password": ""
   }
 }
