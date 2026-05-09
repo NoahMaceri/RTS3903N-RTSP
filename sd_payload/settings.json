@@ -1,4 +1,9 @@
 {
+  "audio": {
+    "enabled": true,
+    "device": "hw:0,1",
+    "gain": 40
+  },
   "ir_control": {
     "adc_cutoff": 400,
     "adc_cutoff_inverted": 2750,
@@ -33,12 +38,31 @@
     "min_bitrate": 512000,
     "width": 1920,
     "height": 1080,
-    "fps": 20
+    "fps": 20,
+    "max_qp": 34,
+    "intra_qp_delta": -3
   },
   "rtsp": {
     "username": "",
     "password": "",
     "port": 554,
     "name": "stream"
+  },
+  "auto_tune": {
+    "enabled": true,
+    "period_s": 5,
+    "aggressiveness": 1
+  },
+  "onvif": {
+    "enabled": true,
+    "port": 80,
+    "interface": "wlan0",
+    "manufacturer": "RTS3903N",
+    "model": "IP Camera",
+    "firmware_ver": "0.5.0",
+    "hardware_id": "RTS3903N",
+    "serial_num": "SN0001",
+    "username": "",
+    "password": ""
   }
 }

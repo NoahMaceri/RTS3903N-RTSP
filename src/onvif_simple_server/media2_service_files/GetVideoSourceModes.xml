@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetVideoSourceModesResponse>
+            <tr2:VideoSourceModes Enabled="true" token="VideoSourceModeToken">
+                <tr2:MaxFramerate>20</tr2:MaxFramerate>
+                <tr2:MaxResolution>
+                    <tt:Width>%WIDTH%</tt:Width>
+                    <tt:Height>%HEIGHT%</tt:Height>
+                </tr2:MaxResolution>
+                <tr2:Encodings>%VIDEO_ENCODING%</tr2:Encodings>
+                <tr2:Reboot>false</tr2:Reboot>
+            </tr2:VideoSourceModes>
+        </tr2:GetVideoSourceModesResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

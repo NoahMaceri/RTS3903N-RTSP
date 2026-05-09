@@ -17,7 +17,7 @@
 /*
  * snapshot_server.cpp - CGI program for capturing JPEG snapshots
  *
- * This program connects to the imager_streamer's snapshot socket to request
+ * This program connects to the imagerd's snapshot socket to request
  * a JPEG frame, then outputs it to stdout for CGI.
  *
  * Usage: Called as a CGI script via lighttpd
@@ -78,14 +78,14 @@ int main(int argc, char *argv[]) {
     tv.tv_usec = 0;
     setsockopt(sock_fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 
-    // Connect to imager_streamer's snapshot socket
+    // Connect to imagerd's snapshot socket
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
     strncpy(addr.sun_path, SNAPSHOT_SOCKET, sizeof(addr.sun_path) - 1);
 
     if (connect(sock_fd, reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr)) < 0) {
         close(sock_fd);
-        output_service_unavailable("Snapshot service not available - is imager_streamer running?");
+        output_service_unavailable("Snapshot service not available - is imagerd running?");
         return 1;
     }
 

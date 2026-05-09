@@ -54,7 +54,7 @@ This creates `RTS3903N-RTSP-X.X.X.tar` containing all binaries and configuration
 
 1. Extract the package to your SD card root
 2. Edit `settings.json` with your preferences
-3. Configure WiFi in `Factory/wpa_supplicant.conf`
+3. Configure WiFi (and optionally static IP) in `network.ini` at the root of the SD card
 4. Insert SD card into camera and power on
 5. Wait ~30 seconds for boot
 6. Access stream at `rtsp://CAMERA_IP:554/stream`
@@ -126,12 +126,15 @@ Some cameras have inverted sensor logic. If your camera switches modes incorrect
 
 | Component | Description |
 |-----------|-------------|
-| `imager_streamer` | Captures video from ISP, encodes H.264 + MJPEG, manages FIFO and snapshot socket |
-| `rtsp_server` | Reads FIFO, streams via RTSP/RTP (Live555) |
-| `day_night_ctrl` | Monitors light sensors, controls IR cut filter |
+| `imagerd` | Central camera daemon: captures video + audio from the ISP, encodes H.264 / MJPEG / G.711, runs the in-process Live555 RTSP server, hosts the snapshot Unix socket, and manages day/night + auto-tune ISP loops |
+| `day_night_ctrl` | Thread inside `imagerd`: monitors ADC light sensors, drives the IR cut filter |
+| `auto_tune_ctrl` | Thread inside `imagerd`: samples the ISP's AE histogram and adjusts contrast / sharpness / WDR_LEVEL to match the current scene |
 | `isp_ctrl` | CGI program for runtime ISP adjustment |
-| `snapshot` | CGI program for JPEG snapshot capture |
+| `snapshot` | CGI program that reads from `imagerd`'s snapshot socket and returns a JPEG over HTTP |
 | `ptz_tool` | Pan-Tilt-Zoom motor control |
+| `onvif_simple_server` | ONVIF SOAP services as CGI under lighttpd (Device, Media, PTZ, Events, DeviceIO) |
+| `wsd_simple_server` | WS-Discovery daemon (UDP/3702 multicast) — makes the camera auto-discoverable to NVRs |
+| `sntp` | One-shot SNTP client run at boot — sets the wall clock since the hardware has no RTC |
 | `lighttpd` | Web server for control interface and CGI |
 
 ---
@@ -192,11 +195,13 @@ The camera performs a 30-second calibration on boot. Wait for calibration to com
 
 ## Development
 
+### AI disclosure
+Portions of this project's code, refactors, and documentation were produced in collaboration with AI coding assistants (Anthropic's Claude). Every change is fully reviewed by a human and tested on a physical RTS3903N camera before it is commited, and ultimately reaches main. If you suspect a bug originated from an AI-generated path, please file an issue and tag it.
 ### Project Structure
 
 ```
 ├── src/
-│   ├── imager_streamer/    # Video capture, encoding & snapshot server
+│   ├── imagerd/    # Video capture, encoding & snapshot server
 │   ├── rtsp_server/        # RTSP streaming server
 │   ├── isp_ctrl/           # ISP control CGI
 │   ├── snapshot_server/    # Snapshot CGI client
@@ -238,12 +243,34 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - [x] Web-based ISP control
 - [x] JPEG snapshots
 - [x] lighttpd HTTP server
-- [ ] Audio streaming
-- [ ] ONVIF compatibility
+- [x] Audio streaming
+- [x] ONVIF Profile S (auto-discovery, GetStreamUri, GetSnapshotUri)
+- [ ] ONVIF PTZ — URL routing exists (`/onvif/ptz_service`), but the binary's hardware-specific PTZ paths need a wrapper that translates ONVIF's normalized `[-1, 1]` velocities into our `ptz_tool` directional commands.
+- [ ] ONVIF audio backchannel — receive audio from the client and play it through the camera's speaker. Requires both an ONVIF Media-side `AudioOutput` configuration and a producer pipeline feeding the rts audio decoder.
 
 ---
 
 ## Version History
+
+### v0.5.0 (2026-05-08)
+
+- Feature: ONVIF Profile S support via vendored `onvif_simple_server` (GPLv3). SOAP services (Device/Media/PTZ/Events/DeviceIO) run as CGI under lighttpd; standalone `wsd_simple_server` handles WS-Discovery (UDP/3702 multicast). Configured under `[onvif]` in `settings.json`; `onvif_conf_gen` regenerates the INI conf at boot so the JSON stays the single source of truth.
+- Feature: G.711 u-law audio streaming. Captured at 8 kHz mono via ALSA, advertised as RTP payload type 0 (PCMU). Capture gain configurable in `settings.json`'s `audio` block.
+- Refactor: `rtsp_server` binary deleted; live555 runs in-process inside `imagerd` via a custom `FramedSource` reading from in-memory queues. Eliminates `/tmp/video.h264` + `/tmp/audio.ulaw` FIFOs and lets us pass per-frame metadata (PTS, keyframe flag) directly to the framer instead of re-parsing it from the byte stream.
+- Feature: Optional dev-tools subtree gated on `-DBUILD_DEV_TOOLS=ON`. Ships `uftpd` (writable FTP/TFTP for pushing binaries onto the camera without reflashing) and `dropbear` (SSH on port 22). Telnet on port 23 is now also gated on dev-tools presence (was always on).
+- Bugfix: dropbear's cross-compile build skipped its `/dev/ptmx` runtime check and fell back to the BSD-pty path which doesn't exist on this kernel — SSH auth would succeed but PTY allocation would fail. Forced `USE_DEV_PTMX` at compile time.
+- Refactor: Network config moved out of `config.sh` and `Factory/wpa_supplicant.conf` into a single `network.ini` at the SD card root. Sections `[wifi]` (ssid, psk) and `[network]` (ip, netmask, gateway). `config.sh` regenerates `wifi/wpa_supplicant.conf` from it on every boot. Old `wpa_supplicant_sample.conf` template removed.
+- Feature: Tiny in-tree `sntp` client. The stock busybox lacks ntpd/ntpdate/rdate, the wget build is too stripped for the HTTP `Date:` trick, and the hardware has no RTC — so we ship our own. One UDP/123 round-trip, `settimeofday()`, exit. Called backgrounded from `config.sh` at end of boot.
+- Feature: H.264 quality knobs `max_qp` and `intra_qp_delta` promoted to `settings.json`'s `encoder` block. New defaults 34 / -3 (from hardcoded 38 / -2). `.value()` fallbacks keep the old defaults in effect for cameras with older `settings.json` files.
+- Feature: Force-IDR on every fresh RTSP client attach via `rts_av_request_h264_key_frame()`. Producer drops P-frames until the next keyframe so live555 starts each session on a clean IDR within ~1 frame instead of waiting up to a 2-second GOP boundary.
+- Bugfix: Queue source was discarding the tail of frames larger than `fMaxSize` instead of buffering for the next `doGetNextFrame()` call. Symptom was periodic decoder corruption around GOP boundaries. Now buffered in `fLeftover` and delivered across multiple calls with PTS pinned across the fragments.
+- Bugfix: A P-frame pushed between client attach and the producer's IDR-request consumption could land at the head of the new session ahead of the forced keyframe. Queue clearing now happens atomically inside `consume_idr_request()` so the producer always wins the race.
+- Change: live555 `OutPacketBuffer::maxSize` bumped 256 KB → 1 MB so large I-frames at higher bitrates don't get silently NAL-unit-dropped.
+- Bugfix: `audio_capture_thread` was a stack-local `pthread_t`, never joined. `kill_stream` could destroy audio channels while the thread was mid-`rts_av_recv()` (UAF on shutdown). Now tracked in `handlers` and joined before channel teardown.
+- Bugfix: `imagerd`'s `zlog_init("zlog.conf")` used a relative path that depended on the supervisor's inherited CWD. Now uses an absolute `/var/tmp/sd/zlog.conf` — robust across `config.sh` restructurings.
+- Cleanup: Root `CMakeLists.txt` reorganized into named sections (Generated headers / Third-party libraries / Project executables / Optional dev tools / Roll-up / Packaging). Per-target file lists hoisted into variables; the package step is now a short list of commands instead of a 90-line `add_custom_target` blob.
+- Rename: `imager_streamer` binary renamed to `imagerd`. The old name described an ISP-to-FIFO bridge; the binary now also runs the in-process RTSP server, the snapshot UDS, and the IR / auto-tune control loops. Cascades through the source dir (`src/imager_streamer/` → `src/imagerd/`), zlog category (`imager` → `imagerd`), `config.sh` invocation, log tag (`[Imager streamer]` → `[imagerd]`), and the startup banner.
+- Feature: scene-adaptive ISP auto-tune. New `auto_tune_ctrl` thread inside `imagerd` samples the SDK's AE histogram via `rts_av_query_isp_ae()` every few seconds and adjusts `CONTRAST` / `SHARPNESS` / `WDR_LEVEL` toward a scene-appropriate target (5-bucket lookup keyed on mean luma + a high-DR override on histogram spread). EMA-smoothed transitions, configurable period and aggressiveness under `[auto_tune]` in `settings.json`. Realtek's built-in 3A keeps running underneath; this is a policy layer on top.
 
 ### v0.4.1 (2026-03-18)
 
@@ -253,7 +280,7 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - Bugfix: `terminate()` had wrong signature (`void()` instead of `void(int)`), masked by `reinterpret_cast`. Undefined behavior on MIPS calling conventions. All signal handlers now use `sigaction()` instead of `signal()`.
 - Bugfix: Logs now rotate at 256KB with 3 files max (~768KB ceiling). Previously unbounded, which could exhaust RAM on the tmpfs-backed `/var/log/`.
 - Change: Production logs filtered to INFO+, dropping DEBUG noise (frame stats, FIFO debug, ADC readings).
-- Bugfix: `imager_streamer` now reports failure to init systems on crash instead of always returning success.
+- Bugfix: `imagerd` now reports failure to init systems on crash instead of always returning success.
 - Bugfix: Proper resource cleanup on server creation failure (was calling `exit()` and leaking).
 
 ### v0.4.0 (2026-01-25)
@@ -284,14 +311,11 @@ First release after forking from [cjj25/Yi-RTS3903N-RTSPServer](https://github.c
 
 This project builds upon the work of many contributors:
 
-### rtsp_server
-- [@roleoroleo](https://github.com/roleoroleo) — Original author
-- [@alienatedsec](https://github.com/alienatedsec) — Modified version
-- [@cjj25](https://github.com/cjj25) — Modified version
-
-### imager_streamer
+### imagerd
+- [@roleoroleo](https://github.com/roleoroleo) — Original author of rtsp_server
+- [@alienatedsec](https://github.com/alienatedsec) — Modified version of rtsp_server
+- [@cjj25](https://github.com/cjj25) — Original author of rt_stream usage
 - [Realtek](https://www.realtek.com/) — rt_stream examples
-- [@cjj25](https://github.com/cjj25) — Original author
 
 ### sd_payload
 - [@rage2dev](https://github.com/rage2dev/) — Original author

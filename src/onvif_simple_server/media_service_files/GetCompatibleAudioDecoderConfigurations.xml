@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:trt="http://www.onvif.org/ver10/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <trt:GetCompatibleAudioDecoderConfigurationsResponse>
+            <trt:Configurations token="%PROFILE%_AudioDecoderToken">
+                <tt:Name>%PROFILE%_AudioDecoder</tt:Name>
+                <tt:UseCount>1</tt:UseCount>
+            </trt:Configurations>
+        </trt:GetCompatibleAudioDecoderConfigurationsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetAudioEncoderConfigurationOptionsResponse>
+            <tr2:Options>
+                <tt:Encoding>%AUDIO_ENCODING%</tt:Encoding>
+                <tt:BitrateList>
+                    <tt:Items>%BITRATE%</tt:Items>
+                </tt:BitrateList>
+                <tt:SampleRateList>
+                    <tt:Items>%SAMPLERATE%</tt:Items>
+                </tt:SampleRateList>
+            </tr2:Options>
+        </tr2:GetAudioEncoderConfigurationOptionsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

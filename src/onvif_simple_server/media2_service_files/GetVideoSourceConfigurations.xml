@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetVideoSourceConfigurationsResponse>
+            <tr2:Configurations ViewMode="Original" token="VideoSourceConfigToken">
+                <tt:Name>VideoSourceConfig</tt:Name>
+                <tt:UseCount>%PROFILES_NUM%</tt:UseCount>
+                <tt:SourceToken>VideoSourceToken</tt:SourceToken>
+                <tt:Bounds x="0" y="0" width="%WIDTH%" height="%HEIGHT%"/>
+            </tr2:Configurations>
+        </tr2:GetVideoSourceConfigurationsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetVideoSourceConfigurationOptionsResponse>
+            <tr2:Options>
+                <tt:BoundsRange>
+                    <tt:XRange>
+                        <tt:Min>0</tt:Min>
+                        <tt:Max>0</tt:Max>
+                    </tt:XRange>
+                    <tt:YRange>
+                        <tt:Min>0</tt:Min>
+                        <tt:Max>0</tt:Max>
+                    </tt:YRange>
+                    <tt:WidthRange>
+                        <tt:Min>%WIDTH%</tt:Min>
+                        <tt:Max>%WIDTH%</tt:Max>
+                    </tt:WidthRange>
+                    <tt:HeightRange>
+                        <tt:Min>%HEIGHT%</tt:Min>
+                        <tt:Max>%HEIGHT%</tt:Max>
+                    </tt:HeightRange>
+                </tt:BoundsRange>
+                <tt:VideoSourceTokensAvailable>VideoSourceToken</tt:VideoSourceTokensAvailable>
+            </tr2:Options>
+        </tr2:GetVideoSourceConfigurationOptionsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

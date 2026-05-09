@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://www.w3.org/2003/05/soap-envelope"
+                   xmlns:tr2="http://www.onvif.org/ver20/media/wsdl"
+                   xmlns:tt="http://www.onvif.org/ver10/schema">
+    <SOAP-ENV:Body>
+        <tr2:GetVideoEncoderConfigurationsResponse>
+            <tr2:Configurations Profile="High" GovLength="40" token="Profile_0_VideoEncoderToken">
+                <tt:Name>Profile_0_VideoEncoder</tt:Name>
+                <tt:UseCount>1</tt:UseCount>
+                <tt:Encoding>%VIDEO_ENCODING_HIGH%</tt:Encoding>
+                <tt:Resolution>
+                    <tt:Width>%WIDTH_HIGH%</tt:Width>
+                    <tt:Height>%HEIGHT_HIGH%</tt:Height>
+                </tt:Resolution>
+                <tt:Quality>10</tt:Quality>
+                <tt:RateControl>
+                    <tt:FrameRateLimit>30</tt:FrameRateLimit>
+                    <tt:BitrateLimit>5000</tt:BitrateLimit>
+                </tt:RateControl>
+                <tt:Multicast>
+                    <tt:Address>
+                    <tt:Type>IPv4</tt:Type>
+                    </tt:Address>
+                    <tt:Port>0</tt:Port>
+                    <tt:TTL>0</tt:TTL>
+                    <tt:AutoStart>false</tt:AutoStart>
+                </tt:Multicast>
+            </tr2:Configurations>
+            <tr2:Configurations Profile="Main" GovLength="40" token="Profile_1_VideoEncoderToken">
+                <tt:Name>Profile_1_VideoEncoder</tt:Name>
+                <tt:UseCount>1</tt:UseCount>
+                <tt:Encoding>%VIDEO_ENCODING_LOW%</tt:Encoding>
+                <tt:Resolution>
+                    <tt:Width>%WIDTH_LOW%</tt:Width>
+                    <tt:Height>%HEIGHT_LOW%</tt:Height>
+                </tt:Resolution>
+                <tt:Quality>10</tt:Quality>
+                <tt:RateControl>
+                    <tt:FrameRateLimit>30</tt:FrameRateLimit>
+                    <tt:BitrateLimit>5000</tt:BitrateLimit>
+                </tt:RateControl>
+                <tt:Multicast>
+                    <tt:Address>
+                    <tt:Type>IPv4</tt:Type>
+                    </tt:Address>
+                    <tt:Port>0</tt:Port>
+                    <tt:TTL>0</tt:TTL>
+                    <tt:AutoStart>false</tt:AutoStart>
+                </tt:Multicast>
+            </tr2:Configurations>
+        </tr2:GetVideoEncoderConfigurationsResponse>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
