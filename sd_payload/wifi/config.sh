@@ -203,6 +203,23 @@ sleep 30s
 killall dispatch 2>/dev/null
 killall init.sh 2>/dev/null
 
+# Sync system time via SNTP. The hardware has no RTC, so without this every
+# reboot starts the clock at the kernel epoch (~1970). The stock busybox image
+# has no ntpd / ntpdate / rdate and a stripped wget, so we ship our own tiny
+# SNTP client (./sntp) which does one UDP/123 round-trip and settimeofday.
+#
+# Run BEFORE lighttpd / imagerd / wsd_simple_server so anything that captures
+# timestamps (logs, ONVIF SOAP responses, RTSP session creation) starts off
+# with a sane wall clock instead of seeing it jump forward mid-operation.
+# Blocking, but with a hard cap so a dead network can't stall the boot — the
+# RTP path uses CLOCK_MONOTONIC, so a missed sync only affects log readability.
+log "Syncing system time via SNTP (pool.ntp.org)..."
+if /var/tmp/sd/sntp pool.ntp.org >> $LOGFILE 2>&1; then
+    log "Time synced via SNTP."
+else
+    log "SNTP sync failed (rc=$?); continuing with unsynced clock."
+fi
+
 # Start HTTP server (lighttpd) for web interface
 log "Starting HTTP server on port 80..."
 /var/tmp/sd/lighttpd -f /var/tmp/sd/http/lighttpd.conf >> $LOGFILE 2>&1 &
@@ -293,20 +310,5 @@ EOF
 else
     log "ONVIF: conf generation failed, skipping ONVIF services"
 fi
-
-# Sync system time via SNTP (best-effort, async). The hardware has no RTC,
-# so without this every reboot starts the clock at the kernel epoch and
-# breaks anything wall-clock-sensitive. The stock busybox image here has
-# no ntpd / ntpdate / rdate and a stripped wget, so we ship our own tiny
-# SNTP client (./sntp) which does one UDP/123 round-trip and settimeofday.
-# Backgrounded so a network hiccup doesn't block boot.
-(
-    if /var/tmp/sd/sntp pool.ntp.org > /tmp/_sntp.out 2>&1; then
-        log "Time synced via SNTP: $(cat /tmp/_sntp.out)"
-    else
-        log "SNTP sync failed: $(cat /tmp/_sntp.out); clock will drift"
-    fi
-    rm -f /tmp/_sntp.out
-) >> $LOGFILE 2>&1 &
 
 log "config.sh fully executed."

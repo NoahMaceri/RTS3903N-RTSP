@@ -252,6 +252,11 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 
 ## Version History
 
+### v0.5.1 (2026-05-08)
+
+- Bugfix: RTP presentation timestamps were derived from `gettimeofday()`, so when the in-tree `sntp` client stepped the wall clock from the kernel epoch (~1970) to the real time mid-stream, ffmpeg-based clients (Frigate, others) saw a multi-decade jump and emitted `Timestamps are unset in a packet for stream 0` followed by `No frames received in 20 seconds`. `imagerd` now reads `CLOCK_MONOTONIC` for both the H.264 and PCMU push paths via a new `monotonic_us()` helper, so RTP timing is immune to wall-clock steps.
+- Change: `sntp` runs synchronously *before* `lighttpd` / `imagerd` / `wsd_simple_server` start instead of being backgrounded at end-of-boot. Logs, ONVIF SOAP timestamps, and RTSP session creation no longer span a wall-clock jump. The earlier ordering was only safe because the RTP path was wall-clock-based; with `CLOCK_MONOTONIC` driving RTP, this is now belt-and-braces — but it makes log readability and ONVIF timestamps correct from boot.
+
 ### v0.5.0 (2026-05-08)
 
 - Feature: ONVIF Profile S support via vendored `onvif_simple_server` (GPLv3). SOAP services (Device/Media/PTZ/Events/DeviceIO) run as CGI under lighttpd; standalone `wsd_simple_server` handles WS-Discovery (UDP/3702 multicast). Configured under `[onvif]` in `settings.json`; `onvif_conf_gen` regenerates the INI conf at boot so the JSON stays the single source of truth.

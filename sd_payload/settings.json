@@ -33,9 +33,9 @@
     "wdr_level": 40
   },
   "encoder": {
-    "max_bitrate": 1024000,
-    "target_bitrate": 1024000,
-    "min_bitrate": 512000,
+    "max_bitrate": 4000000,
+    "target_bitrate": 3000000,
+    "min_bitrate": 1500000,
     "width": 1920,
     "height": 1080,
     "fps": 20,
@@ -59,7 +59,7 @@
     "interface": "wlan0",
     "manufacturer": "RTS3903N",
     "model": "IP Camera",
-    "firmware_ver": "0.5.0",
+    "firmware_ver": "0.5.1",
     "hardware_id": "RTS3903N",
     "serial_num": "SN0001",
     "username": "",

@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 # get here; this file pulls in the cross-compiler settings.
 include(third-party/rsdk/enable_mips_uclibc.cmake)
 
-project(RTS3903N_RTSP VERSION 0.5.0 LANGUAGES C CXX)
+project(RTS3903N_RTSP VERSION 0.5.1 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)

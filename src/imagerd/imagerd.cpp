@@ -23,6 +23,7 @@
 #include <vector>
 #include <netinet/in.h>
 #include <sys/time.h>
+#include <ctime>
 
 std::atomic<bool> g_exit(false);
 zlog_category_t *vid_c = nullptr;
@@ -282,14 +283,16 @@ void set_fps(const uint8_t fps) {
 
 
 
-// Wall-clock microsecond timestamp for live555 fPresentationTime. Audio and
-// video both use this so their relative timestamps stay consistent (live555
-// derives RTCP/RTP timing from the diffs).
-static uint64_t wall_clock_us() {
-    timeval tv{};
-    gettimeofday(&tv, nullptr);
-    return static_cast<uint64_t>(tv.tv_sec) * 1000000ULL +
-           static_cast<uint64_t>(tv.tv_usec);
+// Monotonic microsecond timestamp for live555 fPresentationTime. We deliberately
+// avoid gettimeofday() because SNTP can step the wall clock mid-stream (the
+// hardware has no RTC, so the clock starts near epoch and jumps forward when
+// sntp finishes); ffmpeg's RTSP demuxer interprets the resulting jump as a
+// broken stream and emits AV_NOPTS_VALUE. CLOCK_MONOTONIC is immune.
+static uint64_t monotonic_us() {
+    timespec ts{};
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return static_cast<uint64_t>(ts.tv_sec) * 1000000ULL +
+           static_cast<uint64_t>(ts.tv_nsec) / 1000ULL;
 }
 
 // Audio capture thread. Always drains the encoder so its buffer pool doesn't
@@ -337,7 +340,7 @@ static void *audio_capture_thread(void *arg) {
             rtsp_worker::push_audio_frame(
                 static_cast<uint8_t *>(audio_buffer->vm_addr),
                 audio_buffer->bytesused,
-                wall_clock_us());
+                monotonic_us());
             frames_captured++;
         } else if (!was_idle) {
             zlog_info(vid_c, "Audio: reader disconnected");
@@ -862,7 +865,7 @@ int start_stream(nlohmann::json &cfg) {
             if (active && (!need_keyframe || is_keyframe)) {
                 rtsp_worker::push_video_frame(
                     static_cast<uint8_t *>(vid_buffer->vm_addr),
-                    frame_size, is_keyframe, wall_clock_us());
+                    frame_size, is_keyframe, monotonic_us());
                 if (is_keyframe) need_keyframe = false;
             }
         }
