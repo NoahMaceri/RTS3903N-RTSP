@@ -1,0 +1,63 @@
+name: build
+
+on:
+  push:
+    branches: [main, reflash]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: build (BUILD_DEV_TOOLS=${{ matrix.dev_tools }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dev_tools: [OFF, ON]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install host deps
+        run: sudo bash tools/install_deps_ubuntu.sh
+
+      - name: Install ninja
+        run: sudo apt install -y ninja-build
+
+      # Cache the 200 MB+ extracted MIPS toolchain across runs. Keyed on
+      # the tarball hash — if the tarball is bumped, the cache is
+      # invalidated automatically.
+      - name: Cache rsdk toolchain
+        uses: actions/cache@v4
+        with:
+          path: external/rsdk/rsdk-*-m32fut-*/
+          key: rsdk-${{ hashFiles('external/rsdk/*.tar.gz') }}
+
+      - name: Configure
+        run: |
+          cmake -G Ninja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_DEV_TOOLS=${{ matrix.dev_tools }} \
+            -S . -B build
+
+      - name: Build
+        run: ninja -C build
+
+      - name: Package SD tarball
+        run: ninja -C build package_RTS3903N_RTSP
+
+      # Builds home.bin and gates on the 3 MiB mtdblock4 cap via
+      # tools/build/check_home_bin_size.sh. If the bundled libs grow too
+      # large to fit, this step fails the job.
+      - name: Package home.bin
+        run: ninja -C build package_home_bin
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: RTS3903N_RTSP-dev_tools_${{ matrix.dev_tools }}
+          path: |
+            build/RTS3903N_RTSP-*.tar
+            build/home.bin
+          if-no-files-found: error

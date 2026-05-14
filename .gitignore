@@ -2,3 +2,7 @@
 cmake-build-*/
 external/live555/live
 external/rsdk/*/
+build/
+# Stale duplicate of external/{lighttpd1.4,mbedtls,pcre2,zlog} — leftover from
+# the pre-reflash directory layout. Submodules now live under external/.
+third-party/

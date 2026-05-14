@@ -17,7 +17,7 @@
 #     we never touch).
 #
 # Usage:
-#   ./scripts/flash_home_bin.sh [user@]CAMERA_IP [path/to/home.bin]
+#   ./tools/flash_home_bin.sh [user@]CAMERA_IP [path/to/home.bin]
 #
 # Defaults:
 #   user                = root

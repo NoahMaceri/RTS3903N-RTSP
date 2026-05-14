@@ -20,7 +20,7 @@
 #     willing to send blank passwords.
 #
 # Usage:
-#   ./scripts/dev_update.sh [user@]CAMERA_IP
+#   ./tools/dev_update.sh [user@]CAMERA_IP
 
 set -euo pipefail
 
