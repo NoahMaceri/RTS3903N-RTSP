@@ -1,24 +1,24 @@
-[submodule "third-party/zlog"]
-	path = third-party/zlog
+[submodule "external/zlog"]
+	path = external/zlog
 	url = https://github.com/HardySimpson/zlog.git
-[submodule "third-party/pcre2"]
-	path = third-party/pcre2
+[submodule "external/pcre2"]
+	path = external/pcre2
 	url = https://github.com/PCRE2Project/pcre2.git
-[submodule "third-party/lighttpd1.4"]
-	path = third-party/lighttpd1.4
+[submodule "external/lighttpd1.4"]
+	path = external/lighttpd1.4
 	url = https://github.com/lighttpd/lighttpd1.4.git
-[submodule "dev-tools/libite"]
-	path = dev-tools/libite
+[submodule "external/dev-tools/libite"]
+	path = external/dev-tools/libite
 	url = https://github.com/troglobit/libite.git
-[submodule "dev-tools/libuev"]
-	path = dev-tools/libuev
+[submodule "external/dev-tools/libuev"]
+	path = external/dev-tools/libuev
 	url = https://github.com/troglobit/libuev.git
-[submodule "dev-tools/uftpd"]
-	path = dev-tools/uftpd
+[submodule "external/dev-tools/uftpd"]
+	path = external/dev-tools/uftpd
 	url = https://github.com/troglobit/uftpd.git
-[submodule "dev-tools/dropbear"]
-	path = dev-tools/dropbear
+[submodule "external/dev-tools/dropbear"]
+	path = external/dev-tools/dropbear
 	url = https://github.com/mkj/dropbear.git
-[submodule "third-party/mbedtls"]
-	path = third-party/mbedtls
+[submodule "external/mbedtls"]
+	path = external/mbedtls
 	url = https://github.com/Mbed-TLS/mbedtls.git

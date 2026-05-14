@@ -42,12 +42,17 @@ private:
     bool             thread_created_{false};
     std::atomic<bool> running_{false};
 
-    // Last value we applied per knob. Lets us skip redundant ISP writes
-    // and provides the smoothing baseline (we EMA toward the target
-    // rather than jumping). -1 = unknown / first iteration.
+    // Last value we applied per knob. Seeded from get_isp_setting() on
+    // thread start so the first iteration is a small capped step from the
+    // camera's actual current setting rather than a jump.
     int last_contrast_  = -1;
     int last_sharpness_ = -1;
     int last_wdr_level_ = -1;
+
+    // Luma bucket from the previous tick. Used for hysteresis on the
+    // bucket boundaries — -1 means we haven't run yet, so the first tick
+    // picks by hard thresholds.
+    int last_bucket_ = -1;
 };
 
 #endif // AUTO_TUNE_CTRL_H

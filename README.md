@@ -37,7 +37,7 @@ A custom RTSP streaming server for Realtek RTS3903N-based IP cameras (including 
 
 ```bash
 # Install build dependencies
-sudo bash scripts/install_deps_ubuntu.sh
+sudo bash tools/install_deps_ubuntu.sh
 
 # Build
 mkdir build && cd build
@@ -200,27 +200,34 @@ Portions of this project's code, refactors, and documentation were produced in c
 ### Project Structure
 
 ```
-├── src/
-│   ├── imagerd/    # Video capture, encoding & snapshot server
-│   ├── rtsp_server/        # RTSP streaming server
-│   ├── isp_ctrl/           # ISP control CGI
-│   ├── snapshot_server/    # Snapshot CGI client
-│   ├── isp_tool/           # ISP adjustment tool
-│   └── ptz_tool/           # PTZ control
-├── third-party/
-│   ├── live555/            # RTSP library
-│   ├── lighttpd1.4/        # HTTP server
-│   ├── zlog/               # Logging library
-│   ├── rtscore/            # Realtek SDK
-│   └── rsdk/               # MIPS toolchain
-├── sd_payload/             # Deployment files
-│   ├── settings.json       # Configuration
-│   ├── wifi/               # Network scripts
-│   └── http/               # Web interface
-│       ├── www/            # Static files (HTML, CSS)
-│       ├── cgi-bin/        # CGI scripts
-│       └── lighttpd.conf   # HTTP server config
-└── scripts/                # Build utilities
+├── src/                       # First-party C/C++
+│   ├── imagerd/               # Capture + encode + in-process RTSP + snapshot UDS
+│   ├── isp_ctrl/              # ISP control CGI
+│   ├── isp_tool/              # ISP adjustment one-shot
+│   ├── ptz_tool/              # PTZ control one-shot
+│   ├── snapshot/              # Snapshot CGI client
+│   ├── sntp/                  # Tiny SNTP client
+│   ├── onvif_conf_gen/        # settings.json → ONVIF .conf at boot
+│   └── common/ver.h.in        # Generated version header
+├── external/                  # Vendored & submodule code
+│   ├── live555/  rtscore/  rsdk/      # Vendored sources / blobs
+│   ├── lighttpd1.4/  pcre2/  zlog/  mbedtls/   # Submodules
+│   ├── nlohmann_json/json.hpp         # Single-header JSON
+│   ├── onvif_simple_server/           # Upstream tree + PATCHES.md
+│   ├── stock_blobs/                   # Stock kernel modules / Realtek libs / ISP fw
+│   └── dev-tools/                     # uftpd, dropbear, libite, libuev (BUILD_DEV_TOOLS)
+├── payload/                   # Files that ship to a running camera
+│   ├── common/                # Shared between SD and on-flash deployments
+│   ├── sd/                    # SD-card overlay (wifi/, Yi/, network.ini, …)
+│   └── home/                  # On-flash overlay (init.sh, default.script, …)
+├── cmake/                     # Packaging modules
+│   ├── PackageSdTarball.cmake
+│   └── PackageHomeBin.cmake
+├── tools/                     # Host-side scripts
+│   ├── install_deps_ubuntu.sh  dev_update.sh  flash_home_bin.sh  clean_builds.sh
+│   ├── build/                 # CMake-invoked (strip_home_bin.sh, check_home_bin_size.sh)
+│   └── debug/                 # One-off (socat-based file transfer)
+└── docs/
 ```
 
 ### Cross-Compilation
@@ -322,8 +329,8 @@ This project builds upon the work of many contributors:
 - [@cjj25](https://github.com/cjj25) — Original author of rt_stream usage
 - [Realtek](https://www.realtek.com/) — rt_stream examples
 
-### sd_payload
-- [@rage2dev](https://github.com/rage2dev/) — Original author
+### payload
+- [@rage2dev](https://github.com/rage2dev/) — Original author (then `sd_payload/`)
 - [@cjj25](https://github.com/cjj25) — Modified version
 
 ---

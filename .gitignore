@@ -1,5 +1,5 @@
 .idea/
 cmake-build-*/
-third-party/live555/live
-third-party/rsdk/*/
+external/live555/live
+external/rsdk/*/
 build/

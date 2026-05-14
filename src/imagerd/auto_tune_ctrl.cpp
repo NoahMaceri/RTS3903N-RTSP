@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <cstdlib>
 #include <unistd.h>
 
 #include "isp_utils.h"
@@ -17,6 +18,20 @@
 extern std::atomic<bool> g_exit;
 
 namespace {
+
+// Per-iteration ceiling on how far any single knob can move. Keeps the
+// camera from ever making a visible jump in one step, even if the scene
+// flips between buckets — convergence then takes a few iterations rather
+// than one.
+constexpr int MAX_STEP_PER_TICK = 5;
+
+// Hysteresis margin on the luma-bucket boundaries. We pick the next bucket
+// only if y_mean has moved at least HYSTERESIS past the boundary; otherwise
+// we keep using the previous bucket. Without this, a scene sitting near a
+// boundary (e.g. y_mean ≈ 80) would flip-flop targets every period.
+constexpr uint8_t HYSTERESIS = 6;
+
+constexpr uint8_t LUMA_BUCKETS[] = {30, 80, 180, 220};
 
 // Walk `hist` low to high, return the luma value at which the running
 // pixel-count fraction first exceeds `pct/100`. Bin index is mapped back
@@ -45,52 +60,72 @@ uint8_t histogram_percentile(const std::vector<uint16_t> &hist, int pct) {
 
 struct Targets { int contrast; int sharpness; int wdr_level; };
 
-// Pick a target tuple from luma + histogram-spread features. Hand-tuned
-// lookup, intentionally chunky — easier to debug visually than a PID.
-//   y_mean  : 0–255 frame mean luma
-//   spread  : 0–255 (P95 − P5); how wide the histogram is
-Targets pick_targets(uint8_t y_mean, int spread) {
-    Targets t{};
-    if (y_mean < 30) {                        // night / very dark
-        t = {60, 30,  0};                     // boost contrast, kill noise sharpening
-    } else if (y_mean < 80) {                 // low light
-        t = {55, 45, 20};
-    } else if (y_mean < 180) {                // normal mid-tones
-        t = {50, 60, 30};
-    } else if (y_mean < 220) {                // bright
-        t = {45, 65, 50};
-    } else {                                  // overexposed / sunny
-        t = {40, 50, 70};
+// Map a bucket index (0–4) to a target tuple. The values are deliberately
+// closer together than they used to be — see "WAY too aggressive" feedback
+// from v0.5.1 testing. The big visible offender was WDR jumping by 20–30
+// between buckets; we now cap that to ~5 per step (see MAX_STEP_PER_TICK).
+Targets targets_for_bucket(int bucket) {
+    switch (bucket) {
+        case 0: return {52, 48, 30};  // night / very dark
+        case 1: return {51, 50, 35};  // low light
+        case 2: return {50, 52, 40};  // normal mid-tones (≈ settings.json defaults)
+        case 3: return {49, 54, 45};  // bright
+        default: return {48, 50, 50}; // overexposed / sunny
     }
-    // Hard-backlight or sun-with-shadows scene: very wide histogram.
-    // Crank WDR up and back off contrast slightly so we don't crush
-    // the highlights into clipping.
-    if (spread > 180) {
-        t.wdr_level = std::min(100, t.wdr_level + 30);
-        t.contrast  = std::max(0,   t.contrast  - 5);
-    }
-    return t;
 }
 
-// Scale (target − 50) by the aggressiveness factor. With the camera's
-// natural midpoint at 50, this makes aggressiveness=0 a small nudge and
-// aggressiveness=2 push the same direction harder.
+// Pick a bucket index for `y_mean` with hysteresis around the boundaries.
+// `prev_bucket` is the bucket we picked last time (or -1 for first run).
+int pick_bucket(uint8_t y_mean, int prev_bucket) {
+    // No prior bucket — pick by hard thresholds.
+    auto hard_bucket = [](uint8_t y) -> int {
+        for (int i = 0; i < 4; ++i) {
+            if (y < LUMA_BUCKETS[i]) return i;
+        }
+        return 4;
+    };
+
+    if (prev_bucket < 0) return hard_bucket(y_mean);
+
+    // Only move to the adjacent bucket if y_mean has crossed the boundary
+    // by HYSTERESIS. This stops oscillation when the scene sits right on
+    // a threshold.
+    const int next = hard_bucket(y_mean);
+    if (next == prev_bucket) return prev_bucket;
+
+    if (next > prev_bucket) {
+        const uint8_t boundary = LUMA_BUCKETS[prev_bucket];
+        return (y_mean >= static_cast<int>(boundary) + HYSTERESIS) ? next : prev_bucket;
+    }
+    // next < prev_bucket
+    const uint8_t boundary = LUMA_BUCKETS[next]; // boundary we just dipped below
+    return (y_mean + HYSTERESIS <= boundary) ? next : prev_bucket;
+}
+
+// Apply a per-iteration cap so no single tick moves a knob by more than
+// MAX_STEP_PER_TICK. `current` of -1 means "we don't know the prior value
+// yet, do one capped step from the camera's own current setting".
+int capped_step(int current, int target) {
+    if (current < 0) return target;       // caller already supplied baseline
+    const int delta = target - current;
+    if (delta == 0) return current;
+    if (std::abs(delta) <= MAX_STEP_PER_TICK) return target;
+    return current + (delta > 0 ? MAX_STEP_PER_TICK : -MAX_STEP_PER_TICK);
+}
+
 int clamp01(int x) { return std::min(100, std::max(0, x)); }
 
+// Aggressiveness re-shapes the target by pulling it toward / pushing it
+// from the camera's natural midpoint of 50. aggressiveness=0 is half the
+// natural delta (very gentle), aggressiveness=1 is the table value as-is,
+// aggressiveness=2 is 1.5× (bigger swings). The per-iteration cap above
+// still applies regardless.
 int scale_aggressiveness(int target, uint8_t aggr) {
     constexpr int CENTER = 50;
     int delta = target - CENTER;
     if (aggr == 0) delta /= 2;
     else if (aggr >= 2) delta = (delta * 3) / 2;
     return clamp01(CENTER + delta);
-}
-
-// Half-step EMA toward the target. With period_s=5, a stable scene
-// transition settles within ~30 s — slow enough to not strobe the
-// viewer, fast enough to follow real lighting changes.
-int smooth_toward(int current, int target) {
-    if (current < 0) return target;          // first iteration: jump
-    return current + (target - current) / 2;
 }
 
 void apply_if_changed(enum enum_rts_video_ctrl_id id, int target,
@@ -139,6 +174,19 @@ void *auto_tune_ctrl::thread_fn(void *arg) {
 }
 
 void auto_tune_ctrl::run_loop() {
+    // Seed the baselines from whatever the camera is currently set to so
+    // the first tick is a small capped step rather than a jump to bucket
+    // target. get_isp_setting returns UINT32_MAX on failure — fall back to
+    // 50 in that case (centre of all three knobs).
+    auto seed = [&](enum enum_rts_video_ctrl_id id) -> int {
+        const int32_t v = get_isp_setting(id, log_);
+        if (v == static_cast<int32_t>(UINT32_MAX)) return 50;
+        return v;
+    };
+    last_contrast_  = seed(RTS_VIDEO_CTRL_ID_CONTRAST);
+    last_sharpness_ = seed(RTS_VIDEO_CTRL_ID_SHARPNESS);
+    last_wdr_level_ = seed(RTS_VIDEO_CTRL_ID_WDR_LEVEL);
+
     // Sleep loop is built from short polls so g_exit / running_ shutdown
     // is responsive (≤1 s) even with a long period_s.
     while (running_.load() && !g_exit.load()) {
@@ -154,24 +202,20 @@ void auto_tune_ctrl::tune_once() {
     AeStats stats;
     if (!read_ae_stats(stats, log_)) return;
 
-    const uint8_t p5     = histogram_percentile(stats.hist, 5);
-    const uint8_t p95    = histogram_percentile(stats.hist, 95);
-    const int     spread = static_cast<int>(p95) - static_cast<int>(p5);
-
-    Targets raw = pick_targets(stats.y_mean, spread);
+    last_bucket_ = pick_bucket(stats.y_mean, last_bucket_);
+    Targets raw = targets_for_bucket(last_bucket_);
     Targets agg{
         scale_aggressiveness(raw.contrast,  cfg_.aggressiveness),
         scale_aggressiveness(raw.sharpness, cfg_.aggressiveness),
         scale_aggressiveness(raw.wdr_level, cfg_.aggressiveness),
     };
 
-    const int contrast  = smooth_toward(last_contrast_,  agg.contrast);
-    const int sharpness = smooth_toward(last_sharpness_, agg.sharpness);
-    const int wdr       = smooth_toward(last_wdr_level_, agg.wdr_level);
+    const int contrast  = capped_step(last_contrast_,  agg.contrast);
+    const int sharpness = capped_step(last_sharpness_, agg.sharpness);
+    const int wdr       = capped_step(last_wdr_level_, agg.wdr_level);
 
-    zlog_debug(log_, "auto-tune: y=%u p5=%u p95=%u spread=%d -> "
-                     "contrast=%d sharpness=%d wdr_level=%d",
-               stats.y_mean, p5, p95, spread, contrast, sharpness, wdr);
+    zlog_debug(log_, "auto-tune: y=%u bucket=%d -> contrast=%d sharpness=%d wdr_level=%d",
+               stats.y_mean, last_bucket_, contrast, sharpness, wdr);
 
     apply_if_changed(RTS_VIDEO_CTRL_ID_CONTRAST,  contrast,  &last_contrast_,  log_);
     apply_if_changed(RTS_VIDEO_CTRL_ID_SHARPNESS, sharpness, &last_sharpness_, log_);

@@ -18,6 +18,7 @@
 
 #include "imagerd.h"
 #include "rtsp_worker.h"
+#include <cstdlib>
 #include <mutex>
 #include <condition_variable>
 #include <vector>
@@ -911,13 +912,25 @@ int main(int argc, char *argv[]) {
     sigemptyset(&sigpipe_sa.sa_mask);
     sigaction(SIGPIPE, &sigpipe_sa, nullptr);
 
-    // init zlog using an absolute path — config.sh cd's into /var/tmp/sd/
-    // before launching us, but the supervisor's subshell relies on inherited
-    // CWD which has bitten us before. Absolute is robust regardless.
-    errno = 0;
-    int rc = zlog_init("/var/tmp/sd/zlog.conf");
+    // init zlog. Try paths in order so the same binary works for SD-card
+    // hijack mode (zlog.conf at /var/tmp/sd/) and on-flash mode (baked
+    // copy at /home/app/). $ZLOG_CONF lets the boot script force a
+    // specific path if neither default is right.
+    //
+    // Loop must be index-based, not pointer-walk: getenv() returns NULL
+    // when unset and a `for(p; *p; ++p)` terminates on the first NULL.
+    const char *zlog_paths[] = {
+        getenv("ZLOG_CONF"),
+        "/var/tmp/sd/zlog.conf",
+        "/home/app/zlog.conf",
+    };
+    int rc = -1;
+    for (size_t i = 0; i < sizeof(zlog_paths)/sizeof(zlog_paths[0]); ++i) {
+        const char *path = zlog_paths[i];
+        if (path && path[0] && (rc = zlog_init(path)) == 0) break;
+    }
     if (rc != 0) {
-        fprintf(stderr, "zlog_init rc=%d errno=%d (%s)\n", rc, errno, strerror(errno));
+        fprintf(stderr, "zlog_init failed for all candidate paths\n");
         return -1;
     }
 

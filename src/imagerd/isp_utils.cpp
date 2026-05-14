@@ -46,10 +46,15 @@ const std::map<std::string, enum enum_rts_video_ctrl_id> param_setting_map = {
     {"wb_green", RTS_VIDEO_CTRL_ID_GREEN_BALANCE},
     {"wb_red", RTS_VIDEO_CTRL_ID_RED_BALANCE},
     {"wb_blue", RTS_VIDEO_CTRL_ID_BLUE_BALANCE},
+    {"green_balance", RTS_VIDEO_CTRL_ID_GREEN_BALANCE},
+    {"red_balance", RTS_VIDEO_CTRL_ID_RED_BALANCE},
+    {"blue_balance", RTS_VIDEO_CTRL_ID_BLUE_BALANCE},
     {"awb_mode", RTS_VIDEO_CTRL_ID_AWB_CTRL},
     {"awb", RTS_VIDEO_CTRL_ID_AWB_CTRL},
     {"ir_mode", RTS_VIDEO_CTRL_ID_IR_MODE},
-    {"gray_mode", RTS_VIDEO_CTRL_ID_GRAY_MODE}
+    {"gray_mode", RTS_VIDEO_CTRL_ID_GRAY_MODE},
+    {"smart_ir_mode", RTS_VIDEO_CTRL_ID_SMART_IR_MODE},
+    {"smart_ir_manual_level", RTS_VIDEO_CTRL_ID_SMART_IR_MANUAL_LEVEL}
 };
 
 bool change_isp_setting(const enum enum_rts_video_ctrl_id type, int32_t value, zlog_category_t *logger) {

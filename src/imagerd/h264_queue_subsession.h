@@ -4,16 +4,35 @@
 #include <atomic>
 #include <cstring>
 #include <ctime>
+#include <deque>
+#include <vector>
 
 #include <liveMedia.hh>
 
 #include "frame_queue.h"
 
-// Pulls H.264 access units out of an in-process queue (fed by the encoder
-// thread) and hands the byte stream to live555. The cross-thread wakeup is
-// driven by an EventTriggerId owned by rtsp_worker (not by the source), so
-// the producer never has to hold a pointer to this object — it just calls
+// Pulls H.264 NAL units out of an in-process queue (fed by the encoder
+// thread) and hands them to live555's *discrete* framer. The cross-thread
+// wakeup is driven by an EventTriggerId owned by rtsp_worker, so the
+// producer never has to hold a pointer to this object — it just calls
 // triggerEvent, which is the documented thread-safe primitive in live555.
+//
+// The Realtek encoder emits Annex-B byte-stream access units (NAL units
+// separated by 0x000001 / 0x00000001 start codes). We split each access
+// unit into individual NAL units, strip the start codes, and feed them to
+// H264VideoStreamDiscreteFramer one per call. Each NAL inherits the access
+// unit's PTS. The discrete framer passes that PTS through to the RTP sink
+// unchanged.
+//
+// We deliberately do NOT use H264VideoStreamFramer (the byte-stream
+// variant): that framer ignores the source's fPresentationTime and
+// synthesizes its own from gettimeofday() + a fixed 1/fps tick. On this
+// camera the encoder's actual frame rate jitters (auto-tune + ISP writes
+// occasionally stall the capture loop briefly), so the framer's synthetic
+// clock drifts relative to real time. ffmpeg-based clients (Frigate) see
+// the resulting RTCP-SR vs RTP-timestamp mismatch and bail with
+// AV_NOPTS_VALUE. The discrete framer respects the source's PTS, so our
+// monotonic_us() timestamps survive end-to-end.
 //
 // The source advertises that the producer wants an IDR by flipping
 // `idr_requested` to true on construction; the encoder thread reads-and-
@@ -36,47 +55,24 @@ public:
     void deliverFrame() {
         if (!isCurrentlyAwaitingData()) return;
 
-        // If the previous frame was bigger than fMaxSize we kept the tail
-        // here — drain that first before pulling a new frame. Truncating
-        // mid-NAL would hand the framer corrupted data and the client
-        // would see green/blocky decode artifacts.
-        if (!fLeftover.empty()) {
-            const size_t to_copy = (fLeftover.size() > fMaxSize) ? fMaxSize : fLeftover.size();
-            memcpy(fTo, fLeftover.data(), to_copy);
-            fFrameSize = to_copy;
-            fNumTruncatedBytes = 0;
-            fLeftover.erase(fLeftover.begin(), fLeftover.begin() + to_copy);
-            // Keep PTS pinned across fragments of the same access unit.
-            fPresentationTime.tv_sec = fLeftoverPts / 1000000ULL;
-            fPresentationTime.tv_usec = fLeftoverPts % 1000000ULL;
-            FramedSource::afterGetting(this);
+        // Drain leftover NAL units from a previously-popped access unit
+        // before pulling a new one. With reuseFirstSource=True and the
+        // discrete framer, we always end up here once per NAL.
+        if (!fPendingNals.empty()) {
+            deliverPendingNal();
             return;
         }
 
         VideoFrame frame;
         if (!fQueue->try_pop(frame)) {
             // Queue empty — nothing to do. The next push() in the producer
-            // will trigger this same callback and we'll try again.
+            // will trigger this callback and we'll try again.
             return;
         }
 
-        if (frame.data.size() > fMaxSize) {
-            // Save the tail for the next call. fNumTruncatedBytes stays 0
-            // because nothing is *actually* truncated — just deferred.
-            fFrameSize = fMaxSize;
-            memcpy(fTo, frame.data.data(), fMaxSize);
-            fLeftover.assign(frame.data.begin() + fMaxSize, frame.data.end());
-            fLeftoverPts = frame.presentation_us;
-        } else {
-            fFrameSize = frame.data.size();
-            memcpy(fTo, frame.data.data(), fFrameSize);
-        }
-        fNumTruncatedBytes = 0;
-
-        fPresentationTime.tv_sec = frame.presentation_us / 1000000ULL;
-        fPresentationTime.tv_usec = frame.presentation_us % 1000000ULL;
-
-        FramedSource::afterGetting(this);
+        splitAccessUnit(frame.data, frame.presentation_us);
+        if (fPendingNals.empty()) return; // No NALs parsed; malformed AU.
+        deliverPendingNal();
     }
 
 protected:
@@ -102,23 +98,91 @@ protected:
 
     void doGetNextFrame() override { deliverFrame(); }
 
+    // Drop any partially-delivered access unit if live555 stops pulling
+    // from us (all clients disconnected mid-AU). When a new client attaches
+    // and the source restarts, we want to begin from a fresh queue pop,
+    // not from leftover NALs whose siblings were sent to the now-departed
+    // client.
+    void doStopGettingFrames() override {
+        fPendingNals.clear();
+        FramedSource::doStopGettingFrames();
+    }
+
 private:
+    struct PendingNal {
+        std::vector<uint8_t> data;       // NAL unit *without* start code
+        uint64_t presentation_us;
+    };
+
     FrameQueue<VideoFrame>* fQueue;
     std::atomic<bool>* fIdrRequested;
     H264QueueSource** fBackRef;
+    std::deque<PendingNal> fPendingNals;
 
-    // Buffer for the tail of an oversized frame (frame.size > fMaxSize).
-    // Empty in the common case — H.264 access units at our bitrate fit in
-    // fMaxSize comfortably. Only matters for the rare giant I-frame.
-    std::vector<uint8_t> fLeftover;
-    uint64_t fLeftoverPts{0};
+    // Locate the next Annex-B start code (00 00 01 or 00 00 00 01) at or
+    // after offset `i`. Returns the offset of the start-code prefix and
+    // sets *code_len to 3 or 4. Returns buf.size() if no start code is
+    // found in the remaining buffer.
+    static size_t find_start_code(const std::vector<uint8_t>& buf, size_t i,
+                                  int* code_len) {
+        const size_t n = buf.size();
+        while (i + 2 < n) {
+            if (buf[i] == 0 && buf[i+1] == 0) {
+                if (buf[i+2] == 1) { *code_len = 3; return i; }
+                if (i + 3 < n && buf[i+2] == 0 && buf[i+3] == 1) {
+                    *code_len = 4; return i;
+                }
+            }
+            ++i;
+        }
+        return n;
+    }
+
+    void splitAccessUnit(const std::vector<uint8_t>& buffer, uint64_t pts) {
+        int code_len = 0;
+        size_t pos = find_start_code(buffer, 0, &code_len);
+        if (pos >= buffer.size()) return; // No start code — malformed AU.
+
+        size_t nal_start = pos + code_len;
+        while (nal_start < buffer.size()) {
+            int next_code_len = 0;
+            const size_t next_sc = find_start_code(buffer, nal_start, &next_code_len);
+            if (next_sc > nal_start) {
+                PendingNal nal;
+                nal.data.assign(buffer.begin() + nal_start,
+                                buffer.begin() + next_sc);
+                nal.presentation_us = pts;
+                fPendingNals.push_back(std::move(nal));
+            }
+            if (next_sc >= buffer.size()) break;
+            nal_start = next_sc + next_code_len;
+        }
+    }
+
+    void deliverPendingNal() {
+        PendingNal nal = std::move(fPendingNals.front());
+        fPendingNals.pop_front();
+
+        const size_t copy_size = (nal.data.size() > fMaxSize) ? fMaxSize : nal.data.size();
+        memcpy(fTo, nal.data.data(), copy_size);
+        fFrameSize = copy_size;
+        fNumTruncatedBytes = nal.data.size() > fMaxSize
+            ? static_cast<unsigned>(nal.data.size() - fMaxSize)
+            : 0;
+
+        fPresentationTime.tv_sec  = nal.presentation_us / 1000000ULL;
+        fPresentationTime.tv_usec = nal.presentation_us % 1000000ULL;
+        fDurationInMicroseconds   = 0; // sink paces from PTS deltas.
+
+        FramedSource::afterGetting(this);
+    }
 };
 
-// Subsession boilerplate: creates the queue source, wraps it in the H.264
-// stream framer (which parses NAL units out of the byte stream), and the
-// RTP sink. SDP acquisition uses the standard live555 dummy-sink pattern,
-// the same as the prior FIFO version — the framer extracts SPS/PPS from
-// the very first IDR the encoder emits.
+// Subsession boilerplate: creates the queue source, wraps it in the
+// discrete H.264 framer (which trusts the source's per-NAL PTS rather than
+// synthesizing one), and the RTP sink. SDP acquisition uses the standard
+// live555 dummy-sink pattern; the discrete framer still extracts SPS/PPS
+// from passing NAL units so sprop-parameter-sets lands in the SDP.
 class H264QueueSubsession : public OnDemandServerMediaSubsession {
 public:
     static H264QueueSubsession* createNew(UsageEnvironment& env,
@@ -152,12 +216,9 @@ protected:
     FramedSource* createNewStreamSource(unsigned /*clientSessionId*/,
                                         unsigned& estBitrate) override {
         estBitrate = 1024; // kbps; matches our default target_bitrate
-        // The source's constructor sets *fSourceOut and the destructor
-        // clears it back to nullptr, keeping the worker's back-reference
-        // accurate across the source's lifetime.
         H264QueueSource* src = H264QueueSource::createNew(
             envir(), fQueue, fIdrRequested, fSourceOut);
-        return H264VideoStreamFramer::createNew(envir(), src);
+        return H264VideoStreamDiscreteFramer::createNew(envir(), src);
     }
 
     RTPSink* createNewRTPSink(Groupsock* rtpGroupsock,
