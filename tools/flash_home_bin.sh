@@ -40,19 +40,21 @@ USER_PART="${CAMERA%@*}"
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 HOME_BIN="${2:-}"
+# Auto-discover the build output. Filename is RTS3903N_RTSP-v#_#_#.bin
+# (CMake's PackageHomeBin sets it from PROJECT_VERSION). If multiple match
+# — old + new builds in the same dir — pick the newest by mtime.
 if [ -z "$HOME_BIN" ]; then
-    for candidate in \
-        "$ROOT/cmake-build-release/home.bin" \
-        "$ROOT/build/home.bin"; do
-        if [ -f "$candidate" ]; then
+    for dir in "cmake-build-release" "build"; do
+        candidate=$(ls -t "$ROOT/$dir"/RTS3903N_RTSP-v*.bin 2>/dev/null | head -n1)
+        if [ -n "$candidate" ] && [ -f "$candidate" ]; then
             HOME_BIN="$candidate"
             break
         fi
     done
 fi
 if [ -z "$HOME_BIN" ] || [ ! -f "$HOME_BIN" ]; then
-    echo "home.bin not found. Pass it as argv[2] or build it first:" >&2
-    echo "    ninja -C build_homebin package_home_bin" >&2
+    echo "No RTS3903N_RTSP-v*.bin found. Pass it as argv[2] or build it first:" >&2
+    echo "    ninja -C build package_home_bin" >&2
     exit 1
 fi
 

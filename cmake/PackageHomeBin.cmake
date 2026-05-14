@@ -21,7 +21,11 @@
 #   sync; reboot
 # =============================================================================
 
-set(HOME_BIN           ${CMAKE_BINARY_DIR}/home.bin)
+# Output filename uses the v#_#_# scheme so multiple builds can sit
+# alongside each other and the version is visible at-a-glance. The camera
+# side is unaffected — flash_home_bin.sh always uploads to /tmp/home.bin.
+string(REPLACE "." "_" _HOME_BIN_VER "${PROJECT_VERSION}")
+set(HOME_BIN           ${CMAKE_BINARY_DIR}/${PROJECT_NAME}-v${_HOME_BIN_VER}.bin)
 set(HOME_OUT           ${CMAKE_BINARY_DIR}/home_staging)
 set(STOCK_BLOBS_DIR    ${CMAKE_SOURCE_DIR}/external/stock_blobs)
 set(PAYLOAD_COMMON_DIR ${CMAKE_SOURCE_DIR}/payload/common)
