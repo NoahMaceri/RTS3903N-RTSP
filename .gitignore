@@ -2,4 +2,3 @@
 cmake-build-*/
 external/live555/live
 external/rsdk/*/
-build/
