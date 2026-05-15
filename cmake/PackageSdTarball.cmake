@@ -111,9 +111,8 @@ add_custom_target(package_${PROJECT_NAME}
 
     # Optional dev tools
     ${PKG_DEV_TOOLS_CMD}
-
-    # Tar it up
-    COMMAND ${CMAKE_COMMAND} -E tar cf ${PKG_TAR} -- ${PKG_OUT}
+        
+    COMMAND tar cf ${PKG_TAR} -C ${PKG_OUT} .
     COMMAND ${CMAKE_COMMAND} -E echo "Package created at ${PKG_TAR}"
 
     DEPENDS ${PROJECT_NAME}_tools
