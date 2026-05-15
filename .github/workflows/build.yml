@@ -1,14 +1,15 @@
-name: build
+name: Build + package
 
 on:
   push:
     branches: [main, reflash]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
-    name: build (BUILD_DEV_TOOLS=${{ matrix.dev_tools }})
+    name: BUILD_DEV_TOOLS=${{ matrix.dev_tools }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
