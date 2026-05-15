@@ -48,6 +48,14 @@ link_directories(${CMAKE_BINARY_DIR}/external/pcre2)
 # lighttpd (web UI + CGI for snapshots and ISP control)
 set(HAVE_PCRE2_H 1 CACHE INTERNAL "Have PCRE2 library")
 set(HAVE_PCRE   1 CACHE INTERNAL "Have PCRE2 library")
+if(CMAKE_CROSSCOMPILING)
+    # Prevent lighttpd's pkg_check_modules(PCRE2 libpcre2-8) from finding the
+    # host x86_64 libpcre2 and injecting -I/usr/include into the MIPS
+    # cross-compile flags (Ubuntu 24.04 glibc headers are incompatible with
+    # GCC 4.8.5 — __float128 / __TC__ mode errors). The global
+    # include_directories() above already covers the in-tree pcre2 interface.
+    set(PKG_CONFIG_EXECUTABLE "" CACHE FILEPATH "Disabled for cross-compile" FORCE)
+endif()
 add_subdirectory(external/lighttpd1.4)
 add_dependencies(lighttpd pcre2-8-shared mod_cgi)
 
