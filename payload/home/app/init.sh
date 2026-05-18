@@ -13,6 +13,7 @@ log() {
     echo "$1" > /dev/ttyS1
 }
 
+echo >> $LOGFILE
 log "=== RTS3903N_RTSP $(cat /homever 2>/dev/null) booting from flash ==="
 
 # 1. Library search path:
@@ -63,45 +64,40 @@ fi
 # pid_list.ko is unparameterised — always safe to insmod.
 [ -f /home/rt/ko/pid_list.ko ] && insmod /home/rt/ko/pid_list.ko
 
-# Load the ISP firmware. This is the missing piece stock `rmm` does at
-# startup — without it, sensor i²c never works and zero frames flow.
+# Two-stage sensor probe + firmware load. This was the trickiest piece to
+# reverse-engineer; see the long comment block below for the why.
 #
-# It's a *two-stage* load:
-#   1. Write any sensor's isp.fw to /sys/.../loadfw. The kernel module
-#      uses this to bring up its ISP firmware loader, do basic ISP setup,
-#      and probe the i²c sensor. After this, /sys/.../sensor is populated
-#      with the detected sensor name (e.g. "SC2230"). The "wrong" fw is
-#      enough for the probe step — it's not enough to actually drive
-#      another sensor, but it gets the i²c bus alive.
-#   2. Read /sys/.../sensor, map to the *specific* fw variant for that
-#      sensor, write it to loadfw. This is the firmware that actually
-#      tunes the ISP for the real sensor, and after it lands the encoder
-#      pipeline starts producing frames.
+# The sysfs interface at /sys/devices/platform/rts_soc_camera/loadfw accepts
+# *two* kinds of input:
+#   (a) a path to an ISP firmware blob — loads that blob into the ISP
+#       coprocessor's program memory.
+#   (b) a single ASCII digit ("1", "2") — a *command code* the kernel module
+#       interprets internally. "1" triggers the initial probe / power-up of
+#       the sensor bus; "2" triggers the i²c detection round that fills in
+#       /sys/.../sensor with the detected sensor name (e.g. "SC2230").
 #
-# Each sensor has one or more fw variants in /home/lib/<sensor>/. SC2230
-# has three (jin/lang/mipi) for different sensor sub-revisions; stock rmm
-# defaults to isp_jin.fw. SC2390 has isp.fw + isp_dvp.fw. We default to
-# the same as stock; if you have a different SC2230/SC2390 sub-variant,
-# put the path in /backup/config/isp_firmware to override.
-ISP_FW_OVERRIDE=/backup/config/isp_firmware
-
-# Stage 1: bootstrap probe. Writing any valid isp.fw triggers the kernel
-# module to set up the ISP and probe the sensor over i²c. We use sc2235's
-# fw as the bootstrap because it exists on every Yi/Realtek SDK image —
-# any of them would work since this load isn't expected to drive frames.
+# Stock `rmm` does the probe via (b): write "1", sleep 50ms, write "2", then
+# poll /sys/.../sensor and write the matched sensor fw via (a). This was
+# verified by decompiling rmm and observing that /sys/.../sensor only
+# materialises after the magic-digit writes — writing a firmware blob *alone*
+# does not create that sysfs file. Without it, the encoder runs on whatever
+# generic fw is loaded and emits malformed H.264 (no SPS/PPS in the
+# bitstream, so ffmpeg-based clients see `Video: h264, none`).
 if [ -e /sys/devices/platform/rts_soc_camera/loadfw ]; then
-    echo -n /home/lib/sc2235/isp.fw > /sys/devices/platform/rts_soc_camera/loadfw 2>/dev/null
-    # The sensor probe is async; give it a beat to settle. Stock rmm sleeps
-    # ~1s between the bootstrap load and reading the sensor file.
-    sleep 1
+    echo -n 1 > /sys/devices/platform/rts_soc_camera/loadfw
+    sleep 0.05
+    echo -n 2 > /sys/devices/platform/rts_soc_camera/loadfw
+    # Probe is async — /sys/.../sensor takes 50–200ms to appear on this
+    # hardware. Poll in 100ms steps with a 2s cap.
+    for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+        [ -r /sys/devices/platform/rts_soc_camera/sensor ] && break
+        sleep 0.1
+    done
 fi
 
 # Stage 2: read the detected sensor, pick the matched fw, reload.
 fw=
-if [ -f "$ISP_FW_OVERRIDE" ]; then
-    fw=$(cat "$ISP_FW_OVERRIDE" 2>/dev/null)
-    log "ISP firmware override: $fw"
-elif [ -r /sys/devices/platform/rts_soc_camera/sensor ]; then
+if [ -r /sys/devices/platform/rts_soc_camera/sensor ]; then
     sensor=$(cat /sys/devices/platform/rts_soc_camera/sensor 2>/dev/null | tr -d '\n\r ')
     log "Detected sensor via i2c probe: '$sensor'"
     case "$sensor" in
@@ -110,18 +106,18 @@ elif [ -r /sys/devices/platform/rts_soc_camera/sensor ]; then
         SC1245) fw=/home/lib/sc1245/isp.fw ;;
         SC2230) fw=/home/lib/sc2230/isp_jin.fw ;;   # stock rmm's default variant
         SC2390) fw=/home/lib/sc2390/isp.fw ;;
-        "")     log "WARN: sensor file empty after stage-1 probe — i2c probe may have failed" ;;
+        "")     log "WARN: sensor file empty after probe — i2c detect may have failed" ;;
         *)      log "WARN: unknown sensor '$sensor' — no fw mapping" ;;
     esac
 else
-    log "WARN: /sys/.../sensor not readable; cannot detect sensor"
+    log "WARN: /sys/.../sensor never appeared after probe — i2c detect failed"
 fi
 
 if [ -n "$fw" ] && [ -f "$fw" ]; then
     echo -n "$fw" > /sys/devices/platform/rts_soc_camera/loadfw
     log "ISP firmware loaded for detected sensor: $fw"
 else
-    log "WARN: no matching ISP firmware loaded — frames will not flow"
+    log "WARN: no matching ISP firmware loaded — frames will be malformed"
 fi
 
 # 3. Audio enable line. Stock init.sh reads byte 168 of mtdblock6 (vd1

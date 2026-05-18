@@ -721,12 +721,23 @@ int start_stream(nlohmann::json &cfg) {
     zlog_debug(vid_c, "Encoder channel status: %d", chn_status);
 
     // init day_night_ctrl
-    h.ir_control = new day_night_ctrl(
-        cfg["ir_control"]["adc_cutoff"].get<int32_t>(),
-        cfg["ir_control"]["adc_cutoff_inverted"].get<int32_t>(),
-        cfg["ir_control"]["invert"].get<bool>(),
-        vid_c
-    );
+    {
+        const auto &ir = cfg["ir_control"];
+        const DayNightMode dn_mode = parse_day_night_mode(
+            ir.value("detection_mode", std::string("adc_auto")));
+        int pwm_raw = ir.value("ir_led_pwm_duty", 100);
+        if (pwm_raw < 0)   pwm_raw = 0;
+        if (pwm_raw > 100) pwm_raw = 100;
+        const uint8_t pwm_duty = static_cast<uint8_t>(pwm_raw);
+        h.ir_control = new day_night_ctrl(
+            dn_mode,
+            ir["adc_cutoff"].get<int32_t>(),
+            ir["adc_cutoff_inverted"].get<int32_t>(),
+            ir["invert"].get<bool>(),
+            pwm_duty,
+            vid_c
+        );
+    }
     if (!h.ir_control->begin()) {
         zlog_fatal(vid_c, "Failed to start IR control thread");
         kill_stream(&h);

@@ -67,6 +67,7 @@ add_subdirectory(src/isp_ctrl)
 add_subdirectory(src/isp_tool)
 add_subdirectory(src/snapshot)
 add_subdirectory(src/ptz_tool)
+add_subdirectory(src/cpld_info)
 add_subdirectory(src/sntp)
 add_subdirectory(src/onvif_conf_gen)
 # onvif_simple_server + wsd_simple_server are vendored upstream (GPLv3) plus
@@ -89,6 +90,7 @@ set(SD_TARGETS
     isp_tool
     snapshot
     ptz_tool
+    cpld_info
     sntp
     onvif_simple_server
     wsd_simple_server

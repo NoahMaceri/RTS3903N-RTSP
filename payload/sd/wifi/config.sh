@@ -229,9 +229,26 @@ else
     log "Dev-tools not found in /var/tmp/sd/dev-tools; skipping Telnet and uftpd setup."
 fi
 
-# Wait for PTZ initialization (for compatible models)
-log "Waiting 30s for PTZ movement to complete..."
-sleep 30s
+# Wait for PTZ initialization, but only on cameras that actually have it.
+# Layered check:
+#   1. /dev/ssp existence — fast, catches the common case where
+#      ssp_ms41909.ko didn't load (no motor controller chip on the board).
+#   2. `ptz_tool probe` — opens /dev/ssp and runs a STATUS ioctl. Catches
+#      the rare case where the module loaded but the chip isn't responding
+#      (e.g. an EE-stuffed variant of a PTZ-capable board).
+# Without PTZ we save 30s of every boot.
+PTZ_TOOL=/var/tmp/sd/ptz_tool
+if [ -c /dev/ssp ] && [ -x "$PTZ_TOOL" ] && "$PTZ_TOOL" probe >/dev/null 2>&1; then
+    log "PTZ hardware detected, waiting 30s for stock calibration to finish..."
+    sleep 30s
+elif [ -c /dev/ssp ] && [ ! -x "$PTZ_TOOL" ]; then
+    # Safety net for installs where ptz_tool wasn't shipped: fall back to
+    # the old conservative behaviour rather than truncating the wait.
+    log "PTZ device present but ptz_tool missing; waiting 30s (conservative)..."
+    sleep 30s
+else
+    log "No PTZ hardware detected, skipping 30s calibration wait."
+fi
 killall dispatch 2>/dev/null
 killall init.sh 2>/dev/null
 

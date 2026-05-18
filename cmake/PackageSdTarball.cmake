@@ -18,6 +18,8 @@ set(PKG_BINARIES
     ${CMAKE_BINARY_DIR}/src/isp_ctrl/isp_ctrl
     ${CMAKE_BINARY_DIR}/src/snapshot/snapshot
     ${CMAKE_BINARY_DIR}/src/sntp/sntp
+    ${CMAKE_BINARY_DIR}/src/ptz_tool/ptz_tool      # used by config.sh `probe` gate
+    ${CMAKE_BINARY_DIR}/src/cpld_info/cpld_info    # diagnostic: decode modprobe wiring
     ${CMAKE_BINARY_DIR}/external/onvif_simple_server/onvif_simple_server
     ${CMAKE_BINARY_DIR}/external/onvif_simple_server/wsd_simple_server
     ${CMAKE_BINARY_DIR}/src/onvif_conf_gen/onvif_conf_gen

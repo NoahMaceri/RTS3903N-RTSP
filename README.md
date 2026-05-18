@@ -107,19 +107,36 @@ All settings are stored in `settings.json`
 
 ### Day/Night (IR) Control
 
-The camera uses ADC light sensors to automatically switch between day and night mode:
+The camera automatically switches between day and night mode:
 
-- **Day mode**: IR cut filter engaged, color image
-- **Night mode**: IR cut filter disengaged, grayscale with IR illumination
+- **Day mode**: IR cut filter engaged, IR LED off, color image
+- **Night mode**: IR cut filter disengaged, IR LED at configured PWM duty, grayscale
 
-Some cameras have inverted sensor logic. If your camera switches modes incorrectly:
+| Key | Type | Description |
+|-----|------|-------------|
+| `detection_mode` | string | How "is it dark?" is decided. See modes below. Default `adc_auto`. |
+| `adc_cutoff` | int | ADC threshold for normal-polarity boards (used by the ADC modes). |
+| `adc_cutoff_inverted` | int | ADC threshold used when `invert: true`. Only needed if you pin polarity manually. |
+| `invert` | bool | Initial polarity hint. `adc_auto` will override this at runtime if needed. |
+| `ir_led_pwm_duty` | 0-100 | IR LED brightness when in night mode. 100 = full, 0 = off. |
 
-```json
-"ir_control": {
-  "invert": true,
-  "adc_cutoff_inverted": 2750
-}
-```
+`detection_mode` values (the ADC-based modes mirror the five hardware-variant paths in stock `rmm`; `adc_auto` is our addition):
+
+| Mode | Behaviour |
+|------|-----------|
+| `adc_auto` | **(Default.)** Same logic as `adc_hysteresis`, plus a runtime cross-check: every cycle we also call the SDK daynight estimator and count agreements/disagreements. After ~5 minutes (150 samples at 2 s cadence) of *consistent* disagreement, `imagerd` auto-flips the ADC polarity and persists the result to `daynight_polarity.state` next to `settings.json`. On the next boot the cached polarity is restored and learning resumes. Net effect: you set one cutoff, the camera figures out the rest. |
+| `adc_hysteresis` | ADC threshold with a ±100 hysteresis band — enters night when below `cutoff - 100`, leaves when above `cutoff + 100`. Use this if you want polarity pinned by `invert:` and never auto-changed. |
+| `adc_single` | Single ADC threshold at `adc_cutoff`. No hysteresis band, relies on the 3-sample debounce alone. |
+| `sdk_statis` | Use the SDK's built-in daynight estimator (`rts_av_get_isp_daynight_statis`) exclusively. No ADC required — pick this if your board has no light sensor or the ADC is unreliable. |
+| `adc_zero` | Night iff ADC reads exactly zero (some sensor wirings drop to 0 in darkness). |
+| `adc_raw_bool` | Night iff ADC value > 0 (sensor wired as a digital flag rather than analog). |
+
+**How auto-polarity works**: the SDK's image-histogram-based daynight estimator (`rts_av_get_isp_daynight_statis`) is completely independent of the ADC sensor, so the two should agree under any well-lit scene. When the ADC polarity is wrong they consistently disagree, which is what `adc_auto` watches for. The 5-minute disagreement threshold prevents short cloud-passing or scene-change events from triggering false flips. To reset learning (e.g. after swapping the sensor or moving the camera to a really weird environment), delete `daynight_polarity.state` next to `settings.json`.
+
+**Limitations of `adc_auto`**:
+- Doesn't help on boards with no light sensor at all — use `sdk_statis` for those.
+- During the first ~5 minutes of a deployment on a flipped-polarity board, day/night will be wrong; after that it's permanently right and survives reboots.
+- A camera that only ever sees a permanently dark scene (e.g. an indoor closet with the door always shut) can confuse the SDK estimator. If you suspect this, switch to `adc_hysteresis` and pin polarity manually.
 
 ---
 
@@ -132,7 +149,8 @@ Some cameras have inverted sensor logic. If your camera switches modes incorrect
 | `auto_tune_ctrl` | Thread inside `imagerd`: samples the ISP's AE histogram and adjusts contrast / sharpness / WDR_LEVEL to match the current scene |
 | `isp_ctrl` | CGI program for runtime ISP adjustment |
 | `snapshot` | CGI program that reads from `imagerd`'s snapshot socket and returns a JPEG over HTTP |
-| `ptz_tool` | Pan-Tilt-Zoom motor control |
+| `ptz_tool` | Pan-Tilt-Zoom motor control + `probe` subcommand for non-destructive PTZ-presence detection (used by `config.sh` to gate the 30s boot-time PTZ calibration wait) |
+| `cpld_info` | Diagnostic: reads `/sys/module/cpld_periph/parameters/{gpio,hw}` and decodes them per the kernel init rules — shows which GPIO is wired to which logical port and what active level each output uses |
 | `onvif_simple_server` | ONVIF SOAP services as CGI under lighttpd (Device, Media, PTZ, Events, DeviceIO) |
 | `wsd_simple_server` | WS-Discovery daemon (UDP/3702 multicast) — makes the camera auto-discoverable to NVRs |
 | `sntp` | One-shot SNTP client run at boot — sets the wall clock since the hardware has no RTC |

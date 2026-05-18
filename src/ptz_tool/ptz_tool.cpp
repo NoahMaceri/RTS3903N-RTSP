@@ -35,13 +35,47 @@ typedef struct {
   uint32_t raw[8]; // full 32B status
 } ptz_status_t;
 
+// Non-fatal version: returns -1 if /dev/ssp is missing or unreadable.
+// Used by the `probe` subcommand so it can return a clean exit code
+// instead of dying with perror+exit(1).
+static int try_open_ssp() {
+  return open("/dev/ssp", O_RDWR);
+}
+
 static int open_ssp() {
-  const int fd = open("/dev/ssp", O_RDWR);
+  const int fd = try_open_ssp();
   if (fd < 0) {
     perror("open /dev/ssp");
+    fprintf(stderr,
+            "  (this camera may not have PTZ hardware, or ssp_ms41909.ko is not loaded;\n"
+            "   run `%s probe` to check non-destructively)\n",
+            "ptz_tool");
     exit(1);
   }
   return fd;
+}
+
+// Probe the PTZ motor stack. Returns 0 if /dev/ssp exists AND a status
+// ioctl succeeds (i.e. the motor controller is actually responsive),
+// 1 otherwise. Used by boot scripts to decide whether to bother with
+// the 30s PTZ calibration wait.
+//
+// Two layers of check, matching the failure modes observed on
+// non-PTZ Victure variants:
+//   1. /dev/ssp absent  → ssp_ms41909.ko didn't load, no PTZ at all
+//   2. /dev/ssp present but ioctl(STATUS) errors → module loaded but
+//      the SPI/PWM motor controller chip isn't physically there
+static int ptz_probe() {
+  const int fd = try_open_ssp();
+  if (fd < 0) {
+    // Silent — boot scripts call this in the common path
+    return 1;
+  }
+  uint32_t st[8] = {};
+  const int rc = ioctl(fd, 1, st);
+  close(fd);
+  if (rc < 0) return 1;
+  return 0;
 }
 
 static int ssp_ioctl(const int32_t fd, const uint32_t cmd, uint32_t buf[8]) {
@@ -137,17 +171,24 @@ int ptz_goto_y_stepwise(const int fd, const uint32_t target_y) {
 static void usage(const char *a) {
   fprintf(stderr,
           "Usage:\n"
+          "  %s probe                                # exit 0 if PTZ present, 1 otherwise\n"
           "  %s move <up|down|left|right|1|2|3|4> <speed> <amount>\n"
           "  %s stop\n"
           "  %s status\n"
           "  %s goto_x <position>\n"
           "  %s goto_y <position>\n"
-          , a, a, a, a, a);
+          , a, a, a, a, a, a);
   exit(2);
 }
 
 int main(const int argc, char **argv) {
   if (argc < 2) usage(argv[0]);
+
+  // `probe` is a special case — it must not exit(1) on missing /dev/ssp,
+  // since that's exactly the case the caller is trying to detect.
+  if (!strcmp(argv[1], "probe")) {
+    return ptz_probe();
+  }
 
   const int fd = open_ssp();
 

@@ -5,9 +5,11 @@
     "gain": 40
   },
   "ir_control": {
+    "detection_mode": "adc_auto",
     "adc_cutoff": 400,
     "adc_cutoff_inverted": 2750,
-    "invert": false
+    "invert": false,
+    "ir_led_pwm_duty": 100
   },
   "isp": {
     "noise_reduction": 4,
