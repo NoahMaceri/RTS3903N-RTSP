@@ -1,17 +1,13 @@
-// cpld_info — print the cpld_periph.ko per-board wiring.
-//
-// Reads /sys/module/cpld_periph/parameters/{gpio,hw} (both 32-char
-// strings) and decodes them using the same rules as the kernel
-// module's init_module(). Useful when porting to a new board or
-// debugging an IR/LED misbehavior — tells you which GPIO each logical
-// port is wired to, and which active level each output uses.
-//
-// See docs/cpld.md §2 for the per-position semantics.
+// cpld_info — print the cpld_periph.ko per-board GPIO wiring.
+// Source order: /sys/module/cpld_periph/parameters/* (live), then
+// /dev/mtdblock6 (factory flash). Decode rules: docs/cpld.md §2.
 
 #include <cstdio>
 #include <cstring>
 #include <fcntl.h>
 #include <unistd.h>
+
+#include "factory_data.h"
 
 namespace {
 
@@ -183,19 +179,27 @@ void print_port(const char *name, int gpio, char pol, const char *src) {
 int main(int /*argc*/, char ** /*argv*/) {
     char gpio[64] = {};
     char hw[64]   = {};
+    const char *source = nullptr;
 
-    if (read_param(PARAM_GPIO, gpio, sizeof(gpio)) < 0) {
-        fprintf(stderr, "cpld_info: cannot read %s\n", PARAM_GPIO);
-        fprintf(stderr, "  is cpld_periph.ko loaded?  lsmod | grep cpld_periph\n");
-        return 1;
-    }
-    if (read_param(PARAM_HW, hw, sizeof(hw)) < 0) {
-        fprintf(stderr, "cpld_info: cannot read %s\n", PARAM_HW);
-        fprintf(stderr, "  is cpld_periph.ko loaded?  lsmod | grep cpld_periph\n");
-        return 1;
+    // Prefer the live kernel module params; fall back to factory flash.
+    if (read_param(PARAM_GPIO, gpio, sizeof(gpio)) >= 0 &&
+        read_param(PARAM_HW,   hw,   sizeof(hw))   >= 0) {
+        source = "/sys/module/cpld_periph/parameters";
+    } else {
+        FactoryData fd;
+        const int rc = factory_data_read(&fd);
+        if (rc < 0) {
+            fprintf(stderr, "cpld_info: cannot read %s nor %s (rc=%d)\n",
+                    PARAM_GPIO, FACTORY_DATA_PATH, rc);
+            fprintf(stderr, "  is cpld_periph.ko loaded?  is mtdblock6 accessible?\n");
+            return 1;
+        }
+        strncpy(gpio, fd.gpio_pin, sizeof(gpio) - 1);
+        strncpy(hw,   fd.hw_ver,   sizeof(hw)   - 1);
+        source = FACTORY_DATA_PATH " (cpld_periph.ko not loaded)";
     }
 
-    printf("cpld_periph modprobe wiring:\n");
+    printf("cpld_periph modprobe wiring (source: %s):\n", source);
     printf("  gpio = \"%s\"  (%zu chars)\n", gpio, strlen(gpio));
     printf("  hw   = \"%s\"  (%zu chars)\n", hw,   strlen(hw));
 

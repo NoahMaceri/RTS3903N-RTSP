@@ -9,6 +9,8 @@
 #include <cstdlib>
 #include <map>
 
+#include "factory_data.h"
+
 #define PTZ_STEP      0x00000100
 #define PTZ_SPEED     5
 #define PTZ_MAX_ITERS 500
@@ -35,9 +37,7 @@ typedef struct {
   uint32_t raw[8]; // full 32B status
 } ptz_status_t;
 
-// Non-fatal version: returns -1 if /dev/ssp is missing or unreadable.
-// Used by the `probe` subcommand so it can return a clean exit code
-// instead of dying with perror+exit(1).
+// Non-fatal: returns -1 on failure. Used by `probe` and by `open_ssp`.
 static int try_open_ssp() {
   return open("/dev/ssp", O_RDWR);
 }
@@ -46,36 +46,26 @@ static int open_ssp() {
   const int fd = try_open_ssp();
   if (fd < 0) {
     perror("open /dev/ssp");
-    fprintf(stderr,
-            "  (this camera may not have PTZ hardware, or ssp_ms41909.ko is not loaded;\n"
-            "   run `%s probe` to check non-destructively)\n",
-            "ptz_tool");
+    fprintf(stderr, "  (run `ptz_tool probe` to check non-destructively)\n");
     exit(1);
   }
   return fd;
 }
 
-// Probe the PTZ motor stack. Returns 0 if /dev/ssp exists AND a status
-// ioctl succeeds (i.e. the motor controller is actually responsive),
-// 1 otherwise. Used by boot scripts to decide whether to bother with
-// the 30s PTZ calibration wait.
-//
-// Two layers of check, matching the failure modes observed on
-// non-PTZ Victure variants:
-//   1. /dev/ssp absent  → ssp_ms41909.ko didn't load, no PTZ at all
-//   2. /dev/ssp present but ioctl(STATUS) errors → module loaded but
-//      the SPI/PWM motor controller chip isn't physically there
+// Returns 0 if PTZ is present, 1 otherwise. Used by boot scripts to
+// gate the 30s PTZ calibration wait. Fast path = factory flag (~1ms,
+// works pre-insmod); slow fallback = /dev/ssp + STATUS ioctl.
 static int ptz_probe() {
-  const int fd = try_open_ssp();
-  if (fd < 0) {
-    // Silent — boot scripts call this in the common path
-    return 1;
+  FactoryData fdat;
+  if (factory_data_read(&fdat) == 0 && fdat.hw_ver[0] != '1') {
+    return 1;  // factory says no motor — definitive
   }
+  const int fd = try_open_ssp();
+  if (fd < 0) return 1;
   uint32_t st[8] = {};
   const int rc = ioctl(fd, 1, st);
   close(fd);
-  if (rc < 0) return 1;
-  return 0;
+  return (rc < 0) ? 1 : 0;
 }
 
 static int ssp_ioctl(const int32_t fd, const uint32_t cmd, uint32_t buf[8]) {

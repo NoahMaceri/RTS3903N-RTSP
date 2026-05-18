@@ -147,15 +147,13 @@ uint32_t day_night_ctrl::read_adc_mean(const int32_t samples, const int32_t dela
 }
 
 bool day_night_ctrl::sample_wants_night(const uint8_t current_ir_mode) {
-    // Reset diagnostics — branches set what's relevant; the rest stay
-    // at sentinel so the transition logger can tell what to print.
+    // Sentinel-clear; each branch sets what's relevant for the log.
     last_raw_adc = 0;
     last_ema_adc = 0;
     last_sdk_raw = -1;
 
-    // Apply user-pinned polarity inversion on top of the raw "is dark"
-    // verdict. The hysteresis case bakes invert in directly because it
-    // also needs to know which threshold to compare against.
+    // Apply polarity inversion to the raw "is dark" verdict. Hysteresis
+    // bakes invert into its comparisons directly, so it doesn't use this.
     auto with_invert = [this](bool wants_night) {
         return invert ? !wants_night : wants_night;
     };
@@ -190,14 +188,10 @@ bool day_night_ctrl::sample_wants_night(const uint8_t current_ir_mode) {
             adc_ema = EMA_ALPHA * last_raw_adc + (1.0 - EMA_ALPHA) * adc_ema;
             last_ema_adc = static_cast<uint32_t>(lround(adc_ema));
 
-            // Two-edge hysteresis. In non-inverted polarity "dark"
-            // means below the lower bound; in inverted it means above
-            // the upper bound. We treat readings inside the band as
-            // "no opinion" by returning the *current* state, which the
-            // debounce counters quietly absorb.
+            // Two-edge: in-band readings return the current state ("no
+            // opinion"), which the debounce counter absorbs.
             const uint32_t low  = (cutoff > HYST_BAND) ? (cutoff - HYST_BAND) : 0;
             const uint32_t high = cutoff + HYST_BAND;
-
             const bool is_dark  = invert ? (last_ema_adc > high) : (last_ema_adc < low);
             const bool is_light = invert ? (last_ema_adc < low)  : (last_ema_adc > high);
 
@@ -209,9 +203,9 @@ bool day_night_ctrl::sample_wants_night(const uint8_t current_ir_mode) {
     return false;  // unreachable; switch is exhaustive
 }
 
-// Single INFO-level transition record. Combines the "why" (mode-aware
-// diagnostics) and the "what" (resulting IR-cut + LED state) into one
-// line so users grepping the log see the full story at once.
+// Single INFO line per transition: mode-specific diagnostics + the
+// resulting IR-cut / LED state. Lets a user grep the log and see
+// what reading triggered the switch.
 void day_night_ctrl::apply_transition(const bool to_night) {
     char diag[160] = {};
     const char *target = to_night ? "night" : "day";
@@ -302,20 +296,10 @@ void day_night_ctrl::check_light_level() {
 
     bool wants_night = sample_wants_night(current_ir_mode);
 
-    // ADC_AUTO: cross-check our ADC verdict against the SDK's image-
-    // histogram estimator. Sustained disagreement means our polarity
-    // is wrong — flip it, persist, and re-evaluate this tick.
-    //
-    // Caveats:
-    //   - SDK estimator needs AE to have converged; the WARMUP_SECS
-    //     delay in ir_ctrl_thread() handles startup. Runtime AE re-
-    //     convergence after a big scene change can briefly disagree
-    //     and reset our counter, which is fine.
-    //   - In environments where the SDK is *consistently* wrong (e.g.
-    //     a camera that only ever sees a dark IR-illuminated scene),
-    //     this can mis-flip. The 5-min hold-off makes it unlikely;
-    //     if it bites you, set detection_mode to `adc_hysteresis` and
-    //     pin polarity manually.
+    // ADC_AUTO: cross-check ADC verdict against SDK estimator. Sustained
+    // disagreement (FLIP_THRESHOLD ticks) means polarity is wrong — flip,
+    // persist, re-evaluate. Mis-flips if the SDK is consistently wrong
+    // (rare); fall back to adc_hysteresis with manual `invert:` if so.
     if (mode == DayNightMode::ADC_AUTO) {
         const int sdk_raw = rts_av_get_isp_daynight_statis();
         if (sdk_raw == 0 || sdk_raw == 1) {
@@ -331,10 +315,8 @@ void day_night_ctrl::check_light_level() {
                           invert ? "inverted" : "normal",
                           static_cast<unsigned>(FLIP_THRESHOLD));
                 save_cached_polarity();
-                // Re-sample so this tick reflects the corrected
-                // polarity. Costs an extra ADC read (~600 ms) but
-                // only happens on the rare flip event, so the impact
-                // is negligible.
+                // Re-sample so this tick reflects the new polarity.
+                // Extra 600 ms ADC read, but only on the rare flip event.
                 wants_night = sample_wants_night(current_ir_mode);
             }
         }
