@@ -1,10 +1,7 @@
 /*
- * factory_data.h — read /dev/mtdblock6 the way stock load_cpld_ssp does.
- * Layout + per-character semantics live in docs/load_cpld_ssp.md §2
- * and docs/cpld.md §2.
- *
- * `hw_ver[0] == '1'` is the canonical "this board has PTZ motor
- * hardware" flag — every SSP insmod in stock is gated on it.
+ * Read the per-board factory data block out of mtdblock6. hw_ver[0]=='1'
+ * is the canonical "this board has PTZ motor hardware" flag; the gpio
+ * pattern picks the specific motor variant.
  */
 #ifndef FACTORY_DATA_H
 #define FACTORY_DATA_H
@@ -26,6 +23,12 @@ struct FactoryData {
     char gpio_pin[FACTORY_DATA_FIELD_LEN + 1];
 };
 
+enum FactoryPtzMotor {
+    FACTORY_PTZ_NONE    = 0,
+    FACTORY_PTZ_8PIN    = 1,  // ssp_ms41909.ko       — gpio_pin[0..7] all '1'
+    FACTORY_PTZ_4P1PIN  = 2,  // ssp_ms41909_union.ko — gpio_pin[3..6] all '4' + [10]='4'
+};
+
 // 0 = ok, -1 = open failed, -2 = short read, -3 = magic mismatch.
 static int factory_data_read(struct FactoryData *out) {
     if (out == nullptr) return -1;
@@ -40,8 +43,6 @@ static int factory_data_read(struct FactoryData *out) {
     close(fd);
     if (n < span_len) return -2;
 
-    // Magic sentinels — load_cpld_ssp reads them as 32-bit ints with
-    // the high three bytes zero, so a byte-wise check is equivalent.
     if (buf[FACTORY_DATA_MAGIC1_OFFSET] != 0xAA) return -3;
     if (buf[FACTORY_DATA_MAGIC2_OFFSET] != 0xBB) return -3;
 
@@ -52,8 +53,42 @@ static int factory_data_read(struct FactoryData *out) {
     return 0;
 }
 
-// Fast, side-effect-free PTZ presence check; works even before
-// ssp_ms41909*.ko is loaded. False on any read failure.
+static bool _fd_run_eq(const char *s, size_t start, size_t end, char c) {
+    for (size_t i = start; i <= end; i++) {
+        if (s[i] == '\0') return false;
+        if (s[i] != c)    return false;
+    }
+    return true;
+}
+
+// String-based variant for callers reading the module params out of
+// /sys/module/cpld_periph/parameters at runtime.
+static FactoryPtzMotor factory_motor_from_strings(const char *hw, const char *gpio) {
+    if (hw == nullptr || gpio == nullptr) return FACTORY_PTZ_NONE;
+    if (hw[0] != '1')                     return FACTORY_PTZ_NONE;
+    if (_fd_run_eq(gpio, 0, 7, '1'))      return FACTORY_PTZ_8PIN;
+    if (_fd_run_eq(gpio, 3, 6, '4') && gpio[10] == '4')
+                                          return FACTORY_PTZ_4P1PIN;
+    return FACTORY_PTZ_NONE;
+}
+
+static FactoryPtzMotor factory_data_ptz_motor(void) {
+    struct FactoryData fd;
+    if (factory_data_read(&fd) != 0) return FACTORY_PTZ_NONE;
+    return factory_motor_from_strings(fd.hw_ver, fd.gpio_pin);
+}
+
+static const char *factory_ptz_motor_name(FactoryPtzMotor m) {
+    switch (m) {
+        case FACTORY_PTZ_8PIN:   return "8-pin (ssp_ms41909)";
+        case FACTORY_PTZ_4P1PIN: return "4+1-pin (ssp_ms41909_union)";
+        default:                 return "none";
+    }
+}
+
+// Loose check: only inspects hw_ver[0]. True even on PTZ-capable boards
+// whose specific motor pattern isn't recognised. For "is PTZ actually
+// going to work", use factory_data_ptz_motor() != NONE.
 static bool factory_data_has_ptz(void) {
     struct FactoryData fd;
     if (factory_data_read(&fd) != 0) return false;

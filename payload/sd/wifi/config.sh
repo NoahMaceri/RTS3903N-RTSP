@@ -231,10 +231,14 @@ fi
 
 # Skip the 30s stock PTZ calibration wait on non-PTZ boards.
 # `ptz_tool probe`: mtdblock6 hw_ver[0] fast-path, /dev/ssp fallback.
-# See docs/load_cpld_ssp.md §4.
+# See docs/load_cpld_ssp.md §4 and docs/dispatch.md §10.
 PTZ_TOOL=/var/tmp/sd/ptz_tool
 if [ -x "$PTZ_TOOL" ] && "$PTZ_TOOL" probe >/dev/null 2>&1; then
-    log "PTZ hardware detected, waiting 30s for stock calibration to finish..."
+    # `info` prints the detected motor variant; surface it in the log
+    # so users debugging "stock loaded a different ssp.ko" can see
+    # exactly what factory data says about this board.
+    MOTOR=$("$PTZ_TOOL" info 2>/dev/null | awk -F'Motor type: *' '/Motor type:/ {print $2; exit}')
+    log "PTZ detected (motor: ${MOTOR:-unknown}), waiting 30s for stock calibration..."
     sleep 30s
 elif [ ! -x "$PTZ_TOOL" ] && [ -c /dev/ssp ]; then
     log "PTZ device present but ptz_tool missing; waiting 30s (conservative)..."

@@ -18,6 +18,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <unistd.h>
 
 #include <json.hpp>
 
@@ -77,6 +78,10 @@ int main(int argc, char **argv) {
         << "port="         << onvif.value("port",          8000)        << "\n"
         << "scope=onvif://www.onvif.org/Profile/Streaming\n"
         << "scope=onvif://www.onvif.org/Profile/T\n";
+    const bool ptz_hw_present = (access("/dev/ssp", F_OK) == 0);
+    if (ptz_hw_present) {
+        out << "scope=onvif://www.onvif.org/type/ptz\n";
+    }
     if (!user.empty() && !password.empty()) {
         out << "user="     << user     << "\n"
             << "password=" << password << "\n";
@@ -97,6 +102,35 @@ int main(int argc, char **argv) {
         out << "audio_encoder=G711\n";
     }
     out << "\n";
+
+    if (ptz_hw_present) {
+        const char *tool = "/var/tmp/sd/ptz_tool";
+        out << "ptz=1\n"
+            << "min_step_x=-1\n"
+            << "max_step_x=1\n"
+            << "min_step_y=-1\n"
+            << "max_step_y=1\n"
+            << "min_step_z=0\n"
+            << "max_step_z=0\n"
+            << "get_position="        << tool << " get_position\n"
+            << "is_moving="           << tool << " is_moving\n"
+            << "move_left="           << tool << " move_left %f\n"
+            << "move_right="          << tool << " move_right %f\n"
+            << "move_up="             << tool << " move_up %f\n"
+            << "move_down="           << tool << " move_down %f\n"
+            << "move_in="             << tool << " move_in %f\n"
+            << "move_out="            << tool << " move_out %f\n"
+            << "move_stop="           << tool << " move_stop %s\n"
+            << "move_preset="         << tool << " move_preset %d\n"
+            << "goto_home_position="  << tool << " goto_home_position\n"
+            << "set_preset="          << tool << " set_preset %d %s\n"
+            << "set_home_position="   << tool << " set_home_position\n"
+            << "remove_preset="       << tool << " remove_preset %d\n"
+            << "jump_to_abs="         << tool << " jump_to_abs %f,%f,%f\n"
+            << "jump_to_rel="         << tool << " jump_to_rel %f,%f,%f\n"
+            << "get_presets="         << tool << " get_presets\n"
+            << "\n";
+    }
 
     return 0;
 }

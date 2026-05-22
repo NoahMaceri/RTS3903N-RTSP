@@ -8,7 +8,3 @@ add_executable(ptz_tool
 target_include_directories(ptz_tool PRIVATE
         ${CMAKE_SOURCE_DIR}/src/common
 )
-target_link_libraries(ptz_tool PRIVATE
-        zlog_s
-        rtscore
-)

@@ -271,12 +271,19 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - [x] lighttpd HTTP server
 - [x] Audio streaming
 - [x] ONVIF Profile S (auto-discovery, GetStreamUri, GetSnapshotUri)
-- [ ] ONVIF PTZ — URL routing exists (`/onvif/ptz_service`), but the binary's hardware-specific PTZ paths need a wrapper that translates ONVIF's normalized `[-1, 1]` velocities into our `ptz_tool` directional commands.
+- [x] ONVIF PTZ — URL routing exists (`/onvif/ptz_service`), but the binary's hardware-specific PTZ paths need a wrapper that translates ONVIF's normalized `[-1, 1]` velocities into our `ptz_tool` directional commands.
 - [ ] ONVIF audio backchannel — receive audio from the client and play it through the camera's speaker. Requires both an ONVIF Media-side `AudioOutput` configuration and a producer pipeline feeding the rts audio decoder.
 
 ---
 
 ## Version History
+
+### v0.6.1 (2026-05-22)
+
+- Feature: real ONVIF PTZ. `onvif_simple_server`'s PTZ service is now wired through to `/dev/ssp` via a rewritten `ptz_tool`. Supports `GetStatus`, `AbsoluteMove`, `RelativeMove`, `ContinuousMove`, `Stop`, `GetPresets`, `SetPreset`, `GotoPreset`, `RemovePreset`, `SetHomePosition`, `GotoHomePosition`. Pan/tilt exposed in ONVIF Profile S `[-1, +1]` coords (`+x = right`, `+y = up`); zoom unsupported (no hardware). Presets persisted at `/var/tmp/sd/onvif/ptz_presets.txt`.
+- Feature: `onvif_conf_gen` auto-emits a `[ptz]` config block plus the `onvif://www.onvif.org/type/ptz` WS-Discovery scope when `/dev/ssp` exists. No `settings.json` knob needed — the kernel module presence is the source of truth.
+- Change: `ptz_tool` CLI overhauled. Dropped the raw `move`/`status`/`goto_x`/`goto_y`/`pop_steps` debug subcommands in favour of the ONVIF-shaped surface (`get_position`, `is_moving`, `move_left|right|up|down`, `move_stop`, `jump_to_abs`, `jump_to_rel`, `set_preset`, `move_preset`, etc.). Kept `info`, `probe`, `park` for boot scripts and diagnostics.
+- Bugfix: `ptz_tool` no longer links `librtsio.so.0` (was dead code) — runs without `LD_LIBRARY_PATH` overrides.
 
 ### v0.6.0 (2026-05-14)
 

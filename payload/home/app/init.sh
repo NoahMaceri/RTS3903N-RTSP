@@ -52,14 +52,82 @@ insmod /home/rt/ko/rtstream.ko
 # Board-specific: cpld_periph + ssp_ms41909 need hw= / gpio= parameters
 # at insmod time. The stock `load_cpld_ssp` binary discovers those values
 # from the board config and insmods with the right args; without it, the
-# modules abort with "params error". Run it if present (it's a CGI-style
-# one-shot, exits immediately) and fall back to plain insmod otherwise.
+# modules abort with "params error". Run it if present (CGI-style
+# one-shot, exits immediately).
+#
+# If load_cpld_ssp isn't shipped (community builds may strip it), we
+# reproduce its behaviour inline: read /dev/mtdblock6 at the documented
+# offsets (docs/load_cpld_ssp.md §2), insmod cpld_periph.ko with the
+# right params, then pattern-match gpio_pin to decide which (if any)
+# of the two ssp_ms41909*.ko motor drivers to load (§3b–§3d).
+#
+# Optional auto-recovery: stock dispatch silently restores mtdblock6
+# from /etc/back.bin if the factory partition's magic-byte sentinels
+# are missing (docs/dispatch.md §6). We mirror that here so a board
+# with a partially-erased factory partition still comes up.
+# Both candidate paths are checked — /etc/back.bin (legacy, from
+# camera that ran stock before our flash) and /backup/back.bin
+# (mtd5 jffs2, the right place on our layout). Costs nothing when
+# neither file exists.
 if [ -x /home/app/load_cpld_ssp ]; then
     /home/app/load_cpld_ssp >> $LOGFILE 2>&1
 else
-    [ -f /home/rt/ko/cpld_periph.ko ]      && insmod /home/rt/ko/cpld_periph.ko
-    [ -f /home/rt/ko/ssp_ms41909.ko ]      && insmod /home/rt/ko/ssp_ms41909.ko
-    [ -f /home/rt/ko/ssp_ms41909_union.ko ] && insmod /home/rt/ko/ssp_ms41909_union.ko
+    # Sentinel check: byte 0xA4 must be 0xAA, byte 0xC8 must be 0xBB.
+    # Read both as hex via od; busybox od supports -An -t x1.
+    SENT1=$(dd if=/dev/mtdblock6 bs=1 skip=164 count=1 2>/dev/null | od -An -t x1 | tr -d ' \n')
+    SENT2=$(dd if=/dev/mtdblock6 bs=1 skip=200 count=1 2>/dev/null | od -An -t x1 | tr -d ' \n')
+    if [ "$SENT1" != "aa" ] || [ "$SENT2" != "bb" ]; then
+        BACKUP_BIN=
+        for cand in /backup/back.bin /etc/back.bin; do
+            [ -f "$cand" ] && BACKUP_BIN="$cand" && break
+        done
+        if [ -n "$BACKUP_BIN" ]; then
+            log "Factory partition sentinels invalid (got $SENT1/$SENT2), restoring from $BACKUP_BIN..."
+            dd if="$BACKUP_BIN" of=/dev/mtdblock6 bs=1 count=292 2>>$LOGFILE
+            SENT1=$(dd if=/dev/mtdblock6 bs=1 skip=164 count=1 2>/dev/null | od -An -t x1 | tr -d ' \n')
+            SENT2=$(dd if=/dev/mtdblock6 bs=1 skip=200 count=1 2>/dev/null | od -An -t x1 | tr -d ' \n')
+        else
+            log "WARN: factory sentinels missing (got $SENT1/$SENT2) and no back.bin to restore from"
+        fi
+    fi
+
+    if [ "$SENT1" = "aa" ] && [ "$SENT2" = "bb" ]; then
+        # 168 = 0xA8 (hw_ver), 204 = 0xCC (gpio_pin). tr -d '\0' strips
+        # any embedded NULs that would confuse the shell.
+        HW_VER=$(dd if=/dev/mtdblock6 bs=1 skip=168 count=32 2>/dev/null | tr -d '\0')
+        GPIO_PIN=$(dd if=/dev/mtdblock6 bs=1 skip=204 count=32 2>/dev/null | tr -d '\0')
+        log "Factory: hw=\"$HW_VER\" gpio=\"$GPIO_PIN\""
+
+        [ -f /home/rt/ko/cpld_periph.ko ] && \
+            insmod /home/rt/ko/cpld_periph.ko "hw=$HW_VER" "gpio=$GPIO_PIN"
+
+        # Motor pattern match — same shell-glob translation of
+        # load_cpld_ssp's two memcmp tests. First match wins.
+        case "$HW_VER" in
+            1*)
+                case "$GPIO_PIN" in
+                    11111111*)
+                        log "PTZ: 8-pin motor detected, insmod ssp_ms41909.ko"
+                        [ -f /home/rt/ko/ssp_ms41909.ko ] && \
+                            insmod /home/rt/ko/ssp_ms41909.ko "hw=$HW_VER" "gpio=$GPIO_PIN"
+                        ;;
+                    ???4444???4*)
+                        log "PTZ: 4+1-pin motor detected, insmod ssp_ms41909_union.ko"
+                        [ -f /home/rt/ko/ssp_ms41909_union.ko ] && \
+                            insmod /home/rt/ko/ssp_ms41909_union.ko "hw=$HW_VER" "gpio=$GPIO_PIN"
+                        ;;
+                    *)
+                        log "PTZ: hw says PTZ-capable but no known motor pattern in gpio_pin"
+                        ;;
+                esac
+                ;;
+            *)
+                log "PTZ: not a PTZ board (hw_ver[0]='$(printf %.1s "$HW_VER")')"
+                ;;
+        esac
+    else
+        log "ERROR: cannot insmod cpld_periph.ko without valid factory data"
+    fi
 fi
 # pid_list.ko is unparameterised — always safe to insmod.
 [ -f /home/rt/ko/pid_list.ko ] && insmod /home/rt/ko/pid_list.ko

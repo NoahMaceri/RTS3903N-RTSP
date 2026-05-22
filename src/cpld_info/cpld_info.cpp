@@ -245,5 +245,24 @@ int main(int /*argc*/, char ** /*argv*/) {
             printf("  hw[7]='2' → IR_ON    = 0 (IR LED gate is active-low)\n");
     }
 
+    // PTZ — mirrors load_cpld_ssp's decision (docs/load_cpld_ssp.md §3
+    // and §4) and what stock dispatch checks via g_ptz_mode
+    // (docs/dispatch.md §10). The motor pattern depends only on the
+    // hw_ver[0] flag plus a gpio_pin substring, both of which we
+    // already have above — no extra ioctls needed.
+    printf("\nPTZ:\n");
+    printf("  Factory flag:   hw[0] = '%c' (%s)\n",
+           hw[0] ? hw[0] : '?',
+           hw[0] == '1' ? "PTZ-capable" : "no PTZ hardware");
+    const FactoryPtzMotor motor = factory_motor_from_strings(hw, gpio);
+    printf("  Motor type:     %s\n", factory_ptz_motor_name(motor));
+    if (access("/dev/ssp", F_OK) == 0) {
+        printf("  /dev/ssp:       present (ssp_ms41909*.ko loaded)\n");
+    } else {
+        printf("  /dev/ssp:       absent%s\n",
+               motor == FACTORY_PTZ_NONE ? "" :
+               " — kernel module not loaded? run `ptz_tool info`");
+    }
+
     return 0;
 }
