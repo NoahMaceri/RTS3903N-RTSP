@@ -97,6 +97,14 @@ typedef struct {
 } ptz_node_t;
 
 typedef struct {
+    int enable;
+    char *list_all;       // popen: prints "key=value\n" per line
+    char *set;            // system: sprintf "%s %d" → "<key> <value>"
+    char *get_ir_cut;     // popen: prints "AUTO" | "ON" | "OFF"
+    char *set_ir_cut;     // system: sprintf "%s" → one of "auto"|"on"|"off"
+} imaging_node_t;
+
+typedef struct {
     char *topic;
     char *source_name;
     char *source_type;
@@ -132,6 +140,7 @@ typedef struct {
     relay_output_t *relay_outputs;
     int relay_outputs_num;
     ptz_node_t ptz_node;
+    imaging_node_t imaging_node;
     event_t *events;
     int events_enable;
     int events_num;

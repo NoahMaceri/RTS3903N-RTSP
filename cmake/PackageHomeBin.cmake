@@ -179,6 +179,9 @@ add_custom_target(package_home_bin
         ${CMAKE_SOURCE_DIR}/external/onvif_simple_server/ptz_service_files
         ${HOME_OUT}/app/ptz_service_files
     COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/external/onvif_simple_server/imaging_service_files
+        ${HOME_OUT}/app/imaging_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/external/onvif_simple_server/events_service_files
         ${HOME_OUT}/app/events_service_files
     COMMAND ${CMAKE_COMMAND} -E copy_directory

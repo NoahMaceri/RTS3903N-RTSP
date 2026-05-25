@@ -1,7 +1,17 @@
 #!/usr/bin/env bash
 #
 # flash_home_bin.sh — push a freshly built home.bin to a camera and reflash
-# mtdblock4 in place. Replaces the manual sequence:
+# mtdblock4 in place.
+#
+# *** EXPERIMENTAL — DEVELOPMENT USE ONLY ***
+# The on-flash deployment path is in an experimental phase and is NOT meant
+# to be used outside of development purposes. Writing mtdblock4 is recoverable
+# (stock /etc/init.d/rcS falls through to /backup/init.sh if /home/app/init.sh
+# is missing or broken), but recovery from a bad image still requires either a
+# working dev-tools shell or UART access. Use the SD-card hijack for anything
+# other than active development on a camera you don't mind bricking.
+#
+# Replaces the manual sequence:
 #
 #   curl -T home.bin ftp://root@<ip>/tmp/home.bin
 #   <ssh in>
@@ -34,6 +44,18 @@ if [ -z "$CAMERA" ]; then
     echo "usage: $0 [user@]CAMERA_IP [path/to/home.bin]" >&2
     exit 1
 fi
+
+cat >&2 <<'WARN'
+================================================================================
+  WARNING: EXPERIMENTAL — DEVELOPMENT USE ONLY
+  This tool rewrites mtdblock4 ("userdata") on the camera. The on-flash
+  deployment path is experimental and is NOT meant to be used outside of
+  development. A bad image will leave the camera unable to boot the streamer
+  and may require dev-tools shell access or UART recovery to restore.
+  Use the SD-card hijack for any non-development deployment.
+================================================================================
+WARN
+
 HOST="${CAMERA##*@}"
 USER_PART="${CAMERA%@*}"
 [ "$USER_PART" = "$HOST" ] && USER_PART="root"

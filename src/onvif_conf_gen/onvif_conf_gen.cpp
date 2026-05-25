@@ -103,6 +103,16 @@ int main(int argc, char **argv) {
     }
     out << "\n";
 
+    {
+        const char *isp = "/var/tmp/sd/isp_ctrl";
+        out << "imaging=1\n"
+            << "list_all="    << isp << " list\n"
+            << "set="         << isp << " set %s %d\n"
+            << "get_ir_cut="  << isp << " get " << "ir_cut_filter_mode\n"
+            << "set_ir_cut="  << isp << " set " << "ir_cut_filter_mode %s\n"
+            << "\n";
+    }
+
     if (ptz_hw_present) {
         const char *tool = "/var/tmp/sd/ptz_tool";
         out << "ptz=1\n"

@@ -23,6 +23,25 @@ constexpr int      TICK_SECS   = 2;      // poll cadence
 // Single line, "normal\n" or "inverted\n", recording the polarity that
 // ADC_AUTO has converged on so it survives reboots.
 constexpr const char *POLARITY_STATE_FILE = "daynight_polarity.state";
+
+// Runtime IR-cut override. One of "auto" (or missing), "day", "night".
+// Polled each tick — lets ONVIF SetImagingSettings(IrCutFilterMode=ON/OFF)
+// force a mode without restarting imagerd.
+constexpr const char *IR_CUT_OVERRIDE_FILE = "ir_cut_override.state";
+
+enum class IrCutOverride { AUTO, DAY, NIGHT };
+
+static IrCutOverride read_ir_cut_override() {
+    FILE *f = fopen(IR_CUT_OVERRIDE_FILE, "r");
+    if (f == nullptr) return IrCutOverride::AUTO;
+    char buf[16] = {};
+    const size_t n = fread(buf, 1, sizeof(buf) - 1, f);
+    fclose(f);
+    if (n == 0) return IrCutOverride::AUTO;
+    if (strncmp(buf, "day",   3) == 0) return IrCutOverride::DAY;
+    if (strncmp(buf, "night", 5) == 0) return IrCutOverride::NIGHT;
+    return IrCutOverride::AUTO;
+}
 } // namespace
 
 DayNightMode parse_day_night_mode(const std::string &s) {
@@ -293,6 +312,15 @@ void day_night_ctrl::save_cached_polarity() const {
 
 void day_night_ctrl::check_light_level() {
     const uint8_t current_ir_mode = get_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, vid_c);
+
+    const IrCutOverride ov = read_ir_cut_override();
+    if (ov != IrCutOverride::AUTO) {
+        const bool to_night = (ov == IrCutOverride::NIGHT);
+        const uint8_t want = to_night ? RTS_ISP_IR_NIGHT : RTS_ISP_IR_DAY;
+        if (current_ir_mode != want) apply_transition(to_night);
+        want_day_count = want_night_count = 0;
+        return;
+    }
 
     bool wants_night = sample_wants_night(current_ir_mode);
 

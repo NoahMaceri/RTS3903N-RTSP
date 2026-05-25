@@ -453,7 +453,7 @@ mkdir -p "$ONVIF_CONF_DIR"
 if /home/app/onvif_conf_gen /backup/config/settings.json "$ONVIF_CONF_DIR/onvif.conf" >> $LOGFILE 2>&1; then
     log "ONVIF: regenerated $ONVIF_CONF_DIR/onvif.conf"
     mkdir -p /tmp/onvif
-    for svc in device_service media_service media2_service ptz_service events_service deviceio_service; do
+    for svc in device_service media_service media2_service ptz_service imaging_service events_service deviceio_service; do
         cat > /tmp/onvif/$svc <<EOF
 #!/bin/sh
 cd /home/app

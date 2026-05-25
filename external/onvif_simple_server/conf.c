@@ -95,6 +95,12 @@ int process_conf_file(char *file)
     service_ctx.ptz_node.jump_to_abs = NULL;
     service_ctx.ptz_node.jump_to_rel = NULL;
 
+    service_ctx.imaging_node.enable = 0;
+    service_ctx.imaging_node.list_all = NULL;
+    service_ctx.imaging_node.set = NULL;
+    service_ctx.imaging_node.get_ir_cut = NULL;
+    service_ctx.imaging_node.set_ir_cut = NULL;
+
     while(fgets(line, MAX_LEN, fF)) {
         char *first = line;
         char *second;
@@ -492,6 +498,30 @@ int process_conf_file(char *file)
             if (service_ctx.ptz_node.enable == 1) {
                 service_ctx.ptz_node.get_presets = (char *) malloc(strlen(value) + 1);
                 strcpy(service_ctx.ptz_node.get_presets, value);
+            }
+
+        //Imaging service hooks
+        } else if (strcasecmp(param, "imaging") == 0) {
+            if (strcasecmp(value, "1") == 0) service_ctx.imaging_node.enable = 1;
+        } else if (strcasecmp(param, "list_all") == 0) {
+            if (service_ctx.imaging_node.enable == 1) {
+                service_ctx.imaging_node.list_all = (char *) malloc(strlen(value) + 1);
+                strcpy(service_ctx.imaging_node.list_all, value);
+            }
+        } else if (strcasecmp(param, "set") == 0) {
+            if (service_ctx.imaging_node.enable == 1) {
+                service_ctx.imaging_node.set = (char *) malloc(strlen(value) + 1);
+                strcpy(service_ctx.imaging_node.set, value);
+            }
+        } else if (strcasecmp(param, "get_ir_cut") == 0) {
+            if (service_ctx.imaging_node.enable == 1) {
+                service_ctx.imaging_node.get_ir_cut = (char *) malloc(strlen(value) + 1);
+                strcpy(service_ctx.imaging_node.get_ir_cut, value);
+            }
+        } else if (strcasecmp(param, "set_ir_cut") == 0) {
+            if (service_ctx.imaging_node.enable == 1) {
+                service_ctx.imaging_node.set_ir_cut = (char *) malloc(strlen(value) + 1);
+                strcpy(service_ctx.imaging_node.set_ir_cut, value);
             }
 
         //Relay outputs
@@ -1162,6 +1192,13 @@ void free_conf_file()
         if (service_ctx.ptz_node.move_left != NULL) free(service_ctx.ptz_node.move_left);
         if (service_ctx.ptz_node.is_moving != NULL) free(service_ctx.ptz_node.is_moving);
         if (service_ctx.ptz_node.get_position != NULL) free(service_ctx.ptz_node.get_position);
+    }
+
+    if (service_ctx.imaging_node.enable == 1) {
+        if (service_ctx.imaging_node.list_all   != NULL) free(service_ctx.imaging_node.list_all);
+        if (service_ctx.imaging_node.set        != NULL) free(service_ctx.imaging_node.set);
+        if (service_ctx.imaging_node.get_ir_cut != NULL) free(service_ctx.imaging_node.get_ir_cut);
+        if (service_ctx.imaging_node.set_ir_cut != NULL) free(service_ctx.imaging_node.set_ir_cut);
     }
 
     for (i = service_ctx.relay_outputs_num - 1; i >= 0; i--) {

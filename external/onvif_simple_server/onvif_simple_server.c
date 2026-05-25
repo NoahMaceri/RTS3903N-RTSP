@@ -30,6 +30,7 @@
 #include "media_service.h"
 #include "media2_service.h"
 #include "ptz_service.h"
+#include "imaging_service.h"
 #include "events_service.h"
 #include "deviceio_service.h"
 #include "fault.h"
@@ -266,6 +267,7 @@ int main(int argc, char ** argv)
                 (strstr(tmp, "media_service") != NULL) ||
                 (strstr(tmp, "media2_service") != NULL) ||
                 (strstr(tmp, "ptz_service") != NULL) ||
+                (strstr(tmp, "imaging_service") != NULL) ||
                 (strstr(tmp, "events_service") != NULL) ||
                 (strstr(tmp, "deviceio_service") != NULL)) {
             tmp = argv[argc - 1];
@@ -555,13 +557,13 @@ int main(int argc, char ** argv)
                 media_get_compatible_audio_decoder_configurations();
             } else if (strcasecmp(method, "GetCompatibleAudioOutputConfigurations") == 0) {
                 media_get_compatible_audio_output_configurations();
-            } else if ((service_ctx.adv_fault_if_set == 1) && (strcasecmp(method, "SetVideoSourceConfiguration") == 0)) {
+            } else if (strcasecmp(method, "SetVideoSourceConfiguration") == 0) {
                 media_set_video_source_configuration();
-            } else if ((service_ctx.adv_fault_if_set == 1) && (strcasecmp(method, "SetAudioSourceConfiguration") == 0)) {
+            } else if (strcasecmp(method, "SetAudioSourceConfiguration") == 0) {
                 media_set_audio_source_configuration();
-            } else if ((service_ctx.adv_fault_if_set == 1) && (strcasecmp(method, "SetVideoEncoderConfiguration") == 0)) {
+            } else if (strcasecmp(method, "SetVideoEncoderConfiguration") == 0) {
                 media_set_video_encoder_configuration();
-            } else if ((service_ctx.adv_fault_if_set == 1) && (strcasecmp(method, "SetAudioEncoderConfiguration") == 0)) {
+            } else if (strcasecmp(method, "SetAudioEncoderConfiguration") == 0) {
                 media_set_audio_encoder_configuration();
             } else if ((service_ctx.adv_fault_if_set == 1) && (strcasecmp(method, "SetAudioOutputConfiguration") == 0)) {
                 media_set_audio_output_configuration();
@@ -643,6 +645,18 @@ int main(int argc, char ** argv)
                 ptz_remove_preset();
             } else {
                 ptz_unsupported(method);
+            }
+        } else if (strcasecmp("imaging_service", prog_name) == 0) {
+            if (strcasecmp(method, "GetServiceCapabilities") == 0) {
+                imaging_get_service_capabilities();
+            } else if (strcasecmp(method, "GetImagingSettings") == 0) {
+                imaging_get_imaging_settings();
+            } else if (strcasecmp(method, "SetImagingSettings") == 0) {
+                imaging_set_imaging_settings();
+            } else if (strcasecmp(method, "GetOptions") == 0) {
+                imaging_get_options();
+            } else {
+                imaging_unsupported(method);
             }
         } else if (strcasecmp("events_service", prog_name) == 0) {
             if (strcasecmp(method, "GetServiceCapabilities") == 0) {

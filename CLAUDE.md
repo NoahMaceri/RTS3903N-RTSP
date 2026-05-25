@@ -29,7 +29,8 @@ ninja imagerd               # or isp_ctrl, snapshot, isp_tool, ptz_tool,
 # Package SD-card tarball (RTS3903N_RTSP-<version>.tar):
 ninja package_RTS3903N_RTSP
 
-# Package home.bin for direct flash to mtdblock4 (see "On-flash boot" below):
+# Package home.bin for direct flash to mtdblock4 (see "On-flash boot" below).
+# WARNING: on-flash deployment is EXPERIMENTAL — development use only.
 ninja package_home_bin
 
 # Push a fresh build to a development camera over uftpd + ssh/telnet:
@@ -152,6 +153,8 @@ Logs go to `/var/tmp/sd/boot.log` (boot script output) and `/var/log/rtsp_stream
 Network configuration lives in `/var/tmp/sd/network.ini` (sections `[wifi]` for ssid/psk and `[network]` for optional static ip/netmask/gateway). `config.sh` parses it via a tiny awk INI helper, regenerates `wifi/wpa_supplicant.conf` from those values on every boot (the file is marked DO-NOT-EDIT), and applies static IP if all three fields are set, else falls back to DHCP. `wpa_supplicant_sample.conf` and the `Factory/` placement are gone — `network.ini` is the only file the user touches.
 
 ## On-flash boot (no SD card)
+
+> ⚠️ **EXPERIMENTAL — DEVELOPMENT USE ONLY.** The on-flash deployment path (`package_home_bin`, `flash_home_bin.sh`, the entire `payload/home/` overlay) is in an experimental phase and is **not meant to be used outside of development purposes**. Writing to `mtdblock4` is recoverable in principle (stock `rcS` falls through to `/backup/init.sh` if `/home/app/init.sh` is broken), but a bad image still requires a working dev-tools shell or UART recovery — neither is something an end user should have to do. Stick with the SD-card hijack for any production / non-developer deployment. Only use the flash path if you understand the recovery flow described below and accept the risk of bricking the camera's userspace.
 
 The SD-card hijack is the default and the safer path. There's also an alternative: bake the whole stack into a flashable squashfs and write it to `mtdblock4` ("userdata", 3 MiB, mounted at `/home`). Once flashed, the camera boots into the streamer with no SD card inserted.
 

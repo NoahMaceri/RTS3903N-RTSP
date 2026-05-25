@@ -54,6 +54,50 @@ Trivial fix: wrap the include in `#ifdef USE_ZLIB` to match the rest.
 |---|---|
 | `utils.c` | `#include <zlib.h>` (after the crypto include block) wrapped in `#ifdef USE_ZLIB` |
 
+## Patch 4 — add Imaging service
+
+Upstream ships Device, Media, Media2, PTZ, Events, DeviceIO. We add an
+Imaging service (ONVIF Profile S, `ver20/imaging/wsdl`) that wraps the
+camera's ISP controls so clients can read/write brightness, contrast,
+saturation, sharpness, BLC, WDR, and IR-cut filter mode over SOAP.
+
+Methods implemented: `GetServiceCapabilities`, `GetImagingSettings`,
+`SetImagingSettings`, `GetOptions`. Focus/Move methods return fault
+(no AF hardware on these boards).
+
+Files added:
+| File | Purpose |
+|---|---|
+| `imaging_service.{c,h}` | Handlers: popen `list_all` and parse `key=value` lines for Get; walk known fields and shell out to `set` for Set. |
+| `imaging_service_files/*.xml` | Four response templates with placeholder slots. |
+
+Files touched:
+| File | Change |
+|---|---|
+| `onvif_simple_server.{c,h}` | New `imaging_service` branch in the prog_name dispatcher (3 sites); `imaging_node_t` struct added to `service_context_t`; `imaging_service.h` included. |
+| `conf.c` | Initialize `service_ctx.imaging_node` defaults; parse `imaging=`, `list_all=`, `set=`, `get_ir_cut=`, `set_ir_cut=` keys; free them in `free_conf_file`. |
+| `CMakeLists.txt` | `imaging_service.c` added to the source list. |
+
+## Patch 5 — wire up SetVideoEncoder/SourceConfiguration
+
+Upstream's `media_set_video_encoder_configuration` and
+`media_set_video_source_configuration` always return a SOAP fault. We
+replace the bodies so they actually persist the requested settings
+(via the `settings_tool` helper that edits `/var/tmp/sd/settings.json`).
+
+The dispatcher previously gated those handlers on `adv_fault_if_set==1`;
+we drop the gate so the handlers run unconditionally.
+
+Files touched:
+| File | Change |
+|---|---|
+| `media_service.c` | `media_set_video_source_configuration` returns success for the `VideoSourceConfigToken` token (we don't crop, so any bounds are silently accepted). `media_set_video_encoder_configuration` parses `Width`, `Height`, `FrameRateLimit`, `BitrateLimit` and shells out to `/var/tmp/sd/settings_tool set encoder.<field> <value>`. |
+| `onvif_simple_server.c` | `adv_fault_if_set` gating removed from the four `SetVideo/AudioSource/EncoderConfiguration` dispatch branches. |
+| `media_service_files/SetVideoEncoderConfiguration.xml`, `SetVideoSourceConfiguration.xml` | New response templates. |
+
+Encoder-config changes persist on disk but only take effect on the next
+`imagerd` restart.
+
 ## Re-pulling from upstream
 
 When you want to grab a newer release:

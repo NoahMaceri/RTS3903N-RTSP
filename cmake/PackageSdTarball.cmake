@@ -20,6 +20,7 @@ set(PKG_BINARIES
     ${CMAKE_BINARY_DIR}/src/sntp/sntp
     ${CMAKE_BINARY_DIR}/src/ptz_tool/ptz_tool      # used by config.sh `probe` gate
     ${CMAKE_BINARY_DIR}/src/cpld_info/cpld_info    # diagnostic: decode modprobe wiring
+    ${CMAKE_BINARY_DIR}/src/settings_tool/settings_tool
     ${CMAKE_BINARY_DIR}/external/onvif_simple_server/onvif_simple_server
     ${CMAKE_BINARY_DIR}/external/onvif_simple_server/wsd_simple_server
     ${CMAKE_BINARY_DIR}/src/onvif_conf_gen/onvif_conf_gen
@@ -101,6 +102,9 @@ add_custom_target(package_${PROJECT_NAME}
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/external/onvif_simple_server/ptz_service_files
         ${PKG_OUT}/ptz_service_files
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/external/onvif_simple_server/imaging_service_files
+        ${PKG_OUT}/imaging_service_files
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${CMAKE_SOURCE_DIR}/external/onvif_simple_server/events_service_files
         ${PKG_OUT}/events_service_files

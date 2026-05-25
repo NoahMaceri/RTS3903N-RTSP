@@ -14,14 +14,12 @@ A custom RTSP streaming server for Realtek RTS3903N-based IP cameras (including 
 ## Features
 
 - **H.264 RTSP Streaming** — Standard `rtsp://` URL compatible with VLC, FFmpeg, NVRs, and home automation systems
-- **Web Control Interface** — Browser-based ISP parameter adjustment with live preview
 - **JPEG Snapshots** — HTTP endpoint for capturing still images
 - **Automatic Day/Night Switching** — IR cut filter control based on ambient light sensors
-- **Pan-Tilt-Zoom Control** — PTZ motor support via `/dev/ssp`
-  - This control has been implemented and tested on a Victure SC210. Other models may require adjustments.
-  - Control is via telnet for now, but web interface integration is planned.
-- **Configurable Parameters** — Resolution, bitrate, FPS, ISP settings via JSON config
-- **Optional Authentication** — Username/password protection for RTSP stream
+- **Pan-Tilt-Zoom Control** — PTZ motor support via `/dev/ssp`, exposed over ONVIF
+- **ONVIF Profile S** — Device / Media / Imaging / PTZ / Events / DeviceIO services + WS-Discovery, so the camera is usable from any ONVIF NVR or client (Frigate, Home Assistant, Synology, ONVIF Device Manager, etc.)
+- **Configurable Parameters** — Resolution, bitrate, FPS, ISP settings via JSON config and/or ONVIF SetVideoEncoderConfiguration / SetImagingSettings
+- **Optional Authentication** — Username/password protection for RTSP + ONVIF
 - **Telnet Access** — Remote shell access on port 23
 
 ---
@@ -59,22 +57,21 @@ This creates `RTS3903N-RTSP-X.X.X.tar` containing all binaries and configuration
 4. Insert SD card into camera and power on
 5. Wait ~30 seconds for boot
 6. Access stream at `rtsp://CAMERA_IP:554/stream`
-7. Access web interface at `http://CAMERA_IP/`
+7. Point any ONVIF client at `http://CAMERA_IP/onvif/device_service`
 
 ---
 
-## Web Interface
-
-The camera includes a web interface accessible at `http://CAMERA_IP/`.
-
-![Web Interface](docs/webui.png)
-
-### API Endpoints
+## HTTP endpoints
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/cgi-bin/snapshot` | GET | Capture JPEG snapshot |
-| `/cgi-bin/isp_ctrl` | POST | ISP control commands |
+| `/onvif/device_service` | POST (SOAP) | ONVIF Device — info, network, time, scopes |
+| `/onvif/media_service`, `/onvif/media2_service` | POST (SOAP) | ONVIF Media — profiles, stream/snapshot URIs, encoder configuration |
+| `/onvif/imaging_service` | POST (SOAP) | ONVIF Imaging — brightness / contrast / saturation / sharpness / WDR / IR cut |
+| `/onvif/ptz_service` | POST (SOAP) | ONVIF PTZ — absolute / relative / continuous move, presets |
+| `/onvif/events_service` | POST (SOAP) | ONVIF Events |
+| `/onvif/deviceio_service` | POST (SOAP) | ONVIF DeviceIO |
 
 ---
 
@@ -277,6 +274,14 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 ---
 
 ## Version History
+
+### v0.6.2 (2026-05-22)
+
+- Feature: ONVIF Imaging service. New `imaging_service.c` in the vendored `onvif_simple_server` (patch #4 in `PATCHES.md`) handles `GetImagingSettings`, `SetImagingSettings`, `GetOptions`, `GetServiceCapabilities`. Wraps the ISP through `isp_ctrl` so any ONVIF client can read/write brightness, contrast, saturation, sharpness, BLC, WDR, and IR-cut filter mode.
+- Feature: ONVIF `SetVideoEncoderConfiguration` and `SetVideoSourceConfiguration` actually persist now (patch #5). `Width`, `Height`, `FrameRateLimit`, `BitrateLimit` go through a new tiny `settings_tool` helper that edits dot-paths in `settings.json`. Changes take effect on the next `imagerd` restart.
+- Feature: `IrCutFilterMode` (ONVIF AUTO/ON/OFF) wired through to a runtime override. `day_night_ctrl` polls `/var/tmp/sd/ir_cut_override.state` every tick — when present, the auto-detection is skipped and the requested mode is forced. Clearing the file resumes detection. Override takes effect within the IR-control tick cadence (2 s) without restarting `imagerd`.
+- Change: `isp_ctrl` rewritten. The JSON-over-stdin CGI mode is gone; the binary is now a CLI (`get`, `set`, `list`, `info`, `save`) used as the backend for the ONVIF Imaging service. Treats the virtual key `ir_cut_filter_mode` specially to drive the override above.
+- Change: custom HTTP web UI sunset. `payload/common/http/www/index.html` and the `isp_ctrl` CGI wrapper deleted; `lighttpd.conf` trimmed to just the `/cgi-bin/snapshot` and `/onvif/` aliases. ONVIF clients (Frigate, HA, Synology, ODM, …) are the new control surface.
 
 ### v0.6.1 (2026-05-22)
 

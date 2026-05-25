@@ -1633,14 +1633,16 @@ int media_set_video_source_configuration()
         send_fault("media_service", "Sender", "ter:InvalidArgVal", "ter:NoConfig", "No config", "The configuration does not exist");
         return -1;
     }
-
-    if (strcasecmp("VideoSourceConfigToken", token) == 0) {
-        send_fault("media_service", "Sender", "ter:InvalidArgVal", "ter:ConfigModify", "Config modify", "The configuration parameters are not possible to set");
-        return -2;
-    } else {
+    if (strcasecmp("VideoSourceConfigToken", token) != 0) {
         send_fault("media_service", "Sender", "ter:InvalidArgVal", "ter:NoConfig", "No config", "The configuration does not exist");
-        return -3;
+        return -2;
     }
+
+    // VideoSourceConfiguration is just bounds (cropping). We don't crop,
+    // so accept any bounds silently. Mirror/Flip go via the Imaging service.
+    long size = cat(NULL, "media_service_files/SetVideoSourceConfiguration.xml", 0);
+    output_http_headers(size);
+    return cat("stdout", "media_service_files/SetVideoSourceConfiguration.xml", 0);
 }
 
 int media_set_audio_source_configuration()
@@ -1669,8 +1671,40 @@ int media_set_audio_source_configuration()
 
 int media_set_video_encoder_configuration()
 {
-    send_fault("media_service", "Sender", "ter:InvalidArgVal", "ter:ConfigModify", "Config modify", "The configuration parameters are not possible to set");
-    return -1;
+    char tag_w[8]  = "Width";
+    char tag_h[8]  = "Height";
+    char tag_fr[24] = "FrameRateLimit";
+    char tag_br[24] = "BitrateLimit";
+    char tag_body[8] = "Body";
+    char cmd[256];
+
+    const char *w  = get_element(tag_w,  tag_body);
+    const char *h  = get_element(tag_h,  tag_body);
+    const char *fr = get_element(tag_fr, tag_body);
+    const char *br = get_element(tag_br, tag_body);
+
+    if (w != NULL) {
+        snprintf(cmd, sizeof(cmd), "/var/tmp/sd/settings_tool set encoder.width %d", atoi(w));
+        system(cmd);
+    }
+    if (h != NULL) {
+        snprintf(cmd, sizeof(cmd), "/var/tmp/sd/settings_tool set encoder.height %d", atoi(h));
+        system(cmd);
+    }
+    if (fr != NULL) {
+        snprintf(cmd, sizeof(cmd), "/var/tmp/sd/settings_tool set encoder.fps %d", atoi(fr));
+        system(cmd);
+    }
+    if (br != NULL) {
+        // ONVIF sends bitrate in kbps; settings.json stores bits/s.
+        snprintf(cmd, sizeof(cmd), "/var/tmp/sd/settings_tool set encoder.target_bitrate %d",
+                 atoi(br) * 1000);
+        system(cmd);
+    }
+
+    long size = cat(NULL, "media_service_files/SetVideoEncoderConfiguration.xml", 0);
+    output_http_headers(size);
+    return cat("stdout", "media_service_files/SetVideoEncoderConfiguration.xml", 0);
 }
 
 int media_set_audio_encoder_configuration()

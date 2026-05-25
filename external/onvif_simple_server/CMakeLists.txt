@@ -58,6 +58,7 @@ add_executable(onvif_simple_server
     ${CMAKE_CURRENT_SOURCE_DIR}/media_service.c
     ${CMAKE_CURRENT_SOURCE_DIR}/media2_service.c
     ${CMAKE_CURRENT_SOURCE_DIR}/ptz_service.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/imaging_service.c
     ${CMAKE_CURRENT_SOURCE_DIR}/events_service.c
     ${CMAKE_CURRENT_SOURCE_DIR}/deviceio_service.c
     ${CMAKE_CURRENT_SOURCE_DIR}/fault.c

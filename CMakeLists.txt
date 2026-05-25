@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 # get here; this file pulls in the cross-compiler settings.
 include(external/rsdk/enable_mips_uclibc.cmake)
 
-project(RTS3903N_RTSP VERSION 0.6.1 LANGUAGES C CXX)
+project(RTS3903N_RTSP VERSION 0.6.2 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -45,7 +45,7 @@ add_subdirectory(external/pcre2)
 include_directories(${CMAKE_BINARY_DIR}/external/pcre2/interface)
 link_directories(${CMAKE_BINARY_DIR}/external/pcre2)
 
-# lighttpd (web UI + CGI for snapshots and ISP control)
+# lighttpd — CGI front for snapshots and the ONVIF SOAP services.
 set(HAVE_PCRE2_H 1 CACHE INTERNAL "Have PCRE2 library")
 set(HAVE_PCRE   1 CACHE INTERNAL "Have PCRE2 library")
 if(CMAKE_CROSSCOMPILING)
@@ -69,6 +69,7 @@ add_subdirectory(src/snapshot)
 add_subdirectory(src/ptz_tool)
 add_subdirectory(src/cpld_info)
 add_subdirectory(src/sntp)
+add_subdirectory(src/settings_tool)
 add_subdirectory(src/onvif_conf_gen)
 # onvif_simple_server + wsd_simple_server are vendored upstream (GPLv3) plus
 # our additions — see external/onvif_simple_server/PATCHES.md.
@@ -92,6 +93,7 @@ set(SD_TARGETS
     ptz_tool
     cpld_info
     sntp
+    settings_tool
     onvif_simple_server
     wsd_simple_server
     onvif_conf_gen

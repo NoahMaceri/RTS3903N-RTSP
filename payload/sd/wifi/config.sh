@@ -314,7 +314,7 @@ if /var/tmp/sd/onvif_conf_gen /var/tmp/sd/settings.json "$ONVIF_CONF_DIR/onvif.c
     # via relative paths, so it has to run with /var/tmp/sd/ as CWD where
     # those directories live.
     mkdir -p /tmp/onvif
-    for svc in device_service media_service media2_service ptz_service events_service deviceio_service; do
+    for svc in device_service media_service media2_service ptz_service imaging_service events_service deviceio_service; do
         cat > /tmp/onvif/$svc <<EOF
 #!/bin/sh
 cd /var/tmp/sd
