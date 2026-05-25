@@ -224,20 +224,19 @@ static void terminate(int /*signum*/) {
     g_exit = true;
 }
 
-uint8_t config_h264_chn(const int h264_ch, const nlohmann::json &enc) {
+bool config_h264_chn(const int h264_ch, const nlohmann::json &enc) {
     rts_video_h264_ctrl *h264_ctl = nullptr;
 
-    const int ret = rts_av_query_h264_ctrl(h264_ch, &h264_ctl);
-    if (h264_ctl == nullptr) {
-        zlog_error(vid_c, "Failed to query H264 control for channel %d, ret %d", h264_ch, ret);
+    // Check the query result BEFORE touching h264_ctl — earlier we called
+    // get_h264_ctrl unconditionally, which could operate on a stale handle
+    // when query returned non-zero but still wrote a pointer.
+    const int q_ret = rts_av_query_h264_ctrl(h264_ch, &h264_ctl);
+    if (q_ret != 0 || h264_ctl == nullptr) {
+        zlog_error(vid_c, "rts_av_query_h264_ctrl failed for chn %d (ret=%d, ctl=%p)",
+                   h264_ch, q_ret, static_cast<void *>(h264_ctl));
         return false;
     }
     rts_av_get_h264_ctrl(h264_ctl);
-
-    if (ret) {
-        zlog_error(vid_c, "Failed to get H264 control for channel %d, ret %d", h264_ch, ret);
-        return false;
-    }
 
     // Required fields — settings.json must specify these.
     const uint32_t target_bitrate = enc["target_bitrate"].get<uint32_t>();
@@ -671,8 +670,16 @@ int start_stream(nlohmann::json &cfg) {
         }
     }
 
-    // H264 control can ONLY be applied after the channel is enabled
-    config_h264_chn(h.h264, cfg["encoder"]);
+    // H264 control can ONLY be applied after the channel is enabled.
+    // If it fails the encoder keeps the initial h264_attr values; not
+    // fatal, but the operator should know — log a warning so the
+    // settings.json-only knobs (max_qp, intra_qp_delta) silently
+    // taking effect or not is visible.
+    if (!config_h264_chn(h.h264, cfg["encoder"])) {
+        zlog_warn(vid_c, "config_h264_chn failed — encoder will run with "
+                         "initial attrs (target_bitrate %u, gop %u)",
+                  h264_attr.bps, h264_attr.gop);
+    }
     set_fps(cfg["encoder"]["fps"].get<uint8_t>());
 
     ret = rts_av_start_recv(h.h264);
@@ -874,7 +881,7 @@ int start_stream(nlohmann::json &cfg) {
     struct {
         uint32_t total_frames;
         uint32_t keyframes;
-        uint32_t dropped_keyframes;
+        uint32_t dropped_waiting_idr;   // P-frames dropped by the post-attach IDR gate
         size_t total_bytes;
         size_t max_frame_size;
         size_t min_frame_size;
@@ -956,6 +963,11 @@ int start_stream(nlohmann::json &cfg) {
                     static_cast<uint8_t *>(vid_buffer->vm_addr),
                     frame_size, is_keyframe, wallclock_us());
                 if (is_keyframe) need_keyframe = false;
+            } else if (active && need_keyframe) {
+                // Dropped because we're waiting for the post-attach IDR
+                // to land. Tracked so an operator can see if the encoder
+                // is slow to honour rts_av_request_h264_key_frame.
+                stats.dropped_waiting_idr++;
             }
         }
 
@@ -965,10 +977,10 @@ int start_stream(nlohmann::json &cfg) {
 
         if ((stats.total_frames % 3000) == 0) {
             size_t avg = stats.total_frames ? stats.total_bytes / stats.total_frames : 0;
-            zlog_info(vid_c, "Stats: frames=%u, keyframes=%u (interval=%u), q-dropped=%zu (keyframe-drops=%u), "
+            zlog_info(vid_c, "Stats: frames=%u, keyframes=%u (interval=%u), q-dropped=%zu, idr-gate-drops=%u, "
                              "size avg=%zu min=%zu max=%zu bytes",
                       stats.total_frames, stats.keyframes, stats.last_keyframe_interval,
-                      rtsp_worker::video_dropped(), stats.dropped_keyframes,
+                      rtsp_worker::video_dropped(), stats.dropped_waiting_idr,
                       avg, stats.min_frame_size == SIZE_MAX ? 0 : stats.min_frame_size,
                       stats.max_frame_size);
         }
@@ -976,9 +988,9 @@ int start_stream(nlohmann::json &cfg) {
 
     // Final statistics
     size_t avg_frame_size = stats.total_frames > 0 ? stats.total_bytes / stats.total_frames : 0;
-    zlog_info(vid_c, "Main loop exited. Final stats: frames=%u, keyframes=%u, q-dropped=%zu (keyframe-drops=%u), "
+    zlog_info(vid_c, "Main loop exited. Final stats: frames=%u, keyframes=%u, q-dropped=%zu, idr-gate-drops=%u, "
                      "size avg=%zu min=%zu max=%zu bytes",
-              stats.total_frames, stats.keyframes, rtsp_worker::video_dropped(), stats.dropped_keyframes,
+              stats.total_frames, stats.keyframes, rtsp_worker::video_dropped(), stats.dropped_waiting_idr,
               avg_frame_size, stats.min_frame_size == SIZE_MAX ? 0 : stats.min_frame_size,
               stats.max_frame_size);
     kill_stream(&h);

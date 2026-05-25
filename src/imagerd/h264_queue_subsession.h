@@ -8,8 +8,11 @@
 #include <vector>
 
 #include <liveMedia.hh>
+#include <zlog.h>
 
 #include "frame_queue.h"
+
+extern zlog_category_t *vid_c;
 
 // Pulls H.264 NAL units out of an in-process queue (fed by the encoder
 // thread) and hands them to live555's *discrete* framer. The cross-thread
@@ -169,6 +172,16 @@ private:
         fNumTruncatedBytes = nal.data.size() > fMaxSize
             ? static_cast<unsigned>(nal.data.size() - fMaxSize)
             : 0;
+
+        // Truncation should never fire in practice — H264VideoRTPSink does
+        // its own FU-A fragmentation, and OutPacketBuffer::maxSize is 1 MB.
+        // If it does, the decoder will see a corrupt NAL with no in-band
+        // signal; surface it so we can adjust maxSize or chase down a runaway
+        // I-frame.
+        if (fNumTruncatedBytes > 0) {
+            zlog_warn(vid_c, "H264QueueSource: NAL truncated, %u of %zu bytes dropped (fMaxSize=%u)",
+                      fNumTruncatedBytes, nal.data.size(), fMaxSize);
+        }
 
         fPresentationTime.tv_sec  = nal.presentation_us / 1000000ULL;
         fPresentationTime.tv_usec = nal.presentation_us % 1000000ULL;
