@@ -71,13 +71,28 @@ trap 'rm -f "$TARBALL"' EXIT
 
 log() { printf '==> %s\n' "$*"; }
 
+# Format a byte count as a short human-readable string (no external deps).
+human_size() {
+    awk -v b="$1" 'BEGIN {
+        split("B KB MB GB", u);
+        i=1;
+        while (b >= 1024 && i < 4) { b /= 1024; i++ }
+        if (i == 1) printf "%d %s", b, u[i];
+        else        printf "%.1f %s", b, u[i];
+    }'
+}
+
 log "Packing payload..."
 tar -C "$OUT" "${EXCLUDE_ARGS[@]}" -cf "$TARBALL" .
 TARBALL_SIZE=$(stat -c %s "$TARBALL" 2>/dev/null || stat -f %z "$TARBALL")
-log "  $(printf '%d' "$TARBALL_SIZE") bytes"
+log "  $(human_size "$TARBALL_SIZE") ($(printf '%d' "$TARBALL_SIZE") bytes)"
 
 log "Uploading to ${HOST}..."
-curl -sS -T "$TARBALL" "ftp://anonymous:@${HOST}/_dev_update.tar"
+# curl's default progress meter shows %, transfer rate, time spent, and
+# time-to-completion. We deliberately don't pass -s/--silent (which
+# would suppress both progress and errors); errors will surface
+# naturally on stderr.
+curl -T "$TARBALL" "ftp://anonymous:@${HOST}/_dev_update.tar"
 
 log "Updating camera..."
 
