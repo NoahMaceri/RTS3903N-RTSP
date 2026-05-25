@@ -33,6 +33,9 @@ zlog_category_t *vid_c = nullptr;
 static std::atomic<bool> g_audio_enabled(false);
 static int32_t g_audio_capture_chn = -1;
 static int32_t g_audio_encode_chn = -1;
+static rtsp_worker::AudioCodec g_audio_codec = rtsp_worker::AudioCodec::ULAW;
+static uint32_t g_audio_sample_rate = 8000;
+static uint32_t g_audio_samples_per_frame = 0;   // 0 = ulaw (byte-driven)
 
 
 // Set audio capture volume using ALSA mixer API
@@ -338,10 +341,27 @@ static void *audio_capture_thread(void *arg) {
                 zlog_info(vid_c, "Audio: reader connected");
                 was_idle = false;
             }
-            rtsp_worker::push_audio_frame(
-                static_cast<uint8_t *>(audio_buffer->vm_addr),
-                audio_buffer->bytesused,
-                monotonic_us());
+            auto *frame_data = static_cast<uint8_t *>(audio_buffer->vm_addr);
+            uint32_t frame_size = audio_buffer->bytesused;
+            uint32_t duration_us;
+            if (g_audio_codec == rtsp_worker::AudioCodec::AAC) {
+                // SDK emits ADTS-wrapped AAC; live555 MPEG4GenericRTPSink
+                // wants raw access units, so strip the 7-byte header
+                // (we don't honour CRC-protected ADTS — bit 0 of byte 1
+                // is 1 in all observed frames).
+                if (frame_size > 7 && frame_data[0] == 0xFF
+                    && (frame_data[1] & 0xF6) == 0xF0) {
+                    frame_data += 7;
+                    frame_size -= 7;
+                }
+                duration_us = static_cast<uint32_t>(
+                    1000000ULL * g_audio_samples_per_frame / g_audio_sample_rate);
+            } else {
+                // G.711 u-law: 1 byte = 1 sample, 8 kHz → 125 us/byte.
+                duration_us = frame_size * 125u;
+            }
+            rtsp_worker::push_audio_frame(frame_data, frame_size,
+                                          monotonic_us(), duration_us);
             frames_captured++;
         } else if (!was_idle) {
             zlog_info(vid_c, "Audio: reader disconnected");
@@ -634,13 +654,35 @@ int start_stream(nlohmann::json &cfg) {
     if (cfg.contains("audio") && cfg["audio"]["enabled"].get<bool>()) {
         zlog_info(vid_c, "Setting up audio capture");
 
+        // Codec selection: "ulaw" (default) or "aac". Rate, encoder id, and
+        // per-frame sample count are all derived from the codec.
+        const std::string codec_str = cfg["audio"].value("codec", std::string("ulaw"));
+        int sdk_codec_id;
+        uint32_t capture_rate;
+        uint32_t default_bitrate;
+        if (codec_str == "aac") {
+            g_audio_codec = rtsp_worker::AudioCodec::AAC;
+            sdk_codec_id  = RTS_AUDIO_TYPE_ID_AAC;
+            capture_rate  = 48000;  // 16 kHz also works; 32 / 44.1 don't (SDK rejects bind)
+            default_bitrate = 64000;
+            g_audio_samples_per_frame = 1024;  // AAC-LC frame size
+        } else {
+            g_audio_codec = rtsp_worker::AudioCodec::ULAW;
+            sdk_codec_id  = RTS_AUDIO_TYPE_ID_ULAW;
+            capture_rate  = 8000;
+            default_bitrate = 64000;
+            g_audio_samples_per_frame = 0;  // unused; duration is byte-driven
+        }
+        g_audio_sample_rate = capture_rate;
+        const uint32_t bitrate = cfg["audio"].value("bitrate", default_bitrate);
+
         // Create audio capture channel
         struct rts_audio_attr audio_attr{};
         std::string dev_node = cfg["audio"].value("device", "hw:0,1");
         strncpy(audio_attr.dev_node, dev_node.c_str(), sizeof(audio_attr.dev_node) - 1);
-        audio_attr.format = 16;  // 16-bit samples
-        audio_attr.channels = 1;     // Mono - fixed for G.711
-        audio_attr.rate = 8000;      // 8kHz - fixed for G.711 PCMU
+        audio_attr.format = 16;             // 16-bit samples (PCM input to encoder)
+        audio_attr.channels = 1;            // mono
+        audio_attr.rate = capture_rate;
 
         h.audio_capture = rts_av_create_audio_capture_chn(&audio_attr);
         if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.audio_capture))) {
@@ -650,15 +692,15 @@ int start_stream(nlohmann::json &cfg) {
             zlog_debug(vid_c, "Audio capture channel created: chn %d, dev %s, rate %u, channels %u",
                        h.audio_capture, audio_attr.dev_node, audio_attr.rate, audio_attr.channels);
 
-            // Create audio encoder channel (G.711 u-law, 64kbps)
-            h.audio_encode = rts_av_create_audio_encode_chn(RTS_AUDIO_TYPE_ID_ULAW, 64000);
+            h.audio_encode = rts_av_create_audio_encode_chn(sdk_codec_id, bitrate);
             if (RTS_IS_ERR_VALUE(RTS_ERRNO(h.audio_encode))) {
                 zlog_warn(vid_c, "Failed to create audio encoder channel with error %d - audio disabled", h.audio_encode);
                 rts_av_destroy_chn(h.audio_capture);
                 h.audio_capture = -1;
                 h.audio_encode = -1;
             } else {
-                zlog_debug(vid_c, "Audio encoder channel created: chn %d (G.711 u-law)", h.audio_encode);
+                zlog_debug(vid_c, "Audio encoder channel created: chn %d (%s, %u bps)",
+                           h.audio_encode, codec_str.c_str(), bitrate);
 
                 // Bind capture to encoder
                 ret = rts_av_bind(h.audio_capture, h.audio_encode);
@@ -705,8 +747,9 @@ int start_stream(nlohmann::json &cfg) {
                             g_audio_enabled.store(false);
                         } else {
                             h.audio_thread_started = true;
-                            zlog_info(vid_c, "Audio streaming enabled (G.711 u-law, %u Hz, %u ch)",
-                                      audio_attr.rate, audio_attr.channels);
+                            zlog_info(vid_c, "Audio streaming enabled (%s, %u Hz, %u ch, %u bps)",
+                                      codec_str.c_str(), audio_attr.rate,
+                                      audio_attr.channels, bitrate);
                         }
                     }
                 }
@@ -777,7 +820,10 @@ int start_stream(nlohmann::json &cfg) {
     rcfg.stream_name   = cfg["rtsp"]["name"].get<std::string>();
     rcfg.username      = cfg["rtsp"]["username"].get<std::string>();
     rcfg.password      = cfg["rtsp"]["password"].get<std::string>();
-    rcfg.audio_enabled = g_audio_enabled.load();
+    rcfg.audio_enabled     = g_audio_enabled.load();
+    rcfg.audio_codec       = g_audio_codec;
+    rcfg.audio_sample_rate = g_audio_sample_rate;
+    rcfg.audio_channels    = 1;
     if (!rtsp_worker::start(rcfg)) {
         zlog_fatal(vid_c, "Failed to start RTSP worker");
         kill_stream(&h);

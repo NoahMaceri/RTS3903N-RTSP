@@ -24,18 +24,14 @@ public:
         AudioFrame frame;
         if (!fQueue->try_pop(frame)) return;
 
-        // G.711 packets from the encoder are tiny (~160 bytes per 20ms
-        // chunk). They will always fit in fMaxSize — no truncation case
-        // worth handling here.
+        // G.711 packets from the encoder are tiny — they fit in fMaxSize.
         fFrameSize = (frame.data.size() > fMaxSize) ? fMaxSize : frame.data.size();
         fNumTruncatedBytes = 0;
         memcpy(fTo, frame.data.data(), fFrameSize);
 
-        fPresentationTime.tv_sec = frame.presentation_us / 1000000ULL;
+        fPresentationTime.tv_sec  = frame.presentation_us / 1000000ULL;
         fPresentationTime.tv_usec = frame.presentation_us % 1000000ULL;
-
-        // Pacing for the RTP sink: G.711 at 8 kHz, 1 byte = 1 sample = 125 us.
-        fDurationInMicroseconds = static_cast<unsigned>(fFrameSize) * 125u;
+        fDurationInMicroseconds   = frame.duration_us;
 
         FramedSource::afterGetting(this);
     }

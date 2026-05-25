@@ -24,6 +24,7 @@
 #include <liveMedia.hh>
 #include <zlog.h>
 
+#include "aac_queue_subsession.h"
 #include "frame_queue.h"
 #include "h264_queue_subsession.h"
 #include "pcmu_queue_subsession.h"
@@ -48,11 +49,15 @@ struct Worker {
     std::atomic<bool> idr_requested{false};
 
     // Live555-thread-only state. The source pointers are written by
-    // H264QueueSource/PCMUQueueSource constructors+destructors (which run
-    // on the live555 thread); the trigger callbacks read them on the same
-    // thread, so no atomic is needed. Producer threads never touch these.
+    // QueueSource constructors+destructors (which run on the live555
+    // thread); the trigger callbacks read them on the same thread, so
+    // no atomic is needed. Producer threads never touch these.
+    // Exactly one of pcmu_source / aac_source is non-null depending on
+    // the configured codec (set at start() time, immutable afterwards).
     H264QueueSource* h264_source = nullptr;
     PCMUQueueSource* pcmu_source = nullptr;
+    AACQueueSource*  aac_source  = nullptr;
+    AudioCodec       audio_codec = AudioCodec::ULAW;
 
     // Live555 plumbing — owned by worker thread only.
     TaskScheduler*           scheduler = nullptr;
@@ -83,7 +88,9 @@ void deliver_video_trigger(void* /*ctx*/) {
     if (g && g->h264_source) g->h264_source->deliverFrame();
 }
 void deliver_audio_trigger(void* /*ctx*/) {
-    if (g && g->pcmu_source) g->pcmu_source->deliverFrame();
+    if (!g) return;
+    if (g->pcmu_source) g->pcmu_source->deliverFrame();
+    else if (g->aac_source) g->aac_source->deliverFrame();
 }
 
 // Build the live555 stack. Returns false on failure; on success the server
@@ -124,10 +131,25 @@ bool setup_live555(const Config& cfg) {
         &g->h264_source, True /* reuseFirstSource */));
 
     if (cfg.audio_enabled) {
-        g->sms->addSubsession(PCMUQueueSubsession::createNew(
-            *g->env, &g->audio_queue, &g->pcmu_source,
-            True /* reuseFirstSource */));
-        zlog_info(vid_c, "Audio subsession added (G.711 u-law)");
+        g->audio_codec = cfg.audio_codec;
+        switch (cfg.audio_codec) {
+            case AudioCodec::ULAW:
+                g->sms->addSubsession(PCMUQueueSubsession::createNew(
+                    *g->env, &g->audio_queue, &g->pcmu_source,
+                    True /* reuseFirstSource */));
+                zlog_info(vid_c, "Audio subsession added (G.711 u-law, %u Hz)",
+                          cfg.audio_sample_rate);
+                break;
+            case AudioCodec::AAC:
+                g->sms->addSubsession(AACQueueSubsession::createNew(
+                    *g->env, &g->audio_queue, &g->aac_source,
+                    cfg.audio_sample_rate, cfg.audio_channels,
+                    64000 /* est bitrate hint; producer-driven in practice */,
+                    True /* reuseFirstSource */));
+                zlog_info(vid_c, "Audio subsession added (AAC-LC, %u Hz, %u ch)",
+                          cfg.audio_sample_rate, cfg.audio_channels);
+                break;
+        }
     }
 
     g->server->addServerMediaSession(g->sms);
@@ -167,8 +189,9 @@ void teardown_live555() {
     if (g->env)       { g->env->reclaim(); g->env = nullptr; }
     delete g->scheduler; g->scheduler = nullptr;
 
-    g->h264_source = nullptr; // sources cleared themselves via fBackRef in
-    g->pcmu_source = nullptr; // their dtors when Medium::close(sms) ran.
+    g->h264_source = nullptr; // sources cleared themselves via fBackRef
+    g->pcmu_source = nullptr; // in their dtors when Medium::close(sms) ran.
+    g->aac_source  = nullptr;
 }
 
 void event_loop_thread() {
@@ -226,12 +249,14 @@ void push_video_frame(const uint8_t* data, size_t size,
     }
 }
 
-void push_audio_frame(const uint8_t* data, size_t size, uint64_t pts_us) {
+void push_audio_frame(const uint8_t* data, size_t size,
+                      uint64_t pts_us, uint32_t duration_us) {
     if (!g) return;
 
     AudioFrame f;
     f.data.assign(data, data + size);
     f.presentation_us = pts_us;
+    f.duration_us     = duration_us;
     g->audio_queue.push(std::move(f));
 
     if (g->scheduler && g->audio_trigger) {
@@ -253,7 +278,9 @@ bool consume_idr_request() {
 }
 
 bool video_active() { return g && g->h264_source != nullptr; }
-bool audio_active() { return g && g->pcmu_source != nullptr; }
+bool audio_active() {
+    return g && (g->pcmu_source != nullptr || g->aac_source != nullptr);
+}
 
 size_t video_dropped() { return g ? g->video_queue.total_dropped() : 0; }
 size_t audio_dropped() { return g ? g->audio_queue.total_dropped() : 0; }

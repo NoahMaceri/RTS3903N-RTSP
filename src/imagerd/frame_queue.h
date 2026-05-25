@@ -21,6 +21,7 @@ struct VideoFrame {
 struct AudioFrame {
     std::vector<uint8_t> data;
     uint64_t presentation_us;
+    uint32_t duration_us;   // codec-specific; producer computes from samples/rate
 };
 
 // Bounded SPSC queue with drop-oldest overflow. The lock is uncontended in

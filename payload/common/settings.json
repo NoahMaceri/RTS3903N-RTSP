@@ -2,7 +2,9 @@
   "audio": {
     "enabled": true,
     "device": "hw:0,1",
-    "gain": 40
+    "gain": 40,
+    "codec": "aac",
+    "bitrate": 64000
   },
   "ir_control": {
     "detection_mode": "adc_auto",

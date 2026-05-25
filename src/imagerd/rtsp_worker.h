@@ -27,12 +27,17 @@
 
 namespace rtsp_worker {
 
+enum class AudioCodec { ULAW, AAC };
+
 struct Config {
     uint16_t    port = 554;
     std::string stream_name = "stream";
     std::string username;       // empty = no auth
     std::string password;
     bool        audio_enabled = false;
+    AudioCodec  audio_codec = AudioCodec::ULAW;
+    uint32_t    audio_sample_rate = 8000;   // 8000 for ulaw, 48000 for aac
+    uint8_t     audio_channels = 1;
 };
 
 // Lifecycle. start() blocks until live555 has bound the listening socket
@@ -46,7 +51,8 @@ void stop();
 //   pts_us:        monotonic microseconds (any consistent clock)
 void push_video_frame(const uint8_t* data, size_t size,
                       bool is_keyframe, uint64_t pts_us);
-void push_audio_frame(const uint8_t* data, size_t size, uint64_t pts_us);
+void push_audio_frame(const uint8_t* data, size_t size,
+                      uint64_t pts_us, uint32_t duration_us);
 
 // Did a fresh client session ask for a keyframe? If true, the caller
 // should request an IDR from the encoder. Atomically reads-and-clears.
