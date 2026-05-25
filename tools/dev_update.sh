@@ -159,18 +159,22 @@ rm -f "$MANIFEST"
 
 exit 0'
 
-# Try SSH first (BatchMode + ConnectTimeout so it fails fast instead
-# of hanging on a password prompt), fall back to telnet if it can't
-# connect or auth is rejected. Telnet is the dev-image's fallback
-# console: no auth on busybox, just sends the commands as stdin.
+# Try SSH first; fall back to telnet if it can't connect or auth is
+# rejected. We deliberately do NOT pass BatchMode=yes — that would
+# disable password / passphrase / agent prompts and silently break for
+# anyone whose CLI ssh uses any non-passwordless-pubkey auth. If your
+# key is passphrase-protected, load it into ssh-agent first; otherwise
+# ssh will prompt here.
 #
-# We do NOT redirect ssh's stderr — if dropbear rejects auth, or the
-# remote script aborts, the message has to surface so the user can
-# debug. The "    …" remote-side echo lines from REMOTE_CMDS come
-# through too, nesting visually under the "==> Updating camera..." line.
+# ConnectTimeout governs the TCP handshake only; auth has no script
+# timeout. Hit Ctrl-C if ssh hangs at a prompt you can't satisfy.
+#
+# We don't redirect ssh's stderr — if dropbear rejects auth or the
+# remote script aborts, the message has to surface. The "    …"
+# remote-side log lines from REMOTE_CMDS come through too, nesting
+# visually under the "==> Updating camera..." line.
 SSH_RC=0
-ssh -o BatchMode=yes \
-    -o ConnectTimeout=5 \
+ssh -o ConnectTimeout=5 \
     -o StrictHostKeyChecking=accept-new \
     "${USER_PART}@${HOST}" "$REMOTE_CMDS" || SSH_RC=$?
 
