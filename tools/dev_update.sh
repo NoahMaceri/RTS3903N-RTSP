@@ -140,19 +140,27 @@ log "reboot scheduled in 3s"
 ( sleep 3 && reboot ) >/dev/null 2>&1 &
 
 # Stale-file cleanup (best effort; reboot is already scheduled).
+#
+# Counting deletions without `wc` (this busybox build doesnt ship it):
+# delete_stale writes the file list to a tmp path, the shell loop
+# counts as it deletes, and echoes the per-call count. The outer
+# `n + $(...)` arithmetic then never sees an empty substitution.
 if [ "$EXTRACT_OK" = 1 ] && [ -s "$MANIFEST" ]; then
+    STALE_LIST=/tmp/_dev_stale.list
     list_disk_files() {
         find "$1" -type f 2>/dev/null | { [ -n "${2:-}" ] && awk "$2" || cat; }
     }
-    deleted=0
     delete_stale() {
-        awk "NR==FNR{a[\$0];next} !(\$0 in a)" "$MANIFEST" - 2>/dev/null \
-            | while IFS= read -r stale; do
-                if [ -n "$stale" ]; then
-                    rm -f "$stale"
-                    echo "stale"
-                fi
-              done | wc -l
+        : > "$STALE_LIST"
+        awk "NR==FNR{a[\$0];next} !(\$0 in a)" "$MANIFEST" - 2>/dev/null > "$STALE_LIST"
+        c=0
+        while IFS= read -r stale; do
+            if [ -n "$stale" ]; then
+                rm -f "$stale"
+                c=$((c + 1))
+            fi
+        done < "$STALE_LIST"
+        echo "$c"
     }
 
     n=0
@@ -162,12 +170,20 @@ if [ "$EXTRACT_OK" = 1 ] && [ -s "$MANIFEST" ]; then
         case "$top" in
             dev-tools|onvif) continue ;;
         esac
-        n=$((n + $(list_disk_files "$top" | delete_stale)))
+        c=$(list_disk_files "$top" | delete_stale)
+        n=$((n + ${c:-0}))
     done
 
-    [ -d dev-tools ] && n=$((n + $(list_disk_files dev-tools "\$0 !~ /^dev-tools\/etc\/dropbear\//" | delete_stale)))
-    [ -d onvif ] && n=$((n + $(list_disk_files onvif "\$0 != \"onvif/ptz_presets.txt\"" | delete_stale)))
+    if [ -d dev-tools ]; then
+        c=$(list_disk_files dev-tools "\$0 !~ /^dev-tools\/etc\/dropbear\//" | delete_stale)
+        n=$((n + ${c:-0}))
+    fi
+    if [ -d onvif ]; then
+        c=$(list_disk_files onvif "\$0 != \"onvif/ptz_presets.txt\"" | delete_stale)
+        n=$((n + ${c:-0}))
+    fi
 
+    rm -f "$STALE_LIST"
     log "cleanup: removed $n stale file(s)"
 fi
 rm -f "$MANIFEST"
