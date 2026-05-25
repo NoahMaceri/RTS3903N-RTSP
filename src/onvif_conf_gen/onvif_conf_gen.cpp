@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
 
     if (cfg.contains("audio") && cfg["audio"].value("enabled", false)) {
         // Map our codec key onto ONVIF AudioEncoding enum values.
-        const std::string codec = cfg["audio"].value("codec", std::string("ulaw"));
+        const std::string codec = cfg["audio"].value("codec", std::string("aac"));
         const char *onvif_enc = (codec == "aac") ? "AAC" : "G711";
         out << "audio_encoder=" << onvif_enc << "\n";
     }

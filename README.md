@@ -289,7 +289,6 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 - Refactor: day/night detection schema slimmed (separate commits in this release). `ir_control` is now three keys: `detection_mode`, `adc_cutoff`, `ir_led_pwm_duty`. Polarity is internal state; `adc_auto` learns it via SDK cross-check and persists across reboots. Modes dropped: `adc_single`, `adc_hysteresis`. `AudioFrame` gains `duration_us`; producer computes it codec-specifically. `get_isp_setting` reworked to `bool` + out-param (no more `UINT32_MAX` narrowing footgun). `daynight_polarity.state` and `ir_cut_override.state` writes are atomic (tmp + rename).
 - Feature: ONVIF audio-encoder advertisement reflects the chosen codec. `onvif_conf_gen` emits `audio_encoder=AAC` or `=G711` based on `audio.codec`. Vendored `onvif_simple_server`'s `media_get_audio_encoder_configuration_options` patched (patch #6) to advertise the correct AAC bitrate/samplerate (64 kbps / 48 kHz) — upstream's 50/16 didn't match what we run.
 - Bugfix: `lighttpd.conf` was missing `server.document-root`. lighttpd 1.4.83 refuses to start without it even for CGI-only configs. Both SD-card and on-flash payloads patched.
-- Note: Opus support investigated and dropped. The SDK's `rts_audio_codec_check_encode_id(RTS_AUDIO_TYPE_ID_OPUS)` returns `EINVAL` even though `libopus.so` is shipped — the encoder isn't wired into the SDK's dispatch table.
 
 ### v0.6.2 (2026-05-22)
 
