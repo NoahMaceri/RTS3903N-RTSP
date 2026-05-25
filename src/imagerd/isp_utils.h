@@ -16,7 +16,9 @@ extern std::mutex g_isp_mutex;
 extern const std::map<std::string, enum enum_rts_video_ctrl_id> param_setting_map;
 
 bool change_isp_setting(enum enum_rts_video_ctrl_id type, int32_t value, zlog_category_t *logger);
-int32_t get_isp_setting(enum enum_rts_video_ctrl_id type, zlog_category_t *logger);
+
+// Returns false (and leaves `out` untouched) if the ISP read fails.
+bool get_isp_setting(enum enum_rts_video_ctrl_id type, int32_t &out, zlog_category_t *logger);
 
 // Snapshot of auto-exposure statistics from the ISP. Filled in by
 // read_ae_stats(); empty histogram means the read failed.

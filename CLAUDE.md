@@ -129,20 +129,20 @@ Diagnostic: `cpld_info` (shipped at `/var/tmp/sd/cpld_info`) decodes `/sys/modul
 
 ## Day/night detection modes
 
-`day_night_ctrl` supports six detection modes via `ir_control.detection_mode`. The first five mirror the hardware-variant paths in stock `rmm`'s `daynight_switch_func` (selected there by `g_factory_data_ptr[3] in '1'..'5'`); `adc_auto` is our addition.
+`day_night_ctrl` supports four detection modes via `ir_control.detection_mode`. `adc_zero` and `adc_raw_bool` mirror two of stock `rmm`'s hw-variant paths (`g_factory_data_ptr[3] = '4'` / `'5'`); `adc_auto` is our addition and the default. Earlier versions had separate `adc_single` and `adc_hysteresis` modes — they were dropped in favor of letting `adc_auto` learn polarity automatically.
 
 | Mode | Source | Use when |
 |------|--------|----------|
-| `adc_auto` **(default)** | ADC ± 100 hyst, with runtime cross-check against `rts_av_get_isp_daynight_statis()` | Most boards — auto-learns polarity, no manual `invert` flag needed. |
+| `adc_auto` **(default)** | ADC ± 100 hyst, with runtime cross-check against `rts_av_get_isp_daynight_statis()` | Most boards — auto-learns polarity. |
 | `sdk_statis` | `rts_av_get_isp_daynight_statis()` | No external light sensor; SDK AE is well-tuned. |
-| `adc_single` | One ADC threshold | Light sensor available, simple thresholding. |
-| `adc_hysteresis` | ADC ± 100 hyst around `adc_cutoff` | Pin polarity manually (no SDK cross-check). |
 | `adc_zero` | Night iff ADC reads 0 | Sensor that grounds in darkness. |
 | `adc_raw_bool` | Night iff ADC > 0 | Sensor wired as digital flag. |
 
-All modes pass through the same 3-sample debounce in `check_light_level()`, so a single glitch can't flip the IR-cut. The EMA smoothing (`ema_alpha=0.75`) is only applied to the ADC-based modes; the SDK and boolean modes are deterministic enough that smoothing would just add lag.
+All modes pass through the same 3-sample debounce in `check_light_level()`, so a single glitch can't flip the IR-cut. The EMA smoothing (`ema_alpha=0.75`) is only applied to `adc_auto`; the SDK and boolean modes are deterministic enough that smoothing would just add lag.
 
-**`adc_auto` polarity learning** runs *on top of* the normal ADC_HYSTERESIS sampling: every cycle we also call `rts_av_get_isp_daynight_statis()` and compare its 0/1 result with our own ADC-based decision. If they disagree for `flip_threshold` (default 150 ≈ 5 min at 2 s cadence) *consecutive* samples, we flip the `invert` bit, log a warning, and write `daynight_polarity.state` (single line, `"normal"` or `"inverted"`) into the CWD next to `settings.json`. On the next boot the cached value is read first and overrides whatever `invert:` says in config. The cache uses a separate file so it survives `isp_ctrl SAVE_SETTINGS` rewrites of `settings.json`. To force re-learning, delete the state file. The 5-minute hold-off is what prevents short-lived disagreements (clouds passing, scene changes during AE re-convergence) from triggering false flips — if you want it more or less reactive, change `flip_threshold` in `day_night_ctrl.cpp`.
+Polarity is **not** a settings.json knob. The three user-tunable keys are `detection_mode`, `adc_cutoff`, and `ir_led_pwm_duty` — non-AUTO modes (the two boolean ADC variants and `sdk_statis`) don't have a polarity concept. For analog ADC sensors, use `adc_auto` and let it learn.
+
+**`adc_auto` polarity learning** runs *on top of* the normal ADC_HYSTERESIS sampling: every cycle we also call `rts_av_get_isp_daynight_statis()` and compare its 0/1 result with our own ADC-based decision. If they disagree for `flip_threshold` (default 150 ≈ 5 min at 2 s cadence) *consecutive* samples, we flip the in-memory `invert` bit, log a warning, and write `daynight_polarity.state` (single line, `"normal"` or `"inverted"`) into the CWD next to `settings.json`. On the next boot the cached value is read back and applied. The cache is a separate file so it survives `isp_ctrl` rewrites of `settings.json`. To force re-learning, delete the state file. The 5-minute hold-off is what prevents short-lived disagreements (clouds passing, scene changes during AE re-convergence) from triggering false flips — if you want it more or less reactive, change `flip_threshold` in `day_night_ctrl.cpp`.
 
 ## Boot sequence (camera-side)
 

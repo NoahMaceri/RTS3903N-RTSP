@@ -41,10 +41,17 @@ static int set_ir_cut_override(const char *mode) {
         fprintf(stderr, "isp_ctrl: %s must be auto|on|off, got '%s'\n", IR_CUT_KEY, mode);
         return 2;
     }
-    FILE *f = fopen(IR_CUT_OVERRIDE_FILE, "w");
-    if (f == nullptr) { perror(IR_CUT_OVERRIDE_FILE); return 1; }
+    // write-tmp + rename so day_night_ctrl never sees a partial file.
+    char tmp[sizeof(IR_CUT_OVERRIDE_FILE) + 4];
+    snprintf(tmp, sizeof(tmp), "%s.tmp", IR_CUT_OVERRIDE_FILE);
+    FILE *f = fopen(tmp, "w");
+    if (f == nullptr) { perror(tmp); return 1; }
     fputs(contents, f);
-    fclose(f);
+    if (fclose(f) != 0 || rename(tmp, IR_CUT_OVERRIDE_FILE) != 0) {
+        perror(tmp);
+        unlink(tmp);
+        return 1;
+    }
     return 0;
 }
 

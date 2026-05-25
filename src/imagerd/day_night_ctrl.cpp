@@ -11,23 +11,15 @@
 
 #include "cpld.h"
 
-// Tuneables. Lifted to file-scope constants so they're easy to find;
-// the public mode/cutoff/duty knobs come from settings.json.
 namespace {
-constexpr double   EMA_ALPHA   = 0.75;   // 0..1, higher = faster response
-constexpr uint32_t HYST_BAND   = 100;    // ± around adc_cutoff
-constexpr int      WARMUP_SECS = 15;     // sensor-stabilise delay at boot
-constexpr int      TICK_SECS   = 2;      // poll cadence
+constexpr double   EMA_ALPHA   = 0.75;
+constexpr uint32_t HYST_BAND   = 100;
+constexpr int      WARMUP_SECS = 15;
+constexpr int      TICK_SECS   = 2;
 
-// State file colocated with settings.json (imagerd loads both from CWD).
-// Single line, "normal\n" or "inverted\n", recording the polarity that
-// ADC_AUTO has converged on so it survives reboots.
-constexpr const char *POLARITY_STATE_FILE = "daynight_polarity.state";
-
-// Runtime IR-cut override. One of "auto" (or missing), "day", "night".
-// Polled each tick — lets ONVIF SetImagingSettings(IrCutFilterMode=ON/OFF)
-// force a mode without restarting imagerd.
-constexpr const char *IR_CUT_OVERRIDE_FILE = "ir_cut_override.state";
+// Both files live next to settings.json (loaded from CWD).
+constexpr const char *POLARITY_STATE_FILE   = "daynight_polarity.state";
+constexpr const char *IR_CUT_OVERRIDE_FILE  = "ir_cut_override.state";
 
 enum class IrCutOverride { AUTO, DAY, NIGHT };
 
@@ -45,49 +37,53 @@ static IrCutOverride read_ir_cut_override() {
 } // namespace
 
 DayNightMode parse_day_night_mode(const std::string &s) {
-    if (s == "sdk_statis")     return DayNightMode::SDK_STATIS;
-    if (s == "adc_single")     return DayNightMode::ADC_SINGLE;
-    if (s == "adc_hysteresis") return DayNightMode::ADC_HYSTERESIS;
-    if (s == "adc_zero")       return DayNightMode::ADC_ZERO;
-    if (s == "adc_raw_bool")   return DayNightMode::ADC_RAW_BOOL;
-    if (s == "adc_auto")       return DayNightMode::ADC_AUTO;
+    if (s == "sdk_statis")   return DayNightMode::SDK_STATIS;
+    if (s == "adc_zero")     return DayNightMode::ADC_ZERO;
+    if (s == "adc_raw_bool") return DayNightMode::ADC_RAW_BOOL;
+    // Unknown / dropped modes fall back to the smart default.
     return DayNightMode::ADC_AUTO;
 }
 
 const char *day_night_mode_name(DayNightMode m) {
     switch (m) {
-        case DayNightMode::SDK_STATIS:     return "sdk_statis";
-        case DayNightMode::ADC_SINGLE:     return "adc_single";
-        case DayNightMode::ADC_HYSTERESIS: return "adc_hysteresis";
-        case DayNightMode::ADC_ZERO:       return "adc_zero";
-        case DayNightMode::ADC_RAW_BOOL:   return "adc_raw_bool";
-        case DayNightMode::ADC_AUTO:       return "adc_auto";
+        case DayNightMode::SDK_STATIS:   return "sdk_statis";
+        case DayNightMode::ADC_ZERO:     return "adc_zero";
+        case DayNightMode::ADC_RAW_BOOL: return "adc_raw_bool";
+        case DayNightMode::ADC_AUTO:     return "adc_auto";
     }
     return "unknown";
 }
 
 day_night_ctrl::day_night_ctrl(const DayNightMode mode,
                                const int32_t cutoff,
-                               const int32_t cutoff_inverted,
-                               const bool invert,
                                const uint8_t ir_led_pwm_duty,
                                zlog_category_t *vid_c)
     : vid_c(vid_c),
       mode(mode),
-      cutoff(static_cast<uint32_t>(invert ? cutoff_inverted : cutoff)),
-      ir_led_pwm_duty(ir_led_pwm_duty),
-      invert(invert) {
-    // ADC_AUTO: restore polarity learned on a previous boot so we
-    // don't re-discover it every reboot. Only the polarity bit is
-    // restored — the cutoff stays as-configured.
+      cutoff(static_cast<uint32_t>(cutoff < 0 ? 0 : cutoff)),
+      ir_led_pwm_duty(ir_led_pwm_duty) {
     if (mode == DayNightMode::ADC_AUTO) {
         load_cached_polarity();
     }
 
-    zlog_info(vid_c, "IR control: mode=%s cutoff=%u invert=%u pwm_duty=%u",
-              day_night_mode_name(mode), this->cutoff, this->invert, this->ir_led_pwm_duty);
+    zlog_info(vid_c, "IR control: mode=%s cutoff=%u pwm_duty=%u%s",
+              day_night_mode_name(mode), this->cutoff, this->ir_led_pwm_duty,
+              (mode == DayNightMode::ADC_AUTO && invert) ? " (learned: inverted)" : "");
 
-    // Init to day mode (IR cut filter in, IR LED off).
+    // One-shot ADC channel probe — most boards wire only one of four.
+    // Logging here (rather than per-read) keeps the runtime quiet.
+    for (uint8_t ch = 0; ch < 4; ++ch) {
+        char path[48];
+        snprintf(path, sizeof(path), "/sys/class/hwmon/hwmon0/device/in%u_input", ch);
+        const int fd = open(path, O_RDONLY);
+        if (fd >= 0) {
+            close(fd);
+            zlog_info(vid_c, "ADC channel %u available", ch);
+        } else {
+            zlog_info(vid_c, "ADC channel %u unavailable (will read as 0)", ch);
+        }
+    }
+
     apply_transition(/*to_night=*/false);
 }
 
@@ -116,8 +112,7 @@ void *day_night_ctrl::ir_ctrl_thread(void *arg) {
     auto *ctrl = static_cast<day_night_ctrl *>(arg);
     zlog_info(ctrl->vid_c, "Starting IR control thread");
 
-    // Sensor / AE stabilisation. Interruptible so stop() doesn't have
-    // to wait for the full delay.
+    // Interruptible warmup: stop() doesn't have to wait the full delay.
     for (int i = 0; i < WARMUP_SECS && ctrl->running.load(); ++i) sleep(1);
 
     while (ctrl->running.load()) {
@@ -128,133 +123,93 @@ void *day_night_ctrl::ir_ctrl_thread(void *arg) {
     return nullptr;
 }
 
-// One channel of /sys/class/hwmon/hwmon0/device/inN_input. Sysfs values
-// don't update on an open fd, so we re-open per read.
+// Sysfs values don't update on an open fd, so we re-open per read.
+// Silent on failure — unwired channels are expected (see read_adc_mean).
+// Operators get a one-shot per-channel summary from the constructor probe.
 uint16_t day_night_ctrl::get_adc_value(const uint8_t channel) const {
     char path[48];
     snprintf(path, sizeof(path), "/sys/class/hwmon/hwmon0/device/in%u_input", channel);
     const int fd = open(path, O_RDONLY);
-    if (fd < 0) {
-        zlog_error(vid_c, "Failed to open ADC channel %u", channel);
-        return 0;
-    }
+    if (fd < 0) return 0;
     char buf[16];
     const ssize_t n = read(fd, buf, sizeof(buf) - 1);
     close(fd);
-    if (n < 0) {
-        zlog_error(vid_c, "Failed to read ADC channel %u", channel);
-        return 0;
-    }
+    if (n < 0) return 0;
     buf[n] = '\0';
     return static_cast<uint16_t>(strtol(buf, nullptr, 10));
 }
 
-// Mean across all 4 hwmon channels, averaged over `samples` rounds.
-// Most boards only wire one of them to the actual photoresistor; the
-// rest read ~0 and just dilute the mean. Cheap insurance vs. having
-// to know which channel is "the real one" per board.
+// Most boards wire only one of the 4 hwmon channels; unwired channels
+// read ~0 and just dilute the mean. Cheaper than per-board channel maps.
 uint32_t day_night_ctrl::read_adc_mean(const int32_t samples, const int32_t delay_ms) {
-    int64_t sums[4] = {0, 0, 0, 0};
+    int64_t sum = 0;
     for (int i = 0; i < samples; ++i) {
-        for (uint8_t ch = 0; ch < 4; ++ch) sums[ch] += get_adc_value(ch);
+        for (uint8_t ch = 0; ch < 4; ++ch) sum += get_adc_value(ch);
         usleep(delay_ms * 1000);
     }
-    const int64_t mean = ((sums[0] + sums[1] + sums[2] + sums[3]) / samples) / 4;
+    const int64_t mean = sum / (samples * 4);
     if (mean < 0)            return 0;
     if (mean > 0xFFFFFFFFLL) return 0xFFFFFFFFu;
     return static_cast<uint32_t>(mean);
 }
 
 bool day_night_ctrl::sample_wants_night(const uint8_t current_ir_mode) {
-    // Sentinel-clear; each branch sets what's relevant for the log.
     last_raw_adc = 0;
     last_ema_adc = 0;
     last_sdk_raw = -1;
 
-    // Apply polarity inversion to the raw "is dark" verdict. Hysteresis
-    // bakes invert into its comparisons directly, so it doesn't use this.
-    auto with_invert = [this](bool wants_night) {
-        return invert ? !wants_night : wants_night;
-    };
-
     switch (mode) {
-        case DayNightMode::SDK_STATIS: {
-            // SDK returns 1 when its AE-histogram estimator says dark.
-            const int sdk = rts_av_get_isp_daynight_statis();
-            last_sdk_raw = sdk;
-            return with_invert(sdk == 1);
-        }
-        case DayNightMode::ADC_ZERO: {
+        case DayNightMode::SDK_STATIS:
+            last_sdk_raw = rts_av_get_isp_daynight_statis();
+            return last_sdk_raw == 1;
+
+        case DayNightMode::ADC_ZERO:
             last_raw_adc = read_adc_mean(/*samples=*/4, /*delay_ms=*/40);
-            return with_invert(last_raw_adc == 0);
-        }
-        case DayNightMode::ADC_RAW_BOOL: {
+            return last_raw_adc == 0;
+
+        case DayNightMode::ADC_RAW_BOOL:
             last_raw_adc = read_adc_mean(/*samples=*/4, /*delay_ms=*/40);
-            return with_invert(last_raw_adc > 0);
-        }
-        case DayNightMode::ADC_SINGLE: {
-            last_raw_adc = read_adc_mean(/*samples=*/8, /*delay_ms=*/75);
-            if (adc_ema < 0.0) adc_ema = last_raw_adc;
-            adc_ema = EMA_ALPHA * last_raw_adc + (1.0 - EMA_ALPHA) * adc_ema;
-            last_ema_adc = static_cast<uint32_t>(lround(adc_ema));
-            // Single-edge: no hyst band, just one cutoff.
-            return invert ? (last_ema_adc > cutoff) : (last_ema_adc < cutoff);
-        }
-        case DayNightMode::ADC_HYSTERESIS:
+            return last_raw_adc > 0;
+
         case DayNightMode::ADC_AUTO: {
             last_raw_adc = read_adc_mean(/*samples=*/8, /*delay_ms=*/75);
             if (adc_ema < 0.0) adc_ema = last_raw_adc;
             adc_ema = EMA_ALPHA * last_raw_adc + (1.0 - EMA_ALPHA) * adc_ema;
             last_ema_adc = static_cast<uint32_t>(lround(adc_ema));
 
-            // Two-edge: in-band readings return the current state ("no
-            // opinion"), which the debounce counter absorbs.
-            const uint32_t low  = (cutoff > HYST_BAND) ? (cutoff - HYST_BAND) : 0;
+            // In-band readings hold the current state — debounce absorbs noise.
+            const uint32_t low  = (cutoff > HYST_BAND) ? (cutoff - HYST_BAND) : 0u;
             const uint32_t high = cutoff + HYST_BAND;
             const bool is_dark  = invert ? (last_ema_adc > high) : (last_ema_adc < low);
             const bool is_light = invert ? (last_ema_adc < low)  : (last_ema_adc > high);
 
             if (current_ir_mode == RTS_ISP_IR_NIGHT) return !is_light;
             if (current_ir_mode == RTS_ISP_IR_DAY)   return  is_dark;
-            return (current_ir_mode == RTS_ISP_IR_NIGHT);
+            return false;  // unknown state (e.g. WHITE_LIGHT) → prefer day
         }
     }
     return false;  // unreachable; switch is exhaustive
 }
 
-// Single INFO line per transition: mode-specific diagnostics + the
-// resulting IR-cut / LED state. Lets a user grep the log and see
-// what reading triggered the switch.
 void day_night_ctrl::apply_transition(const bool to_night) {
     char diag[160] = {};
-    const char *target = to_night ? "night" : "day";
 
     switch (mode) {
         case DayNightMode::SDK_STATIS:
-            snprintf(diag, sizeof(diag), "sdk_statis=%d invert=%u",
-                     last_sdk_raw, invert);
+            snprintf(diag, sizeof(diag), "sdk_statis=%d", last_sdk_raw);
             break;
         case DayNightMode::ADC_ZERO:
-            snprintf(diag, sizeof(diag), "adc=%u (zero=night) invert=%u",
-                     last_raw_adc, invert);
+            snprintf(diag, sizeof(diag), "adc=%u (zero=night)", last_raw_adc);
             break;
         case DayNightMode::ADC_RAW_BOOL:
-            snprintf(diag, sizeof(diag), "adc=%u (>0=night) invert=%u",
-                     last_raw_adc, invert);
+            snprintf(diag, sizeof(diag), "adc=%u (>0=night)", last_raw_adc);
             break;
-        case DayNightMode::ADC_SINGLE:
-            snprintf(diag, sizeof(diag), "adc_raw=%u adc_ema=%u cutoff=%u invert=%u",
-                     last_raw_adc, last_ema_adc, cutoff, invert);
-            break;
-        case DayNightMode::ADC_HYSTERESIS:
         case DayNightMode::ADC_AUTO: {
-            const uint32_t low  = (cutoff > HYST_BAND) ? (cutoff - HYST_BAND) : 0;
+            const uint32_t low  = (cutoff > HYST_BAND) ? (cutoff - HYST_BAND) : 0u;
             const uint32_t high = cutoff + HYST_BAND;
-            const char *sdk_str = (mode == DayNightMode::ADC_AUTO)
-                ? (last_sdk_raw == 0 ? " sdk=day"
-                 : last_sdk_raw == 1 ? " sdk=night"
-                 :                     " sdk=n/a")
-                : "";
+            const char *sdk_str = last_sdk_raw == 0 ? " sdk=day"
+                                : last_sdk_raw == 1 ? " sdk=night"
+                                :                     " sdk=n/a";
             snprintf(diag, sizeof(diag),
                      "adc_raw=%u adc_ema=%u cutoff=%u band=[%u,%u] invert=%u%s",
                      last_raw_adc, last_ema_adc, cutoff, low, high, invert, sdk_str);
@@ -284,52 +239,62 @@ bool day_night_ctrl::load_cached_polarity() {
     fclose(f);
     if (n == 0) return false;
 
-    bool cached;
-    if      (strncmp(buf, "inverted", 8) == 0) cached = true;
-    else if (strncmp(buf, "normal",   6) == 0) cached = false;
+    if      (strncmp(buf, "inverted", 8) == 0) invert = true;
+    else if (strncmp(buf, "normal",   6) == 0) invert = false;
     else return false;
 
-    if (cached != invert) {
-        zlog_info(vid_c, "IR control: cached polarity (%s) overrides config (%s)",
-                  cached ? "inverted" : "normal",
-                  invert ? "inverted" : "normal");
-    }
-    invert = cached;
+    zlog_info(vid_c, "Restored learned polarity: %s",
+              invert ? "inverted" : "normal");
     return true;
 }
 
 void day_night_ctrl::save_cached_polarity() const {
-    FILE *f = fopen(POLARITY_STATE_FILE, "w");
+    // write-tmp + rename so a reader can't see a half-written file.
+    char tmp[64];
+    snprintf(tmp, sizeof(tmp), "%s.tmp", POLARITY_STATE_FILE);
+
+    FILE *f = fopen(tmp, "w");
     if (f == nullptr) {
         zlog_warn(vid_c, "Failed to write %s; polarity will re-learn next boot",
                   POLARITY_STATE_FILE);
         return;
     }
     fprintf(f, "%s\n", invert ? "inverted" : "normal");
-    fclose(f);
+    if (fclose(f) != 0 || rename(tmp, POLARITY_STATE_FILE) != 0) {
+        zlog_warn(vid_c, "Failed to persist %s; polarity will re-learn next boot",
+                  POLARITY_STATE_FILE);
+        unlink(tmp);
+        return;
+    }
     zlog_info(vid_c, "Polarity cached to %s", POLARITY_STATE_FILE);
 }
 
 void day_night_ctrl::check_light_level() {
-    const uint8_t current_ir_mode = get_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, vid_c);
+    int32_t ir_mode_raw = 0;
+    if (!get_isp_setting(RTS_VIDEO_CTRL_ID_IR_MODE, ir_mode_raw, vid_c)) {
+        // ISP read failed; skip this tick rather than acting on garbage —
+        // a 0xFF would otherwise make the override branch fire every tick.
+        return;
+    }
+    const uint8_t current_ir_mode = static_cast<uint8_t>(ir_mode_raw);
 
     const IrCutOverride ov = read_ir_cut_override();
     if (ov != IrCutOverride::AUTO) {
         const bool to_night = (ov == IrCutOverride::NIGHT);
         const uint8_t want = to_night ? RTS_ISP_IR_NIGHT : RTS_ISP_IR_DAY;
         if (current_ir_mode != want) apply_transition(to_night);
-        want_day_count = want_night_count = 0;
+        debounce = 0;
         return;
     }
 
     bool wants_night = sample_wants_night(current_ir_mode);
 
-    // ADC_AUTO: cross-check ADC verdict against SDK estimator. Sustained
-    // disagreement (FLIP_THRESHOLD ticks) means polarity is wrong — flip,
-    // persist, re-evaluate. Mis-flips if the SDK is consistently wrong
-    // (rare); fall back to adc_hysteresis with manual `invert:` if so.
+    // ADC_AUTO: sustained SDK disagreement (FLIP_THRESHOLD ticks) means
+    // polarity is wrong — flip, persist, re-sample. Mis-flips if the SDK
+    // is consistently wrong (rare); delete daynight_polarity.state to reset.
     if (mode == DayNightMode::ADC_AUTO) {
         const int sdk_raw = rts_av_get_isp_daynight_statis();
+        last_sdk_raw = sdk_raw;
         if (sdk_raw == 0 || sdk_raw == 1) {
             const bool wants_night_sdk = (sdk_raw == 1);
             if (wants_night == wants_night_sdk) {
@@ -343,26 +308,22 @@ void day_night_ctrl::check_light_level() {
                           invert ? "inverted" : "normal",
                           static_cast<unsigned>(FLIP_THRESHOLD));
                 save_cached_polarity();
-                // Re-sample so this tick reflects the new polarity.
-                // Extra 600 ms ADC read, but only on the rare flip event.
                 wants_night = sample_wants_night(current_ir_mode);
             }
         }
     }
 
     if (wants_night) {
-        ++want_night_count;
-        want_day_count = 0;
+        if (debounce < STABLE_NEEDED)  ++debounce;
     } else {
-        ++want_day_count;
-        want_night_count = 0;
+        if (debounce > -STABLE_NEEDED) --debounce;
     }
 
-    if (want_day_count >= STABLE_NEEDED && current_ir_mode != RTS_ISP_IR_DAY) {
-        apply_transition(/*to_night=*/false);
-        want_day_count = want_night_count = 0;
-    } else if (want_night_count >= STABLE_NEEDED && current_ir_mode != RTS_ISP_IR_NIGHT) {
+    if (debounce ==  STABLE_NEEDED && current_ir_mode != RTS_ISP_IR_NIGHT) {
         apply_transition(/*to_night=*/true);
-        want_day_count = want_night_count = 0;
+        debounce = 0;
+    } else if (debounce == -STABLE_NEEDED && current_ir_mode != RTS_ISP_IR_DAY) {
+        apply_transition(/*to_night=*/false);
+        debounce = 0;
     }
 }

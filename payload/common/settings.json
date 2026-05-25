@@ -7,8 +7,6 @@
   "ir_control": {
     "detection_mode": "adc_auto",
     "adc_cutoff": 400,
-    "adc_cutoff_inverted": 2750,
-    "invert": false,
     "ir_led_pwm_duty": 100
   },
   "isp": {

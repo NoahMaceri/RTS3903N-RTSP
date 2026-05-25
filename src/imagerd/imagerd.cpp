@@ -731,9 +731,7 @@ int start_stream(nlohmann::json &cfg) {
         const uint8_t pwm_duty = static_cast<uint8_t>(pwm_raw);
         h.ir_control = new day_night_ctrl(
             dn_mode,
-            ir["adc_cutoff"].get<int32_t>(),
-            ir["adc_cutoff_inverted"].get<int32_t>(),
-            ir["invert"].get<bool>(),
+            ir.value("adc_cutoff", 1500),
             pwm_duty,
             vid_c
         );

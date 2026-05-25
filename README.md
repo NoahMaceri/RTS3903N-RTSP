@@ -112,18 +112,14 @@ The camera automatically switches between day and night mode:
 | Key | Type | Description |
 |-----|------|-------------|
 | `detection_mode` | string | How "is it dark?" is decided. See modes below. Default `adc_auto`. |
-| `adc_cutoff` | int | ADC threshold for normal-polarity boards (used by the ADC modes). |
-| `adc_cutoff_inverted` | int | ADC threshold used when `invert: true`. Only needed if you pin polarity manually. |
-| `invert` | bool | Initial polarity hint. `adc_auto` will override this at runtime if needed. |
+| `adc_cutoff` | int | ADC threshold used by the ADC modes. |
 | `ir_led_pwm_duty` | 0-100 | IR LED brightness when in night mode. 100 = full, 0 = off. |
 
-`detection_mode` values (the ADC-based modes mirror the five hardware-variant paths in stock `rmm`; `adc_auto` is our addition):
+`detection_mode` values:
 
 | Mode | Behaviour |
 |------|-----------|
-| `adc_auto` | **(Default.)** Same logic as `adc_hysteresis`, plus a runtime cross-check: every cycle we also call the SDK daynight estimator and count agreements/disagreements. After ~5 minutes (150 samples at 2 s cadence) of *consistent* disagreement, `imagerd` auto-flips the ADC polarity and persists the result to `daynight_polarity.state` next to `settings.json`. On the next boot the cached polarity is restored and learning resumes. Net effect: you set one cutoff, the camera figures out the rest. |
-| `adc_hysteresis` | ADC threshold with a ±100 hysteresis band — enters night when below `cutoff - 100`, leaves when above `cutoff + 100`. Use this if you want polarity pinned by `invert:` and never auto-changed. |
-| `adc_single` | Single ADC threshold at `adc_cutoff`. No hysteresis band, relies on the 3-sample debounce alone. |
+| `adc_auto` | **(Default.)** ADC threshold with a ±100 hysteresis band — enters night when below `cutoff - 100`, leaves when above `cutoff + 100` — plus a runtime cross-check: every cycle we also call the SDK daynight estimator and count agreements/disagreements. After ~5 minutes (150 samples at 2 s cadence) of *consistent* disagreement, `imagerd` auto-flips the ADC polarity and persists the result to `daynight_polarity.state` next to `settings.json`. On the next boot the cached polarity is restored and learning resumes. Net effect: you set one cutoff, the camera figures out the rest. |
 | `sdk_statis` | Use the SDK's built-in daynight estimator (`rts_av_get_isp_daynight_statis`) exclusively. No ADC required — pick this if your board has no light sensor or the ADC is unreliable. |
 | `adc_zero` | Night iff ADC reads exactly zero (some sensor wirings drop to 0 in darkness). |
 | `adc_raw_bool` | Night iff ADC value > 0 (sensor wired as a digital flag rather than analog). |
@@ -133,7 +129,7 @@ The camera automatically switches between day and night mode:
 **Limitations of `adc_auto`**:
 - Doesn't help on boards with no light sensor at all — use `sdk_statis` for those.
 - During the first ~5 minutes of a deployment on a flipped-polarity board, day/night will be wrong; after that it's permanently right and survives reboots.
-- A camera that only ever sees a permanently dark scene (e.g. an indoor closet with the door always shut) can confuse the SDK estimator. If you suspect this, switch to `adc_hysteresis` and pin polarity manually.
+- A camera that only ever sees a permanently dark scene (e.g. an indoor closet with the door always shut) can confuse the SDK estimator. If `adc_auto` mis-learns, delete `daynight_polarity.state` to reset and let it re-learn under a more representative lighting cycle.
 
 ---
 
@@ -196,7 +192,7 @@ cat /var/log/rtsp_streamer.log
 
 ### Day/Night mode switching incorrectly
 
-Set `"invert": true` in the `ir_control` section of `settings.json`.
+`adc_auto` learns the correct polarity over ~5 minutes; give it a full day/night cycle to converge. If it gets stuck on the wrong polarity (e.g. confused by an unusual indoor scene during learning), delete `daynight_polarity.state` next to `settings.json` to reset and let it re-learn. If the board has no light sensor, switch `detection_mode` to `sdk_statis`.
 
 ### PTZ not responding
 

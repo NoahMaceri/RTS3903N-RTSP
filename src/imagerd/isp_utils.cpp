@@ -85,16 +85,16 @@ bool change_isp_setting(const enum enum_rts_video_ctrl_id type, int32_t value, z
     return true;
 }
 
-int32_t get_isp_setting(const enum enum_rts_video_ctrl_id type, zlog_category_t *logger) {
+bool get_isp_setting(const enum enum_rts_video_ctrl_id type, int32_t &out, zlog_category_t *logger) {
     std::lock_guard<std::mutex> lock(g_isp_mutex);
 
     rts_video_control ctrl{};
-    const int ret = rts_av_get_isp_ctrl(type, &ctrl);
-    if (ret) {
+    if (rts_av_get_isp_ctrl(type, &ctrl) != 0) {
         zlog_error(logger, "Failed to get control for %s", ctrl.name);
-        return UINT32_MAX;
+        return false;
     }
-    return ctrl.current_value;
+    out = ctrl.current_value;
+    return true;
 }
 
 bool read_ae_stats(AeStats &out, zlog_category_t *logger) {

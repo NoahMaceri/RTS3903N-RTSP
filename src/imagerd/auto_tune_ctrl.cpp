@@ -176,12 +176,10 @@ void *auto_tune_ctrl::thread_fn(void *arg) {
 void auto_tune_ctrl::run_loop() {
     // Seed the baselines from whatever the camera is currently set to so
     // the first tick is a small capped step rather than a jump to bucket
-    // target. get_isp_setting returns UINT32_MAX on failure — fall back to
-    // 50 in that case (centre of all three knobs).
+    // target. Fall back to 50 (centre of all three knobs) if the read fails.
     auto seed = [&](enum enum_rts_video_ctrl_id id) -> int {
-        const int32_t v = get_isp_setting(id, log_);
-        if (v == static_cast<int32_t>(UINT32_MAX)) return 50;
-        return v;
+        int32_t v = 0;
+        return get_isp_setting(id, v, log_) ? v : 50;
     };
     last_contrast_  = seed(RTS_VIDEO_CTRL_ID_CONTRAST);
     last_sharpness_ = seed(RTS_VIDEO_CTRL_ID_SHARPNESS);
