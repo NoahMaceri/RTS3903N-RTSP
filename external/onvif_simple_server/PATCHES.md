@@ -98,6 +98,19 @@ Files touched:
 Encoder-config changes persist on disk but only take effect on the next
 `imagerd` restart.
 
+## Patch 6 — correct AAC bitrate/samplerate in encoder options
+
+Upstream's `media_get_audio_encoder_configuration_options` hardcodes AAC
+at 50 kbps / 16 kHz. The RTS3903N SDK only accepts 16 kHz and 48 kHz at
+encoder-bind time and we run 48 kHz mono at 64 kbps, so the advertised
+options need to match what the camera actually emits — otherwise NVR
+clients negotiate a config we can't deliver.
+
+Files touched:
+| File | Change |
+|---|---|
+| `media_service.c` | Both AAC branches of `media_get_audio_encoder_configuration_options` (profile 0 and profile 1) updated from `bitrate=50, samplerate=16` to `bitrate=64, samplerate=48`. The AAC decoder branch is left alone — we don't implement audio backchannel, so its values are unused. |
+
 ## Re-pulling from upstream
 
 When you want to grab a newer release:

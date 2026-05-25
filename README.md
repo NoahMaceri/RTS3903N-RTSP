@@ -131,13 +131,25 @@ The camera automatically switches between day and night mode:
 - During the first ~5 minutes of a deployment on a flipped-polarity board, day/night will be wrong; after that it's permanently right and survives reboots.
 - A camera that only ever sees a permanently dark scene (e.g. an indoor closet with the door always shut) can confuse the SDK estimator. If `adc_auto` mis-learns, delete `daynight_polarity.state` to reset and let it re-learn under a more representative lighting cycle.
 
+### Audio
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `enabled` | bool | Master on/off for the audio subsession. |
+| `device` | string | ALSA device, default `hw:0,1`. |
+| `gain` | 0–100 | Capture mic gain (%). Maps to ALSA mixer `Real Amic` / `Front Amic` / `ADC Compensate`. |
+| `codec` | string | `"aac"` (default) or `"ulaw"`. |
+| `bitrate` | int | Encoder bitrate in bps. Default 64000. AAC at 64 kbps gives ~165–200 B per 21 ms frame; ULAW is fixed at 64 kbps. |
+
+`aac` runs at 48 kHz mono — the SDK rejects 32 kHz and 44.1 kHz at bind. `ulaw` runs at 8 kHz mono. Opus is not supported (the SDK ships `libopus.so` but doesn't wire it into the encoder dispatch).
+
 ---
 
 ### Components
 
 | Component | Description |
 |-----------|-------------|
-| `imagerd` | Central camera daemon: captures video + audio from the ISP, encodes H.264 / MJPEG / G.711, runs the in-process Live555 RTSP server, hosts the snapshot Unix socket, and manages day/night + auto-tune ISP loops |
+| `imagerd` | Central camera daemon: captures video + audio from the ISP, encodes H.264 / MJPEG + G.711 or AAC-LC, runs the in-process Live555 RTSP server, hosts the snapshot Unix socket, and manages day/night + auto-tune ISP loops |
 | `day_night_ctrl` | Thread inside `imagerd`: monitors ADC light sensors, drives the IR cut filter |
 | `auto_tune_ctrl` | Thread inside `imagerd`: samples the ISP's AE histogram and adjusts contrast / sharpness / WDR_LEVEL to match the current scene |
 | `isp_ctrl` | CGI program for runtime ISP adjustment |
@@ -270,6 +282,14 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 ---
 
 ## Version History
+
+### v0.6.3 (2026-05-25)
+
+- Feature: AAC-LC audio codec, selected via `settings.json` → `audio.codec`: `"aac"` (default) or `"ulaw"`. AAC runs at 48 kHz mono / 64 kbps by default; the SDK only accepts 16 kHz and 48 kHz at bind, so the rate is hardwired per-codec. New `AACQueueSubsession` wraps `MPEG4GenericRTPSink` (RFC 3640) with a computed `AudioSpecificConfig` for the SDP `a=fmtp:`. The audio capture thread strips the 7-byte ADTS header from each SDK-emitted AAC frame before pushing, since `MPEG4GenericRTPSink` wants raw access units.
+- Refactor: day/night detection schema slimmed (separate commits in this release). `ir_control` is now three keys: `detection_mode`, `adc_cutoff`, `ir_led_pwm_duty`. Polarity is internal state; `adc_auto` learns it via SDK cross-check and persists across reboots. Modes dropped: `adc_single`, `adc_hysteresis`. `AudioFrame` gains `duration_us`; producer computes it codec-specifically. `get_isp_setting` reworked to `bool` + out-param (no more `UINT32_MAX` narrowing footgun). `daynight_polarity.state` and `ir_cut_override.state` writes are atomic (tmp + rename).
+- Feature: ONVIF audio-encoder advertisement reflects the chosen codec. `onvif_conf_gen` emits `audio_encoder=AAC` or `=G711` based on `audio.codec`. Vendored `onvif_simple_server`'s `media_get_audio_encoder_configuration_options` patched (patch #6) to advertise the correct AAC bitrate/samplerate (64 kbps / 48 kHz) — upstream's 50/16 didn't match what we run.
+- Bugfix: `lighttpd.conf` was missing `server.document-root`. lighttpd 1.4.83 refuses to start without it even for CGI-only configs. Both SD-card and on-flash payloads patched.
+- Note: Opus support investigated and dropped. The SDK's `rts_audio_codec_check_encode_id(RTS_AUDIO_TYPE_ID_OPUS)` returns `EINVAL` even though `libopus.so` is shipped — the encoder isn't wired into the SDK's dispatch table.
 
 ### v0.6.2 (2026-05-22)
 

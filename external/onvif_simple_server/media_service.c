@@ -1185,8 +1185,9 @@ int media_get_audio_encoder_configuration_options()
                 sprintf(bitrate, "%d", 64);
                 sprintf(samplerate, "%d", 8);
             } else if (service_ctx.profiles[0].audio_encoder == AAC) {
-                sprintf(bitrate, "%d", 50);
-                sprintf(samplerate, "%d", 16);
+                // RTS3903N: SDK only accepts 16/48 kHz at bind; we run 48k mono / 64 kbps.
+                sprintf(bitrate, "%d", 64);
+                sprintf(samplerate, "%d", 48);
             }
         } else {
             send_fault("media_service", "Receiver", "ter:ActionNotSupported", "ter:AudioNotSupported", "AudioNotSupported", "The device does not support audio");
@@ -1204,8 +1205,9 @@ int media_get_audio_encoder_configuration_options()
                 sprintf(bitrate, "%d", 64);
                 sprintf(samplerate, "%d", 8);
             } else if (service_ctx.profiles[1].audio_encoder == AAC) {
-                sprintf(bitrate, "%d", 50);
-                sprintf(samplerate, "%d", 16);
+                // RTS3903N: SDK only accepts 16/48 kHz at bind; we run 48k mono / 64 kbps.
+                sprintf(bitrate, "%d", 64);
+                sprintf(samplerate, "%d", 48);
             }
         } else {
             send_fault("media_service", "Receiver", "ter:ActionNotSupported", "ter:AudioNotSupported", "AudioNotSupported", "The device does not support audio");

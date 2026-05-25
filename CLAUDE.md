@@ -77,7 +77,7 @@ One long-running daemon (`imagerd`) plus a handful of CGI helpers and dev-only d
 Key consequences of this layout:
 
 - **`imagerd` is the only process that touches RTS AV channels.** `isp_ctrl`, `isp_tool`, and `ptz_tool` *also* call `rts_av_init()` / `rts_av_get_isp_ctrl()`, but only as one-shot tools that exit immediately. Long-lived ISP state lives in `imagerd`.
-- **Live555 runs in-process inside `imagerd`** via `rtsp_worker.cpp`. `H264QueueSource` and `PCMUQueueSource` (`*_queue_subsession.h`) pull from `FrameQueue<VideoFrame>` / `FrameQueue<AudioFrame>` populated by the capture loops. Producer wakeups go through `TaskScheduler::triggerEvent()` (the documented thread-safe primitive in live555). There are no FIFOs anywhere — the v0.4.x `/tmp/video.h264` / `/tmp/audio.ulaw` design is gone.
+- **Live555 runs in-process inside `imagerd`** via `rtsp_worker.cpp`. `H264QueueSource`, `PCMUQueueSource`, and `AACQueueSource` (`*_queue_subsession.h`) pull from `FrameQueue<VideoFrame>` / `FrameQueue<AudioFrame>` populated by the capture loops; exactly one of the two audio sources is wired in at start() based on `audio.codec`. Producer wakeups go through `TaskScheduler::triggerEvent()` (the documented thread-safe primitive in live555). There are no FIFOs anywhere — the v0.4.x `/tmp/video.h264` / `/tmp/audio.ulaw` design is gone.
 - **Idle-vs-active state**: `rtsp_worker::video_active()` / `audio_active()` reflect whether live555 has a live source for at least one client. Capture loops always run (so the encoder buffer pool drains) but only push into the queue when `*_active()` is true. On every fresh client attach, the source's constructor flips `idr_requested`; the producer reads-and-clears that, calls `rts_av_request_h264_key_frame()`, drops P-frames until the next IDR, and clears the queue inside `consume_idr_request()` so a stale P-frame can't slip in ahead of the keyframe.
 - **Snapshots** flow `lighttpd → /cgi-bin/snapshot wrapper → snapshot binary (CGI) → /tmp/snapshot.sock → snapshot_server_thread inside imagerd → MJPEG callback`. The snapshot path is gated on an MJPEG channel that's bound to the same ISP as the H.264 channel.
 - **ONVIF** is split between `onvif_simple_server` (CGI under lighttpd, one shell-wrapper per service in `/tmp/onvif/`, sources its config from `onvif_conf_gen`) and `wsd_simple_server` (separate UDP/3702 multicast daemon for WS-Discovery). Neither is part of `imagerd`. See "ONVIF" section below.
@@ -90,7 +90,7 @@ Key consequences of this layout:
 - **Threads are joined, not detached, when they reference resources owned by `main`** (ISP/H264/MJPEG/audio channels, snapshot socket). The teardown order in `kill_stream()` is: stop ISP-touching helper threads (auto-tune, IR control) → set `g_audio_enabled=false` and join audio capture → stop the live555 RTSP worker → tear down audio AV channels → join snapshot thread → tear down video AV channels → `rts_av_release()`. Don't reorder without re-checking dependencies — the live555 worker holds queue/source pointers, the audio thread reaches into the encoder, etc.
 - **`g_isp_mutex` (declared in `isp_utils.h`, defined in `isp_utils.cpp`) is the single shared mutex protecting `rts_av_*_isp_ctrl`, the AE statistics path used by `auto_tune_ctrl`, and any other ISP read/write.** Every ISP access from any thread must go through `change_isp_setting()` / `get_isp_setting()` / `read_ae_stats()`. Do **not** declare a `static std::mutex` in a header — that creates one mutex per translation unit and the threads will not synchronize.
 - **All signal handlers must use `sigaction()` and have signature `void(int)`.** `signal()` and bare `void()` handlers compile but invoke UB on MIPS calling conventions. `SIGPIPE` is `SIG_IGN`'d process-wide.
-- **Live555 sources clear their back-reference on destruction.** `H264QueueSource` / `PCMUQueueSource` take a `**` pointer to the worker's cached source pointer and `nullptr` it in their destructors so the worker's trigger callback can never hit a freed pointer. Same pattern if you add another subsession.
+- **Live555 sources clear their back-reference on destruction.** `H264QueueSource` / `PCMUQueueSource` / `AACQueueSource` take a `**` pointer to the worker's cached source pointer and `nullptr` it in their destructors so the worker's trigger callback can never hit a freed pointer. Same pattern if you add another subsession.
 
 ## Configuration (`settings.json`)
 
@@ -244,9 +244,22 @@ Telnet on :23 is started two ways: stock `/etc/init.d/rcS` invokes `/bin/telnetd
 
 Dropbear's binary has DT_RPATH=`/var/tmp/sd/dev-tools/lib` (set in `external/dev-tools/CMakeLists.txt` for the SD-card layout). On flash with no SD card, that path doesn't exist; the loader falls through to LD_LIBRARY_PATH, which `init.sh` sets to include `/home/app/dev-tools/lib` for exactly this reason. Don't drop that path from LD_LIBRARY_PATH or dropbear will fail to find libcrypt when no SD card is in.
 
-## Audio constraints
+## Audio codecs
 
-Audio is hard-wired to **G.711 u-law / 8 kHz / mono / 64 kbps** end-to-end. The RTSP side uses RTP payload type 0 (PCMU static), and the producer creates the encoder with `rts_av_create_audio_encode_chn(RTS_AUDIO_TYPE_ID_ULAW, 64000)`. To change the codec/rate, all three of (a) the audio capture attrs in `imagerd.cpp::start_stream`, (b) the `PCMUQueueSubsession` RTP sink config, and (c) the per-frame size assumed by the live555 framer (160 bytes = 20 ms at 8 kHz) must change together.
+Two codecs are supported, selected by `settings.json` → `audio.codec`:
+
+| Codec | Sample rate | RTP | live555 sink | SDP fmtp |
+|---|---|---|---|---|
+| `ulaw` | 8 kHz mono | PT 0 (PCMU static) | `SimpleRTPSink "PCMU"` | none |
+| `aac` (default) | 48 kHz mono | dynamic PT | `MPEG4GenericRTPSink "AAC-hbr"` | `config=1188` (AudioSpecificConfig) |
+
+The SDK encoder is created with `rts_av_create_audio_encode_chn(codec_id, bitrate)`; the codec_id and capture rate are derived from the JSON config in `imagerd.cpp::start_stream`. Per-frame duration is computed codec-specifically and carried on `AudioFrame.duration_us` so the subsessions don't have to embed codec-specific timing.
+
+**AAC framing.** The SDK emits ADTS-wrapped AAC (every frame starts with `FF F9 …`). `MPEG4GenericRTPSink` wants raw access units, so the audio capture thread strips the 7-byte ADTS header before pushing onto the queue. `AACQueueSubsession` computes the SDP `config=` AudioSpecificConfig from the configured sample rate + channels (2-byte lookup table for the standard MPEG-4 frequency index).
+
+**AAC rate restriction.** Empirically (probe binary, Phase 0 investigation), the RTS3903N SDK accepts AAC at 16 kHz and 48 kHz but rejects 32 kHz and 44.1 kHz at `rts_av_bind` time with `EAGAIN`. We hard-wire 48 kHz. If you need 16 kHz, also update the AAC branch in `imagerd.cpp::start_stream` and the AAC values in `external/onvif_simple_server/media_service.c::media_get_audio_encoder_configuration_options`.
+
+**Opus.** The SDK's `rts_audio_codec_check_encode_id(RTS_AUDIO_TYPE_ID_OPUS)` returns `EINVAL` despite `libopus.so` being shipped — the encoder isn't wired into the SDK's dispatch table. Adding Opus would require a userspace encoder bypassing the SDK audio chain entirely (capture raw PCM via the SDK PCM codec or ALSA, feed to libopus). Not currently supported.
 
 Capture gain is applied through ALSA mixer controls `Real Amic`, `Front Amic`, `ADC Compensate` — do not assume a single mixer element exists.
 
