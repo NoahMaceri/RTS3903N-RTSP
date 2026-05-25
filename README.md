@@ -283,6 +283,11 @@ The project uses the Realtek RSDK toolchain for MIPS cross-compilation. The tool
 
 ## Version History
 
+### v0.6.4 (2026-05-25)
+
+- Bugfix: RTP presentation timestamps now use wall-clock `gettimeofday()` instead of `CLOCK_MONOTONIC`. The v0.5.1 switch to monotonic was wrong: live555's RTCP Sender Report generation hardcodes `gettimeofday()` for the SR's NTP/RTP pair and feeds it to `convertToRTPTimestamp()` without anchoring, so monotonic-since-boot frame timestamps and wall-clock-since-epoch SR timestamps disagreed by ~1.7e9 seconds × clock-rate. VLC used the SR's bogus mapping to render "current time" and showed wild jumps (17:08 → 00:02 → 3:12:12) with playback freezes. The original v0.5.1 mid-stream-SNTP-jump risk is gone since config.sh now runs `sntp` synchronously *before* `imagerd` starts. See the rewritten "Time sync" section in [CLAUDE.md](CLAUDE.md) for the invariant.
+- Bugfix: AAC RTP timestamps are now sample-accurate. The audio thread anchors to `wallclock_us()` at client attach and computes per-frame PTS from cumulative sample count (`base + samples_emitted × 1e6 / sample_rate`), so AAC-LC frames advance by exactly 1024 ticks each instead of inheriting polling-cadence jitter. `ffprobe` previously showed AAC deltas of 914, 1815, 3255, 4027 …; now reads as 0, 1024, 2048, 3072, … exactly. Anchor resets on client disconnect.
+
 ### v0.6.3 (2026-05-25)
 
 - Feature: AAC-LC audio codec, selected via `settings.json` → `audio.codec`: `"aac"` (default) or `"ulaw"`. AAC runs at 48 kHz mono / 64 kbps by default; the SDK only accepts 16 kHz and 48 kHz at bind, so the rate is hardwired per-codec. New `AACQueueSubsession` wraps `MPEG4GenericRTPSink` (RFC 3640) with a computed `AudioSpecificConfig` for the SDP `a=fmtp:`. The audio capture thread strips the 7-byte ADTS header from each SDK-emitted AAC frame before pushing, since `MPEG4GenericRTPSink` wants raw access units.
