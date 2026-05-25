@@ -72,27 +72,12 @@ static FactoryPtzMotor factory_motor_from_strings(const char *hw, const char *gp
     return FACTORY_PTZ_NONE;
 }
 
-static FactoryPtzMotor factory_data_ptz_motor(void) {
-    struct FactoryData fd;
-    if (factory_data_read(&fd) != 0) return FACTORY_PTZ_NONE;
-    return factory_motor_from_strings(fd.hw_ver, fd.gpio_pin);
-}
-
 static const char *factory_ptz_motor_name(FactoryPtzMotor m) {
     switch (m) {
         case FACTORY_PTZ_8PIN:   return "8-pin (ssp_ms41909)";
         case FACTORY_PTZ_4P1PIN: return "4+1-pin (ssp_ms41909_union)";
         default:                 return "none";
     }
-}
-
-// Loose check: only inspects hw_ver[0]. True even on PTZ-capable boards
-// whose specific motor pattern isn't recognised. For "is PTZ actually
-// going to work", use factory_data_ptz_motor() != NONE.
-static bool factory_data_has_ptz(void) {
-    struct FactoryData fd;
-    if (factory_data_read(&fd) != 0) return false;
-    return fd.hw_ver[0] == '1';
 }
 
 #endif // FACTORY_DATA_H
