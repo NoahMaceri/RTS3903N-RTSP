@@ -116,10 +116,15 @@ else
                 echo "    key_mgmt=NONE"
             fi
             echo "    scan_ssid=1"
-            # Pin to a specific AP if the user listed a BSSID — useful for
-            # mesh / extender networks where wpa_supplicant's roaming logic
-            # bounces between APs mid-stream.
-            [ -n "$BSSID" ] && echo "    bssid=$BSSID"
+            # Express a preference for a specific AP if the user listed
+            # a BSSID — useful for mesh / extender networks where
+            # wpa_supplicant's roaming logic bounces between APs
+            # mid-stream. We use `bssid_hint=` (soft preference) rather
+            # than `bssid=` (hard lock) so a momentarily-unreachable AP
+            # doesn't render the camera permanently unreachable — wpa
+            # will fall back to ANY matching SSID if the hint can't be
+            # associated.
+            [ -n "$BSSID" ] && echo "    bssid_hint=$BSSID"
             # Disable background scanning while associated. The default
             # "simple:30:-65:300" bgscan kicks off a passive scan every 30s
             # when RSSI < -65 dBm, which knocks RTP off air for ~100-300ms
@@ -140,7 +145,7 @@ else
 
         log "Running wpa_supplicant..."
         wpa_supplicant -c"$WPA_CONF" -g/var/tmp/wpa_supplicant-global -Dwext -iwlan0 -B
-        sleep 3s
+        sleep 3
 
         # Defensively force WiFi power-save off. The Realtek 8188fu driver
         # currently boots with PM off, but firmware updates have flipped
@@ -148,6 +153,45 @@ else
         # mid-stream is hard to debug if it ever comes back on. iwconfig
         # is in busybox; silently no-op if missing.
         iwconfig wlan0 power off >/dev/null 2>&1
+
+        # Boot-time association watchdog. wpa_supplicant returns
+        # immediately after fork (we pass -B), so association happens
+        # asynchronously. Poll for up to 60 s; if the radio is still
+        # Not-Associated by then, blank out the bssid_hint and restart
+        # wpa_supplicant. This is the escape hatch for the case where
+        # a hinted AP is unreachable AND the soft fallback isn't kicking
+        # in fast enough.
+        waited=0
+        while [ "$waited" -lt 60 ]; do
+            if ! iwconfig wlan0 2>/dev/null | grep -q "Not-Associated"; then
+                break
+            fi
+            sleep 5
+            waited=$((waited + 5))
+        done
+        if iwconfig wlan0 2>/dev/null | grep -q "Not-Associated"; then
+            log "WiFi: still Not-Associated after 60s — clearing bssid_hint and retrying"
+            sed -i 's/^    bssid_hint=.*/    bssid_hint=/' "$WPA_CONF"
+            killall wpa_supplicant 2>/dev/null
+            sleep 1
+            wpa_supplicant -c"$WPA_CONF" -g/var/tmp/wpa_supplicant-global -Dwext -iwlan0 -B
+            sleep 3
+            iwconfig wlan0 power off >/dev/null 2>&1
+        fi
+
+        # Log the achieved RSSI / link quality so an operator can grep
+        # boot.log across cameras without ssh-ing each one. Falls back
+        # to iwconfig if the driver-specific proc node isnt available
+        # (e.g. on a non-rtl8188fu variant).
+        if [ -r /proc/net/rtl8188fu/wlan0/rx_signal ]; then
+            rssi=$(awk -F: '/rssi/{print $2}' /proc/net/rtl8188fu/wlan0/rx_signal)
+            sigq=$(awk -F: '/signal_qual/{print $2}' /proc/net/rtl8188fu/wlan0/rx_signal)
+            bssid=$(iwconfig wlan0 2>/dev/null | awk '/Access Point/{for(i=1;i<=NF;i++) if($i=="Point:") print $(i+1)}')
+            log "WiFi: associated to ${bssid:-?}  RSSI=${rssi} dBm  link_quality=${sigq}/100"
+        else
+            line=$(iwconfig wlan0 2>/dev/null | awk '/Link Quality|Access Point/{gsub(/^[ \t]+/, ""); print; exit}')
+            log "WiFi: ${line:-(no driver state)}"
+        fi
     else
         log "WiFi: ssid empty in $NETWORK_INI; skipping wpa_supplicant"
     fi

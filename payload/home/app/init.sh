@@ -322,7 +322,9 @@ if [ -f "$NETWORK_INI" ]; then
                 echo "    key_mgmt=NONE"
             fi
             echo "    scan_ssid=1"
-            [ -n "$BSSID" ] && echo "    bssid=$BSSID"
+            # bssid_hint (soft preference) not bssid (hard pin) — see
+            # config.sh for the rationale on why a hard pin is dangerous.
+            [ -n "$BSSID" ] && echo "    bssid_hint=$BSSID"
             echo "    bgscan=\"\""
             echo "}"
         } > "$WPA_CONF"
@@ -375,20 +377,39 @@ rm -f /var/etc/resolv.conf
 } > /var/etc/resolv.conf
 mount --bind /var/etc /etc
 
-# Wait for actual Wi-Fi association before SNTP. wpa_supplicant -B returns
-# as soon as it daemonizes, well before the 4-way handshake completes; on
-# this hardware it's typically ~5–8s after the static-IP-assign call.
-# Without this poll, SNTP fires while the link layer is still negotiating
-# and getaddrinfo/connect both hang or fail. Bound the wait at 15s so we
-# don't stall the boot if Wi-Fi is broken.
+# Wait for actual Wi-Fi association before SNTP. wpa_supplicant -B
+# returns as soon as it daemonizes, well before the 4-way handshake
+# completes. Bounded at 60s; if the hinted AP is unreachable and the
+# soft-fallback hasn't kicked in by then, blank out bssid_hint and
+# retry — same escape hatch as config.sh.
 log "Waiting for Wi-Fi association..."
-for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+waited=0
+while [ "$waited" -lt 60 ]; do
     if iwconfig wlan0 2>/dev/null | grep -q "Access Point: [0-9A-Fa-f]"; then
-        log "wlan0 associated after ${i}s"
+        log "wlan0 associated after ${waited}s"
         break
     fi
-    sleep 1
+    sleep 5
+    waited=$((waited + 5))
 done
+if ! iwconfig wlan0 2>/dev/null | grep -q "Access Point: [0-9A-Fa-f]"; then
+    log "WiFi: still Not-Associated after 60s — clearing bssid_hint and retrying"
+    sed -i 's/^    bssid_hint=.*/    bssid_hint=/' "$WPA_CONF"
+    killall wpa_supplicant 2>/dev/null
+    sleep 1
+    wpa_supplicant -c"$WPA_CONF" -g/var/run/wpa_supplicant-global -Dwext -iwlan0 -B
+    sleep 3
+    iwconfig wlan0 power off >/dev/null 2>&1
+fi
+
+# Log the achieved RSSI / link quality so an operator can grep boot.log
+# across cameras without ssh-ing each one.
+if [ -r /proc/net/rtl8188fu/wlan0/rx_signal ]; then
+    rssi=$(awk -F: '/rssi/{print $2}' /proc/net/rtl8188fu/wlan0/rx_signal)
+    sigq=$(awk -F: '/signal_qual/{print $2}' /proc/net/rtl8188fu/wlan0/rx_signal)
+    bssid=$(iwconfig wlan0 2>/dev/null | awk '/Access Point/{for(i=1;i<=NF;i++) if($i=="Point:") print $(i+1)}')
+    log "WiFi: associated to ${bssid:-?}  RSSI=${rssi} dBm  link_quality=${sigq}/100"
+fi
 
 log "SNTP sync..."
 /home/app/sntp pool.ntp.org >> $LOGFILE 2>&1 || log "SNTP failed; continuing with unsynced clock"
