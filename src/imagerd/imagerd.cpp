@@ -31,8 +31,6 @@ zlog_category_t *vid_c = nullptr;
 
 // Audio capture globals
 static std::atomic<bool> g_audio_enabled(false);
-static int32_t g_audio_capture_chn = -1;
-static int32_t g_audio_encode_chn = -1;
 static rtsp_worker::AudioCodec g_audio_codec = rtsp_worker::AudioCodec::ULAW;
 static uint32_t g_audio_sample_rate = 8000;
 static uint32_t g_audio_samples_per_frame = 0;   // 0 = ulaw (byte-driven)
@@ -467,13 +465,11 @@ void kill_stream(handlers *h) {
         rts_av_disable_chn(h->audio_encode);
         rts_av_destroy_chn(h->audio_encode);
         h->audio_encode = -1;
-        g_audio_encode_chn = -1;
     }
     if (h->audio_capture >= 0) {
         rts_av_disable_chn(h->audio_capture);
         rts_av_destroy_chn(h->audio_capture);
         h->audio_capture = -1;
-        g_audio_capture_chn = -1;
     }
     zlog_info(vid_c, "Audio channels stopped and destroyed");
 
@@ -766,8 +762,6 @@ int start_stream(nlohmann::json &cfg) {
                     if (RTS_IS_ERR_VALUE(RTS_ERRNO(ret))) {
                         zlog_warn(vid_c, "Failed to start audio recv with error %d", ret);
                     } else {
-                        g_audio_capture_chn = h.audio_capture;
-                        g_audio_encode_chn = h.audio_encode;
                         g_audio_enabled.store(true);
 
                         // Set capture volume/gain (0-100%)
@@ -803,7 +797,6 @@ int start_stream(nlohmann::json &cfg) {
     chn_status = rts_av_get_chn_status(h.h264);
     zlog_debug(vid_c, "Encoder channel status: %d", chn_status);
 
-    // init day_night_ctrl
     {
         const auto &ir = cfg["ir_control"];
         const DayNightMode dn_mode = parse_day_night_mode(

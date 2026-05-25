@@ -65,20 +65,17 @@ int main(int argc, char *argv[]) {
     int sock_fd = -1;
     sockaddr_un addr{};
 
-    // Create Unix domain socket
     sock_fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if (sock_fd < 0) {
         output_error("Failed to create socket");
         return 1;
     }
 
-    // Set receive timeout
     timeval tv{};
     tv.tv_sec = TIMEOUT_SECONDS;
     tv.tv_usec = 0;
     setsockopt(sock_fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 
-    // Connect to imagerd's snapshot socket
     memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
     strncpy(addr.sun_path, SNAPSHOT_SOCKET, sizeof(addr.sun_path) - 1);

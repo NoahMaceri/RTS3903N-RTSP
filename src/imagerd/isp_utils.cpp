@@ -69,7 +69,7 @@ bool change_isp_setting(const enum enum_rts_video_ctrl_id type, int32_t value, z
     if (ctrl.current_value == value) {
         return true;
     }
-    if ((value < ctrl.minimum) || value > ctrl.maximum || (value - ctrl.minimum) % ctrl.step != 0) {
+    if (value < ctrl.minimum || value > ctrl.maximum || (value - ctrl.minimum) % ctrl.step != 0) {
         zlog_error(logger, "Invalid value %d for %s (min: %d, max: %d, step: %d)", value, ctrl.name, ctrl.minimum, ctrl.maximum, ctrl.step);
         zlog_warn(logger, "Setting to default value %d", ctrl.default_value);
         value = ctrl.default_value;
