@@ -287,16 +287,30 @@ void set_fps(const uint8_t fps) {
 
 
 
-// Monotonic microsecond timestamp for live555 fPresentationTime. We deliberately
-// avoid gettimeofday() because SNTP can step the wall clock mid-stream (the
-// hardware has no RTC, so the clock starts near epoch and jumps forward when
-// sntp finishes); ffmpeg's RTSP demuxer interprets the resulting jump as a
-// broken stream and emits AV_NOPTS_VALUE. CLOCK_MONOTONIC is immune.
-static uint64_t monotonic_us() {
-    timespec ts{};
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return static_cast<uint64_t>(ts.tv_sec) * 1000000ULL +
-           static_cast<uint64_t>(ts.tv_nsec) / 1000ULL;
+// Wall-clock microsecond timestamp for live555 fPresentationTime.
+//
+// Live555's RTCPInstance::addSR (RTCP.cpp:1051) generates the NTP/RTP
+// pair in the Sender Report by calling gettimeofday() and feeding that
+// value into convertToRTPTimestamp(timeNow). That function applies the
+// linear formula  rtp = fTimestampBase + freq * tv.tv_sec + ...  to the
+// timeval — it does NOT subtract fInitialPresentationTime. So if our
+// per-frame presentationTime is monotonic-since-boot (seconds since
+// reboot) and the SR's NTP is wall-clock (seconds since 1970), the SR's
+// RTP timestamp lies by ~1.7e9 seconds × freq. VLC uses the SR's
+// NTP/RTP pair to render "elapsed time" and ends up jumping by hours.
+//
+// Using gettimeofday() here keeps the RTP packet path and the RTCP-SR
+// path on the same epoch, so the SR's claimed mapping matches reality.
+// The v0.5.1 mid-stream-SNTP-jump risk is gone because config.sh now
+// runs sntp synchronously before imagerd starts (see CLAUDE.md "Time
+// sync"). If sntp fails, the clock stays at the kernel epoch — that's
+// fine: RTP and RTCP-SR are still self-consistent, just anchored at
+// 1970 instead of now.
+static uint64_t wallclock_us() {
+    timeval tv{};
+    gettimeofday(&tv, nullptr);
+    return static_cast<uint64_t>(tv.tv_sec) * 1000000ULL +
+           static_cast<uint64_t>(tv.tv_usec);
 }
 
 // Audio capture thread. Always drains the encoder so its buffer pool doesn't
@@ -310,6 +324,15 @@ static void *audio_capture_thread(void *arg) {
     uint32_t frames_captured = 0;
     uint8_t  consecutive_errors = 0;
     bool     was_idle = true;
+
+    // Sample-counter PTS so the RTP timestamps advance by exactly the
+    // codec's frame size each tick instead of inheriting wall-clock
+    // jitter from this thread's polling cadence. Anchored to the
+    // wall-clock at the moment the first frame is pushed, so the
+    // mapping stays consistent with RTCP-SR (see wallclock_us comment).
+    bool     audio_session_started = false;
+    uint64_t audio_base_us = 0;
+    uint64_t audio_samples_emitted = 0;
 
     while (!g_exit.load() && g_audio_enabled.load()) {
         int poll_ret = rts_av_poll(h->audio_encode);
@@ -343,29 +366,39 @@ static void *audio_capture_thread(void *arg) {
             }
             auto *frame_data = static_cast<uint8_t *>(audio_buffer->vm_addr);
             uint32_t frame_size = audio_buffer->bytesused;
-            uint32_t duration_us;
+            uint32_t samples_in_frame;
             if (g_audio_codec == rtsp_worker::AudioCodec::AAC) {
-                // SDK emits ADTS-wrapped AAC; live555 MPEG4GenericRTPSink
-                // wants raw access units, so strip the 7-byte header
-                // (we don't honour CRC-protected ADTS — bit 0 of byte 1
-                // is 1 in all observed frames).
+                // SDK emits ADTS-wrapped AAC; MPEG4GenericRTPSink wants
+                // raw access units, so strip the 7-byte header.
                 if (frame_size > 7 && frame_data[0] == 0xFF
                     && (frame_data[1] & 0xF6) == 0xF0) {
                     frame_data += 7;
                     frame_size -= 7;
                 }
-                duration_us = static_cast<uint32_t>(
-                    1000000ULL * g_audio_samples_per_frame / g_audio_sample_rate);
+                samples_in_frame = g_audio_samples_per_frame;  // 1024 for AAC-LC
             } else {
-                // G.711 u-law: 1 byte = 1 sample, 8 kHz → 125 us/byte.
-                duration_us = frame_size * 125u;
+                // G.711 u-law: 1 byte = 1 sample.
+                samples_in_frame = frame_size;
             }
-            rtsp_worker::push_audio_frame(frame_data, frame_size,
-                                          monotonic_us(), duration_us);
+
+            if (!audio_session_started) {
+                audio_base_us = wallclock_us();
+                audio_session_started = true;
+            }
+            const uint64_t pts_us = audio_base_us
+                + (audio_samples_emitted * 1000000ULL) / g_audio_sample_rate;
+            const uint32_t duration_us = static_cast<uint32_t>(
+                (static_cast<uint64_t>(samples_in_frame) * 1000000ULL) / g_audio_sample_rate);
+            audio_samples_emitted += samples_in_frame;
+
+            rtsp_worker::push_audio_frame(frame_data, frame_size, pts_us, duration_us);
             frames_captured++;
         } else if (!was_idle) {
             zlog_info(vid_c, "Audio: reader disconnected");
             was_idle = true;
+            // Reset session anchor so the next attach starts fresh.
+            audio_session_started = false;
+            audio_samples_emitted = 0;
         }
 
         rts_av_put_buffer(audio_buffer);
@@ -656,7 +689,7 @@ int start_stream(nlohmann::json &cfg) {
 
         // Codec selection: "ulaw" (default) or "aac". Rate, encoder id, and
         // per-frame sample count are all derived from the codec.
-        const std::string codec_str = cfg["audio"].value("codec", std::string("ulaw"));
+        const std::string codec_str = cfg["audio"].value("codec", std::string("aac"));
         int sdk_codec_id;
         uint32_t capture_rate;
         uint32_t default_bitrate;
@@ -921,7 +954,7 @@ int start_stream(nlohmann::json &cfg) {
             if (active && (!need_keyframe || is_keyframe)) {
                 rtsp_worker::push_video_frame(
                     static_cast<uint8_t *>(vid_buffer->vm_addr),
-                    frame_size, is_keyframe, monotonic_us());
+                    frame_size, is_keyframe, wallclock_us());
                 if (is_keyframe) need_keyframe = false;
             }
         }
