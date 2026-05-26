@@ -1,0 +1,52 @@
+name: CodeQL
+
+# Adds the same triggers as the build workflow, plus a weekly schedule
+# matching what default setup was using. Replaces GitHub's default-setup
+# CodeQL configuration so we can pass a config file that excludes
+# external/ vendored code from analysis (see .github/codeql/codeql-config.yml).
+on:
+  push:
+    branches: [main, reflash]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # `build-mode: none` skips compiler instrumentation and analyses
+          # the source files directly. Avoids dragging in our MIPS cross
+          # toolchain just for CodeQL — the analysis catches the same
+          # class of bugs we care about (taint, format strings, scanf
+          # return checks) from source alone.
+          - language: c-cpp
+            build-mode: none
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          config-file: ./.github/codeql/codeql-config.yml
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

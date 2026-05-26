@@ -1,0 +1,12 @@
+name: "RTS3903N-RTSP CodeQL config"
+
+# Skip vendored upstream sources — onvif_simple_server, live555, pcre2,
+# zlog, mbedtls, dev-tools (uftpd, dropbear, libite, libuev), rtscore
+# (Realtek SDK), stock_blobs, rsdk (cross toolchain). We don't own those
+# trees; security fixes there belong upstream, not in our patch set.
+#
+# Also skip build outputs so we don't double-analyse generated files.
+paths-ignore:
+  - 'external/**'
+  - 'build/**'
+  - 'cmake-build-*/**'
