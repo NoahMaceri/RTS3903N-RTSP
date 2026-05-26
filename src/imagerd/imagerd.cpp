@@ -19,6 +19,7 @@
 #include "imagerd.h"
 #include "rtsp_worker.h"
 #include <cstdlib>
+#include <climits>
 #include <mutex>
 #include <condition_variable>
 #include <vector>
@@ -285,24 +286,6 @@ void set_fps(const uint8_t fps) {
 
 
 // Wall-clock microsecond timestamp for live555 fPresentationTime.
-//
-// Live555's RTCPInstance::addSR (RTCP.cpp:1051) generates the NTP/RTP
-// pair in the Sender Report by calling gettimeofday() and feeding that
-// value into convertToRTPTimestamp(timeNow). That function applies the
-// linear formula  rtp = fTimestampBase + freq * tv.tv_sec + ...  to the
-// timeval — it does NOT subtract fInitialPresentationTime. So if our
-// per-frame presentationTime is monotonic-since-boot (seconds since
-// reboot) and the SR's NTP is wall-clock (seconds since 1970), the SR's
-// RTP timestamp lies by ~1.7e9 seconds × freq. VLC uses the SR's
-// NTP/RTP pair to render "elapsed time" and ends up jumping by hours.
-//
-// Using gettimeofday() here keeps the RTP packet path and the RTCP-SR
-// path on the same epoch, so the SR's claimed mapping matches reality.
-// The v0.5.1 mid-stream-SNTP-jump risk is gone because config.sh now
-// runs sntp synchronously before imagerd starts (see CLAUDE.md "Time
-// sync"). If sntp fails, the clock stays at the kernel epoch — that's
-// fine: RTP and RTCP-SR are still self-consistent, just anchored at
-// 1970 instead of now.
 static uint64_t wallclock_us() {
     timeval tv{};
     gettimeofday(&tv, nullptr);
@@ -310,9 +293,36 @@ static uint64_t wallclock_us() {
            static_cast<uint64_t>(tv.tv_usec);
 }
 
-// Audio capture thread. Always drains the encoder so its buffer pool doesn't
-// stall. Hands frames off to rtsp_worker only while a client is consuming
-// audio — when nobody is listening, frames are recv'd and dropped silently.
+// Read current Wi-Fi RSSI in dBm from the Realtek 8188FU driver
+static int read_wifi_rssi() {
+    FILE *f = fopen("/proc/net/rtl8188fu/wlan0/rx_signal", "r");
+    if (f == nullptr) return INT_MIN;
+    char buf[64];
+    int rssi = INT_MIN;
+    while (fgets(buf, sizeof(buf), f)) {
+        if (strncmp(buf, "rssi:", 5) == 0) {
+            rssi = atoi(buf + 5);
+            break;
+        }
+    }
+    fclose(f);
+    return rssi;
+}
+
+// True if wlan0 is currently associated with an AP
+static bool wifi_associated() {
+    FILE *p = popen("iwconfig wlan0 2>/dev/null", "r");
+    if (p == nullptr) return true;
+    char buf[256];
+    bool ok = true;
+    while (fgets(buf, sizeof(buf), p)) {
+        if (strstr(buf, "Not-Associated")) { ok = false; break; }
+    }
+    pclose(p);
+    return ok;
+}
+
+// Audio capture thread
 static void *audio_capture_thread(void *arg) {
     auto *h = static_cast<handlers *>(arg);
 
@@ -321,12 +331,6 @@ static void *audio_capture_thread(void *arg) {
     uint32_t frames_captured = 0;
     uint8_t  consecutive_errors = 0;
     bool     was_idle = true;
-
-    // Sample-counter PTS so the RTP timestamps advance by exactly the
-    // codec's frame size each tick instead of inheriting wall-clock
-    // jitter from this thread's polling cadence. Anchored to the
-    // wall-clock at the moment the first frame is pushed, so the
-    // mapping stays consistent with RTCP-SR (see wallclock_us comment).
     bool     audio_session_started = false;
     uint64_t audio_base_us = 0;
     uint64_t audio_samples_emitted = 0;
@@ -882,10 +886,6 @@ int start_stream(nlohmann::json &cfg) {
         uint32_t frames_since_keyframe;
     } stats = {0, 0, 0, 0, 0, SIZE_MAX, 0, 0};
 
-    // Reader-presence state. rtsp_worker::video_active() reflects whether
-    // live555 has a live H.264 source for at least one client. need_keyframe
-    // gates forwarding until the next IDR after each fresh attach so live555
-    // always starts on a keyframe.
     bool was_idle = true;
     bool need_keyframe = false;
 
@@ -957,9 +957,6 @@ int start_stream(nlohmann::json &cfg) {
                     frame_size, is_keyframe, wallclock_us());
                 if (is_keyframe) need_keyframe = false;
             } else if (active && need_keyframe) {
-                // Dropped because we're waiting for the post-attach IDR
-                // to land. Tracked so an operator can see if the encoder
-                // is slow to honour rts_av_request_h264_key_frame.
                 stats.dropped_waiting_idr++;
             }
         }
@@ -970,12 +967,29 @@ int start_stream(nlohmann::json &cfg) {
 
         if ((stats.total_frames % 3000) == 0) {
             size_t avg = stats.total_frames ? stats.total_bytes / stats.total_frames : 0;
+
+            // Mid-stream WiFi watchdog
+            static time_t last_reassoc_attempt = 0;
+            if (!wifi_associated()) {
+                const time_t now_s = time(nullptr);
+                if (now_s - last_reassoc_attempt > 300) {
+                    last_reassoc_attempt = now_s;
+                    zlog_warn(vid_c, "WiFi: Not-Associated mid-stream — invoking wpa_cli reassociate");
+                    if (system("wpa_cli reassociate >/dev/null 2>&1") != 0) {
+                        zlog_error(vid_c, "WiFi: wpa_cli reassociate returned non-zero");
+                    }
+                }
+            }
+            char rssi_str[24] = {0};
+            const int rssi = read_wifi_rssi();
+            if (rssi != INT_MIN) snprintf(rssi_str, sizeof(rssi_str), ", rssi=%ddBm", rssi);
+
             zlog_info(vid_c, "Stats: frames=%u, keyframes=%u (interval=%u), q-dropped=%zu, idr-gate-drops=%u, "
-                             "size avg=%zu min=%zu max=%zu bytes",
+                             "size avg=%zu min=%zu max=%zu bytes%s",
                       stats.total_frames, stats.keyframes, stats.last_keyframe_interval,
                       rtsp_worker::video_dropped(), stats.dropped_waiting_idr,
                       avg, stats.min_frame_size == SIZE_MAX ? 0 : stats.min_frame_size,
-                      stats.max_frame_size);
+                      stats.max_frame_size, rssi_str);
         }
     }
 
@@ -1005,13 +1019,6 @@ int main(int argc, char *argv[]) {
     sigemptyset(&sigpipe_sa.sa_mask);
     sigaction(SIGPIPE, &sigpipe_sa, nullptr);
 
-    // init zlog. Try paths in order so the same binary works for SD-card
-    // hijack mode (zlog.conf at /var/tmp/sd/) and on-flash mode (baked
-    // copy at /home/app/). $ZLOG_CONF lets the boot script force a
-    // specific path if neither default is right.
-    //
-    // Loop must be index-based, not pointer-walk: getenv() returns NULL
-    // when unset and a `for(p; *p; ++p)` terminates on the first NULL.
     const char *zlog_paths[] = {
         getenv("ZLOG_CONF"),
         "/var/tmp/sd/zlog.conf",

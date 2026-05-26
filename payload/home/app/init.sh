@@ -8,6 +8,15 @@
 
 LOGFILE=/var/log/boot.log
 mkdir -p /var/log
+
+# Rotate boot.log if it's grown over 256 KB. See config.sh for rationale.
+if [ -f "$LOGFILE" ]; then
+    LOG_SIZE=$(ls -la "$LOGFILE" 2>/dev/null | awk '{print $5+0}')
+    if [ "${LOG_SIZE:-0}" -gt 262144 ]; then
+        mv -f "$LOGFILE" "${LOGFILE}.1" 2>/dev/null
+    fi
+fi
+
 log() {
     echo "[`date`] $1" >> $LOGFILE
     echo "$1" > /dev/ttyS1

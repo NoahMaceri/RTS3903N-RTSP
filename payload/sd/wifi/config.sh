@@ -3,6 +3,14 @@
 # Path to log file
 LOGFILE=/var/tmp/sd/boot.log
 
+# Rotate boot.log if it's grown over 256 KB
+if [ -f "$LOGFILE" ]; then
+    LOG_SIZE=$(ls -la "$LOGFILE" 2>/dev/null | awk '{print $5+0}')
+    if [ "${LOG_SIZE:-0}" -gt 262144 ]; then
+        mv -f "$LOGFILE" "${LOGFILE}.1" 2>/dev/null
+    fi
+fi
+
 # make a function to both log to the file and printk
 log () {
     echo "[`date`] $1" >> $LOGFILE
