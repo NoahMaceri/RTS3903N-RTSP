@@ -1,0 +1,41 @@
+## IMPORTS (external)
+scnprintf	<EXTERNAL>
+platform_driver_register	<EXTERNAL>
+platform_driver_unregister	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+sscanf	<EXTERNAL>
+rts_sys_force_reset	<EXTERNAL>
+__udelay	<EXTERNAL>
+printk	<EXTERNAL>
+platform_get_resource	<EXTERNAL>
+platform_get_irq	<EXTERNAL>
+devm_kzalloc	<EXTERNAL>
+get_device	<EXTERNAL>
+__mutex_init	<EXTERNAL>
+__init_waitqueue_head	<EXTERNAL>
+devm_ioremap_resource	<EXTERNAL>
+devm_request_threaded_irq	<EXTERNAL>
+ioread32	<EXTERNAL>
+iowrite32	<EXTERNAL>
+rtscam_ge_device_alloc	<EXTERNAL>
+strlcpy	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+rtscam_ge_register_device	<EXTERNAL>
+rtscam_ge_device_release	<EXTERNAL>
+device_create_file	<EXTERNAL>
+mutex_lock	<EXTERNAL>
+mutex_unlock	<EXTERNAL>
+rtscam_devdata	<EXTERNAL>
+device_remove_file	<EXTERNAL>
+put_device	<EXTERNAL>
+rtscam_ge_unregister_device	<EXTERNAL>
+__wake_up	<EXTERNAL>
+rtscam_ge_kill_fasync	<EXTERNAL>
+rtscam_usercopy	<EXTERNAL>
+
+## EXPORTS (entry points)
+000110f0	__this_module
+00010b88	cleanup_module
+00010b70	init_module
+000104dc	rtscam_hx280_probe
+00010ad0	rtscam_hx280_remove

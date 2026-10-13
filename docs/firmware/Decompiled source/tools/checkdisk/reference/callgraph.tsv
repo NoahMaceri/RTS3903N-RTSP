@@ -1,0 +1,62 @@
+004009dc	_init	FUN_004010fc,FUN_00402370
+00400a30	_ftext	FUN_004011d8,FUN_00401e20,FUN_00402068,FUN_00402258,FUN_00402300,check_partion_exfat,check_partion_vfat,get_cluster_size,get_fs_type,get_tfcard_size_v2,memset,mount,munmap,printf,snprintf,strlen,strncmp,umount
+00400f60	entry	__uClibc_main
+00400fc0	FUN_00400fc0	
+00401000	FUN_00401000	
+0040104c	FUN_0040104c	FUN_00400fc0
+004010fc	FUN_004010fc	FUN_00401000
+00401140	FUN_00401140	__errno_location,close,ioctl,open
+004011d8	FUN_004011d8	FUN_00402068,memset,strncpy
+00401294	get_tfcard_size_v2	FUN_00401e20,FUN_00402068,atoll,memset
+00401350	do_fat_check	FUN_00401e20,FUN_00402068,__errno_location,memset,mount,printf,puts,sprintf,strerror,strncmp,system
+004016f8	check_partion_vfat	FUN_00401e20,do_fat_check
+00401764	check_partion_exfat	FUN_00401e20,FUN_00402068,memset,mount
+004018f8	get_fs_type	FUN_00401140,FUN_00401e20,__errno_location,close,memcmp,open,pread,strerror
+00401ae8	get_cluster_size	FUN_00401140,FUN_00401e20,__errno_location,close,open,pread,printf,strerror
+00401d04	FUN_00401d04	memset,puts,socket
+00401e20	FUN_00401e20	FUN_00401d04,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+00402038	FUN_00402038	pclose,popen
+00402068	FUN_00402068	FUN_00402038,fileno,fread,pclose,popen,select,strstr
+00402258	FUN_00402258	close,lseek,mmap,open,write
+00402300	FUN_00402300	select
+00402370	FUN_00402370	
+004023c0	__uClibc_main	
+004023e0	_fini	FUN_0040104c
+00402e40	putchar	
+00402e50	ioctl	
+00402e60	popen	
+00402e70	printf	
+00402e80	strerror	
+00402e90	pclose	
+00402ea0	snprintf	
+00402eb0	munmap	
+00402ec0	getpid	
+00402ed0	puts	
+00402ee0	system	
+00402ef0	vsnprintf	
+00402f00	socket	
+00402f10	select	
+00402f20	lseek	
+00402f30	mmap	
+00402f40	write	
+00402f50	strstr	
+00402f60	strncmp	
+00402f70	strncpy	
+00402f80	sendto	
+00402f90	memcmp	
+00402fa0	fread	
+00402fb0	gettimeofday	
+00402fc0	localtime	
+00402fd0	memset	
+00402fe0	time	
+00402ff0	mount	
+00403000	sprintf	
+00403010	umount	
+00403020	pread	
+00403030	__errno_location	
+00403040	fileno	
+00403050	strlen	
+00403060	open	
+00403070	atoll	
+00403080	close	
+00403090	vfprintf	

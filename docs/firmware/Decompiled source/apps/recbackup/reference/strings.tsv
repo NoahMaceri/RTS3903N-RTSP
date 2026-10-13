@@ -1,0 +1,210 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+00400ad9		_fini
+00400adf		__uClibc_main
+00400aed		librt.so.0
+00400af8		_DYNAMIC_LINKING
+00400b09		__RLD_MAP
+00400b13		clock_gettime
+00400b21		free
+00400b26		fcntl
+00400b2c		__errno_location
+00400b3d		pthread_mutex_lock
+00400b50		pthread_mutex_unlock
+00400b65		memset
+00400b6c		pthread_sigmask
+00400b7c		malloc
+00400b83		memcpy
+00400b8a		pthread_create
+00400b99		socket
+00400ba0		mq_open
+00400ba8		mq_send
+00400bb0		libpthread.so.0
+00400bc0		pthread_cond_signal
+00400bd4		sem_timedwait
+00400be2		sem_destroy
+00400bee		system
+00400bf5		sem_post
+00400bfe		sem_init
+00400c07		pthread_kill
+00400c14		pthread_cond_init
+00400c26		pthread_mutex_destroy
+00400c3c		pthread_cond_wait
+00400c4e		pthread_cond_destroy
+00400c63		pthread_mutex_init
+00400c76		mkdir
+00400c7c		strlen
+00400c83		strcmp
+00400c8a		fclose
+00400c91		fopen
+00400c97		gettimeofday
+00400ca4		sigaction
+00400cae		write
+00400cb4		mmap
+00400cb9		statfs
+00400cc0		getpid
+00400cc7		__clz_tab
+00400cd1		libc.so.0
+00400cdb		putchar
+00400ce3		popen
+00400ce9		sigemptyset
+00400cf5		pclose
+00400cfc		usleep
+00400d03		puts
+00400d08		remove
+00400d0f		vsnprintf
+00400d19		readdir
+00400d21		lseek
+00400d27		sigaddset
+00400d31		rename
+00400d38		strrchr
+00400d40		fstat
+00400d46		mktime
+00400d4d		strstr
+00400d54		flock
+00400d5a		strncpy
+00400d62		sendto
+00400d69		fread
+00400d6f		localtime
+00400d7d		opendir
+00400d85		pselect
+00400d8d		localtime_r
+00400d99		access
+00400da0		atoi
+00400da5		fileno
+00400dac		atoll
+00400db2		closedir
+00400dbb		vfprintf
+00400dc4		stdout
+00400dcb		_ftext
+00400dd2		_fdata
+00400dd9		_edata
+00400de0		__bss_start
+00400dec		_fbss
+00400df2		_end
+00405e50	004015a8,main	recbak.main
+00405e5c	004015bc	got sig: %d
+00405e68	main	/tmp/recbackup.lock
+00405e7c	main	instance exist
+00405e8c	main	/tmp/mmap.info
+00405e9c	main	get_sharemem MMAP_FILE_NAME fail
+00405ec0	main	create_sharemem %s fail
+00405ed8	main	cifs_init: %d
+00405ee8	main	got sd exist
+00405ef8	main	/tmp/record_event
+00405f0c	main	recordevent_init_read finish
+00405f2c	main	recordbak_init finish
+00405f44	main	init fail
+00405f50	004015b0	sig_handler
+00405f6c	main	/tmp/recbackup.mmap
+00405fd0		skip file duration=%d\n
+00405fe8		%s(%d) start:%d,duration:%d\n
+00406008	FUN_004015cc	recordevent.c
+00406018		failed create_sharemem(): %s
+00406038		file time list:
+00406054		%s duration:%d\n
+00406064	FUN_004015cc	failed get_sharemem(): %s
+00406080	FUN_0040193c	%s/%04dY%02dM%02dD%02dH/%02dM%02dS%02d.mp4
+004060ac	FUN_0040193c	/tmp/sd/record
+004060c0	FUN_004015cc	recordevent_init_read
+004060d8		print_file_time_list
+004060f0		mmap_init
+004060fc		recordevent_add_file_info
+00406120	FUN_0040180c	%s/%s_%s
+00406144	FUN_0040180c	%s/.mp4.tmp
+00406150	004023dc,00402688,00402790,004027c0,004027ec,FUN_0040193c,FUN_00401c9c,FUN_00402aa0,FUN_00402ce4	recbak.bak
+0040615c	FUN_0040193c	backup dir not exists: %s
+004061ac	FUN_0040193c	src file does not exist: %s
+004061c8	FUN_0040193c	open src file: %s
+004061dc	FUN_0040193c	create dest dir: %s
+004061f0	FUN_0040193c	create temp file: %s
+00406208	FUN_00401c9c	failed copy file: %s
+00406220	FUN_00401c9c	copy speed: %dkB/s, test in %dms.
+00406244	FUN_00401c9c	limit copy speed to: %dkB/s
+00406260	FUN_00401c9c	rename temp file to: %s
+00406278	00402694	wait backup path ready: ...
+00406294	00402798	backup path is ready: %s
+004062b0	004027fc	create_file() failed!
+004062c8	004023e8	recordbak got pause request, pause_cnt=%d
+004062f4	004027d0	temporarily no file to backup
+00406314	FUN_00402aa0	recordbak_pause in
+00406328	FUN_00402aa0	recordbak_pause out, pause_cnt=%d
+0040634c	FUN_00402aa0	recordbak_pause wait: ...
+00406368	FUN_00402aa0	recordbak_pause wait: timeout
+00406388	FUN_00402aa0	recordbak_pause wait: cifs got stuck
+004063b0	FUN_00402aa0	/tmp/recbackup.stuck
+004063cc	FUN_00402aa0	recordbak_pause wait: send reboot msg
+004063f4	FUN_00402aa0	recordbak_pause out, pause_cnt=1
+00406418	FUN_00402ce4	recordbak_resume, pause_cnt=%d
+00406440	FUN_00402ce4	recordbak_resume
+00406454	FUN_00402aa0	recordbak_pause
+00406464	FUN_0040180c	/tmp/cifs
+0040648f		/xiaoyicamera
+004064a0	004023e0	wait_task
+004064ac	FUN_00401c9c	do_copy
+004064b4	FUN_0040193c	create_file
+004064c0	004027f0	copy_file
+004064cc	00402684,00402788	wait_bak_path_ready
+004064e0	004027c4	thread_entry
+004064f0	FUN_00402d88,FUN_0040322c,FUN_004032ec,FUN_00403560,FUN_00403608,FUN_004039a0,FUN_00403c3c,FUN_00403ed4,FUN_00404158	recbak.cifs
+004064fc	FUN_00402d88	umount_cifs
+00406508	FUN_00402d88	umount -l /tmp/cifs 2>/dev/null
+00406530	FUN_00402e34	capacity
+0040653c	FUN_00402e34	available
+00406548	FUN_00402e34	XiaoMi
+00406550	FUN_00402e34	XiaoMi-usb%d
+00406564	FUN_00403160,FUN_00403ed4	/tmp/cifs
+00406570	FUN_0040322c	get_dir_size '%s': ...
+00406588	FUN_0040322c	get_dir_size '%s': %d
+004065a0	FUN_004032ec	try_clean_disk
+004065c8	FUN_004032ec	remove dir: %s
+004065d8	FUN_00403560	pause_bak: ...
+004065e8	FUN_00403560	pause_bak: ok
+004065f8	FUN_00403608	mount.cifs //%s/%s /tmp/cifs -o username=xiaoyicamera,password=,sec=ntlmv2,rsize=8192,wsize=8192,iocharset=utf8 2>/dev/null
+00406674	FUN_00403608	mount_cifs '%s': %d
+004066f4	FUN_0040387c	404 Not Found
+0040670c	FUN_004039a0	send_mq_msg: %s
+0040671c	FUN_004039a0	/ipc_dispatch
+0040672c	FUN_00403abc,FUN_00403c3c	router_disk:%d,%d,%d
+00406744	FUN_00403abc,FUN_00403c3c	extra_disk:%d,%d,%d
+00406758	FUN_00403abc,FUN_00403c3c	mount_ok
+00406764	FUN_00403abc	mount_fail
+00406770	FUN_00403c3c	check_disk_space
+00406784	FUN_00403ed4	gateway: [%s]
+00406794	FUN_00403ed4	is miwifi: %d
+004067a4	FUN_00403ed4	not_miwifi
+004067b0	FUN_00403ed4	get_date: %d
+004067c0	FUN_00403ed4	insmod /home/app/localko/md4.ko
+004067e0	FUN_00403ed4	insmod /home/app/localko/cifs.ko
+00406804	FUN_00404158	get_power_mode: %d
+00406818	FUN_00404158	get_viewing_cnt: %d
+0040682c	FUN_00404158	get_bak_config: enable=%d,resolution=%d,period=%d,disk=%d
+00406868	FUN_00404158	is_disk_changed: %d
+0040687c	FUN_00404158	resume_bak: ...
+0040688c	FUN_00404158	resume_bak: ok
+004068a0	FUN_00403560	pause_bak
+004068ac	FUN_00404158	resume_bak
+004068b8	FUN_00403c3c	check_disk_space
+004068cc	FUN_004032ec	try_clean_disk
+004068dc	FUN_00404158	cifs_watch
+004068e8	FUN_0040322c	get_dir_size
+004068f8	FUN_00403608	mount_cifs
+00406904	FUN_00402d88	umount_cifs
+00406910	FUN_00403ed4	cifs_init
+0040691c	FUN_004039a0	send_mq_msg
+00406930	FUN_00404c6c	invalid para, is null\r
+00406948	FUN_00404c6c	/tmp/logsock
+00406958	FUN_00404c6c	create socket fail\r
+0040696c	FUN_00404d88	%s:%d|%s() 
+00406978	FUN_00404d88	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+004069a4		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+004069e8	FUN_00404fd0	killall cloudAPI
+004069fc		%s : %d ptr %s is NULL pointer\n
+00406a24		insmod %s
+00406a30		ko path
+00406a38		params
+00406a40		insmod %s %s
+00406a50		file node
+00406b00		total malloc(%d) tmp_malloc(%d %p)\n
+00406b24		total free(%p)\n
+00406b34		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+00417310	FUN_0040387c	/backup/cloudAPI -c 136 -url http://miwifi.com/api-third-party/service/datacenter/get_storage_info

@@ -1,0 +1,27 @@
+00400660	_init	FUN_004008ec,FUN_00401930
+004006b0	main	FUN_00400930,FUN_0040183c,puts
+00400750	entry	__uClibc_main
+004007b0	FUN_004007b0	
+004007f0	FUN_004007f0	
+0040083c	FUN_0040083c	FUN_004007b0
+004008ec	FUN_004008ec	FUN_004007f0
+00400930	FUN_00400930	chmod,fclose,fopen,fwrite,memset,perror,snprintf,strcmp,strlen,strncat
+0040183c	FUN_0040183c	close,mmap,open,usleep
+00401930	FUN_00401930	
+004019a0	_fini	FUN_0040083c
+00401b80	__PLT_HEAD	
+00401ba0	snprintf	snprintf
+00401bb0	usleep	
+00401bc0	perror	perror
+00401bd0	puts	
+00401be0	mmap	mmap
+00401bf0	chmod	
+00401c00	strncat	strncat
+00401c10	fopen	
+00401c20	memset	memset
+00401c30	fclose	
+00401c40	strcmp	strcmp
+00401c50	fwrite	
+00401c60	strlen	strlen
+00401c70	open	
+00401c80	close	close

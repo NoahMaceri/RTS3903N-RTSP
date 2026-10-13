@@ -1,0 +1,37 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400575		_init
+00400581		__uClibc_main
+00400599		_DYNAMIC_LINKING
+004005aa		__RLD_MAP
+004005b4		mtd_get_dev_info
+004005c5		mtd_write_img
+004005d3		_Jv_RegisterClasses
+004005e7		libmtd_close
+004005f4		libmtd_open
+00400600		stderr
+00400607		mtd_erase
+00400611		memset
+00400618		_ITM_deregisterTMCloneTable
+00400634		mtd_dev_present
+00400644		_ITM_registerTMCloneTable
+0040065e		fprintf
+0040066d		libc.so.0
+00400677		putchar
+0040067f		snprintf
+00400694		fwrite
+0040069b		stdout
+004006a2		_ftext
+004006b0		_edata
+004006b7		__bss_start
+00400d38	_ftext	usage: %s mtdnum imagefile\n
+00400d54	_ftext	open and init mtd lib fail.\n
+00400d74	_ftext	/dev/mtd%d
+00400d80	_ftext	mtd%d is not present.\n
+00400d98	_ftext	get mtd%d info fail.\n
+00400db0	_ftext	mtd name: %s\n
+00400dc0	_ftext	open mtd%d fail.\n
+00400dd4	_ftext	total blocks %d, erase block 
+00400df4	_ftext	%3d/%3d
+00400e04	_ftext	erase block%d fail.\n
+00400e1c	_ftext	writing image file....
+00400e34	_ftext	write %s fail.\n

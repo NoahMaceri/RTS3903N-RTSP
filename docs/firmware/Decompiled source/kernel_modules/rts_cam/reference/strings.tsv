@@ -1,0 +1,323 @@
+00016a90	000177c4,_elfSectionHeaders::000001c4	clock
+00016a98	000177d4	rtscam_debug
+00016ab0	rtscam_ge_register_device	rtscam_ge_register_device
+00016b40	rtscam_video_register_device	rtscam_video_register_device
+00016b60	rtscam_ctrl_add_mapping	rtscam_ctrl_add_mapping
+00016b78	rtscam_ctrl_add_info	rtscam_ctrl_add_info
+00016b90	FUN_00015e54	__rtscam_update_sensor_fps
+00016bb0	FUN_00010280,_elfSectionHeaders::00000214	clock_
+00016bb8	FUN_00010280	monotonic
+00016bc4	FUN_00010280	realtime
+00016bd0		CLOCK_MONOTONIC
+00016be0		CLOCK_REALTIME
+00016bf1		3rtscam:invalid user fps\n
+00016c0d		3rtscam:%c%c%c%c has been registered\n
+00016c35		3rtscam:please register format(%c%c%c%c) first\n
+00016c69		3rtscam:invalid user format(%c%c%c%c)\n
+00016c91		3rtscam:invalid user format\n
+00016cbd		3rtscam:could not get a gree device node number\n
+00016cf1		3rtscam:%s:cdev_add fail\n
+00016d18	0001781c,init_module,rtscam_ge_register_device	rts_camera
+00016d25		3rtscam:%s:device_register fail\n
+00016d48	rtscam_ge_register_device	&rdev->lock
+00016d55		3rtscam:rtscam_dev:unable to get major %d\n
+00016d81		3rtscam:rtscam_dev:class_register fail\n
+00016db4		debug
+00016dbd		3rtscam:frame buf size is 0\n
+00016ddd		3rtscam:couldn't lock capture driver\n
+00016e05		3rtscam:couldn't activate the camera:%d\n
+00016e31		3rtscam:format (%c%c%c%c) (%dx%d) unsupportted\n
+00016e65		3rtscam:%s:v4l2_device_register fail\n
+00016e8d		6rtscam:Probing %s\n
+00016ea5		3rtscam:Init ctrls fail\n
+00016ec1		3rtscam:No stream found in icd\n
+00016ee4	rtscam_video_register_device	&stream->stream_lock
+00016efd		3rtscam:please init stream format first\n
+00016f29		3rtscam:please init user format first\n
+00016f51		3rtscam:register video device %d fail, %d\n
+00016f7c	rtscam_video_register_device	&stream->queue_lock
+00016f91		3rtscam:video device %d init vb2 fail, %d\n
+00016fbd		3rtscam:video device <%s> probe fail : %d\n
+00016fe9		6rtscam:video device <%s> registered\n
+00017011		3rtscam:not rts camera video buffer\n
+00017039		3rtscam:Unknown[ctrl] ioctl 0x%08x, type = '%c' nr = 0x%x\n
+00017075		6rtscam:0x%08x\n
+00017088	FUN_000138c4	Camera
+00017091		6rtscam:Unsupport [Analog video standards] ioctl 0x%08x\n
+000170cd		3rtscam:Unknown[video] ioctl 0x%08x, type = '%c' nr = 0x%x\n
+0001710d		6rtscam:[video] ioctl 0x%08x, type = '%c' nr = 0x%x (%d)\n
+00017149		3rtscam:%s:kzalloc fail\n
+00017165		6rtscam:Addded control %d/%u\n
+00017185		3rtscam:%s kmemdup fail\n
+000171a1		6rtscam:Adding mapping '%s' to ctrl %d/%u.\n
+000171d1		3rtscam:Ctrl 0x%08x not found\n
+000171f1		3rtscam:acquire ctrl lock fail\n
+00017215		3rtscam:%s:frmival is too large\n
+00017239		3rtscam:%s:set fps fail\n
+00017255		6rtscam:%d %d %d %d %d\n
+00017271		6rtscam:please stop streaming first\n
+00017299		6rtscam:dynamic fps change to: %d\n
+000172bd		3rtscam:please register format(%c%c%c%c) first\n
+000172f0	_elfSectionHeaders::0000023c	license=GPL v2
+000172ff		description=rts_camera commmon
+0001731e		author=Ming Qian <ming_qian@realsil.com.cn>
+0001734a		parm=clock:Video buffers timestamp clock
+00017373		parm=rtscam_debug:activates debug info
+0001739a		parmtype=rtscam_debug:uint
+000173b5		license=GPL v2
+000173c4		description=Device registrar for rts_camera drivers
+000173f8		author=Ming Qian <ming_qian@realsil.com.cn>
+00017424		depends=
+0001742d		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+0001745c	00010144,_elfSectionHeaders::00000264	rtscam_usercopy
+0001746c	0001003c	rts_clear_bit
+0001747a	0001004c	rts_test_bit
+00017487	00010064	rtscam_clr_format
+00017499	00010114	rtscam_register_frame_stepwise
+000174b8	0001010c	rtscam_register_frame_discrete
+000174d7	00010104	rtscam_register_format
+000174ee	00010044	rts_clock_param
+000174fe	0001008c	rtscam_debug
+0001750b	000100d4	rtscam_ge_unregister_device
+00017527	000100cc	rtscam_ge_register_device
+00017541	000100c4	rtscam_ge_kill_fasync
+00017557	00010094	rtscam_devdata
+00017566	000100bc	rtscam_ge_device_release
+0001757f	000100b4	rtscam_ge_device_alloc
+00017596	0001015c	rtscam_video_unregister_device
+000175b5	00010154	rtscam_video_register_device
+000175d2	0001014c	rtscam_video_do_ctrl_ioctl
+000175ed	0001005c	rtscam_buffer_done
+00017600	0001013c	rtscam_submit_buffer
+00017615	000100fc	rtscam_push_back_ready_buffer
+00017633	000100e4	rtscam_get_video_buffer
+0001764b	000100dc	rtscam_get_phy_addr
+0001765f	00010084	rtscam_ctrl_clr_mapping
+00017677	00010074	rtscam_ctrl_add_mapping
+0001768f	0001007c	rtscam_ctrl_clr_info
+000176a4	0001006c	rtscam_ctrl_add_info
+000176b9	000100ec	rtscam_init_sensor_fps
+000176d0	00010124	rtscam_release_sensor_fps
+000176ea	0001011c	rtscam_register_frmival_discrete
+0001770b	000100f4	rtscam_process_dynamic_sensor_fps
+0001772d	0001009c	rtscam_disable_snr_fps_max
+00017748	000100a4	rtscam_enable_snr_fps_max
+00017762	000100ac	rtscam_exec_sensor_frmival_setting
+00017785	00010054	rtscam_adjust_sensor_fps
+0001779e	0001012c	rtscam_set_user_fps
+000177b2	00010134	rtscam_skip_frame
+000178ec		rts_cam
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000089		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::000000cd		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000111		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000155		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.rel__ksymtab_gpl
+.shstrtab::00000068		.reginfo
+.shstrtab::00000071		.rel.rodata
+.shstrtab::0000007d		.rodata.str1.4
+.shstrtab::0000008c		.modinfo
+.shstrtab::00000095		__ksymtab_strings
+.shstrtab::000000a7		.rel__param
+.shstrtab::000000b3		.rel.data
+.shstrtab::000000bd		.rel.gnu.linkonce.this_module
+.shstrtab::000000db		.sbss
+.shstrtab::000000e1		.bss
+.shstrtab::000000e6		.comment
+.shstrtab::000000ef		.rel.pdr
+.shstrtab::000000f8		.gnu.attributes
+.shstrtab::00000108		.mdebug.abi32
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		$LC22
+.strtab::00000081		rtscam_pop_ready_buffer
+.strtab::00000099		vb2_queue_init
+.strtab::000000a8		rtscam_buf_wait_prepare
+.strtab::000000c0		v4l2_fh_exit
+.strtab::000000cd		rtscam_buf_init
+.strtab::000000dd		rtscam_clr_frame
+.strtab::000000ee		__ashldi3
+.strtab::000000f8		rtscam_ctrl_clr_info
+.strtab::0000010d		try_module_get
+.strtab::0000011c		rtscam_get_max_frame_size
+.strtab::00000136		rtscam_devdata
+.strtab::00000145		dev_get_drvdata
+.strtab::00000155		vb2_streamoff
+.strtab::00000163		param_ops_uint
+.strtab::00000172		get_video_frmival
+.strtab::00000184		vb2_queue_release
+.strtab::00000196		rtscam_register_format
+.strtab::000001ad		rtscam_buffer_wq_handle
+.strtab::000001c5		dev_set_name
+.strtab::000001d2		__this_module
+.strtab::000001e0		vb2_poll
+.strtab::000001e9		snprintf
+.strtab::000001f2		rtscam_usercopy
+.strtab::00000202		__rtscam_query_v4l2_ctrl
+.strtab::0000021b		arch_local_irq_disable
+.strtab::00000232		v4l2_prio_max
+.strtab::00000240		v4l2_fh_del
+.strtab::0000024c		rts_clear_bit
+.strtab::0000025a		device_unregister
+.strtab::0000026c		v4l2_fh_add
+.strtab::00000278		kill_fasync
+.strtab::00000284		rtscam_ctrl_add_info
+.strtab::00000299		v4l2_prio_change
+.strtab::000002aa		rtscam_process_dynamic_sensor_fps
+.strtab::000002cc		cleanup_module
+.strtab::000002db		rtscam_query_v4l2_ctrl
+.strtab::000002f2		memcpy
+.strtab::000002f9		rtscam_video_init_ctrl
+.strtab::00000310		rtscam_clr_ready_buffer
+.strtab::00000328		kfree
+.strtab::0000032e		vb2_dqbuf
+.strtab::00000338		getrawmonotonic
+.strtab::00000348		rtscam_video_register_device
+.strtab::00000365		rtscam_buf_prepare
+.strtab::00000378		rtscam_set_le_value
+.strtab::0000038c		rtscam_ge_unregister_device
+.strtab::000003a8		get_device
+.strtab::000003b3		rtscam_init_capture_buffer
+.strtab::000003ce		init_module
+.strtab::000003da		vb2_reqbufs
+.strtab::000003e6		rtscam_push_back_ready_buffer
+.strtab::00000404		rtscam_debug
+.strtab::00000411		kstrtou16
+.strtab::0000041b		rtscam_set_user_fps
+.strtab::0000042f		strncasecmp
+.strtab::0000043b		rtscam_try_ext_ctrls
+.strtab::00000450		queue_delayed_work_on
+.strtab::00000466		video_devdata
+.strtab::00000474		put_device
+.strtab::0000047f		vb2_streamon
+.strtab::0000048c		kmem_cache_alloc
+.strtab::0000049d		rtscam_get_phy_addr
+.strtab::000004b1		rtscam_clr_format
+.strtab::000004c3		rtscam_get_le_value
+.strtab::000004d7		find_vma
+.strtab::000004e0		module_put
+.strtab::000004eb		rtscam_get_timestamp
+.strtab::00000500		rtscam_ctrl_add_mapping
+.strtab::00000518		find_format_by_fourcc
+.strtab::0000052e		rtscam_set_ext_ctrls
+.strtab::00000543		rtscam_init_sensor_fps
+.strtab::0000055a		rtscam_ctrl_get
+.strtab::0000056a		vb2_plane_cookie
+.strtab::0000057b		cdev_add
+.strtab::00000584		v4l2_prio_check
+.strtab::00000594		rtscam_buffer_done
+.strtab::000005a7		rtscam_enable_snr_fps_max
+.strtab::000005c1		rtscam_ge_device_alloc
+.strtab::000005d8		rtscam_clr_delayed_buffer
+.strtab::000005f2		__class_register
+.strtab::00000603		vb2_querybuf
+.strtab::00000610		preempt_schedule
+.strtab::00000621		rtscam_submit_buffer
+.strtab::00000636		rtscam_convert_addr_from_vm_to_phy
+.strtab::00000659		vb2_qbuf
+.strtab::00000662		mutex_lock
+.strtab::0000066d		find_frame
+.strtab::00000678		strlcpy
+.strtab::00000680		rtscam_check_user_format
+.strtab::00000699		fasync_helper
+.strtab::000006a7		strcasecmp
+.strtab::000006b2		rtscam_set_user_frmival
+.strtab::000006ca		vb2_buffer_done
+.strtab::000006da		find_next_zero_bit
+.strtab::000006ed		v4l2_fh_init
+.strtab::000006fa		rtscam_register_frmival_discrete
+.strtab::0000071b		class_unregister
+.strtab::0000072c		rtscam_delay_buffer
+.strtab::00000740		video_unregister_device
+.strtab::00000758		rtscam_buf_stop_stream
+.strtab::0000076f		v4l2_prio_init
+.strtab::0000077e		printk
+.strtab::00000785		__mutex_init
+.strtab::00000792		mutex_lock_interruptible
+.strtab::000007ab		rtscam_register_frame_stepwise
+.strtab::000007ca		rtscam_buf_start_streaming
+.strtab::000007e5		rtscam_set_user_format
+.strtab::000007fc		device_register
+.strtab::0000080c		video_device_alloc
+.strtab::0000081f		rtscam_set_sensor_frmival
+.strtab::00000839		memset
+.strtab::00000840		rtscam_set_buffer_state
+.strtab::00000858		rtscam_check_stream_format
+.strtab::00000873		rtscam_find_ctrl
+.strtab::00000884		rtscam_buf_wait_finish
+.strtab::0000089b		__copy_user
+.strtab::000008a7		rtscam_release_sensor_fps
+.strtab::000008c1		v4l2_device_register
+.strtab::000008d6		rtscam_clr_frmival
+.strtab::000008e9		rtscam_ge_register_device
+.strtab::00000903		rtscam_get_video_buffer
+.strtab::0000091b		sprintf
+.strtab::00000923		rtscam_buf_finish
+.strtab::00000935		unregister_chrdev_region
+.strtab::0000094e		rtscam_buf_queue
+.strtab::0000095f		mutex_unlock
+.strtab::0000096c		cancel_delayed_work_sync
+.strtab::00000985		rtscam_get_ctrl
+.strtab::00000995		init_timer_key
+.strtab::000009a4		__video_register_device
+.strtab::000009bc		rtscam_register_frame_discrete
+.strtab::000009db		rtscam_ge_kill_fasync
+.strtab::000009f1		rtscam_video_do_ctrl_ioctl
+.strtab::00000a0c		kmemdup
+.strtab::00000a14		rtscam_ctrl_clr_mapping
+.strtab::00000a2c		delayed_work_timer_fn
+.strtab::00000a42		rtscam_video_release_ctrl
+.strtab::00000a5c		rtscam_buf_cleanup
+.strtab::00000a6f		rts_clock_param
+.strtab::00000a7f		rtscam_get_ext_ctrls
+.strtab::00000a94		rtscam_set_ctrl
+.strtab::00000aa4		v4l2_device_unregister
+.strtab::00000abb		getnstimeofday
+.strtab::00000aca		rtscam_try_user_format
+.strtab::00000ae1		video_usercopy
+.strtab::00000af0		rtscam_ge_device_release
+.strtab::00000b09		video_device_release
+.strtab::00000b1e		vb2_mmap
+.strtab::00000b27		rtscam_skip_frame
+.strtab::00000b39		register_chrdev_region
+.strtab::00000b50		dev_set_drvdata
+.strtab::00000b60		rts_test_bit
+.strtab::00000b6d		rtscam_video_unregister_device
+.strtab::00000b8c		strlen
+.strtab::00000b93		rtscam_adjust_sensor_fps
+.strtab::00000bac		rtscam_exec_sensor_frmival_setting
+.strtab::00000bcf		rtscam_queue_setup
+.strtab::00000be2		cdev_init
+.strtab::00000bec		__kmalloc
+.strtab::00000bf6		kmalloc_caches
+.strtab::00000c05		cdev_del
+.strtab::00000c0e		system_wq
+.strtab::00000c18		rtscam_disable_snr_fps_max

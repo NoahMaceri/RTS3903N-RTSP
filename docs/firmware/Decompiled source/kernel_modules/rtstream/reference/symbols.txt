@@ -1,0 +1,25 @@
+## IMPORTS (external)
+dev_get_drvdata	<EXTERNAL>
+scnprintf	<EXTERNAL>
+rtscam_devdata	<EXTERNAL>
+vfree	<EXTERNAL>
+vzalloc	<EXTERNAL>
+__udelay	<EXTERNAL>
+printk	<EXTERNAL>
+__copy_user	<EXTERNAL>
+memcpy	<EXTERNAL>
+strlen	<EXTERNAL>
+rtscam_ge_device_alloc	<EXTERNAL>
+strlcpy	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+rtscam_ge_register_device	<EXTERNAL>
+rtscam_ge_device_release	<EXTERNAL>
+device_create_file	<EXTERNAL>
+device_remove_file	<EXTERNAL>
+rtscam_ge_unregister_device	<EXTERNAL>
+
+## EXPORTS (entry points)
+00010d90	__this_module
+00010a44	cleanup_module
+00010920	init_module
+00010d50	dev_attr_streaminfo

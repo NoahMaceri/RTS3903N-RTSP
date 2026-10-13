@@ -1,0 +1,33 @@
+004007d0	_init	FUN_00400c3c,FUN_00400de0
+00400820	main	FUN_00400d0c,FUN_00400d70,exit,fclose,fopen,fread,fseek,ftell,fwrite,memset,perror,printf,puts
+00400aa0	entry	__uClibc_main
+00400b00	FUN_00400b00	
+00400b40	FUN_00400b40	
+00400b8c	FUN_00400b8c	FUN_00400b00
+00400c3c	FUN_00400c3c	FUN_00400b40
+00400c80	FUN_00400c80	BIO_new_mem_buf,PEM_read_bio_RSAPrivateKey,PEM_read_bio_RSA_PUBKEY,printf
+00400d0c	FUN_00400d0c	FUN_00400c80,RSA_public_decrypt
+00400d70	FUN_00400d70	ERR_error_string,ERR_get_error,ERR_load_crypto_strings,free,malloc,printf
+00400de0	FUN_00400de0	
+00400e30	__uClibc_main	
+00400e50	_fini	FUN_00400b8c
+00401140	ERR_get_error	
+00401150	BIO_new_mem_buf	
+00401160	memset	
+00401170	malloc	
+00401180	RSA_public_decrypt	
+00401190	fclose	
+004011a0	perror	
+004011b0	ERR_error_string	
+004011c0	ftell	
+004011d0	printf	
+004011e0	fwrite	
+004011f0	exit	
+00401200	fread	
+00401210	ERR_load_crypto_strings	
+00401220	PEM_read_bio_RSA_PUBKEY	
+00401230	free	
+00401240	puts	
+00401250	fopen	
+00401260	PEM_read_bio_RSAPrivateKey	
+00401270	fseek	

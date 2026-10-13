@@ -1,0 +1,54 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+0040062d		_init
+00400639		__uClibc_main
+00400647		librt.so.0
+00400652		_DYNAMIC_LINKING
+00400663		__RLD_MAP
+0040066d		__errno_location
+0040067e		memset
+00400690		socket
+00400697		libpthread.so.0
+004006a7		strlen
+004006ae		gettimeofday
+004006cc		libc.so.0
+004006d6		putchar
+004006e4		popen
+004006ea		strerror
+004006f3		pclose
+004006ff		vsnprintf
+00400709		select
+00400710		strstr
+00400717		sendto
+0040071e		fread
+00400724		localtime
+0040072e		access
+00400735		fileno
+0040073c		vfprintf
+00400745		stdout
+0040074c		_ftext
+0040075a		_edata
+00400761		__bss_start
+00401250	_ftext	/dev/watchdog
+00401260	_ftext	insmod /home/app/localko/watchdog.ko
+00401288	_ftext	reboot_by_watchdog.c
+004012a0	_ftext	Open /dev/watchdog error!\n
+004012bc	_ftext	ioctl failed,errno = %d, errno : %s\n
+004012e4	_ftext	access /dev/watchdog failed!
+00401320	FUN_00400be0	invalid para, is null\r
+00401338	FUN_00400be0	/tmp/logsock
+00401348	FUN_00400be0	create socket fail\r
+0040135c	FUN_00400cfc	%s:%d|%s() 
+00401368	FUN_00400cfc	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00401394		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+004013dc	FUN_00400f44	killall cloudAPI
+004013f0		%s : %d ptr %s is NULL pointer\n
+00401418		insmod %s
+00401424		ko path
+0040142c		params
+00401434		insmod %s %s
+00401444		file node
+00401450		/tmp/record_event
+004014b4		/tmp/sd/record
+00401544		total malloc(%d) tmp_malloc(%d %p)\n
+00401568		total free(%p)\n
+00401578		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

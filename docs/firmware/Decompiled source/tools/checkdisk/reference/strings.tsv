@@ -1,0 +1,115 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400721		_init
+0040072d		__uClibc_main
+0040073b		librt.so.0
+00400746		_DYNAMIC_LINKING
+00400757		__RLD_MAP
+00400761		__errno_location
+00400772		memset
+00400779		socket
+0040078a		strlen
+00400791		sprintf
+00400799		libc.so.0
+004007a3		putchar
+004007b1		popen
+004007b7		strerror
+004007c0		pclose
+004007c7		munmap
+004007da		system
+004007e1		vsnprintf
+004007eb		select
+004007fd		write
+00400803		strstr
+0040081a		sendto
+00400828		fread
+0040082e		gettimeofday
+0040083b		localtime
+00400845		umount
+0040084c		pread
+00400852		fileno
+00400859		atoll
+0040085f		vfprintf
+00400868		stdout
+0040086f		_ftext
+0040087d		_edata
+00400884		__bss_start
+00402420	FUN_00401140,FUN_00401350,FUN_00401764,FUN_004018f8,FUN_00401ae8,_ftext	/dev/mmcblk0p1
+00402430	FUN_004011d8	cat /sys/block/mmcblk0/device/cid
+00402454	FUN_00401294,FUN_00401350,FUN_004016f8,FUN_00401764,FUN_004018f8,FUN_00401ae8,_ftext	checkdisk.c
+00402460	FUN_00401294	TF card total size : %d MB\n
+0040247c		TF card free size : %d MB\n
+00402498	FUN_00401294	cat /sys/block/mmcblk0/size
+004024b4	FUN_00401350	Can fat check\n
+004024c4	FUN_00401350	/home/base/tools/fsck.fat -aw /dev/mmcblk0p1
+004024f4	FUN_00401350	retBuf(%s)
+00402500	FUN_00401350	ret(%d) \n
+0040250c	FUN_00401350	system() return error(%s)
+00402528	FUN_00401350	normal termination, exit status(%d) \n
+00402550	FUN_00401350,FUN_00401764,_ftext	/tmp/sd
+00402560	FUN_00401350	abnormal termination, signal number(%d) \n
+0040258c	FUN_00401350	process stopped, singnal number(%d) \n
+004025b4	FUN_00401350,FUN_00401764	Card IO input error\n
+004025cc	FUN_00401350,FUN_00401764	Mount sd ok.\n
+004025dc	FUN_00401350	cat /proc/mounts | grep "/dev/mmcblk0p1" | cut -d " " -f4 | cut -d "," -f1
+00402628	FUN_00401350	----ret_buf: %s----\n
+00402644	FUN_00401350	cat /proc/mounts | grep "/dev/mmcblk0p1" | cut -d " " -f2
+00402680	FUN_00401350	%s %s
+0040268c	FUN_00401350	umount
+00402694	FUN_00401350	read-only!!!!!!!!!!
+004026a8	FUN_004016f8,FUN_00401764	TF Card  checking ....\n
+004026c0	FUN_004016f8,FUN_00401764	TF Card check finished.\n
+004026dc	FUN_00401764	/home/base/tools/exfatfsck /dev/mmcblk0p1
+00402708	FUN_00401764	\ncmd(%s) retBuf(%s)\n
+00402720	FUN_00401764	TF card bad\n
+00402730	FUN_00401764,_ftext	exfat
+00402738	FUN_004018f8,FUN_00401ae8	Failed to open '%s': %s
+00402750	FUN_004018f8,FUN_00401ae8	'%s' is write-protected, mounting read-only
+0040277c	FUN_004018f8	FAT32   
+00402788	FUN_004018f8	FS TYPE : VFAT\n
+00402798	FUN_004018f8	EXFAT   
+004027a4	FUN_004018f8	FS TYPE :EXFAT\n
+004027b4	FUN_004018f8	FS TYPE ERROR!\n
+004027c4	FUN_00401ae8	Logical sector size is zero.
+0040281c	FUN_00401ae8	Logical sector size (%d bytes) is not a multiple of the physical sector size.
+0040286c	FUN_00401ae8	Cluster size is zero.
+00402884	FUN_00401ae8	cluster_size = %d Bytes\n
+004028a0	_ftext	/dev/mtdblock7
+004028b0	_ftext	create_sharemem /dev/mtdblock7 fail
+004028fc	_ftext	fdisk /dev/mmcblk0 < /home/base/tools/fdisk.input
+00402930	_ftext	mdev -s
+00402938	_ftext	%s -s %d /dev/mmcblk0p1
+00402950	_ftext	mkfs.vfat
+0040295c	_ftext	ERROR! TF card space is too small: %d MB\n
+00402988	_ftext	FS format error.
+0040299c	_ftext	rmmod exfat.ko
+004029cd		need foramt 1\n
+004029dc	_ftext	FS cluster size is too little. cluster_size = %d 
+00402a38	_ftext	checkdisk, main() ret_status(%d) \n
+00402a5c	_ftext	Need update tf_status.stat,\nold stat : %d, new stat : %d
+00402a98	_ftext	Need update tf_status.cid,\nold cid : %s,\nnew cid : %s
+00402af0	FUN_00401ae8	get_cluster_size
+00402b04	FUN_00401ae8	get_cluster_size
+00402b18	FUN_004018f8	get_fs_type
+00402b24	FUN_00401764	check_partion_exfat
+00402b38	FUN_004016f8	check_partion_vfat
+00402b4c	FUN_00401350	do_fat_check
+00402b5c	FUN_00401294	get_tfcard_size_v2
+00402b70		get_tfcard_size
+00402b80	FUN_00401d04	invalid para, is null\r
+00402b98	FUN_00401d04	/tmp/logsock
+00402ba8	FUN_00401d04	create socket fail\r
+00402bbc	FUN_00401e20	%s:%d|%s() 
+00402bc8	FUN_00401e20	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00402bf4		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00402c38	FUN_00402068	killall cloudAPI
+00402c4c		%s : %d ptr %s is NULL pointer\n
+00402c74		insmod %s
+00402c80		ko path
+00402c88		params
+00402c90		insmod %s %s
+00402ca0		file node
+00402cac		/tmp/record_event
+00402d10		/tmp/sd/record
+00402da0		total malloc(%d) tmp_malloc(%d %p)\n
+00402dc4		total free(%p)\n
+00402dd4		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

@@ -1,0 +1,32 @@
+## IMPORTS (external)
+platform_driver_register	<EXTERNAL>
+platform_driver_unregister	<EXTERNAL>
+__iounmap	<EXTERNAL>
+platform_get_resource	<EXTERNAL>
+__release_region	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+clk_put	<EXTERNAL>
+snd_soc_unregister_component	<EXTERNAL>
+devm_kfree	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+printk	<EXTERNAL>
+mutex_lock	<EXTERNAL>
+mutex_unlock	<EXTERNAL>
+snd_soc_add_dai_controls	<EXTERNAL>
+clk_prepare	<EXTERNAL>
+clk_enable	<EXTERNAL>
+clk_unprepare	<EXTERNAL>
+clk_disable	<EXTERNAL>
+devm_kzalloc	<EXTERNAL>
+__request_region	<EXTERNAL>
+__ioremap	<EXTERNAL>
+clk_get	<EXTERNAL>
+clk_set_parent	<EXTERNAL>
+__mutex_init	<EXTERNAL>
+snd_soc_register_component	<EXTERNAL>
+clk_set_rate	<EXTERNAL>
+
+## EXPORTS (entry points)
+00011bb0	__this_module
+00011448	cleanup_module
+00011430	init_module

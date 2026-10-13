@@ -1,0 +1,46 @@
+## IMPORTS (external)
+mutex_unlock	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+mutex_lock	<EXTERNAL>
+scnprintf	<EXTERNAL>
+rtscam_devdata	<EXTERNAL>
+vzalloc	<EXTERNAL>
+vfree	<EXTERNAL>
+_kstrtoul	<EXTERNAL>
+printk	<EXTERNAL>
+__mutex_init	<EXTERNAL>
+get_device	<EXTERNAL>
+complete	<EXTERNAL>
+put_device	<EXTERNAL>
+__init_waitqueue_head	<EXTERNAL>
+wait_for_completion_timeout	<EXTERNAL>
+wait_for_completion	<EXTERNAL>
+rtscam_ge_device_alloc	<EXTERNAL>
+strlcpy	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+rtscam_ge_register_device	<EXTERNAL>
+rtscam_ge_device_release	<EXTERNAL>
+device_create_file	<EXTERNAL>
+device_remove_file	<EXTERNAL>
+rtscam_ge_unregister_device	<EXTERNAL>
+rtscam_usercopy	<EXTERNAL>
+
+## EXPORTS (entry points)
+000110b0	dev_attr_post
+00011110	__this_module
+00010dbc	cleanup_module
+000102bc	rtscam_lock_free
+00010c50	init_module
+000109d4	rtscam_wait_timeout
+00010b98	rtscam_wait
+000101b8	rtscam_lock_alloc
+000110d0	dev_attr_lockinfo
+000104d4	rtscam_lock_wait
+00010840	rtscam_allocate_wait_queue
+00010374	rtscam_lock_set_num
+000110c0	dev_attr_wait
+00010bac	rtscam_post
+0001041c	rtscam_lock_set_name
+000108cc	rtscam_release_wait_queue
+000105e4	rtscam_lock_post
+000109ac	rtscam_init_wait_queue

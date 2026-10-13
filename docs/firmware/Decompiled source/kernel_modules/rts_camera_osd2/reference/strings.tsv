@@ -1,0 +1,89 @@
+00010879		3rtscam:unknown[rtsosd2] ioctl 0x%08x, '%c' 0x%x\n
+000108ad		6rtscam:%s\n
+000108bd		3rtscam:not support soc osd\n
+000108dd		3rtscam:osd platform_data is NULL\n
+00010901		3rtscam:osd platform_data is invalid\n
+00010929		3rtscam:Missing platform resource data\n
+00010955		3rtscam:Couldn't allocate rts camera osd object\n
+00010988	rtscam_osd2_probe	&rosd2->lock
+00010998	rtscam_osd2_probe	&rosd2->alarm_wq
+000109ad		3rtscam:Couldn't ioremap resource\n
+000109d0	rtscam_osd2_probe	rts_osd2
+000109dd		3rtscam:osd:request irq fail\n
+000109fc	rtscam_osd2_probe	rtsosd2
+00010a10	_elfSectionHeaders::0000019c,rtscam_osd2_probe	rtscam_osd2_probe
+00010a30	_elfSectionHeaders::000001c4	alias=platform:rts_osd2
+00010a48		version=0.1.1
+00010a56		license=GPL v2
+00010a65		author=Wil Shi <wil_shi@realsil.com.cn>
+00010a8d		description=Realsil Osd device driver
+00010ad8		depends=rts_cam
+00010ae8		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00010bfc		rts_camera_osd2
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.rodata
+.shstrtab::00000076		.modinfo
+.shstrtab::0000007f		.rel.data
+.shstrtab::00000089		.rel.gnu.linkonce.this_module
+.shstrtab::000000a7		.bss
+.shstrtab::000000ac		.sbss
+.shstrtab::000000b2		.rel.pdr
+.shstrtab::000000bb		.mdebug.abi32
+.shstrtab::000000c9		.comment
+.shstrtab::000000d2		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		ioread32
+.strtab::0000004e		rtscam_devdata
+.strtab::0000005d		dev_get_drvdata
+.strtab::0000006d		devm_request_threaded_irq
+.strtab::00000087		iowrite32
+.strtab::00000091		platform_driver_unregister
+.strtab::000000ac		__this_module
+.strtab::000000ba		platform_get_irq
+.strtab::000000cb		rtscam_usercopy
+.strtab::000000db		cleanup_module
+.strtab::000000ea		__wake_up
+.strtab::000000f4		rtscam_ge_unregister_device
+.strtab::00000110		get_device
+.strtab::0000011b		init_module
+.strtab::00000127		rtscam_debug
+.strtab::00000134		rtscam_osd2_probe
+.strtab::00000146		put_device
+.strtab::00000151		rtscam_ge_device_alloc
+.strtab::00000168		platform_driver_register
+.strtab::00000181		platform_get_resource
+.strtab::00000197		mutex_lock
+.strtab::000001a2		strlcpy
+.strtab::000001aa		printk
+.strtab::000001b1		__mutex_init
+.strtab::000001be		__init_waitqueue_head
+.strtab::000001d4		rtscam_ge_register_device
+.strtab::000001ee		rtscam_osd2_remove
+.strtab::00000201		mutex_unlock
+.strtab::0000020e		devm_ioremap_resource
+.strtab::00000224		rtscam_ge_kill_fasync
+.strtab::0000023a		rtscam_ge_device_release
+.strtab::00000253		devm_kzalloc
+.strtab::00000260		dev_set_drvdata

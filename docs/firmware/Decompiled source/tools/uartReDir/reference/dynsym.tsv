@@ -1,0 +1,22 @@
+# DT_NEEDED: libc.so.0
+0	T0	UND	0	
+1	FUNC	UND	0	ioctl
+2	FUNC	UND	0	printf
+3	T0	DEF	410b20	_fdata
+4	T3	DEF	1	_DYNAMIC_LINKING
+5	FUNC	UND	0	perror
+6	FUNC	UND	0	puts
+7	FUNC	DEF	400554	_init
+8	T0	DEF	4005a0	_ftext
+9	OBJECT	DEF	410b30	__RLD_MAP
+10	T0	DEF	410b5c	__bss_start
+11	FUNC	DEF	400780	main
+12	FUNC	UND	0	strcmp
+13	FUNC	UND	0	ttyname
+14	FUNC	DEF	400990	_fini
+15	T0	DEF	410b5c	_edata
+16	T0	DEF	410b70	_end
+17	FUNC	UND	0	open
+18	T0	DEF	410b5c	_fbss
+19	FUNC	UND	0	close
+20	FUNC	UND	400970	__uClibc_main

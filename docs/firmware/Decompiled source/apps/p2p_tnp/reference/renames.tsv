@@ -1,0 +1,90 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00406950	FUN_00406950	p2p_send_ctrl_error	true	false	p2p_send_ctrl_error
+00409000	FUN_00409000	event_log_get	true	true	event_log_get: param is error, findNumber %d, head(%d) tail(%d) num(%d)!!! \n
+00409118	FUN_00409118	event_log_seach	true	true	event_log_seach: mem alloc fail \n
+0040918c	FUN_0040918c	init_replay_frame	true	false	init_replay_frame
+0040967c	FUN_0040967c	close_replay_frame	true	false	close_replay_frame
+004096e0	FUN_004096e0	get_video_replay_frame	true	false	get_video_replay_frame
+00409da8	FUN_00409da8	p2p_set_power	true	true	p2p_set_power send_msg fail!\n
+0040a014	FUN_0040a014	p2p_set_light	true	true	p2p_set_light send_msg fail!\n
+0040a0f0	FUN_0040a0f0	p2p_set_motion_record	true	true	p2p_set_motion_record send_msg fail!\n
+0040a1cc	FUN_0040a1cc	p2p_set_mirror_flip	true	true	p2p_set_mirror_flip send_msg fail!\n
+0040a2a8	FUN_0040a2a8	p2p_set_alarm_mode	true	true	p2p_set_alarm_mode %d send_msg fail!\n
+0040a370	FUN_0040a370	p2p_set_day_night_mode	true	true	p2p_set_day_night_mode %d send_msg fail!\n
+0040a45c	FUN_0040a45c	p2p_set_alarm_sensitivity	true	true	p2p_set_alarm_sensitivity %d send_msg fail!\n
+0040a524	FUN_0040a524	p2p_set_audio_mode	true	false	p2p_set_audio_mode
+0040a61c	FUN_0040a61c	p2p_set_encode_mode	true	true	p2p_set_encode_mode %d send_msg fail!\n
+0040a6e4	FUN_0040a6e4	p2p_set_high_resolution	true	true	p2p_set_high_resolution %d send_msg fail!\n
+0040a7ac	FUN_0040a7ac	p2p_send_connected	true	true	p2p_send_connected send_msg fail!\n
+0040a818	FUN_0040a818	p2p_send_disconnected	true	true	p2p_send_disconnected send_msg fail!\n
+0040a884	FUN_0040a884	p2p_send_viewing	true	true	p2p_send_viewing send_msg fail!\n
+0040a8fc	FUN_0040a8fc	p2p_send_stop_viewing	true	true	p2p_send_stop_viewing send_msg fail!\n
+0040a974	FUN_0040a974	p2p_send_clr_viewing	true	true	p2p_send_clr_viewing send_msg fail!\n
+0040a9e0	FUN_0040a9e0	p2p_set_tnp_init_status	true	true	p2p_set_tnp_init_status %d send_msg fail!\n
+0040aa58	FUN_0040aa58	p2p_set_tnp_work_mode	true	true	p2p_set_tnp_work_mode %d send_msg fail!\n
+0040aad0	FUN_0040aad0	p2p_set_tnp_check_login_success	true	true	p2p_set_tnp_check_login_success send_msg fail!\n
+0040ab30	FUN_0040ab30	p2p_set_tnp_check_login_fail	true	true	p2p_set_tnp_check_login_fail send_msg fail!\n
+0040ab90	FUN_0040ab90	p2p_set_tnp_connect_success	true	true	p2p_set_tnp_connect_success send_msg fail!\n
+0040abf0	FUN_0040abf0	p2p_set_immediate_bitrate	true	true	p2p_set_immediate_bitrate %d send_msg fail!\n
+0040ac5c	FUN_0040ac5c	p2p_set_pwd_used_cnt	true	true	p2p_set_pwd_used_cnt send_msg fail!\n
+0040ad50	FUN_0040ad50	p2p_ptz_direction_ctrl	true	true	p2p_ptz_direction_ctrl send_msg fail!\n
+0040add8	FUN_0040add8	p2p_ptz_direction_ctrl_stop	true	true	p2p_ptz_direction_ctrl_stop send_msg fail!\n
+0040ae38	FUN_0040ae38	p2p_ptz_home	true	true	p2p_ptz_home send_msg fail!\n
+0040ae98	FUN_0040ae98	p2p_ap_mode_set	true	true	p2p_ap_mode_set send_msg fail!\n
+0040aff4	FUN_0040aff4	p2p_ptz_jump_to_point	true	true	p2p_ptz_jump_to_point send_msg fail!\n
+0040b07c	FUN_0040b07c	p2p_set_panorama_capture_state	true	true	p2p_set_panorama_capture_state send_msg to dispatch fail!\n
+0040b0e0	FUN_0040b0e0	p2p_set_ldc	true	true	p2p_set_ldc send_msg fail!\n
+0040b1a8	FUN_0040b1a8	p2p_set_baby_cry	true	true	p2p_set_baby_cry send_msg fail!\n
+0040b270	FUN_0040b270	p2p_set_abnormal_sound	true	true	p2p_set_abnormal_sound send_msg fail!\n
+0040b338	FUN_0040b338	p2p_set_abnormal_sound_sensitivity	true	true	p2p_set_abnormal_sound_sensitivity send_msg fail!\n
+0040b400	FUN_0040b400	p2p_set_mic_volume	true	true	p2p_set_mic_volume send_msg fail!\n
+0040b4c8	FUN_0040b4c8	p2p_set_viewpoint_trace	true	true	p2p_set_viewpoint_trace send_msg fail!\n
+0040b590	FUN_0040b590	p2p_set_voice_ctrl	true	true	p2p_set_voice_ctrl send_msg fail!\n
+0040b66c	FUN_0040b66c	p2p_set_alarm_sound	true	false	p2p_set_alarm_sound
+0040b734	FUN_0040b734	p2p_set_double_light	true	false	p2p_set_double_light
+0040b7fc	FUN_0040b7fc	p2p_set_motion_detect_status	true	false	p2p_set_motion_detect_status
+0040b8c4	FUN_0040b8c4	p2p_set_lapse_video	true	false	p2p_set_lapse_video
+0040b98c	FUN_0040b98c	tnp_reply_event_list	true	false	tnp_reply_event_list
+0040be44	FUN_0040be44	p2p_send_ctrl_data	true	true	p2p_send_ctrl_data, msg_type=0x%02x\n
+0040bf7c	FUN_0040bf7c	p2p_set_motion_detect	true	true	p2p_set_motion_detect send_msg fail!\n
+0040c210	FUN_0040c210	p2p_set_video_backup_state	true	true	p2p_set_video_backup_state fail!\n
+0040c4cc	FUN_0040c4cc	p2p_ptz_preset_add	true	true	p2p_ptz_preset_add send_msg fail!\n
+0040c6ec	FUN_0040c6ec	p2p_ptz_preset_del	true	true	p2p_ptz_preset_del send_msg fail!\n
+0040c87c	FUN_0040c87c	p2p_ptz_preset_call	true	true	p2p_ptz_preset_call send_msg fail!\n
+0040c9b4	FUN_0040c9b4	p2p_ptz_set_cruise_stay_time	true	true	p2p_ptz_set_cruise_stay_time send_msg fail!\n
+0040ca58	FUN_0040ca58	p2p_ptz_set_cruise_period	true	true	p2p_ptz_set_cruise_period send_msg fail!\n
+0040cafc	FUN_0040cafc	p2p_ptz_set_motion_track	true	true	p2p_ptz_set_motion_track send_msg fail!\n
+0040cb9c	FUN_0040cb9c	p2p_ptz_set_cruise	true	false	p2p_ptz_set_cruise
+0040cc8c	FUN_0040cc8c	p2p_start_panorama_capture	true	true	p2p_start_panorama_capture send_msg to cloud fail!\n
+0040cdb4	FUN_0040cdb4	p2p_abort_panorama_capture	true	true	p2p_abort_panorama_capture send_msg to cloud fail!\n
+0040cefc	FUN_0040cefc	p2p_sync_info_from_server	true	true	p2p_sync_info_from_server send_msg fail!\n
+0040cfb0	FUN_0040cfb0	reply_dev_info	true	true	reply_dev_info, ret = %d motion_track_switch =%d\n
+0040d42c	FUN_0040d42c	reply_ap_mode_info	true	true	reply_ap_mode_info, ret = %d\n
+0040d58c	FUN_0040d58c	reply_factory_test_info	true	false	reply_factory_test_info
+0040d680	FUN_0040d680	reply_event_list	true	false	reply_event_list
+0040daa8	FUN_0040daa8	set_resolution	true	false	set_resolution
+0040dbd4	FUN_0040dbd4	get_resolution	true	false	get_resolution
+0040dca8	FUN_0040dca8	set_record_speed	true	true	set_record_speed, param error, speed = 0!\n
+0040ddb4	FUN_0040ddb4	get_record_speed	true	false	get_record_speed
+0040de84	FUN_0040de84	get_version	true	false	get_version
+0040df0c	FUN_0040df0c	do_update	true	false	do_update
+0040e27c	FUN_0040e27c	p2p_send_frame_data	true	false	p2p_send_frame_data
+0040e944	FUN_0040e944	send_realtime_video	true	false	send_realtime_video
+0040ecb4	FUN_0040ecb4	send_realtime_audio	true	false	send_realtime_audio
+0040f624	FUN_0040f624	do_record_play	true	false	do_record_play
+0040fcb8	FUN_0040fcb8	start_speaker	true	false	start_speaker
+0040fe58	FUN_0040fe58	p2p_send_auth_result	true	true	p2p_send_auth_result, index=%d, type=0x%02x, resp_type=0x%02x, result=%d\n
+00410094	FUN_00410094	p2p_send_unsupported_version_reply	true	false	p2p_send_unsupported_version_reply
+004102a4	FUN_004102a4	do_auth	true	false	do_auth
+00410b08	FUN_00410b08	myDoIOCtrl	true	true	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_START_KEY\n
+00412b0c	FUN_00412b0c	myReleaseUser	true	false	myReleaseUser
+00412bd0	FUN_00412bd0	parse_msg	true	true	parse_msg: failed %d SessionHandle(%d)!!\n
+00413078	FUN_00413078	refresh_tnp_event_list	true	false	refresh_tnp_event_list
+0041334c	FUN_0041334c	state_statistics	true	false	state_statistics
+00413bf8	FUN_00413bf8	__test	true	false	__test
+0041da44	FUN_0041da44	IBNj3F4L37HiSGpwBgD6	true	false	IBNj3F4L37HiSGpwBgD6
+0043e074	FUN_0043e074	try_adjust_buf	true	false	try_adjust_buf
+0043e1d8	FUN_0043e1d8	fshare_create	true	false	fshare_create
+0043e4c8	FUN_0043e4c8	fshare_open	true	false	fshare_open
+0043e7ac	FUN_0043e7ac	fshare_write	true	false	fshare_write
+00440fd4	FUN_00440fd4	get_filename_by_time	true	false	get_filename_by_time

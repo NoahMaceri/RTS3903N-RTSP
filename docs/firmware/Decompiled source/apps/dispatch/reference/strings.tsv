@@ -1,0 +1,479 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400bb9		_fini
+00400bbf		__uClibc_main
+00400bcd		librt.so.0
+00400bd8		_DYNAMIC_LINKING
+00400be9		__RLD_MAP
+00400bf3		mq_receive
+00400bfe		mq_send
+00400c06		mq_open
+00400c0e		free
+00400c13		__errno_location
+00400c24		pthread_mutex_lock
+00400c37		pthread_self
+00400c44		pthread_mutex_unlock
+00400c59		memset
+00400c60		unlink
+00400c67		pthread_detach
+00400c76		socket
+00400c7d		malloc
+00400c84		memcpy
+00400c8b		pthread_create
+00400c9a		libdl.so.0
+00400ca5		libpthread.so.0
+00400cb5		system
+00400cbc		sem_wait
+00400cc5		sem_post
+00400cce		sem_init
+00400cd7		pthread_mutex_init
+00400cea		mkdir
+00400cf0		strlen
+00400cf7		sprintf
+00400cff		strcmp
+00400d06		fclose
+00400d0d		fopen
+00400d13		gettimeofday
+00400d20		sscanf
+00400d27		mmap
+00400d2c		getpid
+00400d33		munmap
+00400d3a		libm.so.0
+00400d44		floor
+00400d4e		libc.so.0
+00400d58		putchar
+00400d60		strcpy
+00400d67		asctime
+00400d6f		ioctl
+00400d75		popen
+00400d7b		strerror
+00400d84		pclose
+00400d8b		usleep
+00400d92		prctl
+00400d98		puts
+00400d9d		tcflush
+00400da5		vsnprintf
+00400daf		settimeofday
+00400dbc		select
+00400dc3		readdir
+00400dcb		lseek
+00400dd1		gmtime_r
+00400dda		strtol
+00400de1		cfsetispeed
+00400ded		cfsetospeed
+00400df9		mktime
+00400e00		strstr
+00400e07		signal
+00400e0e		strncmp
+00400e16		strncpy
+00400e1e		sendto
+00400e25		statvfs
+00400e2d		fread
+00400e33		symlink
+00400e3b		localtime
+00400e45		srand
+00400e4b		inet_ntoa
+00400e55		tcgetattr
+00400e5f		opendir
+00400e67		fwrite
+00400e6e		access
+00400e75		atoi
+00400e7a		fileno
+00400e81		strchr
+00400e88		closedir
+00400e91		tcsetattr
+00400e9b		vfprintf
+00400ea4		stdout
+00400eab		_ftext
+00400eb2		_fdata
+00400eb9		_edata
+00400ec0		__bss_start
+00400ecc		_fbss
+00400ed2		_end
+00411fe0	FUN_00401bf0	/home/app/script/mount_sd.sh
+00412000	FUN_00401d00	/dev/console
+00412080	FUN_004021e4	%s start "%s" "%s"
+00412094	00409a5c,FUN_004021e4,FUN_00404a28	/home/base/tools/hostapd.sh
+004120b0	00409a68,FUN_004021e4,FUN_00404a28	%s stop
+004120b8	FUN_00402330	/tmp/sd/Factory/factory_test.sh &
+004120dc	FUN_00402330	/home/app/script/ethdhcp.sh
+004121a8	FUN_00402330	ifconfig wlan0 0.0.0.0
+004121f4	FUN_00402330	%02X:%02X:%02X:%02X:%02X:%02X
+0041224c	FUN_00402330	cat /tmp/gw0
+00412274	FUN_00402330	arping %s -I %s -c 1|grep "reply from"|sed -n 1p|cut -d[ -f2 | cut -d] -f1 | tr a-z A-Z
+004122cc	00409854,004099a8,00409a1c,00409b04,00409c10,00409c54,00409dcc,00409e00,00409e58,00409ec4,00409fb4,00409ff8,0040a03c,0040a088,0040a0cc,0040a438,0040a4c0,0040a50c,0040a554,FUN_00402330,FUN_00402de8,FUN_00404a28,choose_server,dispatch_report_cloud_alarm_status,get_config,get_productinfo,get_tmp_did,main,save_config,send_bind_fail_msg,send_bind_timeout_msg,send_connected_msg,send_connectting_msg,send_pwdwrong_msg,send_reboot_msg,send_reset_msg,send_saveconfig_msg,send_success_msg,send_wrong_device_msg,set_default	dispatch.c
+004122d8	FUN_00402330,FUN_00402de8	gwmac(%s)
+00412300	00409fd0,0040a014,0040a058,0040a0a4,0040a0e8,0040a444,0040a4dc,0040a528,0040a56c,0040da90,FUN_00402330,FUN_00402de8,FUN_00404a28,main,ptz_get_position,ptz_stop,set_motor_dir_speed	ioctl(%d) error(%d),%s
+00412318	send_bind_fail_msg,send_bind_timeout_msg,send_connected_msg,send_connectting_msg,send_pwdwrong_msg,send_reboot_msg,send_reset_msg,send_saveconfig_msg,send_success_msg,send_wrong_device_msg	msg snd err, err no is %d
+00412334	FUN_00402de8	wpa_cli -i wlan0 status
+0041234c	FUN_00402de8	wpa_state=COMPLETED
+00412360	FUN_00402de8	ip_address=
+0041236c	FUN_00402de8	bssid=
+00412374	FUN_00402de8	bssid(%s)
+00412380	FUN_00402de8	ip(%s)
+00412388	FUN_00402de8	cat /tmp/gw1
+00412398	FUN_00402de8	gw(%s)
+004123a0	FUN_00402de8	arping %s -I wlan0 -c 1|grep "reply from"|sed -n 1p|cut -d[ -f2 | cut -d] -f1 | tr a-z A-Z
+004123fc	FUN_00402de8	cat /tmp/mask
+0041240c	FUN_00402de8	mask(%s)
+00412418	FUN_00402de8	ifconfig wlan0|grep HWaddr|awk '{print $5}'
+00412444	FUN_00402de8	mac(%s)
+0041244c	FUN_00402de8	ifconfig timeout no usb dev\n
+0041246c	FUN_00402de8	no_wifi_dev
+00412478	FUN_00402de8	reboot: ifconfig timeout no usb dev cause reboot1 !!! 
+004124b0	FUN_00402de8	iwconfig wlan0|grep Quality|cut -d= -f2
+004124d8	FUN_00402de8	signal_quality(%d)
+004124ec	FUN_00402de8	iwconfig timeout no usb dev\n
+0041250c	FUN_00402de8	reboot: ifconfig timeout no usb dev cause reboot2 !!! 
+00412544	FUN_00402de8	wpa_cli -i wlan0 mib|grep dot11RSNA4WayHandshakeFailures|cut -d= -f2
+0041258c	FUN_00402de8	pwd_wrong
+00412598	FUN_00402de8	timeout reset wifi\n
+004125ac	FUN_00402de8	wifi connect timeout\n
+004125c4	FUN_00402de8,FUN_00404a28	/home/app/script/killwifi.sh 1
+004125e4	FUN_00402de8,FUN_00404a28	/home/app/script/wificonnect.sh
+00412604	FUN_00402de8	wifi disconnected, now reconnect wifi\n
+0041262c	FUN_00402de8	wpa connected , now dhcp\n
+00412648	FUN_00402de8	/home/app/script/wifidhcp.sh
+00412668	FUN_00402de8	wpa connected , now dhcp finish\n
+0041268c	FUN_00402de8	long time no ip, now reset\n
+004126a8	FUN_00402de8	wifi_connected
+004126b8	FUN_00402de8	wifi password wrong\n
+004126d0	send_saveconfig_msg	send_saveconfig_msg msg snd success
+004126f4	get_tmp_did	did not exist, read tmp files\n
+00412714	get_tmp_did	/tmp/sd/did.txt
+00412724	get_tmp_did	 did.txt did = %s\n
+00412738	get_productinfo	/dev/mtdblock6
+00412748	get_productinfo	product info partition exist!\n
+00412768	get_productinfo	product info partition is not empty, read it!\n
+00412798	get_productinfo	/etc/back.bin
+004127a8	get_productinfo	product info partition is empty, check if backup exist!\n
+004127e4	get_productinfo	backup exist, read it!\n
+004127fc	get_productinfo	backup not exist, read tmp files!\n
+00412820	get_productinfo	hardware version is not empty, read it!\n
+0041284c	get_productinfo	 ptz_en[%c] ptz_dir hor[%c] ver[%c] cds[%c] mirror[%c] resolution[%c] def_x[%c%c] def_y[%c] isp[%c] \n
+004128b4	get_productinfo	product info partition not exist!\n
+004128dc	choose_server	https://plt-api.xiaoyi.com
+004128f8	choose_server	http://familymonitor-interface-test.mi-ae.com.sg
+0041292c	choose_server	https://api.xiaoyi.com.tw
+00412948	choose_server	https://plt-api-sg.xiaoyi.com
+00412968	choose_server	https://plt-api-de.xiaoyi.com
+00412988	choose_server	https://plt-api-us.xiaoyi.com
+004129a8	choose_server	https://api.xiaoyi.com
+004129c0	choose_server	in choose_server, region_id = %d, api_server = %s, sname = %s, dlproto = %s\n
+00412a10	link_audio_file	/home/app/audio_file/simplecn
+00412a30		/home/app/audio_file/us
+00412a48	link_audio_file	/tmp/audio
+00412a88	FUN_00404908	/backup/upgrade_conf
+00412aa4	FUN_00404908	write_backup_url_md5_info error
+00412ac4	FUN_00404a28	Select error(%d),%s
+00412ad8	00409ed4,FUN_00404a28	MsgHandle: mq_receive failure on mqfd
+00412b00	FUN_00404a28	dispatch got (0x%x)\n
+00412b18	FUN_00404a28	/home/app/localbin/reboot_by_watchdog
+00412b40	FUN_00404a28	ifconfig wlan0 down
+00412b54	FUN_00404a28	reboot -f
+00412b60	FUN_00404a28,get_config	/home/app/localbin/wifi_conf
+00412b80	FUN_00404a28	/tmp/wpa_supplicant.conf
+00412b9c	FUN_00404a28,get_config	got pwd(%s)
+00412ba8	FUN_00404a28	DISPATCH_SET_TIME %lu %s
+00412bc4	FUN_00404a28	wifi connected
+00412bd4	FUN_00404a28	bind_success
+00412be4	FUN_00404a28	reset finished
+00412bf4	FUN_00404a28	DISPATCH_SET_BIND_FAIL
+00412c0c	FUN_00404a28	bind_fail
+00412c18	FUN_00404a28	DISPATCH_SPEAK_WRONG_DEVICE
+00412c34	FUN_00404a28	wrong_device
+00412c44	FUN_00404a28	DISPATCH_SET_BIND_TIMEOUT finished
+00412c68	FUN_00404a28	bind_timeout
+00412c78	FUN_00404a28	killall p2p_tnp
+00412c88	FUN_00404a28	DISPATCH_SET_TNP save conf\n
+00412ca4	FUN_00404a28	g_dispatch_info.mmap_info->motion_type  =%d, motion_time =[%lu]\n
+00412ce8	FUN_00404a28	test human detect!!!
+00412d00	FUN_00404a28	DISPATCH_SET_PREV_MOTION_STATE %d\n
+00412d24	FUN_00404a28	exit recbackup by RCD_START_SHORT_VIDEO %d\n
+00412d50	FUN_00404a28	exit recbackup by too many inpacketloss %d\n
+00412d7c	FUN_00404a28	start recbackup inpacketloss %d\n
+00412da0	FUN_00404a28	/home/app/script/start_recbak.sh &
+00412dc4	FUN_00404a28	DISPATCH_SET_VIDEO_BACKUP_STATE save conf\n
+00412df0	FUN_00404a28	set DISPATCH_SET_BAN_DEVICE\n
+00412e10	FUN_00404a28	set DISPATCH_SET_PWD_USED_CNT\n
+00412e30	FUN_00404a28	set DISPATCH_SET_PWD_SYNC_SERVER\n
+00412e54	FUN_00404a28	set DISPATCH_SET_OTA_STATE\n
+00412e70	FUN_00404a28	set DISPATCH_SYNC_INFO_FROM_SERVER\n
+00412e94	FUN_00404a28	set DISPATCH_SET_TZ_OFFSET\n
+00412eb0	FUN_00404a28	tz_offset(%d)\n
+00412ec0	FUN_00404a28	set DISPATCH_FINISH_SYNC_INFO_FROM_SERVER\n
+00412eec	FUN_00404a28	set DISPATCH_SAVE_API_SERVER\n
+00412f0c	FUN_00404a28	set DISPATCH_CLEAR_API_SERVER\n
+00412f2c	FUN_00404a28	set update_seq = %d\n
+00412f44	FUN_00404a28	set update_version = %s\n
+00412f60	FUN_00404a28	set DISPATCH_SET_CLOUD_STORAGE_ON\n
+00412f84	FUN_00404a28	set DISPATCH_SET_CLOUD_STORAGE_OFF\n
+00412fa8	FUN_00404a28	set DISPATCH_SET_CLOUD_STORAGE_MODE_ALL_DAY\n
+00412fd8	FUN_00404a28	set DISPATCH_SET_CLOUD_STORAGE_MODE_MOTION_DETECT\n
+0041300c	FUN_00404a28	set DISPATCH_SET_REGION\n
+00413028	FUN_00404a28	set RMM_SET_LDC\n
+0041303c	FUN_00404a28	set RMM_SET_BABY_CRY\n
+00413054	FUN_00404a28	set RMM_SET_ABNORMAL_SOUND\n
+00413070	FUN_00404a28	set RMM_SET_HUMAN_MOTION\n
+0041308c	FUN_00404a28	set RMM_SET_MIC_VOLUME\n
+004130a4	FUN_00404a28	set DISPATCH_SET_PANORAMA_CAPTURE_STATE [0x%x]\n
+004130d4	FUN_00404a28	set DISPATCH_SET_PANORAMA_CAPTURE_COUNT\n
+00413100	FUN_00404a28	DISPATCH_P2P_CONNECTTED finished
+00413124	FUN_00404a28	p2p_clr
+0041312c	FUN_00404a28	DISPATCH_P2P_PTZ_PRESET_ADD save conf\n
+00413154	FUN_00404a28	DISPATCH_P2P_PTZ_PRESET_DEL save conf\n
+0041317c	FUN_00404a28	g_dispatch_info.ptz_preset=========== =%d\n
+004131a8	FUN_00404a28	p_time->mode =%d\n
+004131bc	FUN_00404a28	DISPATCH_P2P_PTZ_SET_CURISE_STAY_TIME save conf\n
+004131f0	FUN_00404a28	DISPATCH_P2P_PTZ_SET_CURISE_PERIOD save conf\n
+00413220	FUN_00404a28	DISPATCH_P2P_PTZ_SET_MOTION_TRACK save conf =%d\n
+00413254	FUN_00404a28	======g_dispatch_info.ptz_x_edge =%d\n
+0041327c	FUN_00404a28	DISPATCH_P2P_PTZ_CRUISE_STOP save conf\n
+004132a4	FUN_00404a28	skip this stop
+004132b4	FUN_00404a28	DISPATCH_P2P_PTZ_CRUISE_START save conf\n
+004132e0	FUN_00404a28	DISPATCH_SET_MIRROR_ON save conf\n
+00413304	FUN_00404a28	DISPATCH_SET_MIRROR_OFF save conf\n
+00413328	FUN_00404a28	set do format
+00413338	FUN_00404a28	reboot: DISPATCH_SET_SD_FORMAT cause reboot !!! 
+0041336c	FUN_00404a28	DISPATCH_SET_SD_FORMAT save conf\n
+00413390	FUN_00404a28	DISPATCH_SET_LIGHT_ON save conf\n
+004133b4	FUN_00404a28	DISPATCH_SET_LIGHT_OFF save conf\n
+0041340c	FUN_00404a28	DISPATCH_SET_POWER_OFF save conf\n
+00413464	FUN_00404a28	DISPATCH_SET_POWER_ON save conf\n
+00413488	FUN_00404a28	DISPATCH_BABYCRY_CLEAR chn = %d\n
+004134ac	FUN_00404a28	DISPATCH_ABNORMAL_SOUND_CLEAR chn = %d\n
+004134d4	FUN_00404a28	RMM_SET_MOTION_DETECT save conf\n
+004134f8	FUN_00404a28	down_load_info->url =%s %s\n
+00413514	FUN_00404a28	RMM_SET_DAY_NIGHT_MODE save conf\n
+00413538	FUN_00404a28	DISPATCH_SET_MOTION_RCD save conf\n
+0041355c	FUN_00404a28	DISPATCH_SET_ALWAYS_RCD save conf\n
+00413580	FUN_00404a28	RMM_SET_MOTION_SENSITIVITY save conf\n
+004135a8	FUN_00404a28	RMM_SET_ABNORMAL_SOUND_SENSITIVITY save conf\n
+004135d8	FUN_00404a28	router_disk:%d,%d,%d
+004135f0	FUN_00404a28	router_sd_total_size = %d, router_sd_free_size= %d, router_sd_cam_used_size = %d\n
+00413644	FUN_00404a28	extra_disk:%d,%d,%d
+00413658	FUN_00404a28	extra_sd_total_size = %d, extra_sd_free_size= %d, extra_sd_cam_used_size = %d\n
+004136a8	FUN_00404a28	got rcd heartbeat\n
+004136bc	FUN_00404a28	rcd cost %d\n
+004136cc	FUN_00404a28	DISPATCH_SET_VIEWPOINT_TRACE save conf(viewpoint_trace=%d)\n
+00413708	FUN_00404a28	DISPATCH_SET_VOICE_CTRL save conf(voice_ctrl=%d)\n
+0041373c	FUN_00404a28	DISPATCH_SET_SCHEDULE_POWER\n
+0041375c	FUN_00404a28	status_gather json array create failed!\n
+00413788	FUN_00404a28	json_res = %s\n
+00413798	FUN_00404a28	set DISPATCH_SET_MOTION_DETECT_STATUS, %d\n
+004137c4	FUN_00404a28	set DISPATCH_SET_DOUBLE_LIGHT, %d\n
+004137e8	FUN_00404a28	set DISPATCH_SET_ALARM_SOUND, %d\n
+0041380c	FUN_00404a28	set DISPATCH_SET_AP_MODE,enable(%d)\n
+00413834	FUN_00404a28	set DISPATCH_SET_APMODE_OK,enable(%d)\n
+0041385c	FUN_00404a28	set DISPATCH_SET_APMODE_FAIL,enable(%d)\n
+00413888	FUN_00404a28	DISPATCH_SET_LAPSE_VIDEO save conf(lapse_video_enable=%d)\n
+004138c4	FUN_00404a28	set DISPATCH_SET_LAPSE_VIDEO_MODIFY, %d\n
+004138f0	FUN_00404a28	set RMM_SET_LAPSE_FRAMERATE, %d, %d\n
+00413918	FUN_00404a28	set RMM_SET_LAPSE_FORCE_IDR\n
+00413938	FUN_00404a28	\n\n[Peter] dispatch RMM_APP_AUDIO_MODE_SIMPLEX mode\n
+0041396c	FUN_00404a28	\n\n[Peter] dispatch RMM_APP_AUDIO_MODE_DUPLEX mode\n
+004139a0	FUN_00404a28	set DISPATCH_CLOUD_PIC_INDEX_OCCUR\n
+004139c4	FUN_00404a28	set DISPATCH_CLOUD_PIC_INDEX_CLEAR\n
+004139e8	FUN_00404a28	dispatch DISPATCH_CLOUD_PIC_SET_INTERVAL, value = %d\n
+00413a20	FUN_00404a28	set DISPATCH_SET_CLOUD_IMAGE_ON\n
+00413a44	FUN_00404a28	set DISPATCH_SET_CLOUD_IMAGE_OFF\n
+00413a68	FUN_00404a28	do DISPATCH_APPLY_ABILITY_SETS\n
+00413a88	FUN_00404a28	do  g_dispatch_info.mmap_info->upgrade_mode =%d\n
+00413abc	FUN_00404a28	invalid msg 0x%x\n
+00413ad0	FUN_00404a28	Process (0x%x) end\n
+00413ae4	FUN_004082d4,FUN_00408358	/dev/mtdblock7
+00413af4	save_config	got pwd(%s)(%s)
+00413b04	save_config	got ssid(%s)(%s)
+00413b18	save_config	config save finish %d
+00413b30	set_default	hue, start_with_reset = 1 @set_default() 
+00413b5c	get_config,set_default	 hw_ver_p->def_x = %d \n
+00413b74	get_config,set_default	 hw_ver_p->def_y = %d \n
+00413b8c	set_default	do reset save conf finish
+00413bc0	get_config	got sn(%s)
+00413bcc	get_config	got ssid(%s)
+00413bdc	get_config	got tnp_init_string(%s)
+00413bf4	get_config	hue, start_with_reset = 1 @get_config()->g_sysconf.ssid == 0 
+00413c34	get_config	reset because no wifi config
+00413c54	get_config	/tmp/sd/Factory/wpa_supplicant.conf
+00413c78	get_config	cp %s /tmp/wpa_supplicant.conf
+00413c98	get_config	get_config save conf\n
+00413cb0	FUN_00409418	/sys/devices/platform/rts3903-sdhc/cd
+00413cd8	FUN_00409418	cat /sys/devices/platform/rts3903-sdhc/cd 2>/dev/null
+00413d10	FUN_00409418	cat /sys/block/mmcblk0/device/cid 2>/dev/null
+00413d40	00409a2c	save_config
+00413d4c	00409c68	invalid msg 0x%x
+00413d60	004099bc	write_flash num = %d\n
+00413d78	00409a4c	Disable default ap
+00413d8c	00409dc8	send mq exit_apmode_timeout, ret=%d
+00413de0	00409d00	ifconfig eth0 0.0.0.0
+00413e48	004098d0	start_reset
+00413e74	0040a1a8	%04dY%02dM%02dD%02dH
+00413e8c	0040a218,0040a308	%s/%s
+00413f10	00409b00	DISPATCH_SET_DEFAULT_TIME %lu
+00413f30	00409bd0	/dev/eth0
+00413f64	00409f7c	killall p2p_tnp cloud
+00413f7c	00409f94	killall -SIGUSR1 watch_process
+00413f9c	00409b50	/tmp/sd
+00413fa4	00409f50	statvfs() return fail !!! 
+00413fc0	00409df8	sd card insert
+00413fd0	00409e0c	reboot, sd card insert cause reboot !!! 
+00413ffc	00409c08	sd card plugout
+00414078	0040980c	pwd_change
+00414084	00409e5c	rcd may crashed\n
+00414098	00409e74	killall mp4_record
+004140ac	00409864	check reset, now ding reset
+004140c8		ping -c 1 -q %s
+004140d8		packets transmitted
+004140ec		 %d%% loss
+004140fc	dispatch_report_cloud_alarm_status	%s -c 193 -url "%s/ipc/monitor/gather" -param '%s' 
+00414130	dispatch_report_cloud_alarm_status	/backup/cloudAPI
+00414144	dispatch_report_cloud_alarm_status	https://monitor-log.xiaoyi.com
+00414164	dispatch_report_cloud_alarm_status	dispatch_report_cloud_alarm_status success \n
+00414194	dispatch_report_cloud_alarm_status	cmd = %s\n
+004141a0	dispatch_report_cloud_alarm_status	ret_string = %s\n
+004141bc	FUN_0040a844	/tmp/sd/debug_msg
+004141d0	main	sysversion:%s
+004141e0	main	/home/app/script/factory_test.sh
+00414204	main	/tmp/sd/Factory/factory_test.sh
+00414224	main	/ipc_dispatch
+00414234	main	init_mqueue MQ_NAME_DISPATCH fail
+00414258	main	/ipc_rmm
+00414264	main	init_mqueue MQ_NAME_RMM fail
+00414284	main	/ipc_cloud
+00414290	main	init_mqueue MQ_NAME_CLOUD fail
+004142b0	main	/ipc_p2p
+004142bc	main	init_mqueue MQ_NAME_P2P fail
+004142dc	main	/ipc_rcd
+004142e8	main	init_mqueue MQ_NAME_RCD fail
+00414308	main	/ipc_rtmp
+00414314	main	init_mqueue MQ_NAME_RTMP fail
+00414334	main	/ipc_dispatch_worker
+0041434c	main	init_mqueue MQ_NAME_DISPATCH_WORKER fail
+00414378	main	/tmp/mmap.info
+00414388	main	create_sharemem MMAP_FILE_NAME fail
+004143ac	main	hw_type(%d)\n
+004143bc	main	/dev/cpld_periph
+004143d0	main	open_cpld fail
+004143e0	main	exchange x............ 
+004143f8	main	exchange y............ 
+00414410	main	/dev/ssp
+0041441c	main	open_ptz fail
+0041442c	main	init ok, cost time(%d ms)
+00414448	main	init fail, cost time(%u ms)
+004144b8	0040a110	/tmp/sd/record
+004145b8	FUN_00404a28	do_mq_process
+004145c8	FUN_00404a28	do_mq_process
+004145d8	get_config	get_config
+004145e4	get_productinfo	get_productinfo
+004145f4	004021b0	p_system_tick
+00414604	00409c24,00409e34	do_checkdisk
+00414614	00409c0c,00409df0	do_checkdisk
+00414624	FUN_00402de8	check_wifi_connect
+00414638	FUN_00402de8	do_monitor_wifi
+00414648	FUN_00402de8	do_monitor_wifi
+00414658	0040a260,0040a344,0040a404,0040a590	get_default_time_for_apmode
+00414674	set_default	set_default
+00414680	FUN_00402330	do_get_mac
+0041468c	FUN_00402330	do_get_ip_info
+0041469c	FUN_00402330	do_eth_connect
+004146ac	FUN_00402330	do_eth_connect
+004146bc	00409cb0,00409d24,00409f2c,0040a090,0040a0d4,0040a440,0040a514	check_ethernet
+004146cc	save_config	save_config
+004146d8	00409f74,00409fc8,0040a00c,0040a050,0040a3dc,0040a4d4,0040a55c	p_worker
+004146e4	00409530,00409858,004099ac,00409a20,00409b0c,00409c5c,00409dd4,00409e60,00409ec8	p_worker
+004146f0	schedule_power_onoff	schedule_power_onoff
+00414708	00402134	schedule_power_main
+0041472c	dispatch_report_cloud_alarm_status	dispatch_report_cloud_alarm_status
+00414750	link_audio_file	link_audio_file
+00414760	choose_server	choose_server
+00414770	get_tmp_did	get_tmp_did
+0041477c	send_saveconfig_msg	send_saveconfig_msg
+00414790		send_warning_msg
+004147a4		send_welcome_msg
+004147b8	send_reboot_msg	send_reboot_msg
+004147c8	send_reset_msg	send_reset_msg
+004147d8	send_connected_msg	send_connected_msg
+004147ec	send_bind_timeout_msg	send_bind_timeout_msg
+00414804	send_wrong_device_msg	send_wrong_device_msg
+0041481c	send_bind_fail_msg	send_bind_fail_msg
+00414830	send_success_msg	send_success_msg
+00414844	send_pwdwrong_msg	send_pwdwrong_msg
+00414858	send_connectting_msg	send_connectting_msg
+00414870	FUN_0040abcc,set_motor_dir_speed	\n\n\n~~~~~~~dir = %d, speed = %d~~~~~~\n\n\n
+00414898	0040da70,0040dbb0,0040ddb0,h601r_cruise_start,h601r_get_position,h601r_stop,modify_ptz_running_stat,ptz_cruise_start,ptz_get_position,ptz_stop,set_motor_dir_speed	ptz_ctl.c
+004148a4	h601r_get_position,modify_ptz_running_stat,ptz_get_position,ptz_stop,set_motor_dir_speed	PTZ not open
+004148b4	h601r_stop,ptz_stop	PTZ stop timeout
+004148c8	h601r_get_position	H601R PTZ not support get position \n
+004148f0	0040ae54,0040b8e0	ptz_func =%d\nptz_state =%x\nptz_def_x =%d\nptz_def_y =%d\nptz_isruning =%d\nptz_x_runtimes =%d\nptz_y_runtimes =%d\nptz_current_x =%d\nptz_current_y=%d\n
+00414984	FUN_0040b328,FUN_0040bffc	x =%d %d %d %d x_step =%d %d x_step_2 =%d %d\n
+004149b4	ptz_stop	PTZ stop OK
+004149c0	FUN_0040c3b4,FUN_0040ca84	cur_time =%d %d %d %d\n
+004149d8	h601r_cruise_start,ptz_cruise_start	\n\n\ngoto default point\n\n\n
+004149f4	0040d5f8,0040d604,FUN_0040d274	/tmp/panorama_capture
+00414a0c	0040d6a8,FUN_0040d274	ptz_panorama_capture finish
+00414a28	0040d728,0040d788,FUN_0040d274	/tmp/panorama_capture/%d.jpg
+00414a48	0040d858	g_dispatch_info.mmap_info->hw_type =%d\n
+00414a70	0040ddb8	save default pos
+00414a84	0040dbc0	no message so stop ptz
+00414a9c	0040d97c	g_dispatch_info.mmap_info->ptz_x_runtime =%d %d\n
+00414ad0	h601r_get_position	h601r_get_position
+00414ae4	h601r_stop	h601r_stop
+00414af0	h601r_cruise_start	h601r_cruise_start
+00414b04	ptz_get_position	ptz_get_position
+00414b18	ptz_get_position	ptz_get_position
+00414b2c	ptz_stop	ptz_stop
+00414b38	ptz_stop	ptz_stop
+00414b44	set_motor_dir_speed	set_motor_dir_speed
+00414b58	set_motor_dir_speed	set_motor_dir_speed
+00414b6c	modify_ptz_running_stat	modify_ptz_running_stat
+00414b84	ptz_cruise_start	ptz_cruise_start
+00414b98	0040da7c	p_ptz
+00414ba0	0040d834,0040dbb4,0040ddb4	p_ptz
+00414bcc	FUN_0040e5c4	u%04x
+00414bdc	FUN_0040ed3c,FUN_0040f98c	false
+00414bec		%s("%s") not a number item obj!\n
+00414c10		%s("%s") not a string item obj!\n
+00414cc8		cJSON_GetStrObjItem
+00414cdc		cJSON_GetIntObjItem
+00414d46		$@invalid para, is null\r
+00414d60	FUN_00410624	/tmp/logsock
+00414d70	FUN_00410624	create socket fail\r
+00414d84	FUN_00410740	%s:%d|%s() 
+00414d90	FUN_00410740	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00414dbc		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00414e00	FUN_00410988	killall cloudAPI
+00414e14		%s : %d ptr %s is NULL pointer\n
+00414e3c		insmod %s
+00414e48		ko path
+00414e50		params
+00414e58		insmod %s %s
+00414e68		file node
+00414e74		/tmp/record_event
+00414ec4	0040a2bc	%02dM%02dS%02d.mp4
+00414ed8		/tmp/sd/record
+00414f5c	FUN_00410fb8	%[^"',}]
+00414f68		total malloc(%d) tmp_malloc(%d %p)\n
+00414f8c		total free(%p)\n
+00414f9c		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+00414fe0	ssp_uart_init	/dev/ttyS0
+00414fec	ssp_uart_init,ssp_uart_send_cmd	<DEBUG func %s, line %d>: 
+00415008	ssp_uart_init	***** %s open failed! *****\n
+00415028	ssp_uart_init	***** %s open successfully! *****\n
+0041504c	ssp_uart_init	******uart init param: %d %d %d %d ********\n
+0041507c	ssp_uart_init	******get attr failed!********
+0041509c	ssp_uart_init	**** Set Serial baudrate failed!****
+004150c4	ssp_uart_init	***** set speed finished! *****
+004150e4	ssp_uart_init	****** Unsupport parity %c *****\n
+00415108	ssp_uart_init	***** set parity finished! *****
+0041512c	ssp_uart_init	***** Unsupport stopbits %d ******\n
+00415150	ssp_uart_init	***** set stopbits finished! *****
+00415174	ssp_uart_init	**** Set Serial stopbit failed!****
+00415198	ssp_uart_init	**** Set Serial failed!****
+004151b4	ssp_uart_init	 ******** Serial Init finish! ******** 
+004151dc	ssp_uart_send_cmd	dir = %d speed = %d is running = %d \n
+00415204	ssp_uart_send_cmd	stop x = %d y = %d =============\n
+00415228	ssp_uart_send_cmd	SSP MOTOR STOP!
+00415238	ssp_uart_send_cmd	send command failed! 
+00415250	ssp_uart_send_cmd	send cmd successfully! 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x 0x%02x\n
+0041535c	ssp_uart_send_cmd	ssp_uart_send_cmd
+00415370	ssp_uart_init	ssp_uart_init
+00426250	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789

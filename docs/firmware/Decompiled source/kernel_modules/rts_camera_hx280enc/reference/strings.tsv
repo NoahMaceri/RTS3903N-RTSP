@@ -1,0 +1,113 @@
+00010bc5		6rtscam:ioctl cmd 0x%08x, '%c' %d\n
+00010be9		3rtscam:unknown[rtsmem] ioctl 0x%08x, '%c' 0x%x\n
+00010c1d		6rtscam:Slice ready IRQ handled!\n
+00010c41		6rtscam:IRQ received, but NOT handled!\n
+00010c6d		6rtscam:enable h264 clock\n
+00010c89		6rtscam:disable h264 clock\n
+00010ca9		6rtscam:%s\n
+00010cb9		3rtscam:not support soc h264\n
+00010cd9		3rtscam:h264 platform_data is NULL\n
+00010d01		3rtscam:Missing platform resource data\n
+00010d2d		3rtscam:Couldn't allocate rts camera h264enc object\n
+00010d64	rtscam_hx280_probe	&rh264enc->lock
+00010d74	rtscam_hx280_probe	&rh264enc->alarm_wq
+00010d89		3rtscam:Couldn't ioremap resource\n
+00010dac	rtscam_hx280_probe	rts_h264_hx280enc
+00010dc1		3rtscam:request irq failed\n
+00010de1		3rtscam:hx280enc:HW not found at 0x%08lx, hwid = 0x%08x\n
+00010e1d		3rtscam:hx280enc:HW at base <0x%08lx> with ID <0x%08x>\n
+00010e59		3rtscam:hx280enc: Reserve IO fail\n
+00010e7c	rtscam_hx280_probe	rtshx280enc
+00010e88	000110ac	clock
+00010e90	_elfSectionHeaders::0000019c,rtscam_hx280_probe	rtscam_hx280_probe
+00010eb0	_elfSectionHeaders::000001c4	alias=platform:rts_h264_hx280enc
+00010ed1		version=0.1.1
+00010edf		license=GPL v2
+00010eee		author=Ming Qian <ming_qian@realsil.com.cn>
+00010f1a		description=Realsil H264 encoder device driver
+00010f4c		srcversion=6E493CAB3F126636F84D241
+00010f70		depends=rts_cam
+00010f80		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+000110fc		rts_camera_hx280enc
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.rodata
+.shstrtab::00000076		.modinfo
+.shstrtab::0000007f		.rel.data
+.shstrtab::00000089		.rel.gnu.linkonce.this_module
+.shstrtab::000000a7		.bss
+.shstrtab::000000ac		.sbss
+.shstrtab::000000b2		.rel.pdr
+.shstrtab::000000bb		.mdebug.abi32
+.shstrtab::000000c9		.comment
+.shstrtab::000000d2		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		ioread32
+.strtab::00000084		__udelay
+.strtab::0000008d		rtscam_devdata
+.strtab::0000009c		dev_get_drvdata
+.strtab::000000ac		devm_request_threaded_irq
+.strtab::000000c6		iowrite32
+.strtab::000000d0		platform_driver_unregister
+.strtab::000000eb		__this_module
+.strtab::000000f9		platform_get_irq
+.strtab::0000010a		rtscam_usercopy
+.strtab::0000011a		scnprintf
+.strtab::00000124		cleanup_module
+.strtab::00000133		rts_sys_force_reset
+.strtab::00000147		__wake_up
+.strtab::00000151		rtscam_ge_unregister_device
+.strtab::0000016d		get_device
+.strtab::00000178		init_module
+.strtab::00000184		rtscam_debug
+.strtab::00000191		put_device
+.strtab::0000019c		device_create_file
+.strtab::000001af		rtscam_ge_device_alloc
+.strtab::000001c6		platform_driver_register
+.strtab::000001df		platform_get_resource
+.strtab::000001f5		mutex_lock
+.strtab::00000200		strlcpy
+.strtab::00000208		sscanf
+.strtab::0000020f		printk
+.strtab::00000216		__mutex_init
+.strtab::00000223		__init_waitqueue_head
+.strtab::00000239		rtscam_hx280_probe
+.strtab::0000024c		rtscam_ge_register_device
+.strtab::00000266		mutex_unlock
+.strtab::00000273		devm_ioremap_resource
+.strtab::00000289		rtscam_ge_kill_fasync
+.strtab::0000029f		rtscam_hx280_remove
+.strtab::000002b3		rtscam_ge_device_release
+.strtab::000002cc		devm_kzalloc
+.strtab::000002d9		dev_set_drvdata
+.strtab::000002e9		device_remove_file

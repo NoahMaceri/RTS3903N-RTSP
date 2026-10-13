@@ -1,0 +1,42 @@
+# DT_NEEDED: librtscamkit.so.1, libm.so.0, libgcc_s.so.1, libc.so.0
+0	T0	UND	0	
+1	T3	DEF	9b4	
+2	T0	DEF	13750	_fdata
+3	T3	DEF	1b740	_gp_disp
+4	FUNC	DEF	27c4	rts_geom_get_line_and_circle_cross_point
+5	FUNC	DEF	22f4	rts_geom_get_parallel_line
+6	FUNC	DEF	2c1c	rts_geom_calc_lines_intersection_angle
+7	FUNC	DEF	9b4	_init
+8	T0	DEF	a30	_ftext
+9	FUNC	DEF	10e0	rts_geom_check_point_in_line
+10	T0	DEF	137dc	__bss_start
+11	FUNC	DEF	2fd0	_fini
+12	FUNC	DEF	2e0c	rts_geom_calc_linear_equation
+13	T0	DEF	137dc	_edata
+14	T0	DEF	137f0	_end
+15	FUNC	DEF	1f20	rts_geom_check_segment_intersect_rect
+16	T0	DEF	137dc	_fbss
+17	T0	UND	0	_Jv_RegisterClasses
+18	FUNC	DEF	20ec	rts_geom_get_vertical_line
+19	FUNC	DEF	192c	rts_geom_get_line_and_segment_cross_point
+20	FUNC	DEF	25a0	rts_geom_calc_point_line_distance
+21	FUNC	UND	2fb0	__assert
+22	FUNC	DEF	1dd0	rts_geom_get_interval_overlap
+23	FUNC	DEF	24b0	rts_geom_calc_points_distance
+24	FUNC	UND	2fa0	RTS_IS_ERR
+25	FUNC	UND	2f90	atan
+26	FUNC	DEF	d54	rts_geom_calc_line_y
+27	T0	UND	0	_ITM_deregisterTMCloneTable
+28	FUNC	UND	2f80	rts_log
+29	FUNC	UND	2f70	memcmp
+30	FUNC	DEF	1b60	rts_geom_intersect_line_rect
+31	FUNC	DEF	16d8	rts_geom_get_lines_cross_point
+32	T0	UND	0	_ITM_registerTMCloneTable
+33	FUNC	DEF	f84	rts_geom_calc_line_from_2_point
+34	FUNC	DEF	eb4	rts_geom_compare_point
+35	FUNC	DEF	bf0	rts_geom_calc_line_x
+36	FUNC	UND	0	__cxa_finalize
+37	FUNC	DEF	14f8	rts_geom_check_line_parallel
+38	FUNC	DEF	2b08	rts_geom_calc_line_angle
+39	FUNC	UND	2f60	sqrt
+40	FUNC	DEF	1264	rts_geom_check_same_line

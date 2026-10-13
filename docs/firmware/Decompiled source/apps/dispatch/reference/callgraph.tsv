@@ -1,0 +1,205 @@
+00401188	_init	FUN_00401bac,FUN_00411f30
+004011d0	main	FUN_00401bf0,FUN_004021e4,FUN_0040454c,FUN_00404a28,FUN_0040a844,FUN_0040df64,FUN_004105ec,FUN_00410740,FUN_00410c4c,FUN_00410dc4,FUN_00410f38,FUN_00410f4c,__errno_location,access,get_config,get_productinfo,ioctl,link_audio_file,open,pthread_create,pthread_mutex_init,puts,sem_init,signal,snprintf,ssp_uart_init,strerror
+00401a10	entry	__uClibc_main
+00401a70	FUN_00401a70	
+00401ab0	FUN_00401ab0	
+00401afc	FUN_00401afc	FUN_00401a70
+00401bac	FUN_00401bac	FUN_00401ab0
+00401bf0	FUN_00401bf0	FUN_00410988,memset
+00401c84	FUN_00401c84	FUN_00410ca4,memset
+00401d00	FUN_00401d00	close,ioctl,open
+00401d44	schedule_power_onoff	FUN_00401c84,asctime,gmtime_r,printf,sleep,time
+004021e4	FUN_004021e4	memset,snprintf,system
+00402330	FUN_00402330	FUN_00401d00,FUN_00410740,FUN_00410988,FUN_00410e6c,__errno_location,inet_ntoa,ioctl,memset,printf,snprintf,sprintf,strcpy,strerror,system
+00402870	send_connectting_msg	FUN_00410740,FUN_00410ca4
+0040290c	send_pwdwrong_msg	FUN_00410740,FUN_00410ca4
+004029a8	send_success_msg	FUN_00410740,FUN_00410ca4
+00402a44	send_bind_fail_msg	FUN_00410740,FUN_00410ca4
+00402ae0	send_wrong_device_msg	FUN_00410740,FUN_00410ca4
+00402b7c	send_bind_timeout_msg	FUN_00410740,FUN_00410ca4
+00402c18	send_connected_msg	FUN_00410740,FUN_00410ca4
+00402cb4	send_reset_msg	FUN_00410740,FUN_00410ca4
+00402d50	send_reboot_msg	FUN_00410740,FUN_00410ca4
+00402de8	FUN_00402de8	FUN_00401d00,FUN_004105ec,FUN_00410740,FUN_00410988,FUN_00410e6c,FUN_00411098,__errno_location,atoi,ioctl,memset,puts,send_connected_msg,send_pwdwrong_msg,send_reboot_msg,snprintf,sscanf,strerror,strlen,strstr
+00403a9c	send_saveconfig_msg	FUN_00410740,FUN_00410ca4
+00403b38	get_tmp_did	FUN_00410740,access,close,open,read,strcpy
+00403c44	get_productinfo	FUN_00410740,FUN_00410cd0,access,close,get_tmp_did,memset,munmap,open,read,snprintf,write
+00404118	FUN_00404118	strncmp
+00404154	choose_server	FUN_00410740,memset,snprintf
+0040454c	FUN_0040454c	FUN_00404118,choose_server
+00404848	link_audio_file	__errno_location,printf,strerror,symlink,unlink
+00404908	FUN_00404908	fclose,fopen,fwrite,printf,snprintf
+00404a28	FUN_00404a28	FUN_004021e4,FUN_0040454c,FUN_00404908,FUN_0041049c,FUN_004104ac,FUN_004104c0,FUN_004104e0,FUN_004105a4,FUN_004105c4,FUN_004105ec,FUN_00410740,FUN_00410958,FUN_00410988,FUN_00410ca4,FUN_00410ed0,FUN_00411098,__errno_location,access,ioctl,link_audio_file,memcpy,memset,mq_receive,printf,pthread_mutex_lock,puts,select,sem_post,send_bind_fail_msg,send_bind_timeout_msg,send_connectting_msg,send_reboot_msg,send_saveconfig_msg,send_success_msg,send_wrong_device_msg,settimeofday,sleep,snprintf,sscanf,strcmp,strerror,strlen,strncpy,system,time,usleep
+004082d4	FUN_004082d4	close,open,pthread_mutex_lock,pthread_mutex_unlock,read
+00408358	FUN_00408358	close,open,pthread_mutex_lock,pthread_mutex_unlock,write
+004083dc	save_config	FUN_00408358,FUN_00410740,snprintf,time
+0040881c	set_default	FUN_00408358,FUN_004105ec,FUN_00410740,memset,printf,puts,snprintf
+00408b78	get_config	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,FUN_004082d4,FUN_00410608,FUN_00410740,FUN_00410958,FUN_00410988,access,memset,printf,puts,send_saveconfig_msg,set_default,snprintf
+00409418	FUN_00409418	FUN_00410988,access,memset,strtol
+0040a60c	dispatch_report_cloud_alarm_status	FUN_00410740,FUN_00410988,FUN_00410fb8,atoi,memcpy,memset,sprintf,strlen,usleep
+0040a7dc	FUN_0040a7dc	FUN_00410ed0,dispatch_report_cloud_alarm_status,free,pthread_detach,pthread_self,sem_wait
+0040a844	FUN_0040a844	access
+0040a89c	FUN_0040a89c	
+0040aa34	FUN_0040aa34	
+0040abcc	FUN_0040abcc	printf,ssp_uart_send_cmd
+0040ac10	FUN_0040ac10	FUN_0040abcc,FUN_004105ec
+0040ac6c	FUN_0040ac6c	
+0040acc4	FUN_0040acc4	
+0040ad04	modify_ptz_running_stat	FUN_00410740
+0040ad3c	h601r_stop	FUN_00410740,ssp_uart_send_cmd
+0040ad90	h601r_get_position	FUN_00410740,ssp_uart_send_cmd
+0040aea4	FUN_0040aea4	FUN_004105ec,FUN_00410ed0,h601r_get_position
+0040af30	FUN_0040af30	FUN_0040abcc,FUN_0040ac6c,FUN_0040aea4,h601r_stop
+0040afc8	FUN_0040afc8	FUN_0040abcc,FUN_0040ac6c,FUN_0040aea4,h601r_stop
+0040b02c	FUN_0040b02c	FUN_0040abcc,FUN_0040ac6c,FUN_0040aea4,h601r_stop
+0040b0c8	FUN_0040b0c8	FUN_0040abcc,FUN_0040ac6c,FUN_0040aea4,h601r_stop
+0040b12c	FUN_0040b12c	FUN_004105ec,FUN_00410ed0,h601r_get_position
+0040b1dc	FUN_0040b1dc	FUN_0040abcc,FUN_0040ac6c,FUN_0040b12c,h601r_stop
+0040b240	FUN_0040b240	FUN_0040abcc,FUN_0040ac6c,FUN_0040b12c,h601r_stop
+0040b2a8	FUN_0040b2a8	FUN_0040abcc,FUN_0040b12c,h601r_stop
+0040b328	FUN_0040b328	FUN_0040aa34,FUN_0040ac10,FUN_0040ac6c,FUN_0040b12c,FUN_004105ec,h601r_get_position,h601r_stop,printf
+0040b6d8	set_motor_dir_speed	FUN_00410740,__errno_location,ioctl,printf,strerror
+0040b7ac	FUN_0040b7ac	FUN_004105ec,set_motor_dir_speed
+0040b808	ptz_get_position	FUN_00410740,__errno_location,ioctl,strerror
+0040b930	FUN_0040b930	FUN_004105ec,FUN_00410ed0,ptz_get_position
+0040b9bc	FUN_0040b9bc	FUN_004105ec,FUN_00410ed0,ptz_get_position
+0040ba6c	ptz_stop	FUN_004105ec,FUN_00410740,FUN_00410ed0,__errno_location,ioctl,ptz_get_position,strerror
+0040bd8c	FUN_0040bd8c	FUN_0040acc4,FUN_0040b930,ptz_stop,set_motor_dir_speed
+0040be58	FUN_0040be58	FUN_0040acc4,FUN_0040b9bc,ptz_stop,set_motor_dir_speed
+0040beb8	FUN_0040beb8	FUN_0040acc4,FUN_0040b9bc,ptz_stop,set_motor_dir_speed
+0040bf1c	FUN_0040bf1c	FUN_0040acc4,FUN_0040b930,ptz_stop,set_motor_dir_speed
+0040bf7c	FUN_0040bf7c	FUN_0040b9bc,ptz_stop,set_motor_dir_speed
+0040bffc	FUN_0040bffc	FUN_0040a89c,FUN_0040acc4,FUN_0040b7ac,FUN_0040b9bc,FUN_004105ec,printf,ptz_get_position,ptz_stop
+0040c3b4	FUN_0040c3b4	localtime,printf,time
+0040c4f4	ptz_cruise_start	FUN_0040b9bc,FUN_0040be58,FUN_0040beb8,FUN_0040bffc,FUN_0040c3b4,FUN_00410740,FUN_00410ed0
+0040ca84	FUN_0040ca84	localtime,printf,time
+0040cbc4	h601r_cruise_start	FUN_0040b12c,FUN_0040b1dc,FUN_0040b240,FUN_0040b328,FUN_0040ca84,FUN_00410740,FUN_00410ed0
+0040d154	FUN_0040d154	FUN_00410ca4,memcpy,memset
+0040d1e4	FUN_0040d1e4	FUN_00410ca4,memcpy,memset
+0040d274	FUN_0040d274	FUN_0040acc4,FUN_0040bf7c,FUN_0040d154,FUN_0040d1e4,access,memset,mkdir,ptz_get_position,puts,sleep,snprintf,strlen
+0040df64	FUN_0040df64	
+0040df88	FUN_0040df88	
+0040e10c	FUN_0040e10c	malloc,memset
+0040e154	FUN_0040e154	free,malloc,memcpy
+0040e2c4	FUN_0040e2c4	strlen
+0040e5c4	FUN_0040e5c4	FUN_0040e154,malloc,sprintf,strchr,strcpy
+0040e8f4	FUN_0040e8f4	FUN_0040df88,malloc
+0040ed3c	FUN_0040ed3c	FUN_0040e10c,FUN_0040e8f4,FUN_0040ed3c,pow,strncmp
+0040f98c	FUN_0040f98c	FUN_0040e154,FUN_0040e2c4,FUN_0040e5c4,FUN_0040f98c,free,malloc,memcpy,memset,strcpy,strlen
+004102a0	FUN_004102a0	FUN_004102a0,free
+00410368	FUN_00410368	FUN_0040e10c,FUN_0040ed3c,FUN_004102a0
+0041049c	FUN_0041049c	FUN_00410368
+004104ac	FUN_004104ac	FUN_0040f98c
+004104c0	FUN_004104c0	
+004104e0	FUN_004104e0	
+0041051c	FUN_0041051c	
+004105a4	FUN_004105a4	FUN_004102a0,FUN_0041051c
+004105c4	FUN_004105c4	FUN_0040e10c
+004105ec	FUN_004105ec	memset
+00410608	FUN_00410608	memcpy
+00410624	FUN_00410624	memset,puts,socket
+00410740	FUN_00410740	FUN_00410624,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+00410958	FUN_00410958	pclose,popen
+00410988	FUN_00410988	FUN_00410958,fileno,fread,pclose,popen,select,strstr
+00410b78	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789	gettimeofday,rand,srand,time
+00410c4c	FUN_00410c4c	mq_open
+00410ca4	FUN_00410ca4	mq_send
+00410cd0	FUN_00410cd0	close,mmap,open,usleep
+00410dc4	FUN_00410dc4	close,lseek,mmap,open,write
+00410e6c	FUN_00410e6c	strlen
+00410ed0	FUN_00410ed0	select
+00410f38	FUN_00410f38	gettimeofday
+00410f4c	FUN_00410f4c	gettimeofday
+00410fb8	FUN_00410fb8	sscanf,strlen,strstr
+00411098	FUN_00411098	
+004110a0	FUN_004110a0	write
+00411158	FUN_00411158	write
+0041130c	ssp_uart_init	cfsetispeed,cfsetospeed,open,printf,pthread_create,puts,tcflush,tcgetattr,tcsetattr
+00411850	FUN_00411850	write
+0041195c	ssp_uart_send_cmd	FUN_00411850,printf,puts,sleep,write
+00411f30	FUN_00411f30	
+00411fa0	_fini	FUN_00401afc
+004153a0	__PLT_HEAD	
+004153c0	putchar	putchar
+004153d0	strcpy	
+004153e0	asctime	asctime
+004153f0	ioctl	ioctl
+00415400	popen	
+00415410	printf	printf
+00415420	pthread_create	
+00415430	strerror	strerror
+00415440	pclose	pclose
+00415450	snprintf	
+00415460	munmap	munmap
+00415480	usleep	usleep
+00415490	getpid	
+004154a0	prctl	prctl
+004154b0	memcpy	memcpy
+004154c0	mq_receive	
+004154d0	puts	puts
+004154e0	tcflush	
+004154f0	system	system
+00415500	malloc	
+00415510	sleep	sleep
+00415520	vsnprintf	
+00415530	mq_send	mq_send
+00415540	sem_wait	
+00415550	sem_post	sem_post
+00415560	settimeofday	
+00415570	socket	socket
+00415580	select	
+00415590	readdir	readdir
+004155a0	lseek	lseek
+004155b0	mmap	
+004155c0	pthread_detach	pthread_detach
+004155d0	gmtime_r	gmtime_r
+004155e0	strtol	
+004155f0	cfsetispeed	cfsetispeed
+00415600	write	
+00415610	cfsetospeed	cfsetospeed
+00415620	sem_init	
+00415630	mktime	mktime
+00415640	strstr	strstr
+00415650	rand	
+00415660	signal	signal
+00415670	read	
+00415680	strncmp	strncmp
+00415690	pow	
+004156a0	strncpy	strncpy
+004156b0	unlink	
+004156c0	sendto	sendto
+004156d0	sscanf	
+004156e0	statvfs	statvfs
+004156f0	fread	fread
+00415700	symlink	
+00415710	gettimeofday	gettimeofday
+00415720	fopen	
+00415730	localtime	localtime
+00415740	memset	memset
+00415750	srand	
+00415760	fclose	fclose
+00415770	inet_ntoa	
+00415780	tcgetattr	tcgetattr
+00415790	time	
+004157a0	opendir	opendir
+004157b0	strcmp	strcmp
+004157c0	pthread_mutex_unlock	
+004157d0	sprintf	sprintf
+004157e0	pthread_self	
+004157f0	fwrite	fwrite
+00415800	access	
+00415810	pthread_mutex_lock	pthread_mutex_lock
+00415820	__errno_location	
+00415830	atoi	atoi
+00415840	fileno	fileno
+00415850	pthread_mutex_init	
+00415860	strlen	strlen
+00415870	open	
+00415880	strchr	strchr
+00415890	closedir	
+004158a0	mq_open	mq_open
+004158b0	tcsetattr	
+004158c0	mkdir	mkdir
+004158d0	close	close
+004158e0	vfprintf	
+004158f0	free	free

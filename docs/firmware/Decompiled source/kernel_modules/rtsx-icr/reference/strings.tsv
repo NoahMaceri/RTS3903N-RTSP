@@ -1,0 +1,222 @@
+000150ec	000103f8,00010440,00010494,FUN_00011828	0x%x\n
+000150f4	FUN_000105e0,FUN_0001078c	%s error: register 0x%4x out of range\n
+0001511c	FUN_0001078c	0x%llx\n
+00015124	FUN_00010c84	%s error: unknown cmd->flag\n
+00015144	rtsx_icr_insert_card	TRIGGER_GPIO
+00015154	rtsx_icr_reg_read	%s error: read register 0x%02X failed\n
+0001517c	FUN_0001125c	%s error: 0x%04X(%d): %8ph\n
+00015198	rtsx_icr_wait_cmd	%s error: %d: HCBAR = %08X, HCBCTLR = %08X\n
+000151c4	FUN_00011828,FUN_00011a08	%s error: register 0x%04x out of range\n
+000151ec	rtsx_icr_reg_write	%s error: write register 0x%02X failed\n
+00015214	FUN_00011ce4	%s error: SD_BUS_STAT = 0x%x\n
+00015234	FUN_00011ce4	%s error: %d: switch voltage failed\n
+0001525c	FUN_00011f58	%s error: invalid response bit: 0x%2x\n
+00015284	FUN_00011f58	%s error: CRC7 error: 0x%02x\n
+000152a4	FUN_00014970,rtsx_icr_transfer_data	&x->wait
+000152b0	rtsx_icr_transfer_data	%s error: %d: HDBAR = %08X -> %08X, HDBCTLR = %08X\n
+000152e4	rtsx_icr_transfer_data	%s error: SDMAR = %08x, SDMACTLR = %08x\n
+00015310	rtsx_icr_transfer_data	%s error: ADMA table at %08X: %08x, %04x, %04x\n
+00015341		6RTSX_ICR driver removed\n
+0001535c	FUN_000137ec	%s error: wait for PLL stable fail\n
+00015380	FUN_000137ec	%s error: set bus width to %u\n
+000153a0	FUN_000137ec	%s error: set timing to %u\n
+000153bc	FUN_000137ec	%s error: set clock to %u\n
+000153d8	FUN_000137ec	%s error: set power mode to %u\n
+000153f8	FUN_0001426c	%s error: disable short dma mode\n
+0001541c	FUN_0001426c	%s error: CMD %d 0x%08x (%d, %d)\n
+00015441		3device has no IRQ, check setup\n
+00015465		3device has no MEM, check setup\n
+00015488	FUN_00014970	sd-platform
+00015495		3request memory failed\n
+000154b1		3mapping memory failed\n
+000154cc	FUN_00014970	%s error: request IRQ %d failed\n
+000154f0	FUN_00014970	SD_PWR_CTRL_C2
+00015500	FUN_00014970	SD_VOTAGE_SWITCH_CTRL_C2
+0001551c	FUN_00014970	SD_PULL_CTRL_C2
+0001552d		3request GPIO failed\n
+00015544	FUN_00014970	&icr->mutex
+00015554	00015930	force_rw
+00015560		data_timeout_ms
+00015570		cmd_timeout_ms
+00015580		min_clock
+0001558c		max_clock
+00015598	00015980	trigger
+000155a0	00015990	support_uhs
+000155ac	000159a0	card_exist
+000155b8	000159b0	ip_register
+000155c4	000159c0	ocp_register
+000155fc	FUN_00014970	rtsx_icr_acquire_irq
+00015614	FUN_00011f58	rtsx_icr_check_resp
+00015628	FUN_00010c84	rtsx_icr_resp_type
+0001563c	FUN_0001426c	sdmmc_request
+0001564c	FUN_000137ec	rtsx_icr_power_on_asic
+00015664	FUN_000137ec	sdmmc_set_ios
+00015674	FUN_00011ce4	rtsx_icr_wait_voltage_stable_2
+00015694	FUN_00011ce4	sdmmc_switch_voltage
+000156ac	FUN_00011828	rtsx_icr_ip_register_get
+000156c8	FUN_00011a08	rtsx_icr_ip_register_set
+000156e4	FUN_0001078c	rtsx_icr_ocp_register_get
+00015700	FUN_000105e0	rtsx_icr_ocp_register_set
+0001571c	rtsx_icr_transfer_data	rtsx_icr_dump_dma_table
+00015734	rtsx_icr_transfer_data	rtsx_icr_transfer_data
+0001574c	rtsx_icr_reg_write	rtsx_icr_reg_write
+00015760	rtsx_icr_reg_read	rtsx_icr_reg_read
+00015774	FUN_0001125c	dump_reg_range
+00015784	rtsx_icr_wait_cmd	rtsx_icr_wait_cmd
+000157f0	000158f4	default_tx_phase
+00015804	00015904	force_rw
+00015810	_elfSectionHeaders::000001ec	description=Realtek ipcam sd/mmc host controller driver
+00015848		author=Micky Ching <micky_ching@realsil.com.cn>
+00015878		license=GPL
+00015884		parmtype=default_tx_phase:int
+000158a2		parmtype=force_rw:bool
+000158bc		depends=
+000158c5		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.rel.rodata
+.shstrtab::0000007a		.modinfo
+.shstrtab::00000083		.rel__param
+.shstrtab::0000008f		.rel.data
+.shstrtab::00000099		.rel.gnu.linkonce.this_module
+.shstrtab::000000b7		.bss
+.shstrtab::000000bc		.sbss
+.shstrtab::000000c2		.rel.pdr
+.shstrtab::000000cb		.mdebug.abi32
+.shstrtab::000000d9		.comment
+.shstrtab::000000e2		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		$LC22
+.strtab::00000081		$LC23
+.strtab::00000087		$LC24
+.strtab::0000008d		$LC25
+.strtab::00000093		$LC26
+.strtab::00000099		$LC27
+.strtab::0000009f		$LC28
+.strtab::000000a5		$LC29
+.strtab::000000ab		$LC30
+.strtab::000000b1		$LC31
+.strtab::000000b7		$LC32
+.strtab::000000bd		$LC33
+.strtab::000000c3		$LC34
+.strtab::000000c9		$LC35
+.strtab::000000cf		$LC37
+.strtab::000000d5		$LC36
+.strtab::000000db		free_irq
+.strtab::000000e4		ioread32
+.strtab::000000ed		__udelay
+.strtab::000000f6		rtsx_icr_set_bus_width
+.strtab::0000010d		dev_get_drvdata
+.strtab::0000011d		mmc_request_done
+.strtab::0000012e		dev_attr_min_clock
+.strtab::00000141		iowrite32
+.strtab::0000014b		platform_driver_unregister
+.strtab::00000166		__this_module
+.strtab::00000174		platform_get_irq
+.strtab::00000185		snprintf
+.strtab::0000018e		complete
+.strtab::00000197		rtsx_icr_set_clock
+.strtab::000001aa		__iounmap
+.strtab::000001b4		rtsx_icr_reg_read
+.strtab::000001c6		__rtsx_icr_add_cmd
+.strtab::000001d9		cleanup_module
+.strtab::000001e8		memcpy
+.strtab::000001ef		rtsx_icr_set_timing
+.strtab::00000203		kfree
+.strtab::00000209		rts_sys_force_reset
+.strtab::0000021d		rtsx_icr_send_cmd
+.strtab::0000022f		mmc_remove_host
+.strtab::0000023f		gpio_free
+.strtab::00000249		__release_region
+.strtab::0000025a		init_module
+.strtab::00000266		rtsx_icr_insert_card
+.strtab::0000027b		dev_attr_cmd_timeout_ms
+.strtab::00000293		mmc_alloc_host
+.strtab::000002a2		mmc_add_host
+.strtab::000002af		wait_for_completion_interruptible_timeout
+.strtab::000002d9		_kstrtoul
+.strtab::000002e3		rtsx_icr_transfer_data
+.strtab::000002fa		msecs_to_jiffies
+.strtab::0000030b		queue_delayed_work_on
+.strtab::00000321		kmem_cache_alloc
+.strtab::00000332		device_create_file
+.strtab::00000345		rtsx_icr_pp_write
+.strtab::00000357		synchronize_irq
+.strtab::00000367		rtsx_icr_transfer_stop
+.strtab::0000037e		__ioremap
+.strtab::00000388		preempt_schedule
+.strtab::00000399		platform_driver_register
+.strtab::000003b2		kstrtoint
+.strtab::000003bc		request_threaded_irq
+.strtab::000003d1		platform_get_resource
+.strtab::000003e7		mutex_lock
+.strtab::000003f2		gpio_direction_output
+.strtab::00000408		rtsx_icr_reg_write
+.strtab::0000041b		mod_delayed_work_on
+.strtab::0000042f		rts_sys_mem_up
+.strtab::0000043e		dev_attr_max_clock
+.strtab::00000451		printk
+.strtab::00000458		__mutex_init
+.strtab::00000465		dev_err
+.strtab::0000046d		memset
+.strtab::00000474		dev_attr_data_timeout_ms
+.strtab::0000048d		kstrtoull
+.strtab::00000497		__init_waitqueue_head
+.strtab::000004ad		rtsx_icr_remove_card
+.strtab::000004c2		arch_local_irq_restore
+.strtab::000004d9		rtsx_icr_pp_read
+.strtab::000004ea		rtsx_icr_add_debugfs
+.strtab::000004ff		mutex_unlock
+.strtab::0000050c		cancel_delayed_work_sync
+.strtab::00000525		init_timer_key
+.strtab::00000534		param_ops_bool
+.strtab::00000543		sg_next
+.strtab::0000054b		__gpio_set_value
+.strtab::0000055c		mips_dma_map_ops
+.strtab::0000056d		delayed_work_timer_fn
+.strtab::00000583		gpio_request
+.strtab::00000590		sg_copy_from_buffer
+.strtab::000005a4		rtsx_icr_wait_cmd
+.strtab::000005b6		mmc_free_host
+.strtab::000005c4		dev_set_drvdata
+.strtab::000005d4		arch_local_irq_save
+.strtab::000005e8		iomem_resource
+.strtab::000005f7		param_ops_int
+.strtab::00000605		mmc_detect_change
+.strtab::00000617		sg_copy_to_buffer
+.strtab::00000629		msleep
+.strtab::00000630		__kmalloc
+.strtab::0000063a		kmalloc_caches
+.strtab::00000649		__request_region
+.strtab::0000065a		device_remove_file
+.strtab::0000066d		system_wq

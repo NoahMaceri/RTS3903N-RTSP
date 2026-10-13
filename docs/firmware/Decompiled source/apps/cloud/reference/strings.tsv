@@ -1,0 +1,428 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+004009b7		__uClibc_main
+004009c5		librt.so.0
+004009d0		_DYNAMIC_LINKING
+004009e1		__RLD_MAP
+004009eb		mq_receive
+004009f6		mq_send
+004009fe		mq_open
+00400a0b		pthread_self
+00400a18		memset
+00400a1f		pthread_detach
+00400a2e		socket
+00400a35		malloc
+00400a43		pthread_create
+00400a5d		libpthread.so.0
+00400a6d		system
+00400a74		sem_wait
+00400a7d		sem_post
+00400a86		sem_init
+00400a8f		strlen
+00400a9b		sprintf
+00400aaa		fclose
+00400ab1		fopen
+00400ab7		gettimeofday
+00400ae1		floor
+00400aeb		libc.so.0
+00400af5		putchar
+00400b04		popen
+00400b0a		__xpg_basename
+00400b19		pclose
+00400b20		usleep
+00400b27		perror
+00400b33		remove
+00400b3a		vsnprintf
+00400b44		select
+00400b5f		strstr
+00400b66		signal
+00400b7d		sendto
+00400b8b		fread
+00400b91		localtime
+00400b9b		srand
+00400ba1		fwrite
+00400ba8		access
+00400bb4		fileno
+00400bc2		__ctype_tolower
+00400bd2		vfprintf
+00400bdb		stdout
+00400be2		_ftext
+00400bf0		_edata
+00400bf7		__bss_start
+0040dee4	FUN_004049c8,_ftext	"enable"
+0040df14	_ftext	"repeater"
+0040df20	_ftext,yi_sync_time	"time"
+0040df28	_ftext	%d,%d,%d,%d,%d,%d,%d
+0040dfcc	00406a84,00406b1c,00406ba4,00406bd8,FUN_00402a0c,FUN_004049c8,cloud_cap_pic,cloud_clear_api_server,cloud_finish_sync_info_from_server,cloud_make_video,cloud_report_alarm_upload_status,cloud_save_api_server,cloud_send_shortrec_msg,cloud_set_abnormal_sound_occur,cloud_set_babycry_occur,cloud_set_bind_result,cloud_set_cloud_image_state,cloud_set_cloud_storage_mode,cloud_set_cloud_storage_state,cloud_set_prev_motion_state,cloud_set_region,cloud_set_time,cloud_set_tnp,cloud_set_tz_offset,cloud_set_video_backup_state,cloud_update_upgradefirmware_status,do_need_update,do_update_ex,main,msg_proc,report_tnp_on_line_status,send_apmode_result,send_vc_capture_end_msg,send_vc_record_end_msg,sync_time,sys_init,webapi_do_bindkey,webapi_do_check_did,webapi_do_check_region,webapi_do_event_update,webapi_do_event_upload,webapi_do_log_upload,webapi_do_login,webapi_do_reset_by_specified_server,webapi_do_tnp_on_line,yi_motion_push,yi_proc,yi_push_rcd_file,yi_push_voicecmd_file,yi_sync_time	cloud.c
+0040dfd4	send_apmode_result	mqueue_send(0x%x), ret=%d
+0040dff0	send_apmode_result	Wait ap_enable timeout
+0040e030	cloud_report_alarm_upload_status	alarm_type
+0040e040	cloud_report_alarm_upload_status	device_version
+0040e058	cloud_report_alarm_upload_status	cloud_report_alarm_upload_status send_msg msg fail!\n
+0040e090	cloud_set_time	msg snd err, err no is %d
+0040e0ac	cloud_set_time	msg snd success
+0040e0bc	cloud_set_region	cloud_set_region send_msg fail!\n
+0040e0e0	cloud_set_region	cloud_set_region send_msg ok!\n
+0040e100		cloud_set_server_connect_ok send_msg fail!\n
+0040e12c		cloud_set_server_connect_ok send_msg ok!\n
+0040e158	cloud_set_bind_result	cloud_set_bind_result send_msg fail!\n
+0040e180	cloud_set_bind_result	cloud_set_bind_result send_msg ok!\n
+0040e1a4		cloud_set_power send_msg fail!\n
+0040e1c4		cloud_set_power send_msg ok!\n
+0040e1e4		cloud_set_light send_msg fail!\n
+0040e204		cloud_set_light send_msg ok!\n
+0040e224		cloud_set_motion_record_state send_msg fail!\n
+0040e254		cloud_set_motion_record_state send_msg ok!\n
+0040e280		cloud_set_mirror_flip_state send_msg fail!\n
+0040e2ac		cloud_set_mirror_flip_state send_msg ok!\n
+0040e2d8		cloud_set_infrared_lamp_state %s send_msg fail!\n
+0040e30c		cloud_set_infrared_lamp_state %s send_msg ok!\n
+0040e33c	cloud_set_tnp	cloud_set_tnp send_msg fail!\n
+0040e35c	cloud_set_tnp	cloud_set_tnp send_msg ok!\n
+0040e378	cloud_finish_sync_info_from_server	cloud_finish_sync_info_from_server send_msg DISPATCH_FINISH_SYNC_INFO_FROM_SERVER fail!\n
+0040e3d4	cloud_save_api_server	cloud_save_api_server send_msg DISPATCH_SAVE_API_SERVER fail!\n
+0040e414	cloud_clear_api_server	cloud_clear_api_server send_msg DISPATCH_CLEAR_API_SERVER fail!\n
+0040e458	cloud_set_tz_offset	cloud_set_tz_offset %d send_msg msg fail!\n
+0040e484	cloud_set_cloud_storage_state	cloud_set_cloud_storage_state %02x send_msg msg fail!\n
+0040e4bc	cloud_set_cloud_storage_mode	cloud_set_cloud_storage_mode %02x send_msg msg fail!\n
+0040e4f4	cloud_set_cloud_image_state	cloud_set_cloud_image_state %02x send_msg msg fail!\n
+0040e52c	FUN_004049c8,cloud_set_video_backup_state	p2p_set_video_backup_state fail!\n
+0040e550	cloud_set_babycry_occur	cloud_set_babycry_occur send_msg fail!\n
+0040e578	cloud_set_babycry_occur	cloud_set_babycry_occur send_msg ok!\n
+0040e5a0	cloud_set_abnormal_sound_occur	cloud_set_abnormal_sound_occur send_msg fail!\n
+0040e5d0	cloud_set_abnormal_sound_occur	cloud_set_abnormal_sound_occur send_msg ok!\n
+0040e600	msg_proc	rcd_file_path is %s, len = %d\n
+0040e620	msg_proc	unknown msg 0x%04x
+0040e634		cloud_set_debug_mode send_msg fail!\n
+0040e65c		cloud_set_debug_mode send_msg ok!\n
+0040e680	cloud_cap_pic	cloud_cap_pic send_msg fail!\n
+0040e6a0	cloud_cap_pic	cloud_cap_pic send_msg ok!\n
+0040e6bc	cloud_make_video	cloud_make_video %d(s) send_msg fail!\n
+0040e6e4	cloud_make_video	cloud_make_video %d(s)send_msg ok!\n
+0040e708		cloud_start_panorama_capture send_msg to rmm fail!\n
+0040e73c		cloud_abort_panorama_capture send_msg to rmm fail!\n
+0040e770		cloud_set_panorama_capture_state send_msg to dispatch fail!\n
+0040e7b0		%s -c 301 -url "%s/vmanager/upgrade/get_md5"
+0040e7e0	FUN_00402a0c,FUN_004049c8,cloud_update_upgradefirmware_status,report_tnp_on_line_status,webapi_do_bindkey,webapi_do_check_did,webapi_do_check_region,webapi_do_event_update,webapi_do_event_upload,webapi_do_log_upload,webapi_do_login,webapi_do_reset_by_specified_server,webapi_do_tnp_on_line,yi_motion_push,yi_push_rcd_file,yi_push_voicecmd_file,yi_sync_time	/backup/cloudAPI
+0040e7f4	FUN_004049c8,webapi_do_bindkey,webapi_do_check_did,webapi_do_event_update,webapi_do_reset_by_specified_server,webapi_do_tnp_on_line,yi_motion_push,yi_push_rcd_file,yi_push_voicecmd_file,yi_sync_time	"code"
+0040e804		cloudAPI get_md5 success %s\n
+0040e824	do_update_ex	killall upgrade_firmware;rm -f /tmp/sd/home_r10;rm -f /tmp/sd/home_r10m;/home/app/upgrade_firmware "%s" "%s" &
+0040e894	do_update_ex	start force update url[%s] md5[%s]\n
+0040e8b8	FUN_00402a0c	%s -c 145 -url "%s/vmanager/ipc/firmware/upgrade/silent" -did %s -sname %s -version %s 
+0040e910	FUN_00402a0c,cloud_update_upgradefirmware_status,report_tnp_on_line_status,webapi_do_bindkey,webapi_do_check_region,webapi_do_login,webapi_do_reset_by_specified_server,webapi_do_tnp_on_line	cmd = %s\n
+0040e91c	FUN_00402a0c	ret = %s\n
+0040e928	FUN_00402a0c	needUpdate
+0040e93c	FUN_00402a0c	downloadPath
+0040e94c	FUN_00402a0c	md5Code
+0040e954	webapi_do_tnp_on_line	now do webapi_do_tnp_on_line \n
+0040e974	webapi_do_tnp_on_line	%s -c 141 -url "%s/v4/tnp/on_line" -keySec %s -uid %s -version %s
+0040e9b8	webapi_do_tnp_on_line	webapi_do_tnp_on_line success %s\n
+0040e9dc	webapi_do_tnp_on_line	"DID"
+0040e9e4	webapi_do_tnp_on_line	"License"
+0040e9f0	webapi_do_tnp_on_line	"InitString"
+0040ea00	webapi_do_check_region	now do check region\n
+0040ea18	webapi_do_check_region	%s -c 143 -url %s -uid %s 
+0040ea34	webapi_do_check_region	http://yicamera-router.mi-ae.com.sg/v1/ipc/router
+0040ea68	webapi_do_check_region	"endpoint"
+0040ea74	webapi_do_check_region	"dlProtocol"
+0040ea84	webapi_do_check_region	https://%s
+0040eaa0	webapi_do_check_region	in webapi_do_check_region, region_id = %d, language = %d, api_server = %s, sname = %s, dlproto = %s\n
+0040eb08	webapi_do_reset_by_specified_server	now do reset \n
+0040eb18	webapi_do_reset_by_specified_server	%s -c 139 -keySec %s -url %s/v4/ipc/reset -uid %s -version %s -mac %s 
+0040eb60	webapi_do_reset_by_specified_server	webapi_do_reset success %s\n
+0040eb7c	webapi_do_login,webapi_do_reset_by_specified_server	webapi_do_reset fail %s\n
+0040eb98	webapi_do_bindkey	now do bindkey \n
+0040ebac	webapi_do_bindkey	%s -c 137 -key %s -keySec %s -url %s/v4/ipc/qr_bind -uid %s 
+0040ebec	webapi_do_bindkey	webapi_do_bindkey success %s\n
+0040ec0c	webapi_do_bindkey	webapi_do_bindkey fail %s\n
+0040ec28	FUN_004096e8,FUN_0040a338,webapi_do_check_did,webapi_do_event_update	false
+0040ec30	webapi_do_event_update	%s -c 304 -url "%s/v4/alert/event" -uid %s -keySec %s -EventTime %lu -EventStat %s -pic_url "%s" -video_url "%s" -pic_pwd "%s" -video_pwd "%s" -type %d -sub_type %d 
+0040ecd8	FUN_004049c8,webapi_do_check_did,webapi_do_event_update,webapi_do_event_upload,webapi_do_log_upload,yi_motion_push,yi_push_rcd_file,yi_push_voicecmd_file,yi_sync_time	cmd=%s\n
+0040ed04	webapi_do_event_update	do_cloud_event_update success %s\n
+0040ed28	webapi_do_event_update	"ipcSetTime"
+0040ed38	webapi_do_event_update	got trans_json ipcSetTime fail\n
+0040ed58	webapi_do_event_upload	%s -c 411 -url "%s" -filename %s
+0040ed7c	webapi_do_event_upload	"accessKeyId"
+0040ed8c	webapi_do_event_upload	rm -f %s
+0040ed98	webapi_do_log_upload	%s -c 413 -url "%s" -filename %s -device_id %s&
+0040edc8	webapi_do_log_upload	https://hch.xiaoyi.com:9443/upload/log
+0040edf0	webapi_do_log_upload	/tmp/log.txt
+0040ee00	webapi_do_log_upload	UploadLog.Success
+0040ee14	webapi_do_log_upload	Upload ok!\n
+0040ee20	webapi_do_login	now do login \n
+0040ee30	webapi_do_login	%s -c 138 -url "%s/v4/ipc/on_line" -key %s -keySec %s -uid %s -version %s -ssid "%s" -mac %s -ip %s -signal_quality %d -packetloss %d -p2pconnect %d -p2pconnect_success %d -apmode %s -tfstat %d 
+0040ef74	webapi_do_login	uploadUrl
+0040ef80	webapi_do_login	webapi_do_login success\n
+0040efbc	webapi_do_login	css_flag
+0040efe8	webapi_do_login	css_mode
+0040f014	webapi_do_login	css_image_flag
+0040f048	webapi_do_login	appParam
+0040f054	webapi_do_login	router_backup
+0040f064	webapi_do_login	enable
+0040f06c	webapi_do_login	resolution
+0040f078	webapi_do_login	user_path
+0040f084	webapi_do_login	backup_period
+0040f0ec	webapi_do_login	abilityTable
+0040f124	webapi_do_login	abilities
+0040f130	webapi_do_login	support
+0040f13c	webapi_do_login	send_msg msg(DISPATCH_APPLY_ABILITY_SETS) fail!\n
+0040f1a4	webapi_do_check_did	%s -c 311 -url %s/v4/ipc/check_did -uid %s -keySec %s
+0040f1dc	webapi_do_check_did	"allow"
+0040f1e4	FUN_004049c8	%s -c 142 -url %s/v4/ipc/deviceinfo -uid %s -keySec %s
+0040f21c	FUN_004049c8,yi_motion_push,yi_push_voicecmd_file	"data"
+0040f224	FUN_004049c8	"tz_offset"
+0040f230	FUN_004049c8	"css_flag"
+0040f23c	FUN_004049c8	"css_mode"
+0040f248	FUN_004049c8	"css_image_flag"
+0040f25c	FUN_004049c8	"appParam"
+0040f268	FUN_004049c8	"router_backup"
+0040f278	FUN_004049c8	"resolution"
+0040f288	FUN_004049c8	"user_path"
+0040f294	FUN_004049c8	"backup_period"
+0040f2a4	FUN_004049c8	"schedule_power"
+0040f2dc	FUN_004049c8	"schedule_power_on"
+0040f318	FUN_004049c8	"schedule_power_off"
+0040f35c	FUN_00404fd4	/home/app/crypt_file -e %s %s %s
+0040f380	yi_push_rcd_file	rcd_file_path invalid = %s\n
+0040f39c	yi_push_rcd_file	%s -c 414 -url %s/v4/ipc/upload_data -uid %s -keySec %s -filename %s
+0040f3e4	yi_push_rcd_file	"uploadUrl"
+0040f3f0	yi_push_rcd_file	gen_file_url success \n
+0040f408	yi_push_rcd_file	rm -f /tmp/recorddata/rcd_*
+0040f45c	cloud_send_shortrec_msg	cloud_send_shortrec_msg %d(s) send_msg fail!\n
+0040f48c	cloud_send_shortrec_msg	cloud_send_shortrec_msg %d(s)send_msg ok!\n
+0040f4b8	yi_motion_push	/tmp/babycry.jpg
+0040f4cc	yi_motion_push	/tmp/babycry.mp4
+0040f4e0	yi_motion_push	%s.crypt
+0040f4ec	yi_motion_push	rm -f %s* %s*
+0040f4fc	yi_motion_push	/tmp/abnormal_sound.jpg
+0040f514	yi_motion_push	/tmp/abnormal_sound.mp4
+0040f52c	yi_motion_push,yi_push_voicecmd_file	%s -c 306 -url %s/v5/alert/gen_presigned_url -uid %s -keySec %s -type %d -sub_type %d -suffix %s -time %d
+0040f598	yi_motion_push,yi_push_voicecmd_file	jpg,mp4
+0040f5a0	yi_motion_push,yi_push_voicecmd_file	gen_presigned_url success \n
+0040f5c4	yi_motion_push,yi_push_voicecmd_file	"jpg"
+0040f5cc	yi_motion_push,yi_push_voicecmd_file	"url"
+0040f5d4	yi_motion_push,yi_push_voicecmd_file	"pwd"
+0040f5dc	yi_motion_push,yi_push_voicecmd_file	"mp4"
+0040f5e4	yi_motion_push	mqueue_send RMM_SHORT_RECORD_WARNING err
+0040f610	yi_motion_push	/tmp/motion.jpg
+0040f620	yi_motion_push	/tmp/motion.mp4
+0040f630	yi_push_voicecmd_file	/tmp/vc_record.mp4.crypt
+0040f64c	yi_push_voicecmd_file	/tmp/vc_record.mp4
+0040f660	yi_push_voicecmd_file	/tmp/vc_capture.jpg.crypt
+0040f67c	yi_push_voicecmd_file	/tmp/vc_capture.jpg
+0040f748	send_vc_capture_end_msg	send_vc_capture_end_msg send_msg ok!\n
+0040f770	send_vc_capture_end_msg	send_vc_capture_end_msg send_msg fail!\n
+0040f798	send_vc_record_end_msg	send_vc_record_end_msg send_msg ok!\n
+0040f7c0	send_vc_record_end_msg	send_vc_record_end_msg send_msg fail!\n
+0040f7e8	cloud_set_prev_motion_state	cloud_change_prev_motion_state send_msg ok!\n
+0040f818	cloud_set_prev_motion_state	send cloud_change_prev_motion_state _msg fail!\n
+0040f848	cloud_set_prev_motion_state	cloud_change_prev_motion_state send_msg timeout!\n
+0040f87c	00406a90	\ngot a motion event_timeout(%d) systick(%d) p2p_viewing_cnt(%d)\n
+0040f8c0	00406b18	cloud report bigger move\n
+0040f8dc	00406bbc	cloud report rcd, file path = %s\n
+0040f900	00406bf0	rcd file not exist, path = %s\n
+0040f920	report_tnp_on_line_status	%s -c 192 -url "%s/ipc/monitor/heartbeat" -did %s -version %s -mac %s -heart_time %llu -p2p_status %d 
+0040f988	cloud_update_upgradefirmware_status,report_tnp_on_line_status	https://monitor-log.xiaoyi.com
+0040f9a8	report_tnp_on_line_status	report_tnp_on_line_status success state = %d did = %s\n
+0040f9e0	cloud_update_upgradefirmware_status,report_tnp_on_line_status	ret_string = %s\n
+0040fa30	do_need_update	DISPATCH_UPGRADE_MODE\n
+0040fa48	yi_proc	yi_proc ok, update time[%d]\n
+0040fa68	yi_proc	cloud_set_ban_device send_msg DISPATCH_SET_BAN_DEVICE fail!\n
+0040faa8	yi_proc	ban region!\n
+0040fab8	yi_proc	cloud_set_ban_device send_msg RMM_SPEAK_BAN_DEVICE fail!\n
+0040faf4	yi_proc	webapi_do_reset last_api_server fail
+0040fb1c	yi_proc	webapi_do_reset fail
+0040fb34	yi_proc	webapi_do_login fail
+0040fb4c	yi_proc	webapi_do_bindkey fail
+0040fb64	yi_proc	cloud_update_upgrade send_msg CLOUD_UPDATE_SUCCESS fail!\n
+0040fba0	yi_proc	cloud_update_upgrade send_msg CLOUD_UPDATE_SUCCESS success!\n
+0040fbe0	yi_proc	cloud_update_upgrade send_msg CLOUD_UPDATE_FAILED fail!\n
+0040fc1c	yi_proc	cloud_update_upgrade send_msg CLOUD_UPDATE_FAILED success!\n
+0040fc58	yi_proc	cloud_clr_update_status send_msg DISPATCH_CLR_UPDATE_STATUS fail!\n
+0040fc9c	yi_proc	cloud_clr_update_status send_msg DISPATCH_CLR_UPDATE_STATUS success!\n
+0040fce4	yi_proc	first_login
+0040fcf0	yi_proc	tnp online ok!
+0040fd00	yi_proc	login ok!
+0040fd0c	yi_proc	login
+0040fd14	yi_proc	sync info from server ok!
+0040fd30	yi_proc	/tmp/cloud_init_finish
+0040fd48	yi_proc	echo 1 > /tmp/cloud_init_finish
+0040fd68	yi_proc	\n[%02d:%02d:%02d]:\n
+0040fd7c	cloud_update_upgradefirmware_status	%s -c 144 -url "%s/ipc/firmware/update" -seq %d -did %s -currentCode %s -targetCode %s -region %s -status %d 
+0040fdec	cloud_update_upgradefirmware_status	cloud_update_upgradefirmware_status success state = %d\n
+0040fe24		%s.tar
+0040fe2c		/tmp/panorama_capture
+0040fe44		%s.tar.crypt
+0040fe6c		url length is not null\n
+0040fe84		{"angle":%d, "mirror_flip":%d}
+0040fea4		%s/param.txt
+0040feb4		cd /tmp && tar -cf %s %s && rm -fr %s
+0040fedc		panorama_capture
+0040fef0		webapi_do_event_upload failed [%d]\n
+0040ff14		tar_ok [%d]\n
+0040ff24	yi_sync_time	https://
+0040ff30	yi_sync_time	http://%s
+0040ff3c	yi_sync_time	%s -c 136 -url %s/v2/ipc/sync_time 
+0040ff60	yi_sync_time	yi_sync_time ok!\n
+0040ff74	yi_sync_time	yi_sync_time fail!\n
+0040ff88	sync_time	sync_time ok!\n
+0040ff98	sys_init	open share mem ok\n
+0040ffac	sys_init	/ipc_dispatch
+0040ffbc	sys_init	init_mqueue dispatch fail!\n
+0040ffd8	sys_init	/ipc_cloud
+0040ffe4	sys_init	init_mqueue cloud fail!\n
+00410000	FUN_004049c8,FUN_004096e8,cloud_update_upgradefirmware_status,main,send_apmode_result,send_vc_capture_end_msg,send_vc_record_end_msg,sys_init,webapi_do_check_did,webapi_do_check_region,webapi_do_login,yi_proc,yi_push_rcd_file,yi_push_voicecmd_file,yi_sync_time	/tmp/mmap.info
+00410010	aec_dec	%02x 
+00410074	main	msg_proc failed
+00410084	main	panorama_capture_push_proc failed
+004100a8	main	yi_motion_push_proc failed
+004100c4	main	update_upgrade_firmware_status failed
+004100ec	00410ac8,webapi_do_login	ipcam_onoff
+004100f8	00410ad0,webapi_do_login	status_led
+00410104		image_rotation
+0041011c		night_led
+00410128		cover_warning
+00410138		breath_led
+00410144		voice_broadcast
+00410154		monitor
+0041015c		talk_single
+00410168		talk_two
+00410174		OTA_update
+00410180		SD_update
+0041018c		silence_update
+0041019c		AP_update
+004101a8		move_control
+004101b8		panorama_photo
+004101c8		preset
+004101d0		motion_track
+004101e0		panorama_cruise
+004101f0		preset_cruise
+00410200		allday_cruise
+00410210		defined_cruise
+00410220		move_correction
+00410230		move_check
+0041023c		motion_detect_record
+00410254		allday_record
+00410264		storage_status
+00410274		storage_format
+00410284		resolution_switch
+00410298		fps_switch
+004102a4		network_info
+004102b4		backup_mi
+004102c0		reset_ipcam
+004102cc		time_poweron
+004102dc		fast_video
+004102e8		lapse_video
+004102f4		wireless_switch
+00410304		fast_bind
+00410310		qrcode_bind
+00410320		fast_video_playback
+00410334		motion_detect
+00410344		motion_area
+00410350		motion_sensitivity
+00410364		baby_cry
+00410370		human_detect
+00410380		gestures
+0041038c		voice_cmd
+00410398		abnormal_voice
+004103a8		motion_track_warning
+004103c0		motion_video_upload
+004103d4		visitors_flowrate
+004103e8		allday_video_upload
+004103fc		image_index
+00410408		light_switch
+00410418		voice_warning
+00410428		ap_mode
+004104a8	aec_dec	aec_dec
+004104b0	sys_init	sys_init
+004104bc	sync_time	sync_time
+004104c8	yi_sync_time	yi_sync_time
+004104d8	msg_proc	msg_proc
+004104e4		panorama_capture_push
+004104fc	cloud_update_upgradefirmware_status	cloud_update_upgradefirmware_status
+00410520	yi_proc	yi_proc
+00410528	do_need_update	do_need_update
+00410538		is_valid_yi_bindkey
+0041054c	report_tnp_on_line_status	report_tnp_on_line_status
+00410568	00406a78,00406b14,00406bb0,00406be4	yi_motion_push_proc
+0041057c	cloud_set_prev_motion_state	cloud_set_prev_motion_state
+00410598	send_vc_record_end_msg	send_vc_record_end_msg
+004105b0	send_vc_capture_end_msg	send_vc_capture_end_msg
+004105c8	yi_push_voicecmd_file	yi_push_voicecmd_file
+004105e0	yi_push_voicecmd_file	yi_push_voicecmd_file
+004105f8	yi_motion_push	yi_motion_push
+00410608		cloud_set_light_switch
+00410620	cloud_send_shortrec_msg	cloud_send_shortrec_msg
+00410638	yi_push_rcd_file	yi_push_rcd_file
+0041064c	yi_push_rcd_file	yi_push_rcd_file
+00410660	FUN_004049c8	cloud_set_schedule_power
+0041067c	_ftext	parse_schedule_power
+00410694	FUN_004049c8	webapi_get_dev_info
+004106a8	FUN_004049c8	webapi_get_dev_info
+004106bc	webapi_do_check_did	webapi_do_check_did
+004106d0	webapi_do_log_upload	webapi_do_log_upload
+004106e8	webapi_do_event_upload	webapi_do_event_upload
+00410700	webapi_do_event_upload	webapi_do_event_upload
+00410718	webapi_do_event_update	webapi_do_event_update
+00410730	webapi_do_event_update	webapi_do_event_update
+00410748	webapi_do_bindkey	webapi_do_bindkey
+0041075c	send_apmode_result	send_apmode_result
+00410770	strhex2byte	strhex2byte
+0041077c	webapi_do_login	webapi_do_login
+0041078c	webapi_do_login	webapi_do_login
+0041079c	webapi_do_reset_by_specified_server	webapi_do_reset_by_specified_server
+004107c0	webapi_do_check_region	webapi_do_check_region
+004107d8	webapi_do_tnp_on_line	webapi_do_tnp_on_line
+004107f0	FUN_00402a0c	need_update
+004107fc	do_update_ex	do_update_ex
+0041080c		do_update
+00410818		cloud_set_panorama_capture_state
+0041083c		cloud_abort_panorama_capture
+0041085c		cloud_start_panorama_capture
+0041087c	cloud_make_video	cloud_make_video
+00410890	cloud_cap_pic	cloud_cap_pic
+004108a0		cloud_set_debug_mode
+004108b8	cloud_set_abnormal_sound_occur	cloud_set_abnormal_sound_occur
+004108d8	cloud_set_babycry_occur	cloud_set_babycry_occur
+004108f0	cloud_set_video_backup_state	cloud_set_video_backup_state
+00410910	cloud_set_cloud_image_state	cloud_set_cloud_image_state
+0041092c	cloud_set_cloud_storage_mode	cloud_set_cloud_storage_mode
+0041094c	cloud_set_cloud_storage_state	cloud_set_cloud_storage_state
+0041096c	cloud_set_tz_offset	cloud_set_tz_offset
+00410980	cloud_clear_api_server	cloud_clear_api_server
+00410998	cloud_save_api_server	cloud_save_api_server
+004109b0	cloud_finish_sync_info_from_server	cloud_finish_sync_info_from_server
+004109d4	cloud_set_tnp	cloud_set_tnp
+004109e4		cloud_set_infrared_lamp
+004109fc		cloud_set_mirror_flip
+00410a14		cloud_set_motion_record
+00410a2c		cloud_set_light
+00410a3c		cloud_set_power
+00410a4c	cloud_set_bind_result	cloud_set_bind_result
+00410a64		cloud_set_server_connect_ok
+00410a80	cloud_set_region	cloud_set_region
+00410a94	cloud_set_time	cloud_set_time
+00410aa4	cloud_report_alarm_upload_status	cloud_report_alarm_upload_status
+00410cc4	FUN_00408f70	u%04x
+00410cd4	cJSON_GetIntObjItem	%s("%s") not a number item obj!\n
+00410cf8	cJSON_GetStrObjItem	%s("%s") not a string item obj!\n
+00410da8	cJSON_GetStrObjItem	cJSON_GetStrObjItem
+00410dbc	cJSON_GetIntObjItem	cJSON_GetIntObjItem
+00410e26		$@invalid para, is null\r
+00410e40	FUN_0040b128	/tmp/logsock
+00410e50	FUN_0040b128	create socket fail\r
+00410e64	FUN_0040b244	%s:%d|%s() 
+00410e70	FUN_0040b244	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00410e9c		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00410edc	FUN_0040b48c	killall cloudAPI
+00410ef0		%s : %d ptr %s is NULL pointer\n
+00410f18		insmod %s
+00410f24		ko path
+00410f2c		params
+00410f34		insmod %s %s
+00410f44		file node
+00410f50		/tmp/record_event
+00410fb4		/tmp/sd/record
+00411038	FUN_0040b8cc	%[^"',}]
+00411044		total malloc(%d) tmp_malloc(%d %p)\n
+00411068		total free(%p)\n
+00411078		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

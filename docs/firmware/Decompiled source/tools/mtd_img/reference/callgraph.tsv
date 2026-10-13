@@ -1,0 +1,27 @@
+00400770	_init	FUN_00400c4c,FUN_00400c90
+004007c0	_ftext	atol,close,fflush,fprintf,fwrite,libmtd_close,libmtd_open,memset,mtd_dev_present,mtd_erase,mtd_get_dev_info,mtd_write_img,open,printf,putchar,snprintf,strcpy
+00400ab0	entry	__uClibc_main
+00400b10	FUN_00400b10	
+00400b50	FUN_00400b50	
+00400b9c	FUN_00400b9c	FUN_00400b10
+00400c4c	FUN_00400c4c	FUN_00400b50
+00400c90	FUN_00400c90	
+00400ce0	__uClibc_main	
+00400d00	_fini	FUN_00400b9c
+00400e80	putchar	
+00400e90	strcpy	
+00400ea0	printf	
+00400eb0	snprintf	
+00400ec0	atol	
+00400ed0	fflush	
+00400ee0	mtd_get_dev_info	
+00400ef0	fprintf	
+00400f00	mtd_dev_present	
+00400f10	memset	
+00400f20	mtd_erase	
+00400f30	libmtd_open	
+00400f40	fwrite	
+00400f50	libmtd_close	
+00400f60	open	
+00400f70	mtd_write_img	
+00400f80	close	

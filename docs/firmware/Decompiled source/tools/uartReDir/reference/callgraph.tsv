@@ -1,0 +1,18 @@
+00400554	_init	FUN_0040073c,FUN_00400920
+004005a0	entry	__uClibc_main
+00400600	FUN_00400600	
+00400640	FUN_00400640	
+0040068c	FUN_0040068c	FUN_00400600
+0040073c	FUN_0040073c	FUN_00400640
+00400780	main	close,ioctl,open,perror,printf,puts,strcmp,ttyname
+00400920	FUN_00400920	
+00400970	__uClibc_main	
+00400990	_fini	FUN_0040068c
+00400a60	ioctl	
+00400a70	printf	
+00400a80	perror	
+00400a90	puts	
+00400aa0	strcmp	
+00400ab0	ttyname	
+00400ac0	open	
+00400ad0	close	

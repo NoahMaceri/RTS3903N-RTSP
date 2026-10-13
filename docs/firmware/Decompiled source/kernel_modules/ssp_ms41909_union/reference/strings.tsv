@@ -1,0 +1,131 @@
+000116c4	init_module	activate_ports
+000116d4	ssp_gpio_set_value	ssp_gpio_set_value
+000116e8	ssp_gpio_direction_output	ssp_gpio_direction_output
+00011704	ssp_gpio_request	ssp_gpio_request
+00011751		6n_motor %d\n
+00011760	ssp_gpio_request	ssp---%s, (%s)PIN_INVALID \n
+0001177c	ssp_gpio_direction_output,ssp_gpio_set_value	ssp---%s, PIN_INVALID \n
+00011795		3not init.\n
+000117a5		3Does not support this command.(0x%x)
+000117cc	init_module	moto, stepmotor_function_init() \n
+000117f0	init_module	\n(strlen(hw)=(%d), strlen(gpio)=(%d) \n
+00011818	init_module	(strlen(hw)=(%d), strlen(gpio)=(%d) params error !!! \n
+00011850	init_module	hw[%s] \n
+0001185c	init_module	gpio[%s] \n
+00011868	init_module	hw use 8 pin motor, PIN71/PIN38/PIN69/PIN34/PIN35/PIN37/PIN36/PIN39 \n
+000118b0	init_module	hw use 4+1 pin motor, PIN76/PIN34/PIN35/PIN37/PIN36 \n
+000118e8	init_module	moto not support !!! \n
+00011901		3kmalloc  stepmotor dev fail.\n
+00011924	init_module	moto, hw[PTZ_XY] == HW_REVERSE \n
+00011948	init_module	moto, hw[PTZ_HOR] == HW_REVERSE \n
+0001196c	init_module	moto, hw[PTZ_VER] == HW_REVERSE \n
+00011990	init_module	MOTO_HV
+00011998	init_module	motor_4
+000119a1		3%s: gpio_request %d failed\n
+000119c0	init_module	motor_3
+000119c8	init_module	motor_2
+000119d0	init_module	motor_1
+000119d9		3register misc fail \n
+000119f1		6successful init\n
+00011a04	cleanup_module	moto, stepmotor_function_exit() \n
+00011a2c	_elfSectionHeaders::000001ec,init_module	license=GPL
+00011a38		description=GPIO Function Driver
+00011a59		author=GM Technology Corp.
+00011a74		parmtype=gpio:charp
+00011a88		parmtype=hw:charp
+00011a9c		depends=
+00011aa5		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00011cbc		ssp_ms41909_union
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rel.rodata
+.shstrtab::0000006b		.rodata.str1.4
+.shstrtab::0000007a		.modinfo
+.shstrtab::00000083		.rel__param
+.shstrtab::0000008f		.rel.data
+.shstrtab::00000099		.rel.gnu.linkonce.this_module
+.shstrtab::000000b7		.bss
+.shstrtab::000000bc		.comment
+.shstrtab::000000c5		.rel.pdr
+.shstrtab::000000ce		.gnu.attributes
+.shstrtab::000000de		.mdebug.abi32
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		$LC22
+.strtab::00000081		$LC23
+.strtab::00000087		$LC24
+.strtab::0000008d		$LC25
+.strtab::00000093		$LC26
+.strtab::00000099		misc_deregister
+.strtab::000000a9		MOTO_H_ON
+.strtab::000000b3		__this_module
+.strtab::000000c1		cleanup_module
+.strtab::000000d0		ssp_gpio_free
+.strtab::000000de		kfree
+.strtab::000000e4		MOTO_X_GPIO3
+.strtab::000000f1		stepmotor_fops
+.strtab::00000100		gpio_free
+.strtab::0000010a		MOTO_X_GPIO2
+.strtab::00000117		y_stepmotor
+.strtab::00000123		init_module
+.strtab::0000012f		x_stepmotor
+.strtab::0000013b		kmem_cache_alloc
+.strtab::0000014c		MOTO_Y_GPIO1
+.strtab::00000159		MOTO_HV
+.strtab::00000161		preempt_schedule
+.strtab::00000172		ssp_gpio_direction_output
+.strtab::0000018c		mod_timer
+.strtab::00000196		ssp_gpio_request
+.strtab::000001a7		MOTO_V_ON
+.strtab::000001b1		gpio_direction_output
+.strtab::000001c7		MOTO_X_GPIO4
+.strtab::000001d4		printk
+.strtab::000001db		MOTO_Y_GPIO3
+.strtab::000001e8		misc_register
+.strtab::000001f6		param_ops_charp
+.strtab::00000206		__copy_user
+.strtab::00000212		jiffies
+.strtab::0000021a		arch_local_irq_restore
+.strtab::00000231		MOTO_Y_GPIO2
+.strtab::0000023e		step_motor_array
+.strtab::0000024f		init_timer_key
+.strtab::0000025e		__gpio_set_value
+.strtab::0000026f		timing
+.strtab::00000276		usecs_to_jiffies
+.strtab::00000287		gpio_request
+.strtab::00000294		MOTO_X_GPIO1
+.strtab::000002a1		ssp_gpio_set_value
+.strtab::000002b4		arch_local_irq_save
+.strtab::000002c8		strlen
+.strtab::000002cf		del_timer
+.strtab::000002d9		MOTO_Y_GPIO4
+.strtab::000002e6		stepmotor_misc
+.strtab::000002f5		kmalloc_caches

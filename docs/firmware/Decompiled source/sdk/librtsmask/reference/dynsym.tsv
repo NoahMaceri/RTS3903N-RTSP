@@ -1,0 +1,47 @@
+# DT_NEEDED: librtsisp.so.1, librtscamkit.so.1, libm.so.0, librtsgeom.so.1, librtsv4l2.so.1, libgcc_s.so.1, libc.so.0
+0	T0	UND	0	
+1	T3	DEF	b28	
+2	T0	DEF	12020	_fdata
+3	T3	DEF	1a010	_gp_disp
+4	FUNC	DEF	1a88	rts_isp_set_mask_rect_res
+5	FUNC	DEF	1600	rts_isp_get_mask_grid_absolute
+6	FUNC	DEF	152c	rts_isp_set_mask_grid_absolute
+7	FUNC	DEF	137c	rts_isp_set_mask_rect
+8	FUNC	DEF	16b4	rts_isp_set_mask_rect_absolute
+9	FUNC	DEF	11dc	rts_isp_set_mask_grid
+10	FUNC	DEF	b28	_init
+11	FUNC	DEF	e14	rts_isp_set_mask_enable
+12	FUNC	DEF	10ac	rts_isp_set_mask_grid_bitmap
+13	FUNC	DEF	19ac	rts_isp_get_mask_grid_res
+14	FUNC	DEF	1844	rts_isp_set_mask_grid_res
+15	FUNC	DEF	1030	rts_isp_get_mask_color
+16	T0	DEF	ba0	_ftext
+17	FUNC	DEF	1784	rts_isp_get_mask_rect_absolute
+18	FUNC	DEF	efc	rts_isp_get_mask_enable
+19	FUNC	DEF	fc0	rts_isp_set_mask_color
+20	T0	DEF	1208c	__bss_start
+21	FUNC	DEF	d68	rts_isp_get_mask_count
+22	FUNC	DEF	1e10	_fini
+23	FUNC	DEF	12c0	rts_isp_get_mask_grid
+24	T0	DEF	1208c	_edata
+25	T0	DEF	120a0	_end
+26	FUNC	DEF	1460	rts_isp_get_mask_rect
+27	FUNC	DEF	1bdc	rts_isp_get_mask_rect_res
+28	FUNC	DEF	1144	rts_isp_get_mask_grid_bitmap
+29	T0	DEF	1208c	_fbss
+30	FUNC	UND	1df0	rts_isp_cvrt_bytes_to_rect
+31	T0	UND	0	_Jv_RegisterClasses
+32	FUNC	UND	1de0	__assert
+33	FUNC	UND	1dd0	rts_isp_check_rect
+34	FUNC	UND	1dc0	rts_isp_transfer_grid_bitmap
+35	T0	UND	0	_ITM_deregisterTMCloneTable
+36	FUNC	UND	1db0	rts_log
+37	FUNC	UND	1da0	rts_isp_cvrt_rect_to_bytes
+38	T0	UND	0	_ITM_registerTMCloneTable
+39	FUNC	UND	1d90	rts_isp_cvrt_bytes_to_grid
+40	FUNC	DEF	d70	rts_isp_get_mask_type
+41	FUNC	DEF	d60	rts_isp_get_mask_supported_grid_num
+42	FUNC	UND	1d80	rts_isp_check_grid
+43	FUNC	UND	0	__cxa_finalize
+44	FUNC	UND	1d70	rts_isp_exec_isp_cmd
+45	FUNC	UND	1d60	rts_isp_cvrt_grid_to_bytes

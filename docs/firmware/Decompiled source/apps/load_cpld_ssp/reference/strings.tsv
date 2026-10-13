@@ -1,0 +1,33 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+0040053d		_init
+00400549		__uClibc_main
+00400557		libc.so.0
+00400561		_DYNAMIC_LINKING
+00400572		__RLD_MAP
+0040057c		popen
+00400582		pclose
+00400589		munmap
+00400595		select
+004005a7		write
+004005ad		fread
+004005b3		memset
+004005ba		sprintf
+004005c2		access
+004005c9		fileno
+004005d0		strlen
+004005de		_ftext
+004005ec		_edata
+004005f3		__bss_start
+00401258	FUN_00400c34	/dev/mtdblock6
+00401268	FUN_00400c34	create_sharemem fail! 
+00401280	FUN_00400d2c	hw_ver[%d]=[%s] \n
+00401294	FUN_00400d2c	gpio_pin[%d]=[%s] \n
+004012a8	FUN_00400d2c	insmod %s/cpld_periph.ko hw=%s gpio=%s
+004012d0	FUN_00400d2c	/home/app/localko
+004012e4	FUN_00400d2c	/tmp/sd/debug_msg
+004012f8	FUN_00400d2c	hw use 8 pin motor, PIN71/PIN38/PIN69/PIN34/PIN35/PIN37/PIN36/PIN39 
+00401340	FUN_00400d2c	insmod %s/ssp_ms41909.ko hw=%s gpio=%s
+00401368	FUN_00400d2c	hw use 4+1 pin motor, PIN76/PIN34/PIN35/PIN37/PIN36 
+004013a0	FUN_00400d2c	insmod %s/ssp_ms41909_union.ko hw=%s gpio=%s
+004013d0	FUN_00400d2c	moto not support !!! 
+004013e8	main	read_productinfo() fail !!! 

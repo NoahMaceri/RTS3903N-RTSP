@@ -1,0 +1,161 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+00400985		_init
+0040098b		_fini
+00400991		__uClibc_main
+0040099f		munmap
+004009a6		sem_close
+004009b0		sem_wait
+004009b9		sem_post
+004009c2		memcpy
+004009c9		realloc
+004009d1		__errno_location
+004009e2		error
+004009e8		shm_open
+004009f1		ftruncate
+004009fb		mmap
+00400a00		sem_open
+00400a09		fshare_read
+00400a15		fshare_wait
+00400a21		fshare_read_newest
+00400a34		ms_sleep
+00400a3d		librt.so.0
+00400a48		_DYNAMIC_LINKING
+00400a59		__RLD_MAP
+00400a63		mq_receive
+00400a6e		free
+00400a73		memset
+00400a7a		pthread_detach
+00400a89		pthread_create
+00400a98		socket
+00400a9f		mq_open
+00400aa7		mq_send
+00400aaf		libpthread.so.0
+00400abf		mkdir
+00400ac5		strlen
+00400acc		stat
+00400ad1		gettimeofday
+00400ade		sscanf
+00400ae5		write
+00400aeb		calloc
+00400af2		getpid
+00400af9		fcntl
+00400aff		clock_gettime
+00400b0d		__clz_tab
+00400b17		libc.so.0
+00400b21		putchar
+00400b29		strcpy
+00400b30		memmem
+00400b37		usleep
+00400b3e		qsort
+00400b44		puts
+00400b49		remove
+00400b50		vsnprintf
+00400b5a		select
+00400b61		readdir
+00400b69		lseek
+00400b6f		rename
+00400b76		mktime
+00400b7d		signal
+00400b84		sendto
+00400b8b		localtime
+00400b95		opendir
+00400b9d		localtime_r
+00400ba9		access
+00400bb0		closedir
+00400bb9		vfprintf
+00400bc2		stdout
+00400bc9		_ftext
+00400bd0		_fdata
+00400bd7		_edata
+00400bde		__bss_start
+00400bea		_fbss
+00400bf0		_end
+00408f70	FUN_00401520,FUN_00401ddc	%s/%04dY%02dM%02dD%02dH
+00408f88	FUN_00401520,FUN_00401ddc,FUN_004024f4,main	/tmp/sd/record
+00408f98	FUN_00401520,FUN_0040192c,FUN_00401f60,FUN_004023b8,FUN_00402454,FUN_004024f4,main	mp4record.c
+00408fa4	FUN_00401520	auto delete oldest record folder: %s
+00409014	FUN_00401520	invalid mq msg, length: %d
+00409030	FUN_00401520	mq message:\n\tdstBitmap: %08x\n\tsrcMid: %08x\n\tmainOperation: %04x\n\tsubOperation: %d\n\tmsgLength: %d\n
+00409094	FUN_0040192c	got video main vps=%d sps=%d pps=%d, ts=%u, framerate=%u width=%u height=%u
+004090e0	FUN_0040192c	got video sub sps=%d pps=%d, ts=%u, framerate=%u width=%u height=%u
+00409124	FUN_0040192c	Bad (reserved) 'profile': 3 in first frame of ADTS file\n
+00409160	FUN_0040192c	Bad 'sampling_frequency_index' in first frame of ADTS file\n
+0040919c	FUN_0040192c	got audio aac config, ts=%u
+004091b8	FUN_00401ddc	%s/%04dY%02dM%02dD%02dH/%02dM%02dS%02u.mp4
+004091e8	FUN_00401f60	%s.tmp
+00409238	FUN_00401f60	mp4 shortrec file create failed
+004092a4	FUN_0040236c,main	/tmp/record_event
+004092b8	FUN_004023b8,FUN_00402454	msg snd err, err no is %d
+004092d4	FUN_004023b8,FUN_00402454	msg snd success
+004092e4	FUN_004024f4	record_init finish
+004092f8	FUN_004024f4	%s/tmp.mp4.tmp
+00409330	FUN_004024f4	mp4 file end record: %s
+004093cc	FUN_004024f4	fshare_read_ex timeout!
+004093e4	FUN_004024f4	main video frame lost: main_lost=%d\n
+0040940c	FUN_004024f4	sub video frame lost: sub_lost=%d\n
+00409430	FUN_004024f4	video %d config changed: type=%u width=%u height=%u framerate=%u
+00409474	FUN_004024f4	mp4 file begin record: ...
+00409490	FUN_004024f4	mp4 file create failed
+004094a8	main	/ipc_dispatch
+004094b8	main	init_mqueue MQ_NAME_DISPATCH fail
+004094dc	main	/ipc_rcd
+004094e8	main	init_mqueue MQ_NAME_RCD fail
+00409508	main	/tmp/mmap.info
+00409518	main	create_sharemem MMAP_FILE_NAME fail
+0040953c	main	recordevent_init finish
+00409554	main	init_finish(%d), start_with_reset(%d)
+0040957c	main	mp4 mode start init_finish
+00409598	main	fshare_open ok
+004095a8	main	record_init failed
+004095bc	main	mp4 mode got sd exist
+004095e0	FUN_004024f4	record_file
+004095ec	FUN_004024f4	record_file
+004095f8	FUN_00401f60	thread_short_record
+0040960c	FUN_00401f60	thread_short_record
+00409620	FUN_00401520	process_mq_msg
+00409630	FUN_00401520	remove_record_folder
+00409648	FUN_00401520	thread_handyman
+00409658	FUN_0040192c	calc_aac_config
+00409668	FUN_0040192c	record_init
+0040967c	FUN_00402454	send_mp4rcd_costtime_msg
+00409698	FUN_004023b8	send_mp4rcd_heartbeat_msg
+00409728	FUN_00402ef0	%04dY%02dM%02dD%02dH/%02dM%02dS%02d.mp4
+00409750	FUN_00403144	skip file duration=%d\n
+00409768	FUN_0040329c	%s(%d) start:%d,duration:%d\n
+00409788	FUN_00403300	recordevent.c
+00409798	FUN_00403300	failed create_sharemem(): %s
+004097b8		failed get_sharemem(): %s
+00409800		recordevent_init_read
+00409818	FUN_00403300	mmap_init
+00409824	FUN_0040329c	recordevent_add_file_info
+00409840	FUN_00403a14	fshare.%s.realloc(%d)
+00409858	FUN_00403b78,FUN_00403e68	/fshare_frame_buf
+0040986c	FUN_00403b78,FUN_00403e68	fshare.%s.shm_open
+00409880	FUN_00403b78,FUN_00403e68	fshare.%s.mmap
+00409890	FUN_00403b78,FUN_00403e68	/fshare_write_lock
+004098a4	FUN_00403b78,FUN_00403e68	fshare.%s.sem_open(%s)
+004098bc	FUN_00403b78,FUN_00403e68	/fshare_read_notify_%d
+004098d4	FUN_00403b78,FUN_00403e68	/fshare_read_lock
+004098e8		fshare.%s: size(%d) > size_max(%d)\n
+00409910	FUN_00403a14	try_adjust_buf
+00409920		fshare_write
+00409930	FUN_00403e68	fshare_open
+0040993c	FUN_00403b78	fshare_create
+00409950	FUN_004050d8	invalid para, is null\r
+00409968	FUN_004050d8	/tmp/logsock
+00409978	FUN_004050d8	create socket fail\r
+0040998c	FUN_004051f4	%s:%d|%s() 
+00409998	FUN_004051f4	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+004099c4		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00409a08		killall cloudAPI
+00409a1c		%s : %d ptr %s is NULL pointer\n
+00409a44		insmod %s
+00409a50		ko path
+00409a58		params
+00409a60		insmod %s %s
+00409a70		file node
+00409b20		total malloc(%d) tmp_malloc(%d %p)\n
+00409b44		total free(%p)\n
+00409b54		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+00409b98	FUN_00406528	VideoHandler
+00409ba8	FUN_00406528	SoundHandler

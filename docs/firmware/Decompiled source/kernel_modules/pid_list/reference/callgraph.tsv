@@ -1,0 +1,3 @@
+00010040	FUN_00010040	__copy_user,printk,strlen
+000101b0	init_module	misc_register,printk
+00010228	cleanup_module	misc_deregister,printk

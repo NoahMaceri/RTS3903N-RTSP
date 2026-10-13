@@ -1,0 +1,18 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+00400475		_init
+00400481		__uClibc_main
+0040048f		libc.so.0
+00400499		_DYNAMIC_LINKING
+004004aa		__RLD_MAP
+004004ba		printf
+004004c1		perror
+004004d4		ttyname
+004004e1		close
+004004e7		_ftext
+004004f5		_edata
+004004fc		__bss_start
+004009d0	main	miss argument
+004009e0	main	tty_name: %s\n
+004009f4	main	ioctl TIOCCONS
+00400a08	main	/dev/console
+00400a18	main	error argument

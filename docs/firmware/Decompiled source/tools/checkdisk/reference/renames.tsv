@@ -1,0 +1,7 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00401294	FUN_00401294	get_tfcard_size_v2	true	false	get_tfcard_size_v2
+00401350	FUN_00401350	do_fat_check	true	false	do_fat_check
+004016f8	FUN_004016f8	check_partion_vfat	true	false	check_partion_vfat
+00401764	FUN_00401764	check_partion_exfat	true	false	check_partion_exfat
+004018f8	FUN_004018f8	get_fs_type	true	false	get_fs_type
+00401ae8	FUN_00401ae8	get_cluster_size	true	false	get_cluster_size

@@ -1,0 +1,3 @@
+00010038	FUN_00010038	dev_get_drvdata,snd_soc_dai_set_sysclk
+00010100	init_module	dev_set_drvdata,platform_device_add,platform_device_alloc,platform_device_put,printk,rts_sys_force_reset
+000101dc	cleanup_module	platform_device_unregister

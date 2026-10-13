@@ -1,0 +1,54 @@
+004008c4	_init	FUN_00400d1c,FUN_00401970
+00400910	_ftext	FUN_00400e9c,FUN_00400f08,FUN_00400ff0,FUN_0040134c,FUN_00401564,FUN_00401594,FUN_00401784,FUN_00401808,FUN_00401960,memset,printf,sleep,system
+00400b80	entry	__uClibc_main
+00400be0	FUN_00400be0	
+00400c20	FUN_00400c20	
+00400c6c	FUN_00400c6c	FUN_00400be0
+00400d1c	FUN_00400d1c	FUN_00400c20
+00400d60	md5_check_file	FUN_0040134c,FUN_00401594,FUN_004018fc,memset,snprintf,strcmp
+00400e30	FUN_00400e30	memset,snprintf,system
+00400e9c	FUN_00400e9c	memset,snprintf,system
+00400f08	FUN_00400f08	FUN_004017dc,memcpy,memset
+00400ff0	FUN_00400ff0	FUN_00400e30,FUN_00400f08,FUN_0040134c,FUN_00401594,md5_check_file,memset,snprintf,strstr
+00401230	FUN_00401230	memset,puts,socket
+0040134c	FUN_0040134c	FUN_00401230,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+00401564	FUN_00401564	pclose,popen
+00401594	FUN_00401594	FUN_00401564,fileno,fread,pclose,popen,select,strstr
+00401784	FUN_00401784	mq_open
+004017dc	FUN_004017dc	mq_send
+00401808	FUN_00401808	close,mmap,open,usleep
+004018fc	FUN_004018fc	strlen
+00401960	FUN_00401960	
+00401970	FUN_00401970	
+004019c0	__uClibc_main	
+004019e0	_fini	FUN_00400c6c
+00402020	putchar	
+00402030	popen	
+00402040	printf	
+00402050	pclose	
+00402060	snprintf	
+00402070	usleep	
+00402080	getpid	
+00402090	memcpy	
+004020a0	puts	
+004020b0	system	
+004020c0	sleep	
+004020d0	vsnprintf	
+004020e0	mq_send	
+004020f0	socket	
+00402100	select	
+00402110	mmap	
+00402120	strstr	
+00402130	sendto	
+00402140	fread	
+00402150	gettimeofday	
+00402160	localtime	
+00402170	memset	
+00402180	time	
+00402190	strcmp	
+004021a0	fileno	
+004021b0	strlen	
+004021c0	open	
+004021d0	mq_open	
+004021e0	close	
+004021f0	vfprintf	

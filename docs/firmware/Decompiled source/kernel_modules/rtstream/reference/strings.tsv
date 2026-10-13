@@ -1,0 +1,69 @@
+00010b70	FUN_000100d0,_elfSectionHeaders::00000174	[%d] stream contain %d units\n
+00010b90	FUN_000100d0	\t[unit] %c%c%c%c format = %d %d %d %d %d %d %d %d\n
+00010bc4	FUN_000100d0	\t\t%s\t = %d\n
+00010bd1		3rtscam:malloc unit item[%d] fail\n
+00010bf5		3rtscam:unknown[rtstream] ioctl 0x%08x, '%c' 0x%x\n
+00010c29		6rtscam:%s\n
+00010c38	init_module	rtstream
+00010c44		streaminfo
+00010c50	_elfSectionHeaders::0000019c,cleanup_module	rtstream_exit
+00010c60	init_module	rtstream_init
+00010c70	_elfSectionHeaders::000001c4	version=0.0.1
+00010c7e		license=GPL v2
+00010c8d		author=Ming Qian <ming_qian@realsil.com.cn>
+00010cb9		description=Realsil rtstream driver
+00010ce0		srcversion=267FEA2A851231CD1764897
+00010d04		depends=rts_cam
+00010d14		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00010d9c		rtstream
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.rodata
+.shstrtab::00000076		.modinfo
+.shstrtab::0000007f		.rel.data
+.shstrtab::00000089		.rel.gnu.linkonce.this_module
+.shstrtab::000000a7		.bss
+.shstrtab::000000ac		.rel.pdr
+.shstrtab::000000b5		.mdebug.abi32
+.shstrtab::000000c3		.comment
+.shstrtab::000000cc		.gnu.attributes
+.strtab::00000001		$LC1
+.strtab::00000006		$LC0
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		__udelay
+.strtab::0000002d		rtscam_devdata
+.strtab::0000003c		dev_get_drvdata
+.strtab::0000004c		__this_module
+.strtab::0000005a		rtscam_usercopy
+.strtab::0000006a		scnprintf
+.strtab::00000074		cleanup_module
+.strtab::00000083		memcpy
+.strtab::0000008a		rtscam_ge_unregister_device
+.strtab::000000a6		init_module
+.strtab::000000b2		rtscam_debug
+.strtab::000000bf		vzalloc
+.strtab::000000c7		device_create_file
+.strtab::000000da		dev_attr_streaminfo
+.strtab::000000ee		rtscam_ge_device_alloc
+.strtab::00000105		strlcpy
+.strtab::0000010d		printk
+.strtab::00000114		__copy_user
+.strtab::00000120		rtscam_ge_register_device
+.strtab::0000013a		vfree
+.strtab::00000140		rtscam_ge_device_release
+.strtab::00000159		dev_set_drvdata
+.strtab::00000169		strlen
+.strtab::00000170		device_remove_file

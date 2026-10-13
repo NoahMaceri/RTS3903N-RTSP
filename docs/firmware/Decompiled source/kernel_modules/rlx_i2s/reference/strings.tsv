@@ -1,0 +1,112 @@
+00011479		3invalid clock divider(%d)\n
+00011499		3invalid clock divider id(%d)\n
+000114b9		3invalid rate(%d)\n
+000114cd		3not support soc dai platform\n
+000114ed		3Unable to alloc I2S data\n
+00011509		3Unable to get I2S address-%d\n
+00011528	00011770,FUN_00010ce8	dai-platform
+00011539		3Unable to request mem region\n
+00011559		3failed to ioremap-%d\n
+00011570	FUN_00010ce8	i2s_ck
+00011579		3failed to get i2s_ck\n
+00011590	FUN_00010ce8	usb_pll_7
+0001159c	FUN_00010ce8,FUN_00011150	sys_pll3_f
+000115a9		3failed to get sys_pll3_f\n
+000115c4	FUN_00010ce8	&dai_data->clk_mutex
+000115dc	FUN_00010ce8	&dai_data->ldoi2s_mutex
+000115f5		3register component failed\n
+00011614	FUN_00011150	sys_pll3_m
+00011620	FUN_00011150	sys_pll3_n
+0001162d		3get pll3 m fail\n
+00011641		3get pll3 n fail\n
+00011655		3get pll3 f fail\n
+00011669		3invalid sys clock select(%d)\n
+00011688	000118c8,000119d8	i2s-platform
+00011698		pcm-platform
+000116a8		I2S Playback Mute
+000116bc		I2S Capture Mute
+000116d0	_elfSectionHeaders::0000019c	description=Realtek RLX ALSA soc codec driver
+000116fe		author=Wind_Han <wind_han@realsil.com.cn>
+00011728		license=GPL
+00011734		depends=
+0001173d		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00011864		rts3901-fpga-adai
+0001187c		rts3901-adai
+00011894		rts3903-fpga-adai
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.modinfo
+.shstrtab::00000077		.rel.rodata
+.shstrtab::00000083		.rel.data
+.shstrtab::0000008d		.rel.gnu.linkonce.this_module
+.shstrtab::000000ab		.bss
+.shstrtab::000000b0		.sbss
+.shstrtab::000000b6		.rel.pdr
+.shstrtab::000000bf		.mdebug.abi32
+.shstrtab::000000cd		.comment
+.shstrtab::000000d6		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC6
+.strtab::0000001f		$LC5
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		$LC22
+.strtab::00000081		dev_get_drvdata
+.strtab::00000091		snd_soc_add_dai_controls
+.strtab::000000aa		platform_driver_unregister
+.strtab::000000c5		__this_module
+.strtab::000000d3		__iounmap
+.strtab::000000dd		cleanup_module
+.strtab::000000ec		clk_set_rate
+.strtab::000000f9		clk_get
+.strtab::00000101		__release_region
+.strtab::00000112		init_module
+.strtab::0000011e		clk_prepare
+.strtab::0000012a		clk_set_parent
+.strtab::00000139		snd_soc_info_volsw
+.strtab::0000014c		snd_soc_unregister_component
+.strtab::00000169		devm_kfree
+.strtab::00000174		__ioremap
+.strtab::0000017e		platform_driver_register
+.strtab::00000197		platform_get_resource
+.strtab::000001ad		mutex_lock
+.strtab::000001b8		printk
+.strtab::000001bf		__mutex_init
+.strtab::000001cc		snd_soc_get_volsw
+.strtab::000001de		snd_soc_register_component
+.strtab::000001f9		snd_soc_put_volsw
+.strtab::0000020b		mutex_unlock
+.strtab::00000218		clk_put
+.strtab::00000220		clk_disable
+.strtab::0000022c		devm_kzalloc
+.strtab::00000239		dev_set_drvdata
+.strtab::00000249		iomem_resource
+.strtab::00000258		clk_enable
+.strtab::00000263		__request_region
+.strtab::00000274		clk_unprepare

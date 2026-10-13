@@ -1,0 +1,58 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400645		_init
+00400651		__uClibc_main
+0040065f		librt.so.0
+0040066a		_DYNAMIC_LINKING
+0040067b		__RLD_MAP
+00400685		close
+00400691		memset
+00400698		socket
+004006af		mq_open
+004006b7		mq_send
+004006bf		libc.so.0
+004006c9		putchar
+004006d7		inet_pton
+004006e1		usleep
+004006ef		perror
+004006fb		vsnprintf
+00400705		select
+00400711		sendto
+00400718		gettimeofday
+00400725		localtime
+0040072f		strlen
+00400736		vfprintf
+0040073f		stdout
+00400746		_ftext
+00400754		_edata
+0040075b		__bss_start
+004018ec	FUN_00400e84	arp_send sockets
+00401900	FUN_00400e84,FUN_00400fb8	arp_send fcntl
+00401910	FUN_00400e84	arp_send
+0040191c	FUN_00400fb8	arp_recv socket
+0040192c	FUN_0040116c	socket error
+0040193c	FUN_0040116c	ioctl error
+00401948	FUN_00401298,_ftext	arp_test.c
+00401954	FUN_00401298	msg snd err, err no is %d
+00401970	_ftext	/ipc_dispatch
+00401980	_ftext	init_mqueue MQ_NAME_DISPATCH fail
+004019a4	_ftext	/tmp/mmap.info
+004019b4	_ftext	create_sharemem MMAP_FILE_NAME fail
+004019f0	FUN_00401298	send_arp_status_msg
+00401a10	FUN_0040137c	invalid para, is null\r
+00401a28	FUN_0040137c	/tmp/logsock
+00401a38	FUN_0040137c	create socket fail\r
+00401a4c	FUN_00401498	%s:%d|%s() 
+00401a58	FUN_00401498	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00401a84		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00401ac8		killall cloudAPI
+00401adc		%s : %d ptr %s is NULL pointer\n
+00401b04		insmod %s
+00401b10		ko path
+00401b18		params
+00401b20		insmod %s %s
+00401b30		file node
+00401b3c		/tmp/record_event
+00401ba0		/tmp/sd/record
+00401c30		total malloc(%d) tmp_malloc(%d %p)\n
+00401c54		total free(%p)\n
+00401c64		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

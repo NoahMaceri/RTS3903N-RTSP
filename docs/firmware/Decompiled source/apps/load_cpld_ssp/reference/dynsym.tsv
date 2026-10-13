@@ -1,0 +1,32 @@
+# DT_NEEDED: libc.so.0
+0	T0	UND	0	
+1	FUNC	UND	0	popen
+2	FUNC	UND	0	printf
+3	T0	DEF	4115d0	_fdata
+4	T3	DEF	1	_DYNAMIC_LINKING
+5	FUNC	UND	0	pclose
+6	FUNC	UND	0	munmap
+7	FUNC	UND	0	memcpy
+8	FUNC	UND	0	puts
+9	FUNC	UND	0	select
+10	FUNC	UND	0	lseek
+11	FUNC	UND	0	mmap
+12	FUNC	DEF	40069c	_init
+13	FUNC	UND	0	write
+14	T0	DEF	4006f0	_ftext
+15	OBJECT	DEF	4115e0	__RLD_MAP
+16	FUNC	UND	0	fread
+17	T0	DEF	41160c	__bss_start
+18	FUNC	UND	0	memset
+19	FUNC	DEF	4010cc	main
+20	FUNC	DEF	401210	_fini
+21	FUNC	UND	0	sprintf
+22	FUNC	UND	0	access
+23	T0	DEF	41160c	_edata
+24	T0	DEF	411620	_end
+25	FUNC	UND	0	fileno
+26	FUNC	UND	0	strlen
+27	FUNC	UND	0	open
+28	T0	DEF	41160c	_fbss
+29	FUNC	UND	0	close
+30	FUNC	UND	4011f0	__uClibc_main

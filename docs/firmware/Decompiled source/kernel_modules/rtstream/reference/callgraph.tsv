@@ -1,0 +1,9 @@
+00010030	FUN_00010030	
+00010064	FUN_00010064	
+000100d0	FUN_000100d0	dev_get_drvdata,scnprintf
+00010274	FUN_00010274	dev_get_drvdata,rtscam_devdata
+000102d0	FUN_000102d0	vfree
+00010344	FUN_00010344	vfree
+000103b8	FUN_000103b8	FUN_00010030,FUN_00010064,FUN_000102d0,FUN_00010344,__copy_user,__udelay,memcpy,printk,strlen,vfree,vzalloc
+00010920	init_module	dev_set_drvdata,device_create_file,printk,rtscam_ge_device_alloc,rtscam_ge_device_release,rtscam_ge_register_device,strlcpy
+00010a44	cleanup_module	FUN_000102d0,FUN_00010344,device_remove_file,printk,rtscam_ge_unregister_device,vfree

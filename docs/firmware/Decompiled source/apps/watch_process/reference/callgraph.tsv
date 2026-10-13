@@ -1,0 +1,56 @@
+004009a8	_init	FUN_004010bc,FUN_00401890
+004009f0	_ftext	FUN_00401100,FUN_00401164,FUN_0040129c,FUN_004014e4,FUN_004016d4,FUN_00401734,FUN_00401828,access,atoi,fclose,fopen,fread,free,fseek,ioctl,malloc,memset,open,sleep,snprintf,strncmp,system
+00400f20	entry	__uClibc_main
+00400f80	FUN_00400f80	
+00400fc0	FUN_00400fc0	
+0040100c	FUN_0040100c	FUN_00400f80
+004010bc	FUN_004010bc	FUN_00400fc0
+00401100	FUN_00401100	sscanf,strlen,strstr
+00401164	FUN_00401164	memset
+00401180	FUN_00401180	memset,puts,socket
+0040129c	FUN_0040129c	FUN_00401180,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+004014b4	FUN_004014b4	pclose,popen
+004014e4	FUN_004014e4	FUN_004014b4,fileno,fread,pclose,popen,select,strstr
+004016d4	FUN_004016d4	fseek,ftell
+00401734	FUN_00401734	close,mmap,open,usleep
+00401828	FUN_00401828	select
+00401890	FUN_00401890	
+004018e0	__uClibc_main	
+00401900	_fini	FUN_0040100c
+00401dc0	putchar	
+00401dd0	ioctl	
+00401de0	popen	
+00401df0	printf	
+00401e00	pclose	
+00401e10	snprintf	
+00401e20	usleep	
+00401e30	getpid	
+00401e40	puts	
+00401e50	system	
+00401e60	malloc	
+00401e70	sleep	
+00401e80	vsnprintf	
+00401e90	socket	
+00401ea0	select	
+00401eb0	mmap	
+00401ec0	fseek	
+00401ed0	strstr	
+00401ee0	strncmp	
+00401ef0	sendto	
+00401f00	sscanf	
+00401f10	fread	
+00401f20	gettimeofday	
+00401f30	fopen	
+00401f40	localtime	
+00401f50	memset	
+00401f60	ftell	
+00401f70	fclose	
+00401f80	time	
+00401f90	access	
+00401fa0	atoi	
+00401fb0	fileno	
+00401fc0	strlen	
+00401fd0	open	
+00401fe0	close	
+00401ff0	vfprintf	
+00402000	free	

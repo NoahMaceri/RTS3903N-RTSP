@@ -1,0 +1,555 @@
+00017a54		header   = 0x%02x\n
+00017a68		length   = 0x%02x\n
+00017a7c		magictag = 0x%08x\n
+00017a90		ic name  = 0x%04x\n
+00017aa4		vid      = 0x%04x\n
+00017ab8		pid      = 0x%04x\n
+00017acc		fw ver   = 0x%08x\n
+00017ae0		cus ver  = 0x%08x\n
+00017af4	FUN_0001044c	ISP %d.%03d\n
+00017b0c		\t\tsetting\tactual:\n
+00017b20		senor:\t\t%d\t%d\n
+00017b30		user:\n
+00017b38		    stream[%d] :\t%d\t%d\n
+00017b50		stream id\t
+00017b5c		frame count\t
+00017b6c		skip count\t
+00017b78		overflow count\t
+00017b88		error count\n
+00017bc4	FUN_00010a34	total : %12ld\n
+00017bd4	FUN_00010a34	used  : %12ld\n
+00017be4	FUN_00010a34	left  : %12ld\n
+00017bf9		3rtscam:NULL point\n
+00017c11		6rtscam:begin to load fw from %s\n
+00017c35		3rtscam:Fail to load %s, %d.\n
+00017c54	FUN_00010d5c,FUN_0001708c	isp.fw
+00017c5d		6rtscam:Load firmware size : %d.\n
+00017c81		3rtscam:couldn't activate the mcu:%d\n
+00017ca9		6rtscam:[Write]reg = 0x%x, value = 0x%x\n
+00017cd5		6rtscam:[Read]reg = 0x%x, value = 0x%x\n
+00017d01		3rtscam:data length(%d) is out of range(%d)\n
+00017d31		3rtscam:buf is NULL\n
+00017d49		3rtscam:MCU is busy now.(0x%08x), cmd(0x%04x) fail\n
+00017d80	FUN_0001134c,FUN_00011ce0,rtscam_soc_probe	&x->wait
+00017d8d		3rtscam:exec cmd(0x%04x) timeout, status = 0x%08x\n
+00017dc1		3rtscam:exec cmd(0x%04x) fail, error type = %d\n
+00017df5		6rtscam:soc exec command %04x %02x %02x %04x %04x\n
+00017e29		3rtscam:exec command %04x %02x %02x %04x %04x fail : %d\n
+00017e65		6rtscam:buf in slot already\n
+00017e85		6rtscam:there is no free slot now\n
+00017ea9		6rtscam:get buffer phy addr fail\n
+00017ecd		6rtscam:invalid stream format (%d)\n
+00017ef5		6rtscam:clear frame status, reg = 0x%08x, value = 0x%08x\n
+00017f31		3rtscam:pls update fw first\n
+00017f51		3rtscam:can't get fw\n
+00017f69		6rtscam:mcu run in 0x%08x\n
+00017f85		3rtscam:mcu addr error[%d]: 0x%08x/0x%08x\n
+00017fb1		3rtscam:set mcu addr fail\n
+00017fcd		3rtscam:enable mcu clk fail\n
+00017fed		6rtscam:mcu initialized\n
+00018009		3rtscam:mcu addr error : 0x%08x/0x%08x\n
+00018035		3rtscam:enable mcu fail\n
+00018051		6rtscam:lock mcu done\n
+00018069		3rtscam:request mcu lock fail\n
+00018089		6rtscam:disable mcu\n
+000180a1		3rtscam:rtscam_isp_alloc fail\n
+000180c1		3rtscam:get ldc buffer size fail\n
+000180e5		3rtscam:please init ldc buffer first\n
+00018111		6rtscam:%s\n
+00018121		3rtscam:not support soc camera\n
+00018145		3rtscam:isp platform_data is NULL\n
+00018169		3rtscam:isp clk callback isn't set\n
+00018191		3rtscam:cmd write data reg isn't set\n
+000181b9		3rtscam:cmd read data reg isn't set\n
+000181e1		3rtscam:isp platform_data is invalid\n
+00018209		3rtscam:Missing platform resource data\n
+00018235		3rtscam:Couldn't allocate rts camera soc object\n
+00018268	rtscam_soc_probe	&rsocdev->cmd_lock
+0001827c	rtscam_soc_probe	&rsocdev->rvdev.dev_lock
+00018298	rtscam_soc_probe	&rsocdev->rvdev.ctrl_lock
+000182b5		3rtscam:Couldn't get mem info\n
+000182d5		3rtscam:Couldn't ioremap resource\n
+000182f8	rtscam_soc_attach,rtscam_soc_probe	rts_soc_camera
+00018309		3rtscam:request irq failed\n
+00018329		3rtscam:init vb2 ctx failed\n
+0001834c	FUN_0001708c,rtscam_soc_probe	unknown
+00018354	rtscam_soc_probe	rtscam
+0001835c	rtscam_soc_probe	rtscamctrl
+00018369		6rtscam:mcu cmd done\n
+00018381		6rtscam:cache miss fail\n
+0001839d		3rtscam:mcu watchdog rst\n
+000183b9		6rtscam:motion detected %d\n
+000183d9		6rtscam:td overflow : 0x%08x\n
+000183f9		6rtscam:isp overflow : 0x%08x\n
+00018419		6rtscam:no stream found\n
+00018435		6rtscam:frame error:stream<%d> frame<%d> : 0x%08x\n
+00018469		6rtscam:frameid[%d] is invalid\n
+000184a1		6rtscam:frameid = %d, skip = %d\n
+000184c5		6rtscam:frmival : %d\n
+000184dd		3rtscam:unknown 3dnr mode : %d\n
+00018501		3rtscam:get 3dnr buffer size fail\n
+00018525		3rtscam:%s:alloc td buffer fail\n
+00018551		3rtscam:%s : %d 0x%02x 0x%02x, %d, ret = %d\n
+00018581		6rtscam:%s : %d 0x%02x 0x%02x, %d, ret = %d\n
+000185b1		3rtscam:%s:get td isp func enable fail\n
+000185dd		3rtscam:%s:set td isp func enable fail\n
+00018611		6rtscam:set stream %s\n
+00018629		3rtscam:resume td fail, ret = %d\n
+0001864d		6rtscam:delay %ld ms before streamoff\n
+00018675		3rtscam:pause td fail, ret = %d\n
+00018698	FUN_00014f88	enable
+000186a0		disable
+000186a9		3rtscam:%s:get sensor fmt fail\n
+000186cd		3rtscam:enable td fail, ret = %d\n
+000186f1		3rtscam:disable td fail, ret = %d\n
+00018715		6rtscam:%s temporal denoise\n
+00018735		3rtscam:invalid ldc table, length is not enough\n
+00018769		3rtscam:Unknown rtscam soc cmd: 0x%x, '%c' 0x%x\n
+000187a8	FUN_00015c40	gpio\tstatus(used by mcu or idle)\n
+000187cc	FUN_00015c40	%4d\t  %d\n
+000187d8	FUN_00015c40	%4d\t  %s\n
+000187e5		6rtscam:Found ISP %d.%03d device\n
+00018809		3rtscam:get device descriptor fail\n
+00018831		3rtscam:cann't support %d streams, max %d\n
+0001885d		3rtscam:get isp process desc fail\n
+00018881		3rtscam:get camera desc fail\n
+000188a1		3rtscam:get extended control desc fail\n
+000188cd		3rtscam:get hclk desc fail\n
+000188ed		3rtscam:init device ctrl fail\n
+0001890d		3rtscam:no memory for isp header\n
+00018930	rtscam_soc_attach	isp headers
+0001893d		3rtscam:config isp header fail\n
+00018961		3rtscam:get frmival desc fail\n
+00018981		3rtscam:register rts fps info fail\n
+000189a9		3rtscam:enum stream<%d> format fail\n
+000189d1		3rtscam:init stream<%d> fail\n
+000189f1		3rtscam:init rts video device fail\n
+00018a19		3rtscam:init rts soc camera fail\n
+00018a3d		3rtscam:register rts video device fail\n
+00018a69		3rtscam:alloc buffer for ldc or td fail\n
+00018a95		6rtscam:%s initialized\n
+00018ab1		3rtscam:close device before detach camera\n
+00018add		3rtscam:rts soc dev is not init\n
+00018b00	FUN_0001708c	%127s %127s
+00018b0d		3rtscam:get load fw info fail\n
+00018b2d		3rtscam:download firmware fail when detect fw\n
+00018b5d		3rtscam:detect fw fail:enable mcu fail\n
+00018b89		3rtscam:invalid sensor\n
+00018ba9		3rtscam:fail to detect fw\n
+00018bc5		3rtscam:download firmware fail\n
+00018be9		3rtscam:pls load fw before iq table\n
+00018c11		6rtscam:Load iq table size : %d.\n
+00018c35		3rtscam:fw's ver[%d] and iq table's ver[%d] is not match\n
+00018c71		3rtscam:iq table is size is not correct, want %d but %d\n
+00018cad		3rtscam:download iq table fail\n
+00018cd1		3rtscam:please load fw before dump\n
+00018cf9		3rtscam:Unknown[rtscam] ioctl 0x%08x, type = '%c' nr = 0x%x\n
+00018d38		buf_prealloc
+00018d48		sensorfps_max
+00018d60		drop_frames
+00018d6c		num_buffers
+00018d80		delay
+00018d88		meminfo
+00018d90	0001922c	loadfw
+00018d98	0001923c	timeout
+00018da0		streaminfo
+00018dac		apiversion
+00018dc0	000192cc	sensor
+00018e10	rtscam_soc_probe	rtscam_soc_probe
+00018e24	rtscam_soc_attach	rtscam_soc_get_buf_pre
+00018e3c	FUN_00014f88	rtscam_soc_disable_ldc
+00018e54	FUN_00014f88	rtscam_soc_enable_ldc
+00018e6c	FUN_000140d4	rtscam_soc_get_td_buf
+00018e84	FUN_00014f88	rtscam_soc_enable_td
+00018e9c	FUN_00014664	__disable_td
+00018eac	FUN_00014550	__enable_td
+00018eb8	rtscam_soc_query_ctrl	rtscam_soc_query_ctrl
+00018ed0	_elfSectionHeaders::00000214	alias=platform:rts_soc_camera
+00018eee		version=0.1.1
+00018efc		license=GPL v2
+00018f0b		author=Ming Qian <ming_qian@realsil.com.cn>
+00018f37		description=Realsil Soc Camera device driver
+00018f64		firmware=isp.fw
+00018f98		depends=rts_cam,rts_cam_mem
+00018fb4		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00018fe4	0001002c,_elfSectionHeaders::0000023c	rtscam_soc_get_mcu_gpio_value
+00019002	00010044	rtscam_soc_set_mcu_gpio_value
+00019020	00010024	rtscam_soc_get_mcu_gpio_direction
+00019042	0001003c	rtscam_soc_set_mcu_gpio_direction
+00019064	0001001c	rtscam_soc_free_mcu_gpio
+0001907d	00010034	rtscam_soc_request_mcu_gpio
+00019124		rts3901-fpga-isp
+00019310		Brightness
+00019358		Contrast
+000193e8		Saturation
+00019430		Sharpness
+00019478		Gamma
+000194c0		White Balance Temperature
+00019508		White Balance Red Component
+00019550		White Balance Green Component
+00019598		White Balance Blue Component
+000195e0		Backlight Compensation
+00019670		Power Line Frequency
+000196b8		Hue, Auto
+00019700		White Balance Temperature, Auto
+00019748		White Balance Component, Auto
+00019790		Exposure, Auto
+000197d8		Exposure, Auto Priority
+00019820		Exposure (Absolute)
+00019868		Focus (absolute)
+000198b0		Iris, Absolute
+000198f8		Iris, Relative
+00019940		Zoom, Absolute
+00019988		Pan (Absolute)
+000199d0		Tilt (Absolute)
+00019a18		Roll (Absolute)
+00019a60		AE Gain
+00019aa8		Sensor Crop X
+00019af0		Sensor Crop Y
+00019d40		Auto Mode
+00019d64		Manual Mode
+00019d88		SEMIPLANAR YCBCR 4:2:0
+00019de0		SEMIPLANAR YCBCR 4:2:2
+00019e1c		rts_camera_soc
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.rel__ksymtab_gpl
+.shstrtab::00000068		.reginfo
+.shstrtab::00000071		.rodata.str1.4
+.shstrtab::00000080		.rodata
+.shstrtab::00000088		.modinfo
+.shstrtab::00000091		__ksymtab_strings
+.shstrtab::000000a3		.rel.data
+.shstrtab::000000ad		.rel.gnu.linkonce.this_module
+.shstrtab::000000cb		.bss
+.shstrtab::000000d0		.sbss
+.shstrtab::000000d6		.rel.pdr
+.shstrtab::000000df		.mdebug.abi32
+.shstrtab::000000ed		.comment
+.shstrtab::000000f6		.gnu.attributes
+.strtab::00000001		$LC1
+.strtab::00000006		$LC2
+.strtab::0000000b		$LC3
+.strtab::00000010		$LC4
+.strtab::00000015		$LC5
+.strtab::0000001a		$LC6
+.strtab::0000001f		$LC7
+.strtab::00000024		$LC8
+.strtab::00000029		$LC9
+.strtab::0000002e		$LC10
+.strtab::00000034		$LC11
+.strtab::0000003a		$LC12
+.strtab::00000040		$LC13
+.strtab::00000046		$LC14
+.strtab::0000004c		$LC15
+.strtab::00000052		$LC17
+.strtab::00000058		$LC16
+.strtab::0000005e		$LC18
+.strtab::00000064		$LC19
+.strtab::0000006a		$LC20
+.strtab::00000070		$LC21
+.strtab::00000076		$LC22
+.strtab::0000007c		$LC24
+.strtab::00000082		$LC23
+.strtab::00000088		$LC25
+.strtab::0000008e		$LC26
+.strtab::00000094		$LC27
+.strtab::0000009a		$LC28
+.strtab::000000a0		$LC29
+.strtab::000000a6		$LC30
+.strtab::000000ac		$LC31
+.strtab::000000b2		$LC32
+.strtab::000000b8		$LC33
+.strtab::000000be		$LC34
+.strtab::000000c4		$LC35
+.strtab::000000ca		$LC36
+.strtab::000000d0		$LC37
+.strtab::000000d6		$LC38
+.strtab::000000dc		$LC39
+.strtab::000000e2		$LC40
+.strtab::000000e8		$LC41
+.strtab::000000ee		$LC42
+.strtab::000000f4		$LC43
+.strtab::000000fa		$LC44
+.strtab::00000100		$LC45
+.strtab::00000106		$LC46
+.strtab::0000010c		$LC47
+.strtab::00000112		$LC48
+.strtab::00000118		$LC49
+.strtab::0000011e		$LC50
+.strtab::00000124		$LC51
+.strtab::0000012a		$LC52
+.strtab::00000130		$LC53
+.strtab::00000136		$LC54
+.strtab::0000013c		$LC55
+.strtab::00000142		$LC58
+.strtab::00000148		$LC59
+.strtab::0000014e		$LC60
+.strtab::00000154		$LC62
+.strtab::0000015a		$LC56
+.strtab::00000160		$LC57
+.strtab::00000166		$LC61
+.strtab::0000016c		$LC63
+.strtab::00000172		$LC64
+.strtab::00000178		$LC65
+.strtab::0000017e		$LC66
+.strtab::00000184		$LC67
+.strtab::0000018a		$LC68
+.strtab::00000190		$LC69
+.strtab::00000196		$LC70
+.strtab::0000019c		$LC71
+.strtab::000001a2		$LC72
+.strtab::000001a8		$LC73
+.strtab::000001ae		$LC74
+.strtab::000001b4		$LC75
+.strtab::000001ba		$LC76
+.strtab::000001c0		$LC77
+.strtab::000001c6		$LC78
+.strtab::000001cc		$LC79
+.strtab::000001d2		$LC80
+.strtab::000001d8		$LC81
+.strtab::000001de		$LC82
+.strtab::000001e4		$LC83
+.strtab::000001ea		$LC84
+.strtab::000001f0		$LC85
+.strtab::000001f6		$LC86
+.strtab::000001fc		$LC87
+.strtab::00000202		$LC88
+.strtab::00000208		$LC89
+.strtab::0000020e		$LC90
+.strtab::00000214		$LC91
+.strtab::0000021a		$LC92
+.strtab::00000220		$LC93
+.strtab::00000226		$LC94
+.strtab::0000022c		$LC98
+.strtab::00000232		$LC97
+.strtab::00000238		$LC95
+.strtab::0000023e		$LC96
+.strtab::00000244		$LC99
+.strtab::0000024a		$LC100
+.strtab::00000251		$LC101
+.strtab::00000258		$LC102
+.strtab::0000025f		$LC103
+.strtab::00000266		$LC104
+.strtab::0000026d		$LC105
+.strtab::00000274		$LC106
+.strtab::0000027b		$LC107
+.strtab::00000282		$LC108
+.strtab::00000289		$LC109
+.strtab::00000290		$LC110
+.strtab::00000297		$LC111
+.strtab::0000029e		$LC112
+.strtab::000002a5		$LC113
+.strtab::000002ac		$LC116
+.strtab::000002b3		$LC117
+.strtab::000002ba		$LC118
+.strtab::000002c1		$LC114
+.strtab::000002c8		$LC115
+.strtab::000002cf		$LC119
+.strtab::000002d6		$LC120
+.strtab::000002dd		$LC121
+.strtab::000002e4		$LC124
+.strtab::000002eb		$LC126
+.strtab::000002f2		$LC125
+.strtab::000002f9		$LC122
+.strtab::00000300		$LC123
+.strtab::00000307		$LC127
+.strtab::0000030e		$LC128
+.strtab::00000315		$LC129
+.strtab::0000031c		$LC130
+.strtab::00000323		$LC131
+.strtab::0000032a		$LC132
+.strtab::00000331		$LC133
+.strtab::00000338		$LC135
+.strtab::0000033f		$LC137
+.strtab::00000346		$LC134
+.strtab::0000034d		$LC143
+.strtab::00000354		$LC144
+.strtab::0000035b		$LC136
+.strtab::00000362		$LC138
+.strtab::00000369		$LC139
+.strtab::00000370		$LC140
+.strtab::00000377		$LC141
+.strtab::0000037e		$LC145
+.strtab::00000385		$LC146
+.strtab::0000038c		$LC142
+.strtab::00000393		$LC147
+.strtab::0000039a		$LC148
+.strtab::000003a1		$LC149
+.strtab::000003a8		$LC150
+.strtab::000003af		$LC151
+.strtab::000003b6		$LC152
+.strtab::000003bd		$LC153
+.strtab::000003c4		$LC154
+.strtab::000003cb		$LC155
+.strtab::000003d2		$LC156
+.strtab::000003d9		$LC157
+.strtab::000003e0		$LC158
+.strtab::000003e7		$LC159
+.strtab::000003ee		$LC160
+.strtab::000003f5		$LC161
+.strtab::000003fc		$LC162
+.strtab::00000403		$LC163
+.strtab::0000040a		rtscam_soc_start_clock
+.strtab::00000421		rtscam_soc_stop_preview
+.strtab::00000439		rtscam_soc_attach
+.strtab::0000044b		rtscam_soc_free_mcu_gpio
+.strtab::00000464		rtscam_ctrl_clr_info
+.strtab::00000479		ioread32
+.strtab::00000482		__udelay
+.strtab::0000048b		rtscam_soc_get_dynamic_fps
+.strtab::000004a6		rtscam_devdata
+.strtab::000004b5		release_firmware
+.strtab::000004c6		dev_attr_gpio
+.strtab::000004d4		dev_get_drvdata
+.strtab::000004e4		devm_request_threaded_irq
+.strtab::000004fe		wait_for_completion_timeout
+.strtab::0000051a		rtscam_register_format
+.strtab::00000531		iowrite32
+.strtab::0000053b		rtscam_soc_get_vs_format_desc
+.strtab::00000559		rtscam_soc_get_snr_power_seq
+.strtab::00000576		platform_driver_unregister
+.strtab::00000591		rts_dma_contig_memops
+.strtab::000005a7		__this_module
+.strtab::000005b5		platform_get_irq
+.strtab::000005c6		rtscam_soc_get_snr_fmt
+.strtab::000005dd		complete
+.strtab::000005e6		rtscam_usercopy
+.strtab::000005f6		queue_work_on
+.strtab::00000604		rtscam_soc_get_ctrl
+.strtab::00000618		arch_local_irq_disable
+.strtab::0000062f		rtscam_soc_get_ext_controls_desc
+.strtab::00000650		request_firmware
+.strtab::00000661		dev_attr_sensorfps_max
+.strtab::00000678		scnprintf
+.strtab::00000682		rtscam_soc_get_fw_version
+.strtab::0000069c		rtscam_ctrl_add_info
+.strtab::000006b1		rtscam_process_dynamic_sensor_fps
+.strtab::000006d3		cleanup_module
+.strtab::000006e2		memcpy
+.strtab::000006e9		rtscam_mem_alloc
+.strtab::000006fa		kfree
+.strtab::00000700		rtscam_soc_get_hclk_desc
+.strtab::00000719		rts_sys_force_reset
+.strtab::0000072d		getrawmonotonic
+.strtab::0000073d		rtscam_video_register_device
+.strtab::0000075a		rtscam_soc_set_dynamic_fps
+.strtab::00000775		rtscam_mem_set_info
+.strtab::00000789		dev_attr_meminfo
+.strtab::0000079a		rtscam_soc_resume_video
+.strtab::000007b2		rtscam_soc_pause_video
+.strtab::000007c9		rtscam_ge_unregister_device
+.strtab::000007e5		get_device
+.strtab::000007f0		rtscam_soc_put_ctrl
+.strtab::00000804		rtscam_soc_set_gpio_direction
+.strtab::00000822		init_module
+.strtab::0000082e		rtscam_soc_set_gpio_value
+.strtab::00000848		rtscam_push_back_ready_buffer
+.strtab::00000866		rtscam_debug
+.strtab::00000873		_kstrtoul
+.strtab::0000087d		rtscam_soc_query_ctrl
+.strtab::00000893		put_device
+.strtab::0000089e		dev_attr_drop_frames
+.strtab::000008b3		usleep_range
+.strtab::000008c0		rtscam_soc_get_gpio_use_status
+.strtab::000008df		rtscam_get_phy_addr
+.strtab::000008f3		rtscam_clr_format
+.strtab::00000905		dev_attr_hz
+.strtab::00000911		rtscam_soc_init_capture_buffers
+.strtab::00000931		rtscam_ctrl_add_mapping
+.strtab::00000949		rtscam_soc_get_api_version
+.strtab::00000964		rtscam_init_sensor_fps
+.strtab::0000097b		rtscam_soc_start_preview
+.strtab::00000994		device_create_file
+.strtab::000009a7		rtscam_buffer_done
+.strtab::000009ba		rtscam_enable_snr_fps_max
+.strtab::000009d4		dev_attr_streaminfo
+.strtab::000009e8		rtscam_ge_device_alloc
+.strtab::000009ff		preempt_schedule
+.strtab::00000a10		rtscam_mem_free
+.strtab::00000a20		platform_driver_register
+.strtab::00000a39		kstrtoint
+.strtab::00000a43		rtscam_soc_get_frmival_desc
+.strtab::00000a5f		platform_get_resource
+.strtab::00000a75		rtscam_submit_buffer
+.strtab::00000a8a		rts_put_mem_info
+.strtab::00000a9b		rtscam_soc_get_3dnr_mode
+.strtab::00000ab4		mutex_lock
+.strtab::00000abf		rtscam_soc_get_camera_desc
+.strtab::00000ada		rtscam_soc_s_stream
+.strtab::00000aee		dev_attr_fwinfo
+.strtab::00000afe		strlcpy
+.strtab::00000b06		rtscam_soc_set_format
+.strtab::00000b1c		rtscam_soc_detach
+.strtab::00000b2e		rtscam_soc_submit_buffer
+.strtab::00000b47		dev_attr_apiversion
+.strtab::00000b5b		rtscam_soc_ctrl_query_ctrl
+.strtab::00000b76		rtscam_register_frmival_discrete
+.strtab::00000b97		rtscam_soc_set_mcu_gpio_direction
+.strtab::00000bb9		rtscam_soc_get_isp_func
+.strtab::00000bd1		sscanf
+.strtab::00000bd8		printk
+.strtab::00000bdf		__mutex_init
+.strtab::00000bec		mutex_lock_interruptible
+.strtab::00000c05		rtscam_register_frame_stepwise
+.strtab::00000c24		dev_attr_num_buffers
+.strtab::00000c39		memset
+.strtab::00000c40		rtscam_soc_stop_clock
+.strtab::00000c56		rts_dma_contig_init_ctx
+.strtab::00000c6e		__init_waitqueue_head
+.strtab::00000c84		__copy_user
+.strtab::00000c90		rtscam_release_sensor_fps
+.strtab::00000caa		__compare_api_version
+.strtab::00000cc0		dev_attr_fps
+.strtab::00000ccd		rtscam_ge_register_device
+.strtab::00000ce7		rtscam_soc_set_mcu_gpio_value
+.strtab::00000d05		rtscam_soc_get_snr_power
+.strtab::00000d1e		rtscam_soc_get_isp_processing_desc
+.strtab::00000d41		rtscam_get_video_buffer
+.strtab::00000d59		rtscam_soc_get_sensor_id
+.strtab::00000d72		rtscam_soc_set_fps
+.strtab::00000d85		rtscam_soc_get_mcu_gpio_value
+.strtab::00000da3		rtscam_soc_get_gpio_value
+.strtab::00000dbd		mutex_unlock
+.strtab::00000dca		rtscam_soc_exec_vcmd
+.strtab::00000ddf		devm_ioremap_resource
+.strtab::00000df5		rts_get_mem_info
+.strtab::00000e06		rtscam_video_do_ctrl_ioctl
+.strtab::00000e21		rtscam_ctrl_clr_mapping
+.strtab::00000e39		__rtscam_soc_s_stream
+.strtab::00000e4f		rtscam_soc_get_mcu_gpio_direction
+.strtab::00000e71		rtscam_soc_probe
+.strtab::00000e82		rtscam_soc_set_isp_func
+.strtab::00000e9a		rts_dma_contig_cleanup_ctx
+.strtab::00000eb5		rtscam_ge_device_release
+.strtab::00000ece		rtscam_mem_get_total_size
+.strtab::00000ee8		rtscam_soc_prepare_snr_pwron
+.strtab::00000f05		devm_kzalloc
+.strtab::00000f12		rtscam_skip_frame
+.strtab::00000f24		rtscam_mem_get_used_size
+.strtab::00000f3d		dev_set_drvdata
+.strtab::00000f4d		rts_test_bit
+.strtab::00000f5a		rtscam_video_unregister_device
+.strtab::00000f79		strlen
+.strtab::00000f80		rtscam_adjust_sensor_fps
+.strtab::00000f99		rtscam_exec_sensor_frmival_setting
+.strtab::00000fbc		rtscam_soc_get_gpio_direction
+.strtab::00000fda		rtscam_mem_get_left_size
+.strtab::00000ff3		rtscam_soc_request_mcu_gpio
+.strtab::0000100f		dev_attr_buf_prealloc
+.strtab::00001025		rtscam_soc_get_device_des
+.strtab::0000103f		__kmalloc
+.strtab::00001049		memweight
+.strtab::00001053		RTS_SOC_HW_ID
+.strtab::00001061		device_remove_file
+.strtab::00001074		system_wq
+.strtab::0000107e		rtscam_soc_remove
+.strtab::00001090		dev_attr_delay
+.strtab::0000109f		rtscam_disable_snr_fps_max

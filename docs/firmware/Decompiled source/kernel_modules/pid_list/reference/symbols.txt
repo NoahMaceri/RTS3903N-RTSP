@@ -1,0 +1,11 @@
+## IMPORTS (external)
+printk	<EXTERNAL>
+__copy_user	<EXTERNAL>
+strlen	<EXTERNAL>
+misc_register	<EXTERNAL>
+misc_deregister	<EXTERNAL>
+
+## EXPORTS (entry points)
+00010480	__this_module
+00010228	cleanup_module
+000101b0	init_module

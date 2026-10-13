@@ -1,0 +1,48 @@
+0040085c	_init	FUN_00400d5c,FUN_00401830
+004008b0	_ftext	FUN_00400da0,FUN_00400fb8,FUN_0040116c,FUN_00401498,FUN_004016b0,FUN_00401734,arp_send,inet_pton,memset,send_arp_status_msg,sleep,usleep
+00400bc0	entry	__uClibc_main
+00400c20	FUN_00400c20	
+00400c60	FUN_00400c60	
+00400cac	FUN_00400cac	FUN_00400c20
+00400d5c	FUN_00400d5c	FUN_00400c60
+00400da0	FUN_00400da0	
+00400e84	arp_send	close,fcntl,perror,sendto,socket
+00400fb8	FUN_00400fb8	FUN_00401360,close,fcntl,perror,recv,select,socket
+0040116c	FUN_0040116c	ioctl,perror,socket
+00401298	send_arp_status_msg	FUN_00401360,FUN_00401498,FUN_00401708
+00401360	FUN_00401360	memset
+0040137c	FUN_0040137c	memset,puts,socket
+00401498	FUN_00401498	FUN_0040137c,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+004016b0	FUN_004016b0	mq_open
+00401708	FUN_00401708	mq_send
+00401734	FUN_00401734	close,mmap,open,usleep
+00401830	FUN_00401830	
+00401880	__uClibc_main	
+004018a0	_fini	FUN_00400cac
+00401ce0	putchar	
+00401cf0	ioctl	
+00401d00	printf	
+00401d10	recv	
+00401d20	inet_pton	
+00401d30	snprintf	
+00401d40	usleep	
+00401d50	getpid	
+00401d60	perror	
+00401d70	puts	
+00401d80	sleep	
+00401d90	vsnprintf	
+00401da0	mq_send	
+00401db0	socket	
+00401dc0	select	
+00401dd0	mmap	
+00401de0	sendto	
+00401df0	gettimeofday	
+00401e00	localtime	
+00401e10	memset	
+00401e20	time	
+00401e30	strlen	
+00401e40	open	
+00401e50	fcntl	
+00401e60	mq_open	
+00401e70	close	
+00401e80	vfprintf	

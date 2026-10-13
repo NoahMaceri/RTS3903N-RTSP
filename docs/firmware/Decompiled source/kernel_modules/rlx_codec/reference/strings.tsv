@@ -1,0 +1,173 @@
+00011f1d		3invalid event\n
+00011f31		3not support soc audio codec\n
+00011f51		3Unable to alloc codec data\n
+00011f71		3Unable to get CODEC address-%d\n
+00011f94	FUN_000118dc	rlx-codec
+00011fa1		3Unable to request mem region\n
+00011fc1		3failed to ioremap-%d\n
+00011fd8	FUN_000118dc	codec_ck
+00011fe5		3failed to get codec_ck\n
+00012000	FUN_000118dc	&codec_data->codec_mutex
+0001201d		3register codec failed\n
+00012039		3invalid register address 0x%x\n
+0001205c	00015260,00015370	rlx-codec-analog
+00012070	000128c8,00013928,00015288,00015398	RLX-CODEC Analog Capture
+0001208c	00012dd8,00013e38	RLX-CODEC Analog Playback
+000120a8		rlx-codec-digital
+000120bc	00012838,00013898,00015310,00015420	RLX-CODEC Digital Capture
+000120d8	00012d48,00013da8	RLX-CODEC Digital Playback
+000120f4	000125f0	DAC Filter
+00012100	00012d44,00013da4	RLXD Playback
+00012110	00012dd4,00013e34	RLXA Playback
+00012120		DAC Filter CLK
+00012138		TCON CLK
+00012144	00012834,00013894	RLXD Capture
+00012154		ADC Filter
+00012160	000128c4,00013924	RLXA Capture
+00012170		ADC Filter CLK
+00012180		DMIC CLK
+0001218c	000126f8,00012748	Analog DACL Filter
+000121a0	00012708,00012738	Analog DACR Filter
+000121b4	000126f0,00012700,00012710,00012720,000136c0,000136d0,000136e0,000136f0,00013720,00013730	AOUT MUXL
+000121c0	000126f4,00012744,000136c4,00013714,00013744,00013794,000154c8,000154d4	DAC_L
+000121c8	00012704,00012734,000136d4,00013704,00013754,00013784,000154c4,000154d8	DAC_R
+000121d0	00012714,00012764,000136e4,00013734,00013764,000137b4,000154d0,000154dc	AIN_L
+000121d8	00012718,00012768	Analog ADCL Filter
+000121ec	00012724,00012754,000136f4,00013724,00013774,000137a4,000154cc,000154e0	AIN_R
+000121f4	00012728,00012758	Analog ADCR Filter
+00012208	00012730,00012740,00012750,00012760,00013700,00013710	AOUT MUXR
+00012214		ADC ANA CLK
+00012228		Analog DAC Filter
+0001223c		Dacvref Power
+0001224c	000136c8,000136d8,00013708,00013718,00013748,00013758,00013788,00013798	Analog DF2SE
+0001225c	000136e8,000136f8,00013728,00013738,00013768,00013778,000137a8,000137b8	Analog Inputbf
+0001226c	00013740,00013750,00013760,00013770,000137a0,000137b0	HPOUT MUXL
+00012278	00013780,00013790	HPOUT MUXR
+00012284		AOUT Amp
+00012290		HPOUT Amp
+0001229c		Analog ADC Filter
+000122b0		AMIC INTERN POWER
+000122c4		HPOUT right channel source
+000122e0		HPOUT left channel source
+000122fc		AOUT right channel source
+00012318		AOUT left channel source
+00012334		Master Capture Volume
+0001234c		Master Capture Switch
+00012364		Rear Line Capture Volume
+00012380		Real Amic Capture Volume
+0001239c		Capture Source Select
+000123b4		Line Playback Volume
+000123cc		Rear Amic Capture Volume
+000123e8		Headphone Playback Volume
+00012404		Master Playback Volume
+0001241c		Master Playback Switch
+00012434		ADC Compensate Capture Volume
+00012454		Rear Dmic Capture Volume
+00012470		Dmic Capture Switch
+00012484		Amic Capture Switch
+00012498		Front Amic Capture Volume
+000124b4	00014f88	from mic in
+000124c0	00014f8c	from line in
+000124ec	00015744	-7.6dB
+000124f4	00015748	-3.4dB
+000124fc	0001574c,00015760	1.6dB
+00012504	00015750	8.7dB
+00012514	00015758	23.5dB
+0001251c	0001575c	29.5dB
+00012524	00015764	-10dB
+00012548	_elfSectionHeaders::0000019c	description=Realtek RLX ALSA soc codec driver
+00012576		author=Wind_Han <wind_han@realsil.com.cn>
+000125a0		license=GPL
+000125ac		depends=
+000125b5		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+000150d4		rle0745-fpga-acodec
+000150ec		rlx0745-acodec
+00015104		rts3901-fpga-acodec
+0001511c		rts3901-acodec
+00015134		rts3903-fpga-acodec
+0001514c		rts3903-acodec
+0001579c		rlx_codec
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.modinfo
+.shstrtab::00000077		.rel.rodata
+.shstrtab::00000083		.rel.data
+.shstrtab::0000008d		.rel.gnu.linkonce.this_module
+.shstrtab::000000ab		.bss
+.shstrtab::000000b0		.sbss
+.shstrtab::000000b6		.rel.pdr
+.shstrtab::000000bf		.mdebug.abi32
+.shstrtab::000000cd		.comment
+.shstrtab::000000d6		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC10
+.strtab::00000034		$LC9
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		snd_soc_dapm_put_enum_double
+.strtab::00000080		snd_soc_write
+.strtab::0000008e		dev_get_drvdata
+.strtab::0000009e		snd_soc_register_codec
+.strtab::000000b5		platform_driver_unregister
+.strtab::000000d0		__this_module
+.strtab::000000de		__iounmap
+.strtab::000000e8		snd_soc_dapm_enable_pin
+.strtab::00000100		cleanup_module
+.strtab::0000010f		snd_soc_dapm_disable_pin
+.strtab::00000128		snd_soc_put_enum_double
+.strtab::00000140		clk_set_rate
+.strtab::0000014d		clk_get
+.strtab::00000155		snd_soc_unregister_codec
+.strtab::0000016e		__release_region
+.strtab::0000017f		init_module
+.strtab::0000018b		snd_soc_dapm_sync
+.strtab::0000019d		clk_prepare
+.strtab::000001a9		snd_soc_get_enum_double
+.strtab::000001c1		snd_soc_info_volsw
+.strtab::000001d4		devm_kfree
+.strtab::000001df		__ioremap
+.strtab::000001e9		platform_driver_register
+.strtab::00000202		platform_get_resource
+.strtab::00000218		mutex_lock
+.strtab::00000223		snd_soc_update_bits
+.strtab::00000237		printk
+.strtab::0000023e		__mutex_init
+.strtab::0000024b		snd_soc_read
+.strtab::00000258		snd_soc_info_enum_double
+.strtab::00000271		snd_soc_get_volsw
+.strtab::00000283		snd_soc_put_volsw
+.strtab::00000295		mutex_unlock
+.strtab::000002a2		clk_put
+.strtab::000002aa		snd_soc_add_codec_controls
+.strtab::000002c5		clk_disable
+.strtab::000002d1		devm_kzalloc
+.strtab::000002de		dev_set_drvdata
+.strtab::000002ee		snd_soc_dapm_get_enum_double
+.strtab::0000030b		iomem_resource
+.strtab::0000031a		clk_enable
+.strtab::00000325		msleep
+.strtab::0000032c		RTS_SOC_HW_ID
+.strtab::0000033a		__request_region
+.strtab::0000034b		clk_unprepare

@@ -1,0 +1,80 @@
+0040121c	_init	FUN_00401c6c,FUN_004039e0
+00401270	_ftext	access,atoi,close,fopen,fread,get_upgrade_file,memset,memset_s,printf,puts,rm_enter,sleep,snprintf,sscanf,strlen,strstr,system,system_cmd_withret_timeout,usleep
+00401ad0	entry	__uClibc_main
+00401b30	FUN_00401b30	
+00401b70	FUN_00401b70	
+00401bbc	FUN_00401bbc	FUN_00401b30
+00401c6c	FUN_00401c6c	FUN_00401b70
+00401cb0	md5_check_file	memset,printf,rm_enter,snprintf,strcmp,system_cmd_withret_timeout
+00401d70	get_upgrade_file	md5_check_file,memset,printf,puts,rename,snprintf,strstr,system_cmd_withret_timeout
+00401ef8	memset_s	memset
+00401f14	memcpy_s	
+00401f30	InitLogClient	memset,puts,socket
+0040204c	dump_string	InitLogClient,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+00402264	dump_mem	
+004023ec	system_cmd	pclose,popen
+0040241c	system_cmd_withret_timeout	fileno,fread,pclose,popen,select,strstr,system_cmd
+0040260c	gen_nonce	
+004026e0	filesize	
+00402740	init_mqueue	mq_open
+00402798	mqueue_send	
+004027c4	get_sharemem	close,mmap,open,usleep
+004028b8	create_sharemem	
+00402960	rm_enter	strlen
+004029c4	get_cur_time_ms	gettimeofday
+00402a34	ms_sleep	select
+00402a9c	calc_timecost_init	
+00402ab0	calc_timecost_result	
+00402b1c	yi_insmod_ko	memset,printf,sprintf,system_cmd_withret_timeout
+00402bb4	yi_insmod_with_param	
+00402c84	yi_insmod_with_openfile	
+00402db4	yi_insmod_with_param_openfile	
+00402f20	get_filename_by_time	
+004031c4	get_event_mmap	
+00403210	mymktime	mktime
+004032b0	trans_json	sscanf,strlen,strstr
+00403390	trans_json_ex	strlen,strstr
+0040370c	malloc_s	
+0040379c	free_s	dump_string,free
+004037dc	write_log	
+004037e4	base64_decode	
+00403980	get_cur_ms	gettimeofday
+004039e0	FUN_004039e0	
+00403a30	__uClibc_main	
+00403a50	_fini	FUN_00401bbc
+004043a0	putchar	
+004043b0	popen	
+004043c0	printf	
+004043d0	pclose	
+004043e0	snprintf	
+004043f0	usleep	
+00404400	getpid	
+00404420	puts	
+00404430	system	
+00404450	sleep	
+00404460	vsnprintf	
+00404480	socket	
+00404490	select	
+004044b0	mmap	
+004044c0	rename	
+00404500	mktime	
+00404510	strstr	
+00404530	sendto	
+00404540	sscanf	
+00404550	fread	
+00404560	gettimeofday	
+00404570	fopen	
+00404580	localtime	
+00404590	memset	
+004045c0	time	
+004045d0	strcmp	
+004045e0	sprintf	
+004045f0	access	
+00404600	atoi	
+00404610	fileno	
+00404620	strlen	
+00404630	open	
+00404640	mq_open	
+00404650	close	
+00404660	vfprintf	
+00404670	free	

@@ -1,0 +1,177 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+00400cc7		__uClibc_main
+00400cd5		libpthread.so.0
+00400ce5		_DYNAMIC_LINKING
+00400cf6		__RLD_MAP
+00400d00		pthread_create
+00400d16		fclose
+00400d1d		memset
+00400d24		fopen
+00400d31		librtstream.so.2
+00400d42		rts_av_enable_chn
+00400d54		rts_av_stop_recv
+00400d65		rts_av_disable_chn
+00400d78		rts_av_bind
+00400d84		rts_av_set_aec_ctrl
+00400d98		rts_av_get_chn_status
+00400dae		rts_av_start_send
+00400dc0		rts_av_send
+00400dcc		rts_av_create_h264_chn
+00400de3		rts_av_poll
+00400def		rts_av_stop_send
+00400e00		rts_av_set_profile
+00400e13		rts_av_create_audio_mixer_chn
+00400e31		rts_av_create_isp_chn
+00400e47		rts_av_get_isp_ctrl
+00400e5b		rts_av_query_aec_ctrl
+00400e71		rts_av_destroy_chn
+00400e84		rts_av_init
+00400e90		rts_av_create_mjpeg_chn
+00400ea8		rts_av_create_audio_aec_chn
+00400ec4		rts_av_create_audio_capture_chn
+00400ee4		rts_av_recv
+00400ef0		rts_av_create_audio_resample_chn
+00400f11		rts_av_release_aec_ctrl
+00400f29		rts_av_create_osd_chn
+00400f3f		rts_av_set_isp_ctrl
+00400f53		rts_av_start_recv
+00400f65		rts_av_create_audio_encode_chn
+00400f84		rts_av_create_audio_playback_chn
+00400fa5		rts_queue_destroy
+00400fb7		rts_queue_push_back
+00400fcb		rts_queue_pop
+00400fd9		rts_av_set_buffer_profile
+00400ff3		RTS_IS_ERR
+00400ffe		rts_queue_clear
+0040100e		_ITM_registerTMCloneTable
+00401028		_Jv_RegisterClasses
+0040103c		rts_av_put_buffer
+0040104e		rts_queue_init
+0040105d		rts_log
+00401065		rts_av_release
+0040107b		rts_av_get_buffer
+0040108d		rts_free
+00401096		rts_av_set_buffer_callback
+004010b1		rts_av_delete_buffer
+004010c6		rts_av_new_buffer
+004010d8		_ITM_deregisterTMCloneTable
+004010f4		rts_queue_empty
+00401104		librtscamkit.so.1
+00401116		__rts_malloc
+00401123		rts_set_log_mask
+00401134		fwrite
+0040113b		ftell
+00401147		snprintf
+00401150		librtsisp.so.1
+0040115f		libc.so.0
+00401169		usleep
+0040117a		signal
+00401181		fread
+00401191		libasound.so.2
+004011a0		libfdk-aac.so.1
+004011b0		aacDecoder_DecodeFrame
+004011c7		aacDecoder_Open
+004011d7		aacDecoder_GetStreamInfo
+004011f0		aacDecoder_Fill
+00401200		aacDecoder_Close
+00401211		_ftext
+0040121f		_edata
+00401226		__bss_start
+00401256		msg_proc
+0040125f		save_mjpeg
+0040126a		Snapshot
+00401273		release_stream
+00401282		sub_stream_recv
+00401292		apply_capture_aac
+004012a4		init_main_stream
+004012b5		init_raw_stream
+004012c5		__data_start
+004012d2		main_stream_recv
+004012e3		init_aac_audio_server
+004012f9		init_sub_stream
+00401309		raw_stream_recv
+00401319		send_aac_frame
+00401328		_gp_disp
+00401331		__start
+00401339		stop_aac_audio_server
+0040134f		rmm_init_jpeg
+0040135d		init_stream_info
+0040136e		stop_capture_aac
+00403dd0	FUN_00402134	/mnt/record.pcm
+00403de4	FUN_00402134,FUN_00402248	<%s, %d>open pcm_file fail.\n
+00403e04	FUN_00402134	\n\n~~~~~~~~~buffer->bytesused = %d~~~~~~~~~~~~~~\n\n
+00403e38	FUN_00402248	/mnt/encode.aac
+00403e48	FUN_00402248	<%s, %d>open aac_file fail.\n
+00403e6c	FUN_0040243c	<%s, %d>get isp attr fail, ret = %d\n
+00403e94	FUN_0040243c	%s min = %d, max = %d, step = %d, default = %d, cur = %d\n
+00403ed0	FUN_0040243c	<%s, %d>set isp attr fail, ret = %d\n
+00403ef8	FUN_0040243c	<%s, %d>set grey attr fail.\n
+00403f18	init_main_stream,init_raw_stream,init_sub_stream	<%s, %d>fail to create isp chn, ret = %d\n
+00403f44	init_main_stream,init_raw_stream,init_sub_stream	isp chn : %d\n
+00403f54	init_main_stream,init_raw_stream,init_sub_stream	<%s, %d>set isp profile fail, ret = %d\n
+00403f7c	init_main_stream,init_sub_stream	<%s, %d>fail to create osd chn, ret = %d\n
+00403fa8	init_main_stream,init_sub_stream	<%s, %d>fail to create h264 chn, ret = %d\n
+00403fd4	init_main_stream,init_sub_stream	h264 chn : %d\n
+00403fe4	init_main_stream	<%s, %d>fail to create jpg chn, ret = %d\n
+00404010	init_main_stream	jpg chn : %d\n
+00404020	init_main_stream,init_sub_stream	<%s, %d>fail to bind isp and osd, ret %d\n
+0040404c	init_main_stream,init_sub_stream	<%s, %d>fail to bind osd and h264, ret %d\n
+00404078	init_main_stream	<%s, %d>fail to bind isp and mjpeg, ret %d\n
+004040a4	init_aac_audio_server	hw:0,1
+004040ac	init_aac_audio_server	<%s, %d>Error opening aac decoder\n
+004040d0	init_aac_audio_server	<%s, %d>fdk aac decode fail.\n
+004040f0	init_aac_audio_server	<%s, %d>create audio dtom resample chn fail, ret = %d\n
+00404128	init_aac_audio_server	audio resample chn : %d\n
+00404144	init_aac_audio_server	audio mixer chn : %d\n
+0040415c	init_aac_audio_server	audio playback chn : %d\n
+00404178	init_aac_audio_server	audio capture chn : %d\n
+00404190	init_aac_audio_server	audio aec chn : %d\n
+004041a4	init_aac_audio_server	encode chn : %d\n
+004041b8	init_aac_audio_server	<%s, %d>set dtom resample ch fail, ret = %d\n
+004041e8	init_aac_audio_server	<%s, %d>fail to bind resample and mixer, ret = %d\n
+0040421c	init_aac_audio_server	<%s, %d>fail to bind mixer and playback, ret = %d\n
+00404250	init_aac_audio_server	<%s, %d>fail to bind playback and resample, ret = %d\n
+00404288	init_aac_audio_server	<%s, %d>fail to bind resample and aec, ret = %d\n
+004042bc	init_aac_audio_server	<%s, %d>fail to bind capture and aec, ret = %d\n
+004042ec	init_aac_audio_server	<%s, %d>fail to bind resample and encode, ret = %d\n
+00404320	init_aac_audio_server	<%s, %d>start decode fail, ret = %d\n
+00404348	send_aac_frame	<%s, %d>server info not init.\n
+00404368	send_aac_frame	<%s, %d>aacDecoder_Fill() failed: %x\n
+00404390	send_aac_frame	<%s, %d>AAC decode not enough bits.\n
+004043b8	send_aac_frame	<%s, %d>aacDecoder_DecodeFrame() failed: %x\n
+004043e8	send_aac_frame	<%s, %d>Unable to get stream info\n
+0040440c	send_aac_frame	<%s, %d>Stream info not initialized\n
+00404434	send_aac_frame	<%s, %d>unknown channel type\n
+00404454	send_aac_frame	<%s, %d>setresample profile fail, ret = %d\n
+00404480	send_aac_frame	<%s, %d>decode aac frame fail %d\n
+004044a4	save_mjpeg	/mnt/xy_snapshot_%lld.jpg
+004044c4	save_mjpeg	<%s, %d>open %s fail\n
+004044e0	main	rmm_init_isp error
+004044f4	main	<%s, %d>init aac playback fail.\n
+00404518	main	<%s, %d>fail to apply capture
+00404538	main	<%s, %d>open aacfile fail.\n
+00404554	main	<%s, %d>malloc buffer fail\n
+00404570	main	<%s, %d>wrong aac format\n
+0040458c	main	<%s, %d>buffer is busy.\n
+004045a8	main	<%s, %d>enable jpg fail, ret = %d\n
+004045cc	main	<%s, %d>start recv jpg fail, ret = %d\n
+004045f4	main	rmm_init_ai error
+00404610	main	get_mjpeg_data
+00404620	FUN_0040243c	set_grey_attr
+00404630	FUN_0040243c	venc_set_color2grey
+00404644	main	send_pcm_to_playback
+0040465c	main	parse_decode_aac_frame
+00404674	main	send_ao_beep
+00404684	main	rmm_init_ai
+00404690	FUN_00402248	ai_get_aacstream
+004046a4	FUN_00402134	ai_get_lpcmstream
+004046b8	save_mjpeg	save_mjpeg
+004046c4	send_aac_frame	get_stream_info
+004046d4	send_aac_frame	fdk_aac_decode_frame
+004046ec	send_aac_frame	send_aac_frame
+004046fc	init_aac_audio_server	start_server_job
+00404710	init_aac_audio_server	fdk_aac_decode_init
+00404724	init_aac_audio_server	init_aac_audio_server
+0040473c	init_raw_stream	init_raw_stream
+0040474c	init_sub_stream	init_sub_stream
+0040475c	init_main_stream	init_main_stream

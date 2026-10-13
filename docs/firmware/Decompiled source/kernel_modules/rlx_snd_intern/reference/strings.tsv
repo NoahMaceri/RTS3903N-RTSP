@@ -1,0 +1,57 @@
+0001020d		6rlx snd internal codec init\n
+0001022c	init_module	soc-audio
+00010239		3platform device alloc failed\n
+00010259		3platform device add failed\n
+00010278	00010490	RLX_INTERN_CARD
+00010290		AMIC EXTERN POWER
+000102a4	000105fc	RLX INTERN CARD DIGITAL
+000102bc	00010600	RLX INTERN PCM1
+000102cc	0001060c,0001065c	pcm-platform
+000102dc	00010610,00010660	rlx-codec
+000102e8	00010618	rlx-codec-digital
+000102fc	0001061c,0001066c	audio-platform
+0001030c	0001064c	RLX INTERN CARD ANALOG
+00010324	00010650	RLX INTERN PCM2
+00010334	00010668	rlx-codec-analog
+00010348	_elfSectionHeaders::0000019c	description=Realtek RLX ALSA soc codec driver
+00010376		author=Wind_Han <wind_han@realsil.com.cn>
+000103a0		license=GPL
+000103ac		depends=
+000103b5		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+000106cc		rlx_snd_intern
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.modinfo
+.shstrtab::00000077		.rel.rodata
+.shstrtab::00000083		.rel.data
+.shstrtab::0000008d		.rel.gnu.linkonce.this_module
+.shstrtab::000000ab		.bss
+.shstrtab::000000b0		.rel.pdr
+.shstrtab::000000b9		.mdebug.abi32
+.shstrtab::000000c7		.comment
+.shstrtab::000000d0		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		platform_device_put
+.strtab::00000029		dev_get_drvdata
+.strtab::00000039		__this_module
+.strtab::00000047		cleanup_module
+.strtab::00000056		rts_sys_force_reset
+.strtab::0000006a		snd_soc_dai_set_sysclk
+.strtab::00000081		init_module
+.strtab::0000008d		platform_device_unregister
+.strtab::000000a8		platform_device_add
+.strtab::000000bc		platform_device_alloc
+.strtab::000000d2		printk
+.strtab::000000d9		dev_set_drvdata

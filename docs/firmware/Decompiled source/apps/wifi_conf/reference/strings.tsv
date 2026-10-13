@@ -1,0 +1,44 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+004004fd		_init
+00400503		_fini
+00400509		__uClibc_main
+00400517		librt.so.0
+00400522		_DYNAMIC_LINKING
+00400533		__RLD_MAP
+0040053d		memset
+00400544		libc.so.0
+0040054e		snprintf
+00400557		__ctype_b
+00400561		usleep
+00400568		perror
+0040056f		puts
+00400574		mmap
+00400579		chmod
+0040057f		strncat
+00400587		fopen
+0040058d		fclose
+00400594		strcmp
+0040059b		fwrite
+004005a2		strlen
+004005a9		_ftext
+004005b0		_fdata
+004005b7		_edata
+004005be		__bss_start
+004005ca		_fbss
+004005d0		_end
+004019f8	FUN_00400930	licant\nap_scan=1\n
+00401a0c	FUN_00400930	network={\n
+00401a18	FUN_00400930	ssid="%s"\n
+00401a24	FUN_00400930	scan_ssid=1\n
+00401a34	FUN_00400930	key_mgmt=NONE\n
+00401a44	FUN_00400930	proto=WPA RSN\nkey_mgmt=WPA-PSK\npairwise=CCMP TKIP\ngroup=CCMP TKIP\n
+00401a88	FUN_00400930	psk="%s"\n
+00401a94	FUN_00400930	wep_key0="%s"\n
+00401aa4	FUN_00400930	wep_tx_keyidx=0\n
+00401ab8	FUN_00400930	wep_key0=%s\n
+00401ac8	FUN_00400930	/tmp/wpa_supplicant.conf
+00401ae8	FUN_00400930	fwrite
+00401af0	main	/tmp/mmap.info
+00401b00	main	wifi_conf get sharemem failed
+00401b20	main	set wifi configuration success!
+00401b40	main	set wifi configuration failed!

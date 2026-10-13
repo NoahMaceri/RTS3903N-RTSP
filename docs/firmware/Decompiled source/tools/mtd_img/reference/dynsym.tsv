@@ -1,0 +1,36 @@
+# DT_NEEDED: libmtd.so, libc.so.0
+0	T0	UND	0	
+1	FUNC	UND	0	putchar
+2	FUNC	UND	0	strcpy
+3	FUNC	UND	0	printf
+4	OBJECT	DEF	411090	stdout
+5	T0	DEF	411060	_fdata
+6	T3	DEF	1	_DYNAMIC_LINKING
+7	FUNC	UND	0	snprintf
+8	FUNC	UND	0	atol
+9	FUNC	UND	0	fflush
+10	FUNC	DEF	400770	_init
+11	FUNC	UND	0	mtd_get_dev_info
+12	FUNC	UND	0	fprintf
+13	T0	UND	0	_ITM_registerTMCloneTable
+14	T0	DEF	4007c0	_ftext
+15	FUNC	UND	0	mtd_dev_present
+16	OBJECT	DEF	411060	__RLD_MAP
+17	T0	UND	0	_ITM_deregisterTMCloneTable
+18	T0	DEF	411088	__bss_start
+19	FUNC	UND	0	memset
+20	FUNC	DEF	4007c0	main
+21	FUNC	UND	0	mtd_erase
+22	FUNC	DEF	400d00	_fini
+23	OBJECT	DEF	411094	stderr
+24	FUNC	UND	0	libmtd_open
+25	FUNC	UND	0	fwrite
+26	T0	DEF	411088	_edata
+27	T0	DEF	4110b0	_end
+28	FUNC	UND	0	libmtd_close
+29	FUNC	UND	0	open
+30	FUNC	UND	0	mtd_write_img
+31	T0	UND	0	_Jv_RegisterClasses
+32	T0	DEF	411088	_fbss
+33	FUNC	UND	0	close
+34	FUNC	UND	400ce0	__uClibc_main

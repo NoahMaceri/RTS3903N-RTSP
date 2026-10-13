@@ -1,0 +1,39 @@
+## IMPORTS (external)
+snd_soc_dapm_sync	<EXTERNAL>
+platform_driver_register	<EXTERNAL>
+platform_driver_unregister	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+__iounmap	<EXTERNAL>
+platform_get_resource	<EXTERNAL>
+__release_region	<EXTERNAL>
+clk_put	<EXTERNAL>
+snd_soc_unregister_codec	<EXTERNAL>
+devm_kfree	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+mutex_lock	<EXTERNAL>
+clk_disable	<EXTERNAL>
+mutex_unlock	<EXTERNAL>
+snd_soc_dapm_disable_pin	<EXTERNAL>
+clk_set_rate	<EXTERNAL>
+snd_soc_read	<EXTERNAL>
+snd_soc_write	<EXTERNAL>
+printk	<EXTERNAL>
+msleep	<EXTERNAL>
+snd_soc_add_codec_controls	<EXTERNAL>
+snd_soc_update_bits	<EXTERNAL>
+snd_soc_put_volsw	<EXTERNAL>
+devm_kzalloc	<EXTERNAL>
+__request_region	<EXTERNAL>
+__ioremap	<EXTERNAL>
+clk_get	<EXTERNAL>
+__mutex_init	<EXTERNAL>
+snd_soc_register_codec	<EXTERNAL>
+clk_prepare	<EXTERNAL>
+clk_enable	<EXTERNAL>
+clk_unprepare	<EXTERNAL>
+snd_soc_dapm_enable_pin	<EXTERNAL>
+
+## EXPORTS (entry points)
+00015790	__this_module
+00011ec8	cleanup_module
+00011eb0	init_module

@@ -1,0 +1,31 @@
+## IMPORTS (external)
+platform_driver_register	<EXTERNAL>
+platform_driver_unregister	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+__iounmap	<EXTERNAL>
+platform_get_resource	<EXTERNAL>
+__release_region	<EXTERNAL>
+free_irq	<EXTERNAL>
+snd_soc_unregister_platform	<EXTERNAL>
+devm_kfree	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+snd_pcm_hw_constraint_integer	<EXTERNAL>
+snd_pcm_hw_constraint_pow2	<EXTERNAL>
+snd_soc_set_runtime_hwparams	<EXTERNAL>
+snd_pcm_period_elapsed	<EXTERNAL>
+printk	<EXTERNAL>
+devm_kzalloc	<EXTERNAL>
+__request_region	<EXTERNAL>
+__ioremap	<EXTERNAL>
+request_threaded_irq	<EXTERNAL>
+snd_soc_register_platform	<EXTERNAL>
+rts_sys_mem_up	<EXTERNAL>
+__udelay	<EXTERNAL>
+rts_sys_mem_down	<EXTERNAL>
+
+## EXPORTS (entry points)
+00011aa0	__this_module
+00011508	cleanup_module
+00010908	rlx_dma_put_enum
+000114a0	init_module
+0001088c	rlx_dma_get_enum

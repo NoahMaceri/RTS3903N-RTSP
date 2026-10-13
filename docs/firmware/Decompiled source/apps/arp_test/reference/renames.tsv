@@ -1,0 +1,3 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00400e84	FUN_00400e84	arp_send	true	true	arp_send sockets
+00401298	FUN_00401298	send_arp_status_msg	true	false	send_arp_status_msg

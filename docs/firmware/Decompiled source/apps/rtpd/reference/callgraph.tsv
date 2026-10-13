@@ -1,0 +1,69 @@
+00010da4	_DT_INIT	FUN_00010f90,FUN_000173b0
+00010e20	entry	_ITM_deregisterTMCloneTable
+00010e68	FUN_00010e68	_ITM_registerTMCloneTable
+00010eb8	FUN_00010eb8	__cxa_finalize
+00010f90	FUN_00010f90	_Jv_RegisterClasses
+00010fe0	FUN_00010fe0	FUN_00015618,FUN_00015c60,FUN_000163cc,FUN_00016630,error_at_line,memcpy,memset,usleep
+00011160	FUN_00011160	
+00011180	FUN_00011180	
+000111a4	FUN_000111a4	
+000111c8	FUN_000111c8	
+000111ec	FUN_000111ec	
+00011210	FUN_00011210	
+00011234	FUN_00011234	FUN_00016590
+00011484	FUN_00011484	free
+000114d0	FUN_000114d0	sem_wait,write
+00011534	FUN_00011534	sem_wait,write
+00011598	FUN_00011598	FUN_0001489c,luaL_checkinteger,lua_pushboolean
+0001162c	FUN_0001162c	FUN_000149d0,luaL_checkinteger,lua_pushboolean
+00011690	FUN_00011690	FUN_00014964,luaL_checkinteger,lua_pushboolean
+000116f4	FUN_000116f4	FUN_0001462c,luaL_checkinteger,lua_pushinteger,lua_pushnil
+0001181c	FUN_0001181c	FUN_00014578,luaL_checkinteger,lua_pushboolean
+00011914	FUN_00011914	FUN_00014374,luaL_checkinteger,lua_pushinteger,lua_pushnil
+00011aa8	FUN_00011aa8	FUN_00013698,FUN_00014c40,close,eventfd,lua_pushboolean,lua_pushstring,pthread_create,pthread_join,sem_destroy,sem_init
+00011d64	FUN_00011d64	FUN_00010fe0,FUN_00011160,FUN_00011180,FUN_000111a4,FUN_000111c8,FUN_000111ec,FUN_00011210,FUN_00011234,FUN_00011484,FUN_00014a3c,FUN_00014a70,FUN_00014aa4,FUN_00014ad8,FUN_00014b0c,fwrite
+00012114	FUN_00012114	FUN_00014c40,close,lua_pushboolean,lua_pushstring,pthread_join,sem_destroy,write
+0001224c	luaopen_rtpd	luaL_checkversion_,luaL_setfuncs,lua_createtable
+000122d0	FUN_000122d0	clock_gettime
+0001262c	FUN_0001262c	realloc
+00012720	FUN_00012720	close,connect,freeaddrinfo,getaddrinfo,socket
+000129d0	FUN_000129d0	bind,close,getsockname,setsockopt,socket
+00012be0	FUN_00012be0	pthread_mutex_lock,pthread_mutex_unlock,send
+0001301c	FUN_0001301c	close
+000130e4	FUN_000130e4	__errno_location,error_at_line,fclose,fopen,fscanf
+00013278	FUN_00013278	FUN_00016850,FUN_00016e40,memcpy,swab
+000134d0	FUN_000134d0	getpeername,inet_ntop,sprintf,strlen
+00013698	FUN_00013698	calloc,free,pthread_mutex_init
+00014374	FUN_00014374	FUN_000129d0,FUN_00016850,close
+00014578	FUN_00014578	FUN_00016850
+0001462c	FUN_0001462c	FUN_000122d0,FUN_00016e40,connect
+0001489c	FUN_0001489c	pthread_mutex_lock,pthread_mutex_unlock
+00014964	FUN_00014964	pthread_mutex_lock
+000149d0	FUN_000149d0	pthread_mutex_unlock
+00014a3c	FUN_00014a3c	
+00014a70	FUN_00014a70	
+00014aa4	FUN_00014aa4	
+00014ad8	FUN_00014ad8	
+00014b0c	FUN_00014b0c	FUN_00016850,FUN_00016e40,memcpy,swab
+00014c40	FUN_00014c40	free,pthread_mutex_destroy
+00014d30	FUN_00014d30	munmap,sem_close
+00014dfc	FUN_00014dfc	sem_post,sem_wait
+00015008	FUN_00015008	
+000151c4	FUN_000151c4	__errno_location,error,realloc
+00015328	FUN_00015328	__errno_location,close,error,ftruncate,mmap,sem_open,shm_open,snprintf
+00015618	FUN_00015618	__errno_location,close,error,mmap,sem_open,shm_open,snprintf
+00015c60	FUN_00015c60	sem_post,sem_wait
+00015ce0	FUN_00015ce0	
+00015f5c	FUN_00015f5c	
+000161f0	FUN_000161f0	sem_wait
+000162b4	FUN_000162b4	
+000163cc	FUN_000163cc	
+00016590	FUN_00016590	FUN_00015ce0,FUN_000161f0
+00016630	FUN_00016630	FUN_00015f5c,FUN_000161f0
+000166d0	FUN_000166d0	FUN_00015ce0,ms_sleep
+00016790	FUN_00016790	FUN_00015f5c,ms_sleep
+00016850	FUN_00016850	
+00016880	FUN_00016880	
+00016e40	FUN_00016e40	
+000173b0	FUN_000173b0	
+00017890	_DT_FINI	FUN_00010eb8

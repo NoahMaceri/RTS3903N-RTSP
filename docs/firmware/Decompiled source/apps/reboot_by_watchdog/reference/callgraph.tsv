@@ -1,0 +1,40 @@
+00400850	_init	FUN_00400b9c,FUN_004011a0
+004008a0	_ftext	FUN_00400cfc,FUN_00400f44,FUN_00401134,__errno_location,access,ioctl,memset,open,strerror
+00400a00	entry	__uClibc_main
+00400a60	FUN_00400a60	
+00400aa0	FUN_00400aa0	
+00400aec	FUN_00400aec	FUN_00400a60
+00400b9c	FUN_00400b9c	FUN_00400aa0
+00400be0	FUN_00400be0	memset,puts,socket
+00400cfc	FUN_00400cfc	FUN_00400be0,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+00400f14	FUN_00400f14	pclose,popen
+00400f44	FUN_00400f44	FUN_00400f14,fileno,fread,pclose,popen,select,strstr
+00401134	FUN_00401134	select
+004011a0	FUN_004011a0	
+004011f0	__uClibc_main	
+00401210	_fini	FUN_00400aec
+004015e0	putchar	
+004015f0	ioctl	
+00401600	popen	
+00401610	printf	
+00401620	strerror	
+00401630	pclose	
+00401640	snprintf	
+00401650	getpid	
+00401660	puts	
+00401670	vsnprintf	
+00401680	socket	
+00401690	select	
+004016a0	strstr	
+004016b0	sendto	
+004016c0	fread	
+004016d0	gettimeofday	
+004016e0	localtime	
+004016f0	memset	
+00401700	time	
+00401710	access	
+00401720	__errno_location	
+00401730	fileno	
+00401740	strlen	
+00401750	open	
+00401760	vfprintf	

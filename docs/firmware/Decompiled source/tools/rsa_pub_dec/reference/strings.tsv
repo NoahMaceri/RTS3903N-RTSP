@@ -1,0 +1,40 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400579		_init
+00400585		__uClibc_main
+00400593		libssl.so.1.0.0
+004005a3		_DYNAMIC_LINKING
+004005b4		__RLD_MAP
+004005be		PEM_read_bio_RSAPrivateKey
+004005d9		ERR_load_crypto_strings
+004005f1		_ITM_registerTMCloneTable
+0040060b		fwrite
+00400612		_ITM_deregisterTMCloneTable
+0040062e		_Jv_RegisterClasses
+00400642		memset
+00400649		libcrypto.so.1.0.0
+0040065c		ERR_get_error
+0040066a		BIO_new_mem_buf
+0040067a		RSA_public_decrypt
+0040068d		ERR_error_string
+0040069e		PEM_read_bio_RSA_PUBKEY
+004006bc		fopen
+004006cc		fread
+004006d2		printf
+004006d9		ftell
+004006df		perror
+004006e6		fclose
+004006ed		malloc
+004006f4		libc.so.0
+00400703		_ftext
+00400711		_edata
+00400718		__bss_start
+00400e88	FUN_00400c80	Failed to create key BIO
+00400ea4	FUN_00400c80	Failed to create RSA
+00400ebc	FUN_00400d70	%s ERROR: %s\n
+00400ecc	main	error argc\n
+00400ed8	main	before read argv1
+00400eec	main	fopen %s fail!\n
+00400efc	main	input file size error
+00400f14	main	public_decrypt() failed !!!
+00400f30	main	decrypted_length =%d\n
+00400f6c	main	jANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2H25q4JDLUKY4g+yXAAR\n21fufV5WDvwItz0rxmIse6VcSMCFuJhNd1klIdl5E2ObznnJ1Ri5rwd99Jwlem9E\nUxi8n9xDb8+0AtgrkZzM+0/MUAVArZwRtrC8tRrWzl6juO1uO+fzg7G822ivikA2\nlecO9ZZ6jU/uQF/HuAIYBJ4Y7l95e03486OPa4mXYiiyeEeGQgIjUf+ZguCf2RIR\nFtpWuIjB8sbZT7hFTay4zkl6io9gXJdYai/4MHII3rkMC5AHdjBuwOXHj++nRJWa\nWwfpBa6we8xzmt5hk+KXxqZqsCf8yZVNhnAprd09ydyxeI3BIkVrknWFzUZk0i+Z\nKQIDAQAB\n-----END PUBLIC KEY-----\n

@@ -1,0 +1,3 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00013cb4	FUN_00013cb4	rts_wq_lock_ctrl	true	false	rts_wq_lock_ctrl
+000173a0	FUN_000173a0	rts_isp_check_i2c_parm	true	false	rts_isp_check_i2c_parm

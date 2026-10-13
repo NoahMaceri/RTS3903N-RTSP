@@ -1,0 +1,35 @@
+## IMPORTS (external)
+platform_driver_register	<EXTERNAL>
+platform_driver_unregister	<EXTERNAL>
+printk	<EXTERNAL>
+mutex_lock	<EXTERNAL>
+mutex_unlock	<EXTERNAL>
+platform_get_resource	<EXTERNAL>
+platform_get_irq	<EXTERNAL>
+devm_kzalloc	<EXTERNAL>
+get_device	<EXTERNAL>
+__mutex_init	<EXTERNAL>
+__init_waitqueue_head	<EXTERNAL>
+devm_ioremap_resource	<EXTERNAL>
+devm_request_threaded_irq	<EXTERNAL>
+iowrite32	<EXTERNAL>
+rtscam_ge_device_alloc	<EXTERNAL>
+strlcpy	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+rtscam_ge_register_device	<EXTERNAL>
+rtscam_ge_device_release	<EXTERNAL>
+ioread32	<EXTERNAL>
+__wake_up	<EXTERNAL>
+rtscam_ge_kill_fasync	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+put_device	<EXTERNAL>
+rtscam_ge_unregister_device	<EXTERNAL>
+rtscam_devdata	<EXTERNAL>
+rtscam_usercopy	<EXTERNAL>
+
+## EXPORTS (entry points)
+00010bf0	__this_module
+00010848	cleanup_module
+00010830	init_module
+0001021c	rtscam_osd2_probe
+000106d0	rtscam_osd2_remove

@@ -1,0 +1,48 @@
+00010278	FUN_00010040,_elfSectionHeaders::00000174	pid_list_ioctl(), cmd(%d) is invalid !!!!!! \n
+000102a9		3copy process args from user failed!\n
+000102d0	init_module	\n[PID_LIST] pid_list_init fail, [ misc_register fail ] \n
+0001030c	init_module	\n[PID_LIST] pid_list_init ok, [ ver=%s, %s ] \n
+0001033c	init_module	May 27 2019
+00010348	init_module	16:21:04
+00010354	cleanup_module	\n[PID_LIST] pid_list_exit ok \n
+00010374	000103f4	pid_list
+00010380	_elfSectionHeaders::0000019c	license=GPL
+0001038c		description=PID list foreach
+000103ac		depends=
+000103b5		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+0001048c		pid_list
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.modinfo
+.shstrtab::00000077		.rel.data
+.shstrtab::00000081		.rel.gnu.linkonce.this_module
+.shstrtab::0000009f		.bss
+.shstrtab::000000a4		.rel.pdr
+.shstrtab::000000ad		.mdebug.abi32
+.shstrtab::000000bb		.comment
+.shstrtab::000000c4		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		misc_deregister
+.strtab::00000034		__this_module
+.strtab::00000042		cleanup_module
+.strtab::00000051		init_module
+.strtab::0000005d		init_task
+.strtab::00000067		printk
+.strtab::0000006e		misc_register
+.strtab::0000007c		__copy_user
+.strtab::00000088		strlen

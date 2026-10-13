@@ -1,0 +1,137 @@
+00011108	FUN_00010040,_elfSectionHeaders::000001c4	%s, count(%d), dbg_cpld_enalbe(%d)\n
+0001112c	FUN_000101e8	KERN_ERR [CPLD_PERIPH] cmd(%d) is invalid \n
+00011158	FUN_000101e8	cpld---hue, cpld_ioctl() cmd get (%d) \n
+00011180	FUN_000101e8	cpld---KERN_DBG [CPLD_PERIPH] cmd(%d) value = %d \n
+000111b4	FUN_000101e8	cpld---KERN_DBG [CPLD_PERIPH] cmd(%d) \n
+000111dc	FUN_000101e8	cpld---hue, cpld_ioctl() cmd(%d) invalid !!! \n
+0001120c	FUN_000101e8	cpld---hue, cpld_ioctl() ret (%ld) \n
+00011234	init_module	(strlen(hw)=(%d), strlen(gpio)=(%d), params error !!! \n
+0001126c	init_module	hw  =[%s] \n
+00011278	init_module	gpio=[%s] \n
+00011284	init_module	cpld---KERN_ERR [CPLD_PERIPH] cpld_init fail, [ misc_register fail ] \n
+000112cc	init_module	cpld---\n[CPLD_PERIPH] cpld_init ok, [ ver=%s, %s ] \n
+00011304	init_module	Dec  5 2019
+00011310	init_module	13:42:40
+0001131c	init_module	PORT_LED_GREEN
+0001132c	init_module	ETH_LIGHT
+00011338	init_module	PORT_IR_LED
+00011344	init_module	PORT_LED_RED
+00011354	init_module	WHITE_LIGHT
+00011360	init_module	PORT_FACTORY_DEFAULT
+00011378	init_module	PORT_AUDIO_ENABLE
+0001138c	init_module	PORT_IR_CUT_DN_ANODE
+000113a4	init_module	PORT_IR_CUT_DN_CATHODE
+000113bc	init_module	cpld---[CPLD_PERIPH] timer init ok.\n
+000113e4	cleanup_module,init_module	driver/cpld
+000113f0	init_module	[CPLD_PERIPH] CPLD_PERIPH module inited \n
+0001141c	cleanup_module	cpld---\n[CPLD_PERIPH] misc_dev deregistered \n
+0001144c	cleanup_module	cpld---[CPLD_PERIPH] Timer closed.\n
+00011470	cleanup_module	[CPLD_PERIPH] CPLD_PERIPH module exited \n
+0001149c	000116e4	cpld_periph
+00011558	FUN_00010040	cpld_proc_write
+000115e0	_elfSectionHeaders::0000028c	license=GPL
+000115ec		version=CPLD_VERSION=CPLD_PERIPH @rt
+00011611		description=Peripheral ctrl interface
+00011637		parmtype=gpio:charp
+0001164b		parmtype=hw:charp
+00011660		srcversion=BD90DAB78C708BABCA77741
+00011684		depends=
+0001168d		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+000117cc		cpld_periph
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.fixup
+.shstrtab::00000043		.rel.init.text
+.shstrtab::00000052		.rel.exit.text
+.shstrtab::00000061		.reginfo
+.shstrtab::0000006a		.rodata.str1.4
+.shstrtab::00000079		.rel__ex_table
+.shstrtab::00000088		.rel.rodata
+.shstrtab::00000094		.modinfo
+.shstrtab::0000009d		.rel__param
+.shstrtab::000000a9		.rel.data
+.shstrtab::000000b3		.rel.gnu.linkonce.this_module
+.shstrtab::000000d1		.bss
+.shstrtab::000000d6		.rel.pdr
+.shstrtab::000000df		.mdebug.abi32
+.shstrtab::000000ed		.comment
+.shstrtab::000000f6		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		$LC22
+.strtab::00000081		$LC23
+.strtab::00000087		$LC24
+.strtab::0000008d		$LC25
+.strtab::00000093		$LC26
+.strtab::00000099		$LC27
+.strtab::0000009f		$LC28
+.strtab::000000a5		PORT_IR_CUT_DN_CATHODE
+.strtab::000000bc		misc_deregister
+.strtab::000000cc		cpld_gpio_free
+.strtab::000000db		PORT_FACTORY_DEFAULT
+.strtab::000000f0		__this_module
+.strtab::000000fe		LED_WHITE_ON
+.strtab::0000010b		PORT_LED_RED
+.strtab::00000118		cpld_gpio_get_value
+.strtab::0000012c		PORT_LED_ETHERNET
+.strtab::0000013e		__gpio_get_value
+.strtab::0000014f		cleanup_module
+.strtab::0000015e		cpld_gpio_direction_input
+.strtab::00000178		proc_create_data
+.strtab::00000189		gpio_free
+.strtab::00000193		cpld_gpio_request
+.strtab::000001a5		PORT_WIFI_PWR
+.strtab::000001b3		init_module
+.strtab::000001bf		PORT_IR_CUT_DN_ANODE
+.strtab::000001d4		add_timer
+.strtab::000001de		PORT_AUDIO_ENABLE
+.strtab::000001f0		gpio_direction_output
+.strtab::00000206		cpld_gpio_direction_output
+.strtab::00000221		PORT_IR_LED
+.strtab::0000022d		printk
+.strtab::00000234		gpio_direction_input
+.strtab::00000249		misc_register
+.strtab::00000257		param_ops_charp
+.strtab::00000267		LED_GREEN
+.strtab::00000271		__copy_user
+.strtab::0000027d		PORT_SDIO_ENABLE
+.strtab::0000028e		LED_ETH_ON
+.strtab::00000299		jiffies
+.strtab::000002a1		init_timer_key
+.strtab::000002b0		IR_ON
+.strtab::000002b6		__gpio_set_value
+.strtab::000002c7		remove_proc_entry
+.strtab::000002d9		PORT_WHITE_LIGHT_PIN
+.strtab::000002ee		gpio_request
+.strtab::000002fb		PORT_LED_GREEN
+.strtab::0000030a		AUDIO_ON
+.strtab::00000313		LED_RED
+.strtab::0000031b		cpld_gpio_set_value
+.strtab::0000032f		strlen
+.strtab::00000336		del_timer
+.strtab::00000340		msleep

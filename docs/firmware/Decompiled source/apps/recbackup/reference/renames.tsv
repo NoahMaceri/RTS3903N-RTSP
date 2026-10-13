@@ -1,0 +1,16 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+004015cc	FUN_004015cc	recordevent_init_read	true	false	recordevent_init_read
+0040193c	FUN_0040193c	create_file	true	false	create_file
+00401c9c	FUN_00401c9c	do_copy	true	false	do_copy
+00402aa0	FUN_00402aa0	recordbak_pause	true	true	recordbak_pause in
+00402ce4	FUN_00402ce4	recordbak_resume	true	true	recordbak_resume, pause_cnt=%d
+00402d88	FUN_00402d88	umount_cifs	true	false	umount_cifs
+00402e34	FUN_00402e34	XiaoMi	true	true	XiaoMi-usb%d
+0040322c	FUN_0040322c	get_dir_size	true	true	get_dir_size '%s': ...
+004032ec	FUN_004032ec	try_clean_disk	true	false	try_clean_disk
+00403560	FUN_00403560	pause_bak	true	true	pause_bak: ...
+00403608	FUN_00403608	mount_cifs	true	true	mount_cifs '%s': %d
+004039a0	FUN_004039a0	send_mq_msg	true	true	send_mq_msg: %s
+00403abc	FUN_00403abc	mount_fail	true	false	mount_fail
+00403c3c	FUN_00403c3c	check_disk_space	true	false	check_disk_space
+00404158	FUN_00404158	resume_bak	true	true	resume_bak: ...

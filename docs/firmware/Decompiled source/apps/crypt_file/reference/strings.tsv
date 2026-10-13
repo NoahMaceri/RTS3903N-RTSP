@@ -1,0 +1,74 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+004006a1		_init
+004006ad		__uClibc_main
+004006bb		CYASSL_MSG
+004006cd		AesSetIV
+004006d6		memset
+004006dd		AesSetKey
+004006e7		AesCbcDecrypt
+004006f5		stderr
+004006fc		sprintf
+00400704		librt.so.0
+0040070f		_DYNAMIC_LINKING
+00400720		__RLD_MAP
+0040072a		unlink
+00400731		socket
+00400738		libc.so.0
+00400742		putchar
+0040075d		system
+00400764		vsnprintf
+0040076e		basename
+00400777		sendto
+0040077e		fread
+00400784		gettimeofday
+00400791		fopen
+00400797		localtime
+004007a1		fclose
+004007b4		fwrite
+004007bb		strlen
+004007c2		vfprintf
+004007cb		stdout
+004007d2		_ftext
+004007e0		_edata
+004007e7		__bss_start
+004050d0	FUN_00400f94	/tmp/%s.crypt_tmp_file
+004050ec	FUN_00400f94,main	crypt_file.c
+004050fc	FUN_00400f94	fopen in file fail!\n
+00405118	FUN_00400f94	fopen out file fail!\n
+00405130	FUN_00400f94	crype_file got file len %d!\n
+00405150	FUN_00400f94	mv %s %s
+0040515c	FUN_00400f94	fwrite data_len fail!\n
+00405174	FUN_00400f94	fread in fail!\n
+00405184	FUN_00400f94	fwrite out fail!\n
+00405198	FUN_00400f94	file too short!\n
+004051ac	FUN_00400f94	wrong file len!\n
+004051c0	main	success
+004051d4	main	Usage:%s [-e/-d] [src_file] [dst_file] [key]\n
+00405204	main	encrypt file %s!\n
+0040521c	main	decrypt file %s!\n
+00405234	main	encrypt_ext file %s!\n
+00405250	main	decrypt_ext file %s!\n
+00405278	FUN_00400f94	crypt_file
+00405290	FUN_00401444	invalid para, is null\r
+004052a8	FUN_00401444	/tmp/logsock
+004052b8	FUN_00401444	create socket fail\r
+004052cc	FUN_00401560	%s:%d|%s() 
+004052d8	FUN_00401560	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00405304		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00405348		killall cloudAPI
+0040535c		%s : %d ptr %s is NULL pointer\n
+00405384		insmod %s
+00405390		ko path
+00405398		params
+004053a0		insmod %s %s
+004053b0		file node
+004053bc		/tmp/record_event
+00405420		/tmp/sd/record
+004054b0		total malloc(%d) tmp_malloc(%d %p)\n
+004054d4		total free(%p)\n
+004054e4		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+00407d54		}}}}AesEncrypt encountered improper key, set it up
+00407d88	FUN_00402798	AesDecrypt encountered improper key, set it up
+00407dc4		CyaSSL Entering %s
+00407dd8		CyaSSL Leaving %s, return %d
+00407df8		CyaSSL error occured, error = %d

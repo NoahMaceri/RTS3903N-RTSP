@@ -1,0 +1,94 @@
+000115f1		3not support soc audio platform\n
+00011615		3Unable to alloc dma data\n
+00011631		3Unable to get DMA address-%d\n
+00011650	FUN_00010ec4	rlx-dma
+00011659		3Unable to request mem region\n
+00011679		3failed to ioremap-%d\n
+00011691		3Unable to get dma irq\n
+000116ad		3failed to request irq %d\n
+000116c9		3register platform failed
+000116e5		3failed to alloc dma buffer\n
+00011704	FUN_00010ec4	audio-platform
+00011714		Audio Mono/Stereo In/Out Mode
+00011734	00011a04	normal stereo out
+00011748	00011a08	L/R exchange R/L out
+00011760	00011a0c	mono out(single channel)
+0001177c	00011a10	mono out(channel copy stereo)
+0001179c	00011a14	normal stereo in
+000117b0	00011a18	L/R exchange R/L in
+000117c4	00011a1c	mono in(select left channel)
+000117e4	00011a20	mono in(select right channel)
+00011804	00011a24	mono in(half of left and right)
+00011824	_elfSectionHeaders::0000028c	description=Realtek RLX ALSA soc codec driver
+00011852		author=Wind_Han <wind_han@realsil.com.cn>
+0001187c		license=GPL
+00011888		depends=
+00011891		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00011944		rts3901-fpga-adma
+0001195c		rts3901-adma
+00011974		rts3903-fpga-adma
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.fixup
+.shstrtab::00000043		.rel.init.text
+.shstrtab::00000052		.rel.exit.text
+.shstrtab::00000061		.reginfo
+.shstrtab::0000006a		.rel.rodata
+.shstrtab::00000076		.rel__ex_table
+.shstrtab::00000085		.rodata.str1.4
+.shstrtab::00000094		.modinfo
+.shstrtab::0000009d		.rel.data
+.shstrtab::000000a7		.rel.gnu.linkonce.this_module
+.shstrtab::000000c5		.bss
+.shstrtab::000000ca		.rel.pdr
+.shstrtab::000000d3		.mdebug.abi32
+.shstrtab::000000e1		.comment
+.shstrtab::000000ea		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC3
+.strtab::00000010		$LC2
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC10
+.strtab::0000002a		$LC7
+.strtab::0000002f		$LC9
+.strtab::00000034		$LC8
+.strtab::00000039		free_irq
+.strtab::00000042		__udelay
+.strtab::0000004b		dev_get_drvdata
+.strtab::0000005b		platform_driver_unregister
+.strtab::00000076		__this_module
+.strtab::00000084		__iounmap
+.strtab::0000008e		cleanup_module
+.strtab::0000009d		rlx_dma_put_enum
+.strtab::000000ae		__release_region
+.strtab::000000bf		init_module
+.strtab::000000cb		snd_soc_register_platform
+.strtab::000000e5		devm_kfree
+.strtab::000000f0		__ioremap
+.strtab::000000fa		snd_pcm_lib_ioctl
+.strtab::0000010c		platform_driver_register
+.strtab::00000125		request_threaded_irq
+.strtab::0000013a		platform_get_resource
+.strtab::00000150		snd_pcm_hw_constraint_pow2
+.strtab::0000016b		rts_sys_mem_down
+.strtab::0000017c		rts_sys_mem_up
+.strtab::0000018b		printk
+.strtab::00000192		snd_soc_info_enum_ext
+.strtab::000001a8		snd_pcm_hw_constraint_integer
+.strtab::000001c6		rlx_dma_get_enum
+.strtab::000001d7		mips_dma_map_ops
+.strtab::000001e8		snd_soc_set_runtime_hwparams
+.strtab::00000205		snd_pcm_period_elapsed
+.strtab::0000021c		devm_kzalloc
+.strtab::00000229		dev_set_drvdata
+.strtab::00000239		iomem_resource
+.strtab::00000248		snd_soc_unregister_platform
+.strtab::00000264		__request_region

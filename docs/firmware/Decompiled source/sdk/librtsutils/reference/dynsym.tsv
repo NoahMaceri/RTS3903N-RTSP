@@ -1,0 +1,41 @@
+# DT_NEEDED: librtsisp.so.1, librtsv4l2.so.1, librtscamkit.so.1, libm.so.0, librtsgeom.so.1, libgcc_s.so.1, libc.so.0
+0	T0	UND	0	
+1	T3	DEF	950	
+2	T0	DEF	11b40	_fdata
+3	T3	DEF	19b30	_gp_disp
+4	FUNC	DEF	950	_init
+5	FUNC	DEF	1140	rts_get_raw_header
+6	T0	DEF	9d0	_ftext
+7	T0	DEF	11bcc	__bss_start
+8	FUNC	DEF	18b0	_fini
+9	FUNC	DEF	10b8	rts_release_raw
+10	FUNC	DEF	1694	rts_update_raw_fmt
+11	T0	DEF	11bcc	_edata
+12	T0	DEF	11be0	_end
+13	FUNC	DEF	1230	rts_get_raw_frame
+14	FUNC	DEF	e4c	rts_init_raw
+15	T0	DEF	11bcc	_fbss
+16	T0	UND	0	_Jv_RegisterClasses
+17	FUNC	UND	1890	__assert
+18	FUNC	UND	1880	rts_v4l2_set_fmt
+19	FUNC	UND	1870	rts_free
+20	FUNC	UND	1860	rts_isp_get_snr_fmt
+21	FUNC	UND	1850	rts_v4l2_check_frame
+22	FUNC	UND	1840	rts_v4l2_put_buffer
+23	FUNC	UND	1830	rts_isp_set_raw
+24	FUNC	UND	1820	rts_v4l2_open
+25	FUNC	UND	1810	rts_v4l2_munmap_buf
+26	T0	UND	0	_ITM_deregisterTMCloneTable
+27	FUNC	UND	1800	rts_v4l2_get_buffer
+28	FUNC	UND	17f0	rts_log
+29	FUNC	UND	17e0	rts_v4l2_streamoff
+30	T0	UND	0	_ITM_registerTMCloneTable
+31	FUNC	UND	17d0	rts_isp_get_streamid
+32	FUNC	UND	17c0	rts_v4l2_request_bufs
+33	OBJECT	UND	0	rts_hw_id
+34	FUNC	UND	17b0	rts_v4l2_query_mmap_buf
+35	FUNC	UND	17a0	rts_v4l2_close
+36	FUNC	UND	0	__cxa_finalize
+37	FUNC	UND	1790	usleep
+38	FUNC	UND	1780	__rts_calloc
+39	FUNC	UND	1770	rts_v4l2_streamon

@@ -1,0 +1,89 @@
+00010ef0	_elfSectionHeaders::00000174,init_module	rtscam_lock_init
+00010f10	FUN_0001007c,_elfSectionHeaders::0000019c	0x%lx\t%16s\t%d\t%d\n
+00010f25		3rtscam:unknown[rtslock] ioctl 0x%08x, '%c' 0x%x\n
+00010f58	init_module	&m_rtslock.lock
+00010f68	init_module	rtslock
+00010f71		6rtscam:%s\n
+00010f90		lockinfo
+00010f9c	rtscam_allocate_wait_queue	&queue->lock
+00010fad		6rtscam:alloc wait item fail\n
+00010fcc	rtscam_wait_timeout	&x->wait
+00010fd8	_elfSectionHeaders::000001c4	version=0.0.1
+00010fe6		license=GPL v2
+00010ff5		author=Ming Qian <ming_qian@realsil.com.cn>
+00011021		description=Realsil cam lock driver
+00011048		srcversion=B6BCF795A6445CF69DBA7F2
+0001106c		depends=rts_cam
+0001107c		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+0001111c		rts_cam_lock
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000089		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata
+.shstrtab::00000067		.rodata.str1.4
+.shstrtab::00000076		.modinfo
+.shstrtab::0000007f		.rel.data
+.shstrtab::00000089		.rel.gnu.linkonce.this_module
+.shstrtab::000000a7		.sbss
+.shstrtab::000000ad		.bss
+.shstrtab::000000b2		.comment
+.shstrtab::000000bb		.rel.pdr
+.shstrtab::000000c4		.gnu.attributes
+.shstrtab::000000d4		.mdebug.abi32
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		dev_attr_post
+.strtab::00000028		rtscam_devdata
+.strtab::00000037		dev_get_drvdata
+.strtab::00000047		wait_for_completion_timeout
+.strtab::00000063		__this_module
+.strtab::00000071		complete
+.strtab::0000007a		rtscam_usercopy
+.strtab::0000008a		scnprintf
+.strtab::00000094		cleanup_module
+.strtab::000000a3		rtscam_lock_free
+.strtab::000000b4		rtscam_ge_unregister_device
+.strtab::000000d0		get_device
+.strtab::000000db		init_module
+.strtab::000000e7		rtscam_debug
+.strtab::000000f4		_kstrtoul
+.strtab::000000fe		put_device
+.strtab::00000109		vzalloc
+.strtab::00000111		rtscam_wait_timeout
+.strtab::00000125		device_create_file
+.strtab::00000138		rtscam_ge_device_alloc
+.strtab::0000014f		rtscam_wait
+.strtab::0000015b		mutex_lock
+.strtab::00000166		rtscam_lock_alloc
+.strtab::00000178		strlcpy
+.strtab::00000180		dev_attr_lockinfo
+.strtab::00000192		printk
+.strtab::00000199		__mutex_init
+.strtab::000001a6		rtscam_lock_wait
+.strtab::000001b7		rtscam_allocate_wait_queue
+.strtab::000001d2		rtscam_lock_set_num
+.strtab::000001e6		wait_for_completion
+.strtab::000001fa		__init_waitqueue_head
+.strtab::00000210		rtscam_ge_register_device
+.strtab::0000022a		vfree
+.strtab::00000230		mutex_unlock
+.strtab::0000023d		dev_attr_wait
+.strtab::0000024b		rtscam_post
+.strtab::00000257		rtscam_lock_set_name
+.strtab::0000026c		rtscam_release_wait_queue
+.strtab::00000286		rtscam_lock_post
+.strtab::00000297		rtscam_init_wait_queue
+.strtab::000002ae		rtscam_ge_device_release
+.strtab::000002c7		dev_set_drvdata
+.strtab::000002d7		device_remove_file

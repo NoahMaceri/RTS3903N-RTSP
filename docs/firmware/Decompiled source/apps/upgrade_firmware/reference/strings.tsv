@@ -1,0 +1,84 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400681		_init
+0040068d		__uClibc_main
+0040069b		libpthread.so.0
+004006ab		_DYNAMIC_LINKING
+004006bc		__RLD_MAP
+004006c6		system
+004006d4		memset
+004006e9		strlen
+004006f0		gettimeofday
+00400702		librt.so.0
+0040070d		mq_send
+00400715		mq_open
+0040071d		socket
+00400724		libc.so.0
+0040072e		putchar
+00400736		popen
+0040073c		pclose
+00400743		usleep
+0040074f		vsnprintf
+00400759		select
+00400760		strstr
+00400767		sendto
+0040076e		fread
+00400774		localtime
+0040077e		fileno
+00400785		vfprintf
+0040078e		stdout
+00400795		_ftext
+004007a3		_edata
+004007aa		__bss_start
+00401a20	_ftext	Usage: %s [URL] [MD5]..\n
+00401a3c	FUN_00400d60	md5sum %s | awk '{print $1}'
+00401a5c	FUN_00400d60,FUN_00400ff0,_ftext	upgrade_firmware.c
+00401a70	FUN_00400d60	calc_md5 = %s, md5 = %s\n
+00401a8c	FUN_00400e30	mv %s %s/%s;sync
+00401aa0	FUN_00400e30,FUN_00400e9c	/tmp/update
+00401aac	FUN_00400e30,FUN_00400e9c,FUN_00400ff0	firmware_m.bin
+00401abc	FUN_00400e9c	rm -f /%s/%s;rm -rf %s;mkdir %s;mkdir %s
+00401ae8	FUN_00400e9c,FUN_00400ff0	/tmp/loadtmp
+00401af8	FUN_00400ff0	%s/%s
+00401b00	FUN_00400ff0	%s -c 300 -url %shome_r10m -filename %s
+00401b28	FUN_00400ff0	/backup/cloudAPI
+00401b3c	FUN_00400ff0	downloading file(%s)
+00401b54	FUN_00400ff0	success
+00401b5c	FUN_00400ff0	download fail\n
+00401b6c	FUN_00400ff0	download success\n
+00401b80	FUN_00400ff0	md5_check_file fail!\n
+00401b98	FUN_00400ff0	md5_check_file success\n
+00401bb0	FUN_00400ff0	move_file fail!\n
+00401bc4	FUN_00400ff0	move_file success\n
+00401bd8	FUN_00400ff0	get_upgrade_file ok!\n
+00401bf0	_ftext	/ipc_dispatch
+00401c00	_ftext	init_mqueue dispatch fail!\n
+00401c1c	_ftext	/tmp/mmap.info
+00401c2c	_ftext	open share mem fail!\n
+00401c44	_ftext	/home/app/script/killapp.sh
+00401c60	_ftext	get_upgradefile_ok
+00401c74	_ftext	/backup/script/update.sh /tmp/update/firmware_m.bin
+00401ca8	_ftext	try too much times\n
+00401cbc	_ftext	get_upgradefile_fail
+00401cd4	_ftext	%s after update.sh, wait reboot\n
+00401cf8	_ftext	killall watchdog
+00401d0c	_ftext	reboot
+00401d30	FUN_00400ff0	get_upgrade_file
+00401d44	FUN_00400d60	md5_check_file
+00401d60	FUN_00401230	invalid para, is null\r
+00401d78	FUN_00401230	/tmp/logsock
+00401d88	FUN_00401230	create socket fail\r
+00401d9c	FUN_0040134c	%s:%d|%s() 
+00401da8	FUN_0040134c	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00401dd4		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00401e1c	FUN_00401594	killall cloudAPI
+00401e30		%s : %d ptr %s is NULL pointer\n
+00401e58		insmod %s
+00401e64		ko path
+00401e6c		params
+00401e74		insmod %s %s
+00401e84		file node
+00401e90		/tmp/record_event
+00401ef4		/tmp/sd/record
+00401f84		total malloc(%d) tmp_malloc(%d %p)\n
+00401fa8		total free(%p)\n
+00401fb8		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

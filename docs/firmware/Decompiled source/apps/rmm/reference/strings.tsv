@@ -1,0 +1,655 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+00401461		_fini
+00401467		__uClibc_main
+00401475		libpthread.so.0
+00401485		_DYNAMIC_LINKING
+00401496		__RLD_MAP
+004014a0		pthread_create
+004014af		system
+004014b6		sem_wait
+004014bf		sem_post
+004014c8		pthread_detach
+004014d7		sem_init
+004014e0		pthread_mutex_unlock
+004014f5		pthread_self
+00401502		pthread_mutex_lock
+00401515		pthread_mutex_init
+00401528		strlen
+0040152f		exit
+00401534		__errno_location
+00401545		sprintf
+0040154d		strcmp
+00401554		fclose
+0040155b		memset
+00401562		fopen
+00401568		gettimeofday
+00401575		calloc
+0040157c		memcpy
+00401583		getpid
+0040158a		syscall
+00401592		libm.so.0
+0040159c		sqrt
+004015a1		floor
+004015af		libdl.so.0
+004015ba		librt.so.0
+004015c5		mq_receive
+004015d0		librtstream.so.2
+004015e1		rts_av_set_callback
+004015f5		rts_av_unbind
+00401603		rts_av_enable_chn
+00401615		rts_av_stop_recv
+00401626		rts_av_disable_chn
+00401639		rts_av_bind
+00401645		rts_av_get_isp_daynight_statis
+00401664		rts_av_set_aec_ctrl
+00401678		rts_av_get_chn_status
+0040168e		rts_av_start_send
+004016a0		rts_av_send
+004016ac		rts_av_create_h264_chn
+004016c3		rts_av_poll
+004016cf		rts_av_stop_send
+004016e0		rts_av_get_profile
+004016f3		rts_av_set_profile
+00401706		rts_av_create_audio_mixer_chn
+00401724		rts_av_create_isp_chn
+0040173a		rts_av_get_isp_ctrl
+0040174e		rts_av_query_aec_ctrl
+00401764		rts_av_query_h264_ctrl
+0040177b		rts_av_destroy_chn
+0040178e		rts_av_request_h264_key_frame
+004017ac		rts_av_init
+004017b8		rts_av_release_h264_ctrl
+004017d1		rts_av_create_mjpeg_chn
+004017e9		rts_av_create_audio_aec_chn
+00401805		rts_av_create_audio_capture_chn
+00401825		rts_av_recv
+00401831		rts_av_create_audio_resample_chn
+00401852		rts_av_release_aec_ctrl
+0040186a		rts_av_create_osd_chn
+00401880		rts_av_set_isp_ctrl
+00401894		rts_av_is_idle
+004018a3		rts_av_start_recv
+004018b5		rts_av_create_audio_encode_chn
+004018d4		rts_av_create_audio_playback_chn
+004018f5		rts_queue_destroy
+00401907		rts_queue_push_back
+0040191b		rts_queue_pop
+00401929		rts_av_set_buffer_profile
+00401943		RTS_IS_ERR
+0040194e		rts_queue_clear
+0040195e		_ITM_registerTMCloneTable
+00401978		_Jv_RegisterClasses
+0040198c		rts_av_put_buffer
+0040199e		rts_queue_init
+004019ad		rts_log
+004019b5		rts_av_get_h264_ctrl
+004019ca		rts_av_release
+004019d9		rts_av_set_h264_ctrl
+004019ee		rts_av_get_buffer
+00401a00		__assert
+00401a09		rts_free
+00401a12		rts_av_set_buffer_callback
+00401a2d		rts_av_delete_buffer
+00401a42		strerror
+00401a4b		rts_av_new_buffer
+00401a5d		_ITM_deregisterTMCloneTable
+00401a79		rts_queue_empty
+00401a89		librtsmd.so.1
+00401a97		fwrite
+00401a9e		stderr
+00401aa5		puts
+00401aaa		stdout
+00401ab1		ioctl
+00401ab7		librtsmask.so.1
+00401ac7		librtscamkit.so.1
+00401ad9		__rts_malloc
+00401ae6		ftell
+00401aec		strncmp
+00401af4		fseek
+00401afa		select
+00401b01		librtsisp.so.1
+00401b10		libc.so.0
+00401b1a		putchar
+00401b22		popen
+00401b28		memmove
+00401b30		usleep
+00401b37		prctl
+00401b3d		rename
+00401b44		strrchr
+00401b4c		strstr
+00401b53		signal
+00401b5a		fread
+00401b60		nice
+00401b65		access
+00401b6c		atoi
+00401b71		strchr
+00401b78		libubacktrace.so.0
+00401b8b		libasound.so.2
+00401b9a		snd_ctl_elem_info_sizeof
+00401bb3		snd_hctl_elem_info
+00401bc6		snd_ctl_elem_info_get_type
+00401be1		snd_ctl_elem_info_get_min
+00401bfb		snd_ctl_elem_info_get_max
+00401c15		snd_ctl_elem_info_get_items
+00401c31		snd_ctl_elem_value_sizeof
+00401c4b		snd_hctl_elem_read
+00401c5e		snd_ctl_elem_info_get_count
+00401c7a		snd_ctl_elem_value_set_enumerated
+00401c9c		snd_ctl_elem_value_set_boolean
+00401cbb		snd_ctl_elem_value_set_integer
+00401cda		snd_hctl_elem_write
+00401cee		snd_ctl_elem_value_get_boolean
+00401d0d		snd_ctl_elem_value_get_integer
+00401d2c		snd_ctl_elem_value_get_enumerated
+00401d4e		snd_hctl_elem_get_hctl
+00401d65		snd_hctl_close
+00401d74		snd_ctl_elem_id_sizeof
+00401d8b		snd_hctl_open
+00401d99		snd_hctl_load
+00401da7		snd_ctl_elem_id_set_interface
+00401dc5		snd_ctl_elem_id_set_name
+00401dde		snd_hctl_find_elem
+00401df1		libfdk-aac.so.1
+00401e01		aacDecoder_DecodeFrame
+00401e18		aacDecoder_Open
+00401e28		aacDecoder_GetStreamInfo
+00401e41		aacDecoder_Fill
+00401e51		aacDecoder_Close
+00401e62		munmap
+00401e69		sem_close
+00401e73		realloc
+00401e7b		shm_open
+00401e84		ftruncate
+00401e8e		mmap
+00401e93		sem_open
+00401e9c		fshare_read
+00401ea8		fshare_wait
+00401eb4		fshare_read_newest
+00401ec7		ms_sleep
+00401ed0		socket
+00401ed7		vsnprintf
+00401ee1		sendto
+00401ee8		localtime
+00401ef2		vfprintf
+00401efb		pclose
+00401f02		fileno
+00401f09		mq_open
+00401f11		mq_send
+00401f19		pthread_once
+00401f26		memcmp
+00401f2d		clock_gettime
+00401f3b		qsort
+00401f41		iconv_open
+00401f4c		iconv_close
+00401f58		iconv
+00401f5e		memchr
+00401f65		log10
+00401f6b		libh1encoder.so.1
+00401f7d		librtsosd2.so.0
+00401f8d		librtsjpeg.so.1
+00401f9d		librtsv4l2.so.1
+00401fad		../../lib/realtek/lib/librtsaec.so
+00401fd0		../../lib/realtek/lib/libaacenc.so
+00401ff3		librtsgeom.so.1
+00402003		__clz_tab
+0040200d		_ftext
+00402014		_fdata
+0040201b		_edata
+00402022		__bss_start
+0040202e		_fbss
+00402034		_end
+004221f0	0040590c,004059b4,00405bd0,00405dbc,00405e24,00405e50,00405ebc,00406050,00406160,0040621c,0040623c,FUN_00406604,abnormal_sound_detection_func,daynight_switch_func,main,rmm_ptz_direction_ctrl,send_abnormal_sound_detect_msg,send_capture_finish_msg,send_motion_flowwith_start_msg,send_motion_start_msg,send_reboot_msg,send_wait_msg,send_wifi_conf_msg,set_light_switch,trans_info,zbar_proc	rmm.c
+004221f8	00406228,send_abnormal_sound_detect_msg,send_capture_finish_msg,send_do_speaking_msg,send_motion_flowwith_start_msg,send_motion_start_msg,send_reboot_msg,send_stop_speaking_msg,send_wait_msg,send_wifi_conf_msg	msg snd err, err no is %d
+00422214	00405e30,send_abnormal_sound_detect_msg,send_capture_finish_msg,send_do_speaking_msg,send_motion_flowwith_start_msg,send_motion_start_msg,send_reboot_msg,send_stop_speaking_msg,send_wait_msg,send_wifi_conf_msg	msg snd success
+00422224	daynight_switch_func	cat /sys/devices/platform/rts_saradc.0/in0_input
+00422258	daynight_switch_func	ircut is locked\n
+0042226c	trans_info	trans_json info=%s;key=%s\n
+00422288	trans_info	trans_json result=%s\n
+004222a0	00406248,rmm_ptz_direction_ctrl	p2p_ptz_direction_ctrl send_msg fail!\n
+004222f4	set_light_switch	set_light_switch %s
+0042230c	00405914,FUN_00406604	pid[%d]
+00422314	004059b8	time sync. set motion_stat = 0\n
+00422334	00405be0	pre_power_flag sync. set motion_stat = 0\n
+00422360	00406178	discard. old tick:%d, new tick:%d \n
+00422384	00405e5c	###fmy: got a new motion start pause_motion =%d motion =%d unlock_motion=%d \n
+004223d4	00406154	send_motion_flowwith_start_msg 2\n
+004223f8	00405ef4	send_motion_start_msg. old:%d, new:%d\n
+00422420	00406054	send_motion_flowwith_start_msg\n
+00422440	00405dc4	###fmy: got a new motion stop. send_motion_stop_msg unlock_motion=%d \n
+00422488	abnormal_sound_detection_func	 ivaAbnormalSoundDetect =%d sec. lastReport:%d. cbmalen:%d sensitivity %d\n
+004224d4	abnormal_sound_detection_func	ivaAbnormalSoundDetect REPORT =%d sec.\n
+00422504	FUN_00406604	Success
+00422548	FUN_00406604	got RMM_SPEAK_SUCCESS
+00422560	FUN_00406604	/tmp/audio/success.aac
+00422578	FUN_00406604,main	echo 3 > /proc/sys/vm/drop_caches
+0042259c	FUN_00406604	/home/app/audio_file/common/poweroff.aac
+004225c8	FUN_00406604	got RMM_SPEAK_RESET
+004225dc	FUN_00406604	got RMM_SPEAK_WAIT
+004225f0	FUN_00406604	/home/app/audio_file/common/wait.aac
+00422618	FUN_00406604	got RMM_SPEAK_WARNING
+00422630	FUN_00406604	/home/app/audio_file/common/warning.aac
+00422658	FUN_00406604	/tmp/audio/wifi_connect_failed.aac
+0042267c	FUN_00406604	/tmp/audio/pwdwrong.aac
+00422694	FUN_00406604	got RMM_SPEAK_PWD_WRONG
+004226ac	FUN_00406604	/tmp/audio/connectting.aac
+004226c8	FUN_00406604	got RMM_SPEAK_CONNECTTING
+004226e4	FUN_00406604	/tmp/audio/wifi_connected.aac
+00422704	FUN_00406604	got RMM_SPEAK_WIFI_CONNECTTED
+00422724	FUN_00406604	/tmp/audio/welcome.aac
+0042273c	FUN_00406604	got RMM_START_WELCOME
+00422754	FUN_00406604	/tmp/audio/bindkey_fail.aac
+00422770	FUN_00406604	got RMM_SPEAK_BINDFAIL
+00422788	FUN_00406604	/tmp/audio/timeout.aac
+004227a0	FUN_00406604	got RMM_SPEAK_BIND_TIMEOUT
+004227bc	FUN_00406604	/tmp/audio/device_wrong.aac
+004227d8	FUN_00406604	got RMM_SPEAK_WRONG_DEVICE
+004227f4	FUN_00406604	/tmp/audio/downloading.aac
+00422810	FUN_00406604	got RMM_SPEAK_DOWNLOADING
+0042282c	FUN_00406604	/tmp/audio/updating.aac
+00422844	FUN_00406604	got RMM_SPEAK_UPDATING
+0042285c	FUN_00406604	/tmp/audio/download_fail.aac
+0042287c	FUN_00406604	got RMM_SPEAK_DOWNLOAD_FAIL
+00422898	FUN_00406604	/tmp/audio/scanok.aac
+004228b0	FUN_00406604	got RMM_SPEAK_SCAN_OK
+004228c8	FUN_00406604	/tmp/audio/ban_device.aac
+004228e4	FUN_00406604	got RMM_SPEAK_BAN_DEVICE
+00422900	FUN_00406604	/tmp/sd/1k.aac
+00422910	FUN_00406604	rmm rcv RMM_APP_MODE_EARPHONE
+00422930	FUN_00406604	rmm rcv RMM_APP_MODE_SPKER
+0042294c	FUN_00406604	\n\n[Peter] rmm RMM_APP_AUDIO_MODE_SIMPLEX mode\n
+0042297c	FUN_00406604	\n\n[Peter] rmm RMM_APP_AUDIO_MODE_DUPLEX mode\n
+004229ac	FUN_00406604	%s.tmp
+004229b4	FUN_00406604	/home/app/audio_file/common/capture.aac
+00422a08	FUN_00406604	media_get_jpeg error!
+00422a44	FUN_00406604	=======pic_name=%s\n
+00422a58	FUN_00406604	 ===========g_rmm_info.ePlayload =%d\n
+00422aac	FUN_00406604	/home/app/audio_file/common/record_end.aac
+00422b04	FUN_00406604	/home/app/audio_file/common/record_start.aac
+00422ba8	FUN_00406604	open white light compensate, warning beep...
+00422c54	send_wifi_conf_msg	msg snd err, err no is %d\n
+00422c70	send_wifi_conf_msg	msg snd success\n
+00422c84	zbar_proc	zbar_image_create fail
+00422c9c	zbar_proc	Got raw video size(%d,%d)
+00422cfc	zbar_proc	decoded %s symbol "%s"\n
+00422d21	zbar_proc	9JFSjo8HUbhou5776NJOMp9i90ghg7Y78G78t68899y79HY7g7y87y9ED45Ew30O0jkkl
+00422d68	zbar_proc	rmm got /tmp/got_wpa ssid(%s) pwd(%s) bind(%s)\n
+00422d98	zbar_proc	ssid = %s pwd = %s=========================\n\n
+00422dc8	zbar_proc	zbar error
+00422dd8	FUN_004079bc	open [%s] failed!\n
+00422df4	FUN_00407a40	/sys/devices/platform/rts_soc_camera/loadfw
+00422e20	FUN_00407a40	open [/sys/devices/platform/rts_soc_camera/sensor] failed
+00422e5c	FUN_00407a40	/home/lib/sc2390/isp.fw
+00422e74	FUN_00407a40	\nchoose CS2390 isp.fw============
+00422e98	FUN_00407a40	/home/lib/sc2390/isp_dvp.fw
+00422eb4	FUN_00407a40	\nchoose CS2390 DVP isp.fw============
+00422edc	FUN_00407a40	use default isp.fw=============== 
+00422f00	FUN_00407a40	sensor = %s===========\n
+00422f18	FUN_00407a40,FUN_0040b144	SC1245
+00422f20	FUN_00407a40	/home/lib/sc1245/isp.fw
+00422f38	FUN_00407a40,FUN_0040b144	SC2235
+00422f40	FUN_00407a40	/home/lib/sc2235/isp.fw
+00422f58	FUN_00407a40,FUN_0040b144	SC2232
+00422f60	FUN_00407a40	/home/lib/sc2232/isp.fw
+00422f78	FUN_00407a40,FUN_0040b144	SC2230
+00422f80	FUN_00407a40	/home/lib/sc2230/isp_jin.fw
+00422f9c	FUN_00407a40	\nchoose isp_jin.fw============
+00422fbc	FUN_00407a40	/home/lib/sc2230/isp_lang.fw
+00422fdc	FUN_00407a40	\nchoose isp_lang.fw============
+00422ffc	FUN_00407a40	/home/lib/sc2230/isp_mipi.fw
+0042301c	FUN_00407a40	\nchoose isp_mipi.fw============
+0042303c	FUN_00407a40	C2390
+00423044	FUN_00407a40	do not support this sensor[%s]\n
+00423064	main	realtek
+0042306c	main	aacplay
+00423074	main	Usage:%s <filename> [ms]
+00423090	main	/ipc_dispatch
+004230a0	main	init_mqueue MQ_NAME_DISPATCH fail
+004230c4	main	/ipc_rmm
+004230d0	main	init_mqueue MQ_NAME_RMM fail
+004230f0	main	fshare_create fail
+00423104	main	/tmp/mmap.info
+00423114	main	create_sharemem MMAP_FILE_NAME fail
+00423138	main	/dev/cpld_periph
+0042314c	main	/tmp/sd/debug_msg
+00423160	main	/dev/ssp
+0042316c	main	ps|grep "\<aacplay\>"|grep -v grep
+00423190	main	pthread_create failed ret[%d]\n
+004231b0	main	/tmp/rmm_skip_zbar
+004231c4	main	/home/app/script/factory_test.sh
+004231e8	main	/tmp/sd/Factory/factory_test.sh
+00423208	main	\n\npthread creat media_rtl_get_videostream fail!!!\n
+0042323c	main	\n\npthread creat media_rtl_get_videostream ok!!!\n
+00423270	main	\n\npthread creat media_rtl_get_videostream 1 fail!!!\n
+004232a8	main	\n\npthread creat media_rtl_get_videostream 1 ok!!!\n
+00423308	main	gIsGraySwitchLocal change to [%d]\n
+00423330	main	auto_loop_func
+00423340	main	auto_loop_func
+00423350	trans_info	trans_info
+0042335c	zbar_proc	zbar_proc
+00423368	zbar_proc	zbar_proc
+00423374	send_reboot_msg	send_reboot_msg
+00423384	send_wait_msg	send_wait_msg
+00423394	FUN_00406604	msg_proc
+004233a0	FUN_00406604	msg_proc
+004233ac	set_light_switch	set_light_switch
+004233c0	set_light_switch	set_light_switch
+004233d4	00405e20,00406214	send_motion_stop_msg
+004233ec	send_motion_flowwith_start_msg	send_motion_flowwith_start_msg
+0042340c	send_motion_start_msg	send_motion_start_msg
+00423424	rmm_ptz_direction_ctrl	rmm_ptz_direction_ctrl
+0042343c	00406240	rmm_ptz_direction_ctrl_stop
+00423458	00405908,00405924,004059bc,00405bd4,00405dc0,00405e54,00405ee8,00406058,0040614c,00406168	motion_proc
+00423464	abnormal_sound_detection_func	abnormal_sound_detection_func
+00423484	daynight_switch_func	daynight_switch_func
+004234a4	send_wifi_conf_msg	send_wifi_conf_msg
+004234b8	send_wifi_conf_msg	send_wifi_conf_msg
+004234cc	send_capture_finish_msg	send_capture_finish_msg
+004234e4	send_abnormal_sound_detect_msg	send_abnormal_sound_detect_msg
+00423510		\n\ninit not exit!!!\n
+00423524	FUN_0040801c	get_video_%d
+00423534	FUN_0040801c	\n\nget_videostream not exit!!!\n
+00423554	FUN_004080b8	\n\nget_yuv_data not exit!!!\n
+00423570	FUN_004080f8	\n\nget_jpeg not exit!!!\n
+00423588		\n\nset_color2grey not exit!!!\n
+004235a8		\n\nai_get_lpcmstream not exit!!!\n
+004235cc	media_ai_get_aacstream	\n\nai_get_aacstream not exit!!!\n
+004235ec	00408208	\n\nao_get_aacstream not exit!!!\n
+0042360c	FUN_00408214	\n\nsend_ao_beep not exit!!!\n
+00423630	004081c4	media_ao_get_aacstream
+00423648	media_ai_get_aacstream	media_ai_get_aacstream
+00423660		media_ai_get_lpcmstream
+004236b8		[%s] param NULL, buf:%p, \n
+004236d4		w:%d, h:%d, bitCount:%d offset:%d\n
+004236f8		infoHead.ciCompress:%x\n
+00423710		[%s] malloc failed \n
+00423728	send_do_speaking_msg,send_stop_speaking_msg	media_common.c
+00423738		.backtrace_file
+00423748		No such file: .backtrace_file or you have not permission to access it\n
+00423790		The .so name is:%s\n
+004237a4		/proc/%d/maps
+004237b4		grep %s %s | head -1 | awk -F- '{print $1}'
+004237e0		The Base address of the %s is:%s\n
+00423804		The Stack Address is:%p\n
+00423824		OffsetAddress:%d\n
+00423838		addr2line -e %s 0x%x
+00423850		[bt] trace_size:%d\n
+00423864		Got signal %d, faulty address is %p\n 
+0042388c		Got signal %d\n
+0042389c		[bt] Execution path:
+004238c0		awk -F"(" '{if(NR==3) print$1}' .backtrace_file
+00423924	send_stop_speaking_msg	send_stop_speaking_msg
+0042393c	send_do_speaking_msg	send_do_speaking_msg
+00423954		OSD_Bitmap888ToRgb2222
+0042396c		OSD_Bitmap888ToRgb8888
+00423984		write_data2sd
+004239a0	send_pcm_to_playback	<%s, %d>buffer is busy.\n
+004239bc	FUN_004086a0	/tmp/rmm_force_h264
+004239d0	FUN_004086a0	/tmp/sd/Factory/wpa_supplicant.conf
+004239f8	00408968,004089e0,00408b28,00408b88,00409a04,00409a70,media_rtl_set_flip	media_rtl.c
+00423a04	004089dc	fopen(%s) error(%d),%s
+00423a1c	00408978	get %s error
+00423a2c	00408b38	buffer->vm_addr is NULL
+00423a44	00408b64	<%s, %d>fail to assert : %s\n
+00423a64	00408b60,00408b84	buffer->vm_addr
+00423a74	FUN_0040b2ac,init_raw_stream,raw_video_resize	<%s, %d>set isp profile fail, ret = %d\n
+00423ae4	00409110	SubJPG
+00423aec	FUN_0040948c	<%s, %d>server info not init.\n
+00423b0c	FUN_0040948c	<%s, %d>aacDecoder_Fill() failed: %x\n
+00423b34	FUN_0040948c	<%s, %d>AAC decode not enough bits.\n
+00423b5c	FUN_0040948c	<%s, %d>aacDecoder_DecodeFrame() failed: %x\n
+00423b8c	FUN_0040948c	<%s, %d>Unable to get stream info\n
+00423bb0	FUN_0040948c	<%s, %d>Stream info not initialized\n
+00423bd8	FUN_0040948c	<%s, %d>unknown channel type\n
+00423bf8	FUN_0040948c	<%s, %d>setresample profile fail, ret = %d\n
+00423c24	FUN_0040948c	<%s, %d>decode aac frame fail %d\n
+00423c48	00409a10	ao_get_aacstream: speak sw on speak_mode %d=========\n
+00423c80	00409a7c	speak sw off speak_mode %d===============\n
+00423cac	parse_decode_aac_frame	<%s, %d>wrong aac format\n
+00423cc8	media_rtl_send_ao_beep	<%s, %d>open aacfile fail.\n
+00423ce4	media_rtl_send_ao_beep	<%s, %d>malloc buffer fail\n
+00423d00	init_raw_stream	raw_video_init %d\n
+00423d14	init_raw_stream	release chn 0
+00423d24	init_raw_stream	rts_av_init fail, ret = %d\n
+00423d40	FUN_0040b2ac,init_raw_stream	<%s, %d>fail to create isp chn, ret = %d\n
+00423d6c	FUN_0040b2ac,init_raw_stream	isp chn : %d\n
+00423d7c	init_raw_stream	<%s, %d>enable jpg fail, ret = %d\n
+00423da0	init_raw_stream	<%s, %d>start recv jpg fail, ret = %d\n
+00423dc8	init_raw_stream	init_raw_stream fail, ret = %d\n
+00423de8	FUN_0040a2d0	<%s, %d>Error opening aac decoder\n
+00423e0c	FUN_0040a2d0	<%s, %d>fdk aac decode fail.\n
+00423e2c	FUN_0040a2d0	<%s, %d>create audio dtom resample chn fail, ret = %d\n
+00423e64	FUN_0040a2d0	audio resample chn : %d\n
+00423e80	FUN_0040a2d0	audio mixer chn : %d\n
+00423e98	FUN_0040a2d0	audio playback chn : %d\n
+00423eb4	FUN_0040a2d0	audio capture chn : %d\n
+00423ecc	FUN_0040a2d0	audio aec chn : %d\n
+00423ee0	FUN_0040a2d0	encode chn : %d\n
+00423ef4	FUN_0040a2d0	<%s, %d>set dtom resample ch fail, ret = %d\n
+00423f24	FUN_0040a2d0	<%s, %d>fail to bind mixer and playback, ret = %d\n
+00423f58	FUN_0040a2d0	<%s, %d>fail to bind playback and resample, ret = %d\n
+00423f90	FUN_0040a2d0	<%s, %d>fail to bind aec and resample, ret = %d\n
+00423fc4	FUN_0040a2d0	<%s, %d>fail to bind resample and aec, ret = %d\n
+00423ff8	FUN_0040a2d0	<%s, %d>fail to bind capture and aec, ret = %d\n
+00424028	FUN_0040a2d0	<%s, %d>fail to bind resample and encode, ret = %d\n
+0042405c	FUN_0040a2d0	\n\n\n[BAD]~~~~~set pcm callback fail, thread crashed!!!~~~~~\n\n
+0042409c	FUN_0040a2d0	\n\n\n~~~~~set pcm callback ok~~~~~\n\n
+004240c0	FUN_0040a2d0	<%s, %d>start decode fail, ret = %d\n
+004240e8	FUN_0040a2d0	<%s, %d>init aac playback fail.\n
+0042410c	FUN_0040a2d0	<%s, %d>pthread_create("media_ai_get_aacstream") fail\n
+00424144	FUN_0040a2d0	<%s, %d>fail to apply capture.\n
+00424164	set_grey_attr,set_isp_attr	<%s, %d>get isp attr fail, ret = %d\n
+0042418c	set_grey_attr,set_isp_attr	%s min = %d, max = %d, step = %d, default = %d, cur = %d\n
+004241c8	set_grey_attr,set_isp_attr	<%s, %d>set isp attr fail, ret = %d\n
+004241f0	media_rtl_set_color2grey	<%s, %d>set grey attr fail.\n
+00424210	media_venc_set_color2grey	<%s, %d>set ir_mode attr fail.\n
+00424230	media_venc_set_color2grey	<%s, %d>set grey_mode attr fail.\n
+00424254	media_rtl_set_flip	hw ver mirror[%c] flip reseve\n
+00424274	media_rtl_set_flip	<%s, %d>set flip_mode attr fail.\n
+00424298	media_rtl_set_flip	<%s, %d>set mirror_mode attr fail.\n
+004242bc	media_rtl_set_ldc	<%s, %d>set ldc_mode attr fail.\n
+004242e0	media_rtl_set_3dnr	<%s, %d>set 3dnr attr fail.\n
+00424300	FUN_0040b144	cat /sys/devices/platform/rts_soc_camera/sensor
+00424330	FUN_0040b144	Sensor ID SC1245
+00424344	FUN_0040b144	Sensor ID SC2235
+00424358	FUN_0040b144	Sensor ID SC2230
+0042436c	FUN_0040b144	Sensor ID SC2232
+00424380	FUN_0040b2ac	###fmy###: in video_init
+004243a4	FUN_0040b2ac	<%s, %d>fail to create osd chn, ret = %d\n
+004243d0	FUN_0040b2ac	<%s, %d>fail to create h264 chn, ret = %d\n
+004243fc	FUN_0040b2ac	h264 chn : %d\n
+0042440c	FUN_0040b2ac	<%s, %d>fail to create jpg chn, ret = %d\n
+00424438	FUN_0040b2ac	jpg chn : %d\n
+00424448	FUN_0040b2ac	<%s, %d>fail to bind isp and h264, ret %d\n
+00424474	FUN_0040b2ac	set H264 to CVBR mode.\n
+004244c4	FUN_0040b2ac	###fmy: init_main_stream failed ret %d\n
+004244ec	FUN_0040b2ac	<%s, %d>fail to bind osd and h264, ret %d\n
+00424518	FUN_0040b2ac	\n\npthread creat do_isp 1 ok!!!\n
+00424538	FUN_0040b2ac	###fmy: init_sub_stream failed ret %d\n
+00424560	FUN_0040b2ac	###fmy###: out video_init success
+00424584	FUN_0040b2ac	###fmy###: out video_init failed
+004245a8	media_rtl_init	<%s, %d>fail to init video
+004245c4	0040bc28	<%s, %d>fail to init audio
+004245e0	0040bc08	\n\n\n~~~~~media init ok.~~~~~\n\n
+00424600	media_rtl_set_3dnr	media_rtl_set_3dnr
+00424614	media_rtl_set_ldc	media_rtl_set_ldc
+00424628	media_rtl_set_flip	media_rtl_set_flip
+0042463c	media_rtl_set_flip	media_rtl_set_flip
+00424650	media_venc_set_color2grey	media_venc_set_color2grey
+0042466c	set_isp_attr	set_isp_attr
+0042467c	set_grey_attr	set_grey_attr
+0042468c	FUN_0040a2d0	start_server_job
+004246a0	FUN_0040a2d0	fdk_aac_decode_init
+004246b4	FUN_0040a2d0	init_aac_audio_server
+004246cc	FUN_0040a2d0	audio_init
+004246d8	init_raw_stream	init_raw_stream
+004246e8	raw_video_resize	raw_video_resize
+004246fc	FUN_0040b2ac	init_sub_stream
+0042470c	FUN_0040b2ac	init_main_stream
+00424720	0040bc2c,media_rtl_init	media_rtl_init
+00424730	media_rtl_get_videostream	media_rtl_get_videostream
+0042474c	00408b94	media_rtl_get_yuv_data
+00424764	00408b2c,00408b68	media_rtl_get_yuv_data
+0042477c	00408970,004089d4	media_rtl_get_jpeg
+00424790	media_rtl_set_color2grey	media_rtl_set_color2grey
+004247ac	00409a68	media_rtl_ao_get_aacstream
+004247c8	004099fc	media_rtl_ao_get_aacstream
+004247e4	send_pcm_to_playback	send_pcm_to_playback
+004247fc	FUN_0040948c	get_stream_info
+0042480c	FUN_0040948c	fdk_aac_decode_frame
+00424824	FUN_0040948c	send_aac_frame
+00424834	parse_decode_aac_frame	parse_decode_aac_frame
+0042484c	media_rtl_send_ao_beep	media_rtl_send_ao_beep
+004248a0	cb_datalen,cb_empty,cb_full,cb_info,cb_read,cb_write	((void *)0) != pmngr
+004248b8	cb_datalen,cb_deinit,cb_empty,cb_full,cb_info,cb_init,cb_read,cb_write	ringbuf.c
+004248c4		   --- pmngr:%p datalen=%d,readpos=%d,writepos=%d.\n
+004248f8	cb_read,cb_write	((void *)0) != pmngr->bufptr
+00424918	cb_deinit,cb_init	((void *)0) != ppmngr
+00424930	cb_init	((void *)0) != *ppmngr
+00424948	cb_init	((void *)0) != (*ppmngr)->bufptr
+0042496c	cb_init	ppmngr:%p, len:%d\n
+00424980	cb_empty	cb_empty
+0042498c	cb_full	cb_full
+00424994	cb_datalen	cb_datalen
+004249a0	cb_write	cb_write
+004249ac	cb_read	cb_read
+004249b4	cb_info	cb_info
+004249bc	cb_deinit	cb_deinit
+004249c8	cb_init	cb_init
+00424a00		/tmp/sd/motrk_%d.log
+00424a18	motrk_getLastImg	motrk_msqr.c
+00424a28	motrk_getLastImg	motrk img is too old. storetm:%ld-%ld, diff:%ld\n
+00424a5c	FUN_0040c580	meanSqr[%d] gray frm[%d], average:%d, x3-y3:%d-%d, x2-y2:%d-%d, x1-y1:%d-%d , time:%ld, max:%d, DIR:%d\n
+00424ac4	FUN_0040cb5c	meanSqr[%d] day frm[%d], average:%d, x3-y3:%d-%d, x2-y2:%d-%d, x1-y1:%d-%d , time:%ld, max:%d, DIR:%d\n
+00424b40	motrk_getLastImg	motrk_getLastImg
+00424b60	modet_init,modet_isBiggerMove,modet_process	motion_detect.c
+00424b70	modet_init	%s img wid-hei:%d-%d, thresh:%d\n
+00424b94	modet_isBiggerMove	Bigger move. old:%d, new:%d, thresh:%d. ms:%d-%d oldtick:%d now:%d\n
+00424bd8		writing mod file:%s\n
+00424bf0	modet_process	IsMotion(%d/%d)(small:%d)------ y-x[%d][%d]: ms-cnt(thresh):%d(ave:%d)-%d/%d(%d-%d), msSta(60-0):%d-%d-%d-%d-%d-%d-%d time:%d(%ld-%ld). . discd:%d, nt:%d\n
+00424c8c	modet_process	small action[%d/%d] (small:%d)!  msarr[%d][%d]: %d, cnt:%d/%d, thresh:%d, time:%d sec\n
+00424cf0	modet_process	modet_process
+00424d00		modet_writeFile
+00424d10	modet_isBiggerMove	modet_isBiggerMove
+00424d24	modet_init	modet_init
+00424d57		?Real FFT optimization must be even.\n
+00424d80	FUN_0040f7a4	kiss fft usage error: improper alloc\n
+00424db4	FUN_00410b40	(%c,%d,%d)
+00424dc0	FUN_00410b40	rsRet = %d \n
+00424dd0	FUN_00410b40	rsCount = %d \n
+00424de0	FUN_00410e10	\nbegin
+00424de8	FUN_00410e10	{%d,%d,%d,%d}\n
+00424e90	wave_fifo_put	wave_fifo_put
+00424ea0	00411494,00411540,00411594,004115d4	wave_parser
+00424eb0	FUN_00411750	<%s, %d>failed to get info\n
+00424ecc	FUN_00411750	<%s, %d>unsupport control type\n
+00424eec	FUN_00411750	<%s, %d>failed to read value\n
+00424f0c	FUN_00411750	<%s, %d>failed to write value\n
+00424f2c	rts_amixer_init	hw:%d
+00424f34	rts_amixer_init	<%s, %d>failed to open card %d\n
+00424f54	rts_amixer_init	<%s, %d>failed to load card %d\n
+00424f74	rts_amixer_init	<%s, %d>failed to find control: %s\n
+00424f98	FUN_00411fb0,FUN_00412040	Master Playback Volume
+00424fb0	FUN_00412100,FUN_00412190	Master Capture Volume
+00424fc8	FUN_00412250	Master Playback Switch
+00424fe0	FUN_004122a0,FUN_004122c8	Master Capture Switch
+00425000	FUN_00411750	rts_amixer_check_type
+00425018	FUN_00411750	rts_amixer_handle_info
+00425030	rts_amixer_init	rts_amixer_init
+00425040	try_adjust_buf	fshare.%s.realloc(%d)
+00425058	fshare_create	/fshare_frame_buf
+0042506c	fshare_create	fshare.%s.shm_open
+00425080	fshare_create	fshare.%s.mmap
+00425090	fshare_create	/fshare_write_lock
+004250a4	fshare_create	fshare.%s.sem_open(%s)
+004250bc	fshare_create	/fshare_read_notify_%d
+004250d4	fshare_create	/fshare_read_lock
+004250e8	fshare_write	fshare.%s: size(%d) > size_max(%d)\n
+00425110	try_adjust_buf	try_adjust_buf
+00425120	fshare_write	fshare_write
+00425130		fshare_open
+0042513c	fshare_create	fshare_create
+00425150	FUN_00413e48	invalid para, is null\r
+00425168	FUN_00413e48	/tmp/logsock
+00425178	FUN_00413e48	create socket fail\r
+0042518c	FUN_00413f64	%s:%d|%s() 
+00425198	FUN_00413f64	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+004251c4		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00425204	FUN_004141ac	killall cloudAPI
+00425218		%s : %d ptr %s is NULL pointer\n
+00425240		insmod %s
+0042524c		ko path
+00425254		params
+0042525c		insmod %s %s
+0042526c		file node
+00425278		/tmp/record_event
+004252dc		/tmp/sd/record
+0042536c		total malloc(%d) tmp_malloc(%d %p)\n
+00425390		total free(%p)\n
+004253a0	FUN_0041457c	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+004253e4	FUN_004025e0,FUN_00402630,FUN_00414b54,FUN_00414cf4,qr_code_data_list_extract_text	rc >= 0
+004253ec	FUN_004025e0,FUN_00402630,FUN_00414b54,FUN_00414cf4	zbar/refcnt.h
+004253fc	FUN_0041476c	EAN-8
+00425404	FUN_0041476c	UPC-E
+0042540c	FUN_0041476c	ISBN-10
+00425414	FUN_0041476c	UPC-A
+0042541c	FUN_0041476c	EAN-13
+00425424	FUN_0041476c	ISBN-13
+00425434	FUN_0041476c	CODE-39
+0042543c	FUN_0041476c	CODE-128
+00425448	FUN_0041476c	PDF417
+00425450	FUN_0041476c	QR-Code
+00425458	FUN_0041476c	UNKNOWN
+00425468		<symbol type='%s' quality='%d'
+00425490		zbar/symbol.c
+004254a0		n <= maxlen
+004254ac		 count='%d'
+004254c0		><data><![CDATA[
+004254d4		]]></data></symbol>
+004254f0		zbar_symbol_xml
+00425500	FUN_004025e0	_zbar_refcnt
+00425510	zbar_image_free_data	img->refcnt
+0042551c	zbar_image_free_data	zbar/image.c
+0042552c		dst->data
+00425560		%s: dumping %.4s(%08x) image to %s\n
+00425584		%s: ERROR opening %s: %s\n
+004255a0		%s: ERROR writing %s: %s\n
+004255c0		zbar_image_write
+004255d4		zbar_image_write
+004255e8		zbar_image_copy
+004255f8	zbar_image_free_data	zbar_image_free_data
+00425610	FUN_00414b54,FUN_00414cf4	_zbar_refcnt
+00425620	FUN_00402658	iscn->recycle[i].nsyms
+00425638	FUN_00402658,FUN_00415128,_zbar_image_scanner_recycle_syms,qr_handler,zbar_scan_image	zbar/img_scanner.c
+0042564c	_zbar_image_scanner_recycle_syms	sym->data_alloc
+0042565c	_zbar_image_scanner_recycle_syms	sym->data
+00425668	FUN_00415128,qr_handler	!sym->syms
+0042567c	dump_stats	%s: symbol sets allocated   = %-4d\n
+004256a0	dump_stats	%s:     scanner syms in use = %-4d\trecycled  = %-4d\n
+004256d8	dump_stats	%s:     image syms in use   = %-4d\trecycled  = %-4d\n
+00425710	dump_stats	%s: symbols allocated       = %-4d\n
+00425734	dump_stats	%s:      recycled[%d]        = %-4d\n
+0042575c	zbar_scan_image	%s: img_x+: %04d,%04d @%p\n
+00425778	zbar_scan_image	p == data + x + y * (intptr_t)w
+00425798	zbar_scan_image	%s: img_x-: %04d,%04d @%p\n
+004257b4	zbar_scan_image	%s: img_y+: %04d,%04d @%p\n
+004257d0	zbar_scan_image	%s: img_y-: %04d,%04d @%p\n
+004257f0	zbar_scan_image	zbar_scan_image
+00425800	zbar_scan_image	zbar_scan_image
+00425810	dump_stats	dump_stats
+0042581c	qr_handler	qr_handler
+00425828	FUN_00402658,FUN_00415128,qr_handler	_zbar_image_scanner_alloc_sym
+00425848	FUN_00402630	_zbar_refcnt
+00425858	_zbar_image_scanner_recycle_syms	_zbar_image_scanner_recycle_syms
+004258c0	_zbar_qr_decode	_zbar_qr_decode
+0042592c	_zbar_qr_destroy	_zbar_qr_destroy
+00425a50	FUN_0040288c	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:
+00425b30	_zbar_qr_destroy	%s: max finder lines = %dx%d\n
+00425b50	_zbar_qr_decode	%s: %dx%d finders, %d centers:\n
+00425b80	qr_code_data_list_extract_text	UTF-8
+00425b88	qr_code_data_list_extract_text	ISO8859-1
+00425ba0	qr_code_data_list_extract_text	./zbar/refcnt.h
+00425bb0	qr_code_data_list_extract_text	next > syms->datalen
+00425bc8	qr_code_data_list_extract_text	zbar/qrcode/qrdectxt.c
+00425c04	qr_code_data_list_extract_text	_zbar_refcnt
+00425c14	qr_code_data_list_extract_text	qr_code_data_list_extract_text
+00425c80	FUN_00421440	\n***** - Abnormal Sound Detection - V20161229.2 - *****

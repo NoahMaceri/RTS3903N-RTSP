@@ -1,0 +1,48 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00401590	FUN_00401590	strhex2byte	true	false	strhex2byte
+004016e4	FUN_004016e4	send_apmode_result	true	false	send_apmode_result
+00401a58	FUN_00401a58	cloud_report_alarm_upload_status	true	true	cloud_report_alarm_upload_status send_msg msg fail!\n
+00401c24	FUN_00401c24	cloud_set_time	true	false	cloud_set_time
+00401d04	FUN_00401d04	cloud_set_region	true	true	cloud_set_region send_msg fail!\n
+00401e00	FUN_00401e00	cloud_set_bind_result	true	true	cloud_set_bind_result send_msg fail!\n
+00401e6c	FUN_00401e6c	cloud_set_tnp	true	true	cloud_set_tnp send_msg fail!\n
+00401f78	FUN_00401f78	cloud_finish_sync_info_from_server	true	true	cloud_finish_sync_info_from_server send_msg DISPATCH_FINISH_SYNC_INFO_FROM_SERVER fail!\n
+00401fdc	FUN_00401fdc	cloud_save_api_server	true	true	cloud_save_api_server send_msg DISPATCH_SAVE_API_SERVER fail!\n
+00402040	FUN_00402040	cloud_clear_api_server	true	true	cloud_clear_api_server send_msg DISPATCH_CLEAR_API_SERVER fail!\n
+004020a4	FUN_004020a4	cloud_set_tz_offset	true	true	cloud_set_tz_offset %d send_msg msg fail!\n
+00402114	FUN_00402114	cloud_set_cloud_storage_state	true	true	cloud_set_cloud_storage_state %02x send_msg msg fail!\n
+0040218c	FUN_0040218c	cloud_set_cloud_storage_mode	true	true	cloud_set_cloud_storage_mode %02x send_msg msg fail!\n
+00402204	FUN_00402204	cloud_set_cloud_image_state	true	true	cloud_set_cloud_image_state %02x send_msg msg fail!\n
+0040227c	FUN_0040227c	cloud_set_video_backup_state	true	false	cloud_set_video_backup_state
+00402364	FUN_00402364	cloud_set_babycry_occur	true	true	cloud_set_babycry_occur send_msg fail!\n
+004023d8	FUN_004023d8	cloud_set_abnormal_sound_occur	true	true	cloud_set_abnormal_sound_occur send_msg fail!\n
+0040244c	FUN_0040244c	msg_proc	true	false	msg_proc
+00402730	FUN_00402730	cloud_cap_pic	true	true	cloud_cap_pic send_msg fail!\n
+004027ac	FUN_004027ac	cloud_make_video	true	true	cloud_make_video %d(s) send_msg fail!\n
+00402988	FUN_00402988	do_update_ex	true	false	do_update_ex
+00402cd8	FUN_00402cd8	webapi_do_tnp_on_line	true	true	now do webapi_do_tnp_on_line \n
+00402fac	FUN_00402fac	webapi_do_check_region	true	true	in webapi_do_check_region, region_id = %d, language = %d, api_server = %s, sname = %s, dlproto = %s\n
+004032ac	FUN_004032ac	webapi_do_reset_by_specified_server	true	false	webapi_do_reset_by_specified_server
+0040356c	FUN_0040356c	webapi_do_bindkey	true	true	webapi_do_bindkey success %s\n
+004037d4	FUN_004037d4	webapi_do_event_update	true	false	webapi_do_event_update
+00403ad8	FUN_00403ad8	webapi_do_event_upload	true	false	webapi_do_event_upload
+00403d24	FUN_00403d24	webapi_do_log_upload	true	false	webapi_do_log_upload
+00403e3c	FUN_00403e3c	webapi_do_login	true	true	webapi_do_login success\n
+004047a4	FUN_004047a4	webapi_do_check_did	true	false	webapi_do_check_did
+00405040	FUN_00405040	yi_push_rcd_file	true	false	yi_push_rcd_file
+0040537c	FUN_0040537c	cloud_send_shortrec_msg	true	true	cloud_send_shortrec_msg %d(s) send_msg fail!\n
+00405428	FUN_00405428	yi_motion_push	true	false	yi_motion_push
+00405f58	FUN_00405f58	yi_push_voicecmd_file	true	false	yi_push_voicecmd_file
+004066fc	FUN_004066fc	send_vc_capture_end_msg	true	true	send_vc_capture_end_msg send_msg ok!\n
+004067b4	FUN_004067b4	send_vc_record_end_msg	true	true	send_vc_record_end_msg send_msg ok!\n
+0040686c	FUN_0040686c	cloud_set_prev_motion_state	true	false	cloud_set_prev_motion_state
+00406c54	FUN_00406c54	report_tnp_on_line_status	true	true	report_tnp_on_line_status success state = %d did = %s\n
+00406ee4	FUN_00406ee4	do_need_update	true	false	do_need_update
+00406fcc	FUN_00406fcc	yi_proc	true	true	yi_proc ok, update time[%d]\n
+00407738	FUN_00407738	cloud_update_upgradefirmware_status	true	true	cloud_update_upgradefirmware_status success state = %d\n
+004082bc	FUN_004082bc	yi_sync_time	true	true	yi_sync_time ok!\n
+00408550	FUN_00408550	sync_time	true	true	sync_time ok!\n
+00408634	FUN_00408634	sys_init	true	false	sys_init
+004087cc	FUN_004087cc	aec_dec	true	false	aec_dec
+0040b02c	FUN_0040b02c	cJSON_GetIntObjItem	true	false	cJSON_GetIntObjItem
+0040b0a0	FUN_0040b0a0	cJSON_GetStrObjItem	true	false	cJSON_GetStrObjItem

@@ -1,0 +1,132 @@
+00400d88	_init	FUN_0040130c,FUN_00408e40
+00400dd0	_ftext	FUN_00404de0
+00400de0	FUN_00400de0	FUN_004044b0
+00400df0	FUN_00400df0	FUN_00404f20
+00400e00	FUN_00400e00	FUN_00404b04
+00400e10	FUN_00400e10	fshare_open
+00400e20	FUN_00400e20	FUN_00404c1c
+00400e30	main	FUN_00400e10,FUN_0040192c,FUN_0040236c,FUN_004050a0,FUN_004051f4,FUN_0040540c,FUN_00405490,access,mkdir,mmap_init,ms_sleep,pthread_create,pthread_detach,record_file,signal,time
+00401170	entry	__uClibc_main
+004011d0	FUN_004011d0	
+00401210	FUN_00401210	
+0040125c	FUN_0040125c	FUN_004011d0
+0040130c	FUN_0040130c	FUN_00401210
+00401350	FUN_00401350	FUN_00401350,closedir,opendir,readdir,remove,stat,strcpy,strlen
+00401520	FUN_00401520	FUN_00401350,FUN_00403420,FUN_004034bc,FUN_004050bc,FUN_004051f4,calloc,free,localtime_r,memset,mq_receive,printf,pthread_create,pthread_detach,select,snprintf
+004018a4	FUN_004018a4	
+0040192c	FUN_0040192c	FUN_00400de0,FUN_00400e20,FUN_004051f4,_ftext,memcpy
+00401d20	FUN_00401d20	memmem
+00401ddc	FUN_00401ddc	localtime_r,memset,mkdir,snprintf
+00401f18	FUN_00401f18	FUN_00405464
+00401f60	thread_short_record	FUN_00400de0,FUN_00400e00,FUN_00400e20,FUN_00401d20,FUN_00401f18,FUN_004050a0,FUN_004051f4,FUN_00405ce4,FUN_00405d70,FUN_00405df8,FUN_00405f14,FUN_00405fb4,FUN_00406054,FUN_0040613c,FUN_004062a8,FUN_00406410,FUN_00406528,FUN_004081d0,_ftext,free,printf,rename,snprintf
+0040236c	FUN_0040236c	FUN_00405584
+004023b8	send_mp4rcd_heartbeat_msg	FUN_004051f4,FUN_00405464
+00402454	send_mp4rcd_costtime_msg	FUN_004051f4,FUN_00405464
+004024f4	record_file	FUN_00400de0,FUN_00400df0,FUN_00400e00,FUN_00400e20,FUN_004018a4,FUN_0040192c,FUN_00401d20,FUN_00401ddc,FUN_004050a0,FUN_004051f4,FUN_00405ce4,FUN_00405d70,FUN_00405df8,FUN_00405e50,FUN_00405f14,FUN_00405fb4,FUN_00406054,FUN_0040613c,FUN_00406288,FUN_004062a8,FUN_00406410,FUN_00406528,access,memcpy,ms_sleep,printf,recordevent_add_file_info,remove,rename,send_mp4rcd_costtime_msg,send_mp4rcd_heartbeat_msg,snprintf
+00402ef0	FUN_00402ef0	FUN_00402ef0,closedir,mktime,opendir,readdir,realloc,sscanf,strcpy,strlen
+00403144	FUN_00403144	printf
+0040329c	recordevent_add_file_info	FUN_00403144,printf
+00403300	mmap_init	FUN_00402ef0,FUN_00403144,FUN_004051f4,FUN_00405584,free,memcpy,qsort,strlen
+00403420	FUN_00403420	localtime_r,mktime
+004034bc	FUN_004034bc	
+00403580	FUN_00403580	munmap,sem_close
+0040364c	FUN_0040364c	sem_post,sem_wait
+004036e8	FUN_004036e8	sem_post,sem_wait
+00403764	FUN_00403764	memcpy
+00403858	FUN_00403858	FUN_00403764
+00403a14	try_adjust_buf	__errno_location,error,realloc
+00403b1c	FUN_00403b1c	
+00403b78	fshare_create	FUN_00403580,__errno_location,close,error,ftruncate,mmap,sem_open,shm_open,snprintf
+00403e68	fshare_open	FUN_00403580,__errno_location,close,error,mmap,sem_open,shm_open,snprintf
+004044b0	FUN_004044b0	sem_post,sem_wait
+00404530	fshare_read	FUN_0040364c,FUN_004036e8,FUN_00403764,FUN_00403858,FUN_00403b1c,try_adjust_buf
+004047ac	fshare_read_newest	FUN_0040364c,FUN_004036e8,FUN_00403764,FUN_00403858,FUN_00403b1c,try_adjust_buf
+00404a40	fshare_wait	FUN_0040364c,FUN_004036e8,sem_wait
+00404b04	FUN_00404b04	FUN_0040364c,FUN_004036e8,FUN_00403764
+00404c1c	FUN_00404c1c	FUN_0040364c,FUN_004036e8,FUN_00403764
+00404de0	FUN_00404de0	fshare_read,fshare_wait
+00404e80	FUN_00404e80	fshare_read_newest,fshare_wait
+00404f20	FUN_00404f20	fshare_read,ms_sleep
+00404fe0	FUN_00404fe0	fshare_read_newest,ms_sleep
+004050a0	FUN_004050a0	memset
+004050bc	FUN_004050bc	memcpy
+004050d8	FUN_004050d8	memset,puts,socket
+004051f4	FUN_004051f4	FUN_004050d8,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+0040540c	FUN_0040540c	mq_open
+00405464	FUN_00405464	mq_send
+00405490	FUN_00405490	close,mmap,open,usleep
+00405584	FUN_00405584	close,lseek,mmap,open,write
+0040562c	ms_sleep	select
+00405694	FUN_00405694	fcntl
+004056e0	FUN_004056e0	__errno_location,clock_gettime,select,write
+00405898	FUN_00405898	realloc
+00405934	FUN_00405934	FUN_00405898,memcpy
+0040598c	FUN_0040598c	FUN_00405898,memset
+00405ab0	FUN_00405ab0	FUN_00405898,memset
+00405b30	FUN_00405b30	FUN_004056e0,memcpy
+00405ce4	FUN_00405ce4	calloc
+00405d70	FUN_00405d70	
+00405df8	FUN_00405df8	
+00405e50	FUN_00405e50	memcpy
+00405f14	FUN_00405f14	memcpy
+00405fb4	FUN_00405fb4	memcpy
+00406054	FUN_00406054	memcpy
+0040613c	FUN_0040613c	FUN_00405694,FUN_00405b30,close,open,remove,time
+00406288	FUN_00406288	
+004062a8	FUN_004062a8	FUN_00405898,FUN_00405b30
+00406410	FUN_00406410	FUN_00405898,FUN_00405b30
+00406528	FUN_00406528	FUN_004056e0,FUN_00405898,FUN_00405934,FUN_0040598c,FUN_00405ab0,FUN_00405b30,FUN_004082f8,FUN_004088c8,close,lseek,memcpy,memset
+004081d0	FUN_004081d0	FUN_00406528,free
+004082f8	FUN_004082f8	
+004088c8	FUN_004088c8	
+00408e40	FUN_00408e40	
+00408f30	_fini	FUN_0040125c
+00409d60	__PLT_HEAD	
+00409d80	putchar	putchar
+00409d90	clock_gettime	
+00409da0	strcpy	strcpy
+00409db0	printf	printf
+00409dc0	pthread_create	
+00409dd0	snprintf	snprintf
+00409de0	memmem	
+00409df0	usleep	usleep
+00409e00	getpid	
+00409e10	qsort	qsort
+00409e20	memcpy	
+00409e30	mq_receive	
+00409e40	puts	puts
+00409e50	remove	
+00409e60	vsnprintf	vsnprintf
+00409e70	mq_send	mq_send
+00409e80	socket	
+00409e90	select	select
+00409ea0	readdir	
+00409eb0	lseek	lseek
+00409ec0	mmap	
+00409ed0	pthread_detach	pthread_detach
+00409ee0	rename	
+00409ef0	calloc	calloc
+00409f00	write	
+00409f10	mktime	mktime
+00409f20	signal	
+00409f30	sendto	sendto
+00409f40	realloc	
+00409f50	sscanf	sscanf
+00409f60	gettimeofday	
+00409f70	localtime	localtime
+00409f80	memset	
+00409f90	time	
+00409fa0	opendir	opendir
+00409fb0	localtime_r	
+00409fc0	stat	stat
+00409fd0	access	access
+00409fe0	__errno_location	
+00409ff0	strlen	strlen
+0040a000	open	
+0040a010	closedir	closedir
+0040a020	fcntl	
+0040a030	mq_open	
+0040a040	mkdir	mkdir
+0040a050	close	
+0040a060	vfprintf	vfprintf
+0040a070	free	

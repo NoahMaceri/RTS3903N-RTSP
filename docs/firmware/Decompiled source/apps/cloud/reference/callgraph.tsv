@@ -1,0 +1,174 @@
+00400e20	_init	FUN_0040154c,FUN_0040de00
+00400e70	_ftext	FUN_0040b9ac,atoi,memset,mktime,printf,sscanf
+00401160	main	FUN_0040b244,FUN_0040b864,aec_dec,memset,perror,printf,pthread_create,pthread_detach,signal,sync_time,sys_init,yi_proc
+004013b0	entry	__uClibc_main
+00401410	FUN_00401410	
+00401450	FUN_00401450	
+0040149c	FUN_0040149c	FUN_00401410
+0040154c	FUN_0040154c	FUN_00401450
+00401590	strhex2byte	printf,strlen
+004016e4	send_apmode_result	FUN_0040b244,FUN_0040b6d4,usleep
+00401818	FUN_00401818	fclose,fopen,fwrite,strcmp
+00401918	FUN_00401918	FUN_0040b6d4,memcpy,memset
+00401a58	cloud_report_alarm_upload_status	FUN_00401918,FUN_0040ac4c,FUN_0040ae58,FUN_0040af00,FUN_0040af80,FUN_0040afb8,FUN_0040b004,FUN_0040b244,FUN_0040b7f4,free,sprintf,strlen
+00401c24	cloud_set_time	FUN_0040b10c,FUN_0040b244,FUN_0040b6d4
+00401d04	cloud_set_region	FUN_00401918,FUN_0040b244,memset,snprintf
+00401e00	cloud_set_bind_result	FUN_00401918,FUN_0040b244
+00401e6c	cloud_set_tnp	FUN_0040b10c,FUN_0040b244,FUN_0040b6d4,strlen,strncpy
+00401f78	cloud_finish_sync_info_from_server	FUN_00401918,FUN_0040b244
+00401fdc	cloud_save_api_server	FUN_00401918,FUN_0040b244
+00402040	cloud_clear_api_server	FUN_00401918,FUN_0040b244
+004020a4	cloud_set_tz_offset	FUN_00401918,FUN_0040b244
+00402114	cloud_set_cloud_storage_state	FUN_00401918,FUN_0040b244
+0040218c	cloud_set_cloud_storage_mode	FUN_00401918,FUN_0040b244
+00402204	cloud_set_cloud_image_state	FUN_00401918,FUN_0040b244
+0040227c	cloud_set_video_backup_state	FUN_00401918,FUN_0040b244,usleep
+00402364	cloud_set_babycry_occur	FUN_00401918,FUN_0040b244
+004023d8	cloud_set_abnormal_sound_occur	FUN_00401918,FUN_0040b244
+0040244c	msg_proc	FUN_00401918,FUN_0040b244,cloud_set_abnormal_sound_occur,cloud_set_babycry_occur,memcpy,memset,mq_receive,select,sem_post
+00402730	cloud_cap_pic	FUN_00401918,FUN_0040b244,strlen
+004027ac	cloud_make_video	FUN_00401918,FUN_0040b244,strlen
+00402988	do_update_ex	FUN_0040b244,memset,sprintf,system
+00402a0c	FUN_00402a0c	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,atoi,memset,sleep,sprintf,strcmp,strcpy
+00402cd8	webapi_do_tnp_on_line	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,atoi,cloud_set_tnp,memset,sleep,sprintf
+00402fac	webapi_do_check_region	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,cloud_set_region,memset,sleep,snprintf,sprintf,strcmp
+004032ac	webapi_do_reset_by_specified_server	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,atoi,gettimeofday,memset,rand,sleep,sprintf,srand,webapi_do_check_region
+0040356c	webapi_do_bindkey	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,atoi,cloud_set_bind_result,gettimeofday,memset,rand,sleep,sprintf,srand
+004037d4	webapi_do_event_update	FUN_0040b244,FUN_0040b48c,FUN_0040b864,FUN_0040b8cc,atoi,memset,printf,snprintf,strncpy
+00403ad8	webapi_do_event_upload	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,gettimeofday,memset,printf,rand,sleep,snprintf,srand,system
+00403d24	webapi_do_log_upload	FUN_0040b244,FUN_0040b48c,memset,snprintf,strstr
+00403e3c	webapi_do_login	FUN_00401918,FUN_0040ac4c,FUN_0040ae48,FUN_0040ae6c,FUN_0040b10c,FUN_0040b244,FUN_0040b48c,FUN_0040c644,FUN_0040ceb0,atoi,cJSON_GetIntObjItem,cJSON_GetStrObjItem,cloud_set_cloud_image_state,cloud_set_cloud_storage_mode,cloud_set_cloud_storage_state,cloud_set_video_backup_state,exit,gettimeofday,memcmp,memset,printf,rand,send_apmode_result,sleep,snprintf,srand,strcmp,strhex2byte,strlen,strrchr,webapi_do_check_region,webapi_do_log_upload
+004047a4	webapi_do_check_did	FUN_0040b244,FUN_0040b48c,FUN_0040b9ac,atoi,memset,sleep,snprintf,strcmp
+004049c8	FUN_004049c8	FUN_00401918,FUN_0040b244,FUN_0040b48c,FUN_0040b9ac,_ftext,atoi,cloud_set_cloud_image_state,cloud_set_cloud_storage_mode,cloud_set_cloud_storage_state,cloud_set_tz_offset,cloud_set_video_backup_state,memcmp,memset,printf,sleep,snprintf,usleep
+00404fd4	FUN_00404fd4	memset,sprintf,system
+00405040	yi_push_rcd_file	FUN_0040b244,FUN_0040b48c,FUN_0040b9ac,atoi,memset,printf,remove,sleep,snprintf,strrchr,system,webapi_do_event_upload
+0040537c	cloud_send_shortrec_msg	FUN_00401918,FUN_0040b244,memset,strncpy
+00405428	yi_motion_push	FUN_00404fd4,FUN_0040b244,FUN_0040b48c,FUN_0040b6d4,FUN_0040b9ac,access,atoi,cloud_cap_pic,cloud_report_alarm_upload_status,cloud_send_shortrec_msg,memset,sleep,snprintf,strcmp,strcpy,time,usleep,webapi_do_event_update,webapi_do_event_upload
+00405f58	yi_push_voicecmd_file	FUN_00404fd4,FUN_0040b244,FUN_0040b48c,FUN_0040b9ac,access,atoi,cloud_cap_pic,cloud_make_video,memset,printf,remove,sleep,snprintf,strcmp,time,webapi_do_event_update,webapi_do_event_upload
+004066fc	send_vc_capture_end_msg	FUN_00401918,FUN_0040b244,FUN_0040b864
+004067b4	send_vc_record_end_msg	FUN_00401918,FUN_0040b244,FUN_0040b864
+0040686c	cloud_set_prev_motion_state	FUN_00401918,FUN_0040b244,FUN_0040b864
+00406c54	report_tnp_on_line_status	FUN_0040b244,FUN_0040b48c,FUN_0040b7f4,FUN_0040b8cc,atoi,memset,snprintf,sprintf,usleep
+00406ee4	do_need_update	FUN_00401918,FUN_00402a0c,FUN_0040b244,do_update_ex,memset
+00406fcc	yi_proc	FUN_00401918,FUN_004049c8,FUN_0040b244,FUN_0040b48c,FUN_0040bd28,access,cloud_clear_api_server,cloud_finish_sync_info_from_server,cloud_save_api_server,cloud_set_bind_result,do_need_update,exit,gettimeofday,localtime,memset,printf,rand,report_tnp_on_line_status,sleep,srand,strcmp,strncpy,time,webapi_do_bindkey,webapi_do_check_did,webapi_do_login,webapi_do_reset_by_specified_server,webapi_do_tnp_on_line
+00407738	cloud_update_upgradefirmware_status	FUN_0040b244,FUN_0040b48c,FUN_0040b8cc,atoi,memset,snprintf,sprintf,usleep
+004082bc	yi_sync_time	FUN_0040b244,FUN_0040b48c,FUN_0040b864,FUN_0040b8cc,atof,atoi,cloud_set_time,memset,snprintf,sprintf,strncmp
+00408550	sync_time	FUN_0040b244,FUN_0040b864,cloud_set_bind_result,send_apmode_result,sleep,yi_sync_time
+00408634	sys_init	FUN_0040b10c,FUN_0040b244,FUN_0040b67c,FUN_0040b700,FUN_0040b864,mq_receive,sem_init
+004087cc	aec_dec	FUN_0040c644,FUN_0040ceb0,printf,strhex2byte,strlen
+0040889c	FUN_0040889c	
+00408934	FUN_00408934	
+00408ab8	FUN_00408ab8	malloc,memset
+00408b00	FUN_00408b00	free,malloc,memcpy
+00408c10	FUN_00408c10	malloc,memcpy,strlen
+00408c70	FUN_00408c70	strlen
+00408cb8	FUN_00408cb8	
+00408f70	FUN_00408f70	FUN_00408b00,malloc,sprintf,strchr,strcpy
+004092a0	FUN_004092a0	FUN_00408934,malloc
+004096e8	FUN_004096e8	FUN_00408ab8,FUN_004092a0,FUN_004096e8,pow,strncmp
+0040a338	FUN_0040a338	FUN_00408b00,FUN_00408c10,FUN_00408cb8,FUN_00408f70,FUN_0040a51c
+0040a51c	FUN_0040a51c	FUN_00408b00,FUN_00408c70,FUN_00408f70,FUN_0040a338,free,malloc,memcpy,memset,strcpy,strlen
+0040ac4c	FUN_0040ac4c	FUN_0040ac4c,free
+0040ad14	FUN_0040ad14	FUN_00408ab8,FUN_004096e8,FUN_0040ac4c
+0040ae48	FUN_0040ae48	FUN_0040ad14
+0040ae58	FUN_0040ae58	FUN_0040a338
+0040ae6c	FUN_0040ae6c	FUN_0040889c
+0040aec4	FUN_0040aec4	
+0040af00	FUN_0040af00	FUN_00408c10,FUN_0040aec4,free
+0040af80	FUN_0040af80	FUN_00408ab8
+0040afb8	FUN_0040afb8	FUN_00408ab8,FUN_00408c10
+0040b004	FUN_0040b004	FUN_00408ab8
+0040b02c	cJSON_GetIntObjItem	FUN_0040ae6c,printf
+0040b0a0	cJSON_GetStrObjItem	FUN_0040ae6c,printf
+0040b10c	FUN_0040b10c	memset
+0040b128	FUN_0040b128	memset,puts,socket
+0040b244	FUN_0040b244	FUN_0040b128,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+0040b45c	FUN_0040b45c	pclose,popen
+0040b48c	FUN_0040b48c	FUN_0040b45c,fileno,fread,pclose,popen,select,strstr
+0040b67c	FUN_0040b67c	mq_open
+0040b6d4	FUN_0040b6d4	mq_send
+0040b700	FUN_0040b700	close,mmap,open,usleep
+0040b7f4	FUN_0040b7f4	gettimeofday
+0040b864	FUN_0040b864	select
+0040b8cc	FUN_0040b8cc	sscanf,strlen,strstr
+0040b9ac	FUN_0040b9ac	strlen,strstr
+0040bd28	FUN_0040bd28	
+0040bd30	FUN_0040bd30	
+0040bd64	FUN_0040bd64	
+0040bdd0	FUN_0040bdd0	
+0040be04	FUN_0040be04	
+0040bf10	FUN_0040bf10	FUN_0040bd30,memcpy
+0040c574	FUN_0040c574	FUN_0040bd30
+0040c5f8	FUN_0040c5f8	memcpy,memset
+0040c644	FUN_0040c644	FUN_0040bd30,FUN_0040c5f8,memcpy
+0040cdec	FUN_0040cdec	FUN_0040bd64,FUN_0040bf10,memcpy
+0040ceb0	FUN_0040ceb0	FUN_0040bd30,FUN_0040bd64,memcpy
+0040d558	FUN_0040d558	FUN_0040bf10,FUN_0040c644
+0040d5d4	FUN_0040d5d4	FUN_0040be04,FUN_0040c574,memcpy
+0040d8e8	FUN_0040d8e8	FUN_0040bd64,FUN_0040bdd0,FUN_0040bf10,FUN_0040d5d4,memcpy
+0040dad0	FUN_0040dad0	FUN_0040bd64,FUN_0040bdd0,FUN_0040bf10,FUN_0040d5d4,memcpy
+0040dd2c	FUN_0040dd2c	FUN_0040d8e8
+0040de00	FUN_0040de00	
+0040de50	__uClibc_main	
+0040de70	_fini	FUN_0040149c
+00413200	FUN_00413200	
+00413220	putchar	FUN_00413200
+00413230	strcpy	
+00413240	popen	FUN_00413200
+00413250	printf	
+00413260	pthread_create	FUN_00413200
+00413280	pclose	FUN_00413200
+00413290	snprintf	
+004132b0	usleep	FUN_00413200
+004132c0	getpid	FUN_00413200
+004132d0	memcpy	
+004132e0	perror	FUN_00413200
+004132f0	mq_receive	
+00413300	puts	FUN_00413200
+00413310	system	
+00413320	malloc	FUN_00413200
+00413330	remove	FUN_00413200
+00413340	sleep	FUN_00413200
+00413350	vsnprintf	FUN_00413200
+00413360	mq_send	
+00413380	sem_post	FUN_00413200
+00413390	socket	FUN_00413200
+004133a0	select	
+004133b0	mmap	FUN_00413200
+004133c0	pthread_detach	
+004133d0	strrchr	FUN_00413200
+004133e0	atof	
+004133f0	sem_init	
+00413400	mktime	FUN_00413200
+00413410	strstr	FUN_00413200
+00413420	rand	
+00413430	signal	FUN_00413200
+00413440	strncmp	
+00413450	pow	FUN_00413200
+00413460	strncpy	
+00413470	sendto	FUN_00413200
+00413480	memcmp	
+00413490	sscanf	FUN_00413200
+004134a0	fread	
+004134b0	gettimeofday	FUN_00413200
+004134c0	fopen	
+004134d0	localtime	FUN_00413200
+004134e0	memset	
+004134f0	srand	
+00413500	fclose	FUN_00413200
+00413510	time	FUN_00413200
+00413520	strcmp	
+00413530	sprintf	FUN_00413200
+00413540	pthread_self	
+00413550	fwrite	FUN_00413200
+00413560	access	
+00413570	exit	
+00413580	atoi	FUN_00413200
+00413590	fileno	
+004135a0	strlen	FUN_00413200
+004135b0	open	
+004135c0	strchr	FUN_00413200
+004135d0	mq_open	FUN_00413200
+004135e0	close	
+004135f0	vfprintf	FUN_00413200
+00413600	free	

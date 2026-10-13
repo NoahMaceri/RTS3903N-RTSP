@@ -1,0 +1,107 @@
+00010b35		3rtscam:jpgenc:isp buffer overflow\n
+00010b5d		3rtscam:jpgenc:mjpeg frame buffer overflow\n
+00010b8d		6rtscam:jpgenc:mjpeg encode finish\n
+00010bb5		3rtscam:unknown[rtsjpgenc] ioctl 0x%08x, '%c' 0x%x\n
+00010bed		6rtscam:%s\n
+00010bfd		3rtscam:not support soc mjpeg\n
+00010c1d		3rtscam:mjpeg platform_data is NULL\n
+00010c45		3rtscam:Missing platform resource data\n
+00010c71		3rtscam:Couldn't allocate rts camera jpgenc object\n
+00010ca8	rtscam_jpgenc_probe	&rjpgenc->lock
+00010cb8	rtscam_jpgenc_probe	&rjpgenc->alarm_wq
+00010ccd		3rtscam:Couldn't ioremap resource\n
+00010cf0	rtscam_jpgenc_probe	rts_jpgenc
+00010cfd		3rtscam:jpgenc:request irq fail\n
+00010d21		3rtscam:jpgenc:HW not found\n
+00010d41		3rtscam:jpgenc: Reserve IO fail\n
+00010d64	rtscam_jpgenc_probe	rtsjpgenc
+00010d70	00010f9c	clock
+00010d80	_elfSectionHeaders::0000019c,rtscam_jpgenc_probe	rtscam_jpgenc_probe
+00010da0	_elfSectionHeaders::000001c4	alias=platform:rts_jpgenc
+00010dba		version=0.1.1
+00010dc8		license=GPL v2
+00010dd7		author=Ming Qian <ming_qian@realsil.com.cn>
+00010e03		description=Realsil Mjpeg encoder device driver
+00010e34		srcversion=1ECAE7A04CF244E5343E500
+00010e58		depends=rts_cam
+00010e68		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+00010fec		rts_camera_jpgenc
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.reginfo
+.shstrtab::0000005f		.rodata.str1.4
+.shstrtab::0000006e		.rodata
+.shstrtab::00000076		.modinfo
+.shstrtab::0000007f		.rel.data
+.shstrtab::00000089		.rel.gnu.linkonce.this_module
+.shstrtab::000000a7		.bss
+.shstrtab::000000ac		.sbss
+.shstrtab::000000b2		.rel.pdr
+.shstrtab::000000bb		.mdebug.abi32
+.shstrtab::000000c9		.comment
+.shstrtab::000000d2		.gnu.attributes
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		rtscam_jpgenc_remove
+.strtab::0000007e		ioread32
+.strtab::00000087		__udelay
+.strtab::00000090		rtscam_devdata
+.strtab::0000009f		dev_get_drvdata
+.strtab::000000af		devm_request_threaded_irq
+.strtab::000000c9		iowrite32
+.strtab::000000d3		platform_driver_unregister
+.strtab::000000ee		__this_module
+.strtab::000000fc		platform_get_irq
+.strtab::0000010d		rtscam_usercopy
+.strtab::0000011d		scnprintf
+.strtab::00000127		cleanup_module
+.strtab::00000136		rts_sys_force_reset
+.strtab::0000014a		__wake_up
+.strtab::00000154		rtscam_ge_unregister_device
+.strtab::00000170		get_device
+.strtab::0000017b		init_module
+.strtab::00000187		rtscam_debug
+.strtab::00000194		put_device
+.strtab::0000019f		device_create_file
+.strtab::000001b2		rtscam_ge_device_alloc
+.strtab::000001c9		platform_driver_register
+.strtab::000001e2		rtscam_jpgenc_probe
+.strtab::000001f6		platform_get_resource
+.strtab::0000020c		mutex_lock
+.strtab::00000217		strlcpy
+.strtab::0000021f		sscanf
+.strtab::00000226		printk
+.strtab::0000022d		__mutex_init
+.strtab::0000023a		__init_waitqueue_head
+.strtab::00000250		rtscam_ge_register_device
+.strtab::0000026a		mutex_unlock
+.strtab::00000277		devm_ioremap_resource
+.strtab::0000028d		rtscam_ge_kill_fasync
+.strtab::000002a3		rtscam_ge_device_release
+.strtab::000002bc		devm_kzalloc
+.strtab::000002c9		dev_set_drvdata
+.strtab::000002d9		device_remove_file

@@ -1,0 +1,1514 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+004028c5		_fini
+004028cb		__uClibc_main
+004028d9		_ZN3tnp15PPPP_DebugTraceEjPcz
+004028f7		_ZN3tnp16gFlagInitializedE
+00402912		_ZN3tnp10MUTEX_LOCKEP15pthread_mutex_t
+00402939		_ZN3tnp7TheLockE
+0040294a		_ZN3tnp14gP2PServerAddrE
+00402963		_ZN3tnp13gServerStringE
+0040297b		_ZN3tnp21PPPP__DoNetWorkDetectEP15st_PPPP_NetInfotPcP11sockaddr_inS4_S4_
+004029c4		_ZN3tnp13MUTEX_RELEASEEP15pthread_mutex_t
+004029ee		_ZN3tnp17gMaxSessionNumberE
+00402a0a		_ZN3tnp11gTNPSessionE
+00402a20		memset
+00402a27		strncpy
+00402a2f		_ZN3tnp17PPPP__Close_InnerEj
+00402a4c		_ZN3tnp15gTNPSessionLockE
+00402a66		_ZN3tnp10getCurTimeEv
+00402a7c		PPPP_Close
+00402a87		_ZN3tnp16PPPP__SendReportEhcPc
+00402aa6		_ZN3tnp9mSecSleepEj
+00402aba		_ZN3tnp19sll_Remove_ByNumberEPNS_9__the_SLLEj
+00402ae8		memcpy
+00402aef		_ZN3tnp16sll_element_FreeEPNS_17__the_SLL_ElementE
+00402b22		_Z20PPPP__ShareBandwidthv
+00402b3c		_ZN3tnp16PPPP_Write_BlockEihPci
+00402b5c		_ZN3tnp8gNetInfoE
+00402b6e		_Z24PPPP__AnotherDeviceInLanv
+00402b8c		malloc
+00402b93		__udivdi3
+00402b9d		_ZN3tnp26PPPP_Proto_Generate_SeqNumEv
+00402bc3		_ZN3tnp34PPPP_Proto_Generate_SendDataReportEPcjS0_jS0_cc
+00402bfc		_ZN3tnp16PPPP__Timer_PushEPNS_22st_PPPP_TimerElement_tE
+00402c34		_ZN3tnp11DEBUG_LEVELE
+00402c4a		_ZN3tnp13UpdateNetworkEv
+00402c63		strlen
+00402c6a		_ZN3tnp13DEBUG_LOGFILEE
+00402c82		_ZN3tnp10MUTEX_INITEP15pthread_mutex_t
+00402ca9		_ZN3tnp13InitSocketEnvEv
+00402cc2		_ZN3tnp18gLastNetDetectTimeE
+00402cdf		_ZN3tnp19PPPP__Reset_SessionEiNS_18SESSION_RESET_FLAGE
+00402d16		_Z17PPPP__Device_Initv
+00402d2d		_Z14PPPP__App_Initv
+00402d41		_ZN3tnp11keymap_InitEv
+00402d58		_ZN3tnp16PPPP__Timer_InitEv
+00402d74		_ZN3tnp17PPPP_DecodeStringEPcS0_i
+00402d96		_ZN3tnp14gP2PServerNameE
+00402daf		PPPP_Connect_Break_All
+00402dc6		PPPP_Listen_Break
+00402dd8		_ZN3tnp18PPPP__Timer_UnInitEv
+00402df6		_ZN3tnp13keymap_UnInitEv
+00402e0f		_Z19PPPP__Device_UnInitv
+00402e28		_Z16PPPP__App_UnInitv
+00402e3e		_ZN3tnp13MUTEX_DESTROYEP15pthread_mutex_t
+00402e68		free
+00402e6d		_ZN3tnp14ClearSocketEnvEv
+00402e87		_ZN3tnp19PPPP_Proto_Recv_ALLEiP11sockaddr_injPhPtPctS2_
+00402ebf		pthread_exit
+00402ecc		inet_ntoa
+00402ed6		_ZN3tnp8ntohAddrEPK11sockaddr_inPS0_
+00402efb		getsockname
+00402f07		gethostbyname
+00402f15		_ZN3tnp26PPPP__Update_Session_StateEih
+00402f3c		_ZN3tnp27PPPP_Proto_Send_PunchPkt_EXEiP11sockaddr_inPcjS2_
+00402f77		_ZN3tnp24PPPP_Proto_Read_PunchPktEPNS_16st_PPPP_PunchPktEPcPjS2_
+00402fb8		strncmp
+00402fc0		_ZN3tnp22PPPP_Proto_Read_P2PRdyEPNS_14st_PPPP_P2PRdyEPcPjS2_
+00402ffd		_ZN3tnp27PPPP_Proto_Send_RlyPort_KeyEiP11sockaddr_inPcjS2_S2_
+0040303b		_ZN3tnp21PPPP_Proto_Read_RlyToEPNS_13st_PPPP_RlyToEP11sockaddr_inPj
+0040307f		_ZN3tnp22PPPP_Proto_Send_RlyPktEiP11sockaddr_inPcjS2_cj
+004030b7		_ZN3tnp24PPPP_Proto_Send_RlyToAckEiP11sockaddr_inPcjS2_cjc
+004030f2		_ZN3tnp22PPPP_Proto_Read_RlyRdyEPNS_14st_PPPP_RlyRdyEPcPjS2_
+0040312f		_ZN3tnp24PPPP_Proto_Send_RlyHelloEiP11sockaddr_in
+00403161		memcmp
+00403168		_ZN3tnp27PPPP_Proto_Send_RlyTCPToAckEicP11sockaddr_inPcjS2_S2_cc
+004031a9		_ZN3tnp30PPPP_Proto_Read_RlyPortAck_KeyEPNS_22st_PPPP_RlyPortAck_KeyEPjPtPc
+004031f5		_ZN3tnp22PPPP_Proto_Send_RlyReqEiP11sockaddr_inPcjS2_S1_j
+0040322f		_ZN3tnp25PPPP_Proto_Send_RlyTCPPktEiP11sockaddr_inPcc
+00403265		_ZN3tnp15gSuperDeviceKeyE
+0040327f		_ZN3tnp23PPPP__Set_Session_StateEih
+004032a3		_ZN3tnp28PPPP_Proto_Send_RlyHelloSDevEiP11sockaddr_in
+004032d9		_ZN3tnp26PPPP__Halt_TCP_For_SessionEi
+004032ff		_ZN3tnp26PPPP_Proto_Send_P2PRdy_AckEiP11sockaddr_in
+00403333		_ZN3tnp19PPPP_Proto_Recv_TCPEiPctPtj
+00403358		_ZN3tnp30PPPP__Check_Session_Data_ReadyEPctPtPh
+00403388		_ZN3tnp14gP2PTcpAddrNumE
+004033a1		memmove
+004033a9		_ZN3tnp11CloseSocketEi
+004033c0		_ZN3tnp22PPPP__ConnectTcpServerEP11sockaddr_iniPiii
+004033f4		_ZN3tnp25PPPP_Proto_Send_RlyTCPReqEicP11sockaddr_inPcjS2_S1_S2_
+00403434		_ZN3tnp12getTickCountEv
+0040344c		srand
+00403452		_ZN3tnp24PPPP__DecodeServerStringEPcP11sockaddr_ini
+00403486		_ZN3tnp12CreateSocketEc
+0040349e		_ZN3tnp18SetSocketBroadcastEi
+004034bc		_ZN3tnp11TryBindPortEiPt
+004034d5		_ZN3tnp21PPPP_Proto_Send_ProbeEiP11sockaddr_inPcjc
+00403508		__bswapsi2
+00403513		_ZN3tnp25PPPP_Proto_Send_ProbeAck2EiP11sockaddr_inPcj
+00403549		__errno_location
+0040355a		_ZN3tnp19PPPP__CheckValidDIDEPKc
+0040357b		strchr
+00403582		atoi
+00403587		strnlen
+0040358f		_ZN3tnp25PPPP_Proto_Send_DevOnlineEiP11sockaddr_inPcjS2_
+004035c8		_ZN3tnp24PPPP_Proto_Send_LanSerchEit
+004035ed		_ZN3tnp22PPPP_Proto_Send_P2PReqEiP11sockaddr_inPcjS2_S1_
+00403626		_ZN3tnp27PPPP__Start_TCP_For_SessionEiP8sockaddri
+00403658		_ZN3tnp27PPPP_Proto_Send_RlyTCPStartEiP11sockaddr_inPcjS2_S2_
+00403696		_ZN3tnp28PPPP_Proto_Send_EasyTCPStartEiP11sockaddr_inPcjS2_cS2_
+004036d6		_Z18PPPP_TryRelayByUDPii
+004036ef		_Z18PPPP_TryRelayByTCPii
+00403708		_ZN3tnp14WaitThreadExitEPm
+00403723		_ZN3tnp18CreateWorkerThreadEPFPvS0_ES0_
+0040374b		_Z30PPPP_thread_recv_Proto_TCP_appPv
+00403770		_ZN3tnp28PPPP_Proto_Send_RlyServerReqEicP11sockaddr_inPcjS2_c
+004037ae		_ZN3tnp22PPPP_Proto_Send_WakeUpEicP11sockaddr_inPcjS2_
+004037e5		_ZN3tnp13keymap_SearchEPcjS0_
+00403803		_ZN3tnp24PPPP_Proto_Verify_HeaderEPKciPNS_23st_PPPP_SessionHeaderV2E
+00403848		_ZN3tnp27PPPP_Proto_Send_SigErrorAckEicP11sockaddr_inhcc
+00403881		strcpy
+00403888		_ZN3tnp14gDefaultSigKeyE
+004038a1		_ZN3tnp11gLastHandleE
+004038b7		_ZN3tnp21gCurrentSignalSessionE
+004038d7		_ZN3tnp16PPPP_Set_Sig_KeyEjPKc
+004038f6		_ZN3tnp10keymap_AddEPcjS0_
+00403911		_ZN3tnp11keymap_DumpEv
+00403928		_ZN3tnp17gLastServerStringE
+00403944		_ZN3tnp21PPPP__GetLocalAddressEP11sockaddr_inS1_
+00403975		_ZN3tnp16gP2PTcpPortArrayE
+00403990		_Z14PPPP_TryWakeUpPciS_ijj
+004039ab		_ZN3tnp22gFlagConnectInProgressE
+004039cc		_Z26PPPP_thread_recv_Proto_appPv
+004039ed		_Z22PPPP__GetLanSearchFlagv
+00403a09		_ZN3tnp21PPPP_Proto_Send_HelloEiP11sockaddr_in
+00403a38		_Z11PPPP_TryP2Pic
+00403a4a		_ZN3tnp30PPPP_Proto_Send_Connect_ReportEicP11sockaddr_inPcPhcS2_i
+00403a8c		_ZN3tnp15gLastServerAddrE
+00403aa6		_Z13PPPP_TryRelayic
+00403aba		_ZN3tnp22PPPP_Proto_Send_ReportEicP11sockaddr_inPccccsS2_
+00403af4		_ZN3tnp8sll_InitEPNS_9__the_SLLEj
+00403b16		_ZN3tnp20PPPP_thread_send_DRWEPv
+00403b37		_ZN3tnp24PPPP___Dump_Session_InfoEi
+00403b5b		_ZN3tnp20PPPP_thread_recv_DRWEPv
+00403b7c		gP2PServerMapNum
+00403b8d		P2PServerMap
+00403b9a		_ZN3tnp22PPPP__GetP2PServerAddrEPciS0_S0_S0_
+00403bc7		strcmp
+00403bce		_Z25PPPP__GetP2PServerAddrAppPKcPciS1_S1_S1_
+00403bfb		_Z15PPPP_Connect_ToPciS_cS_tS_c
+00403c1b		_ZN3tnp14PPPP__ParseDIDEPKcPciPiS2_i
+00403c40		PPPP_ConnectByServer
+00403c55		pthread_self
+00403c62		pthread_detach
+00403c71		_ZN3tnp27gIncomingConnectionCallbackE
+00403c97		_ZN3tnp17setup_listen_portEt
+00403cb4		_ZN3tnp25PPPP_Proto_Read_LanNotifyEPNS_17st_PPPP_LanNotifyEPcPjS2_
+00403cf7		_ZN3tnp28PPPP_Proto_Send_LanNotifyAckEiP11sockaddr_inPcjS2_
+00403d33		_ZN3tnp9gSDevInfoE
+00403d46		_ZN3tnp27PPPP_Proto_Send_SDev_ReportEiP11sockaddr_inPcjS2_S2_jS2_cS2_
+00403d8c		_ZN3tnp16gExitHelloThreadE
+00403da7		_ZN3tnp3gSNE
+00403db4		_ZN3tnp10gCheckCodeE
+00403dc9		_ZN3tnp31PPPP_Proto_Send_Hello_With_BodyEiP11sockaddr_inPcjS2_c
+00403e09		_ZN3tnp7gPrefixE
+00403e1a		_ZN3tnp20gDeviceNextLoginTypeE
+00403e39		popen
+00403e3f		fread
+00403e45		pclose
+00403e4c		_Z21PPPP__thread_callbackPv
+00403e68		_ZN3tnp17gNoticeToCallbackE
+00403e84		_ZN3tnp21gLastSuccessLoginTimeE
+00403ea4		_ZN3tnp13hthread_helloE
+00403ebc		_ZN3tnp22PPPP__ResetSuperDeviceEv
+00403ede		_ZN3tnp21PPPP__ExitSuperDeviceEc
+00403eff		_ZN3tnp13gP2PTcpSocketE
+00403f17		_ZN3tnp21gFlagListenInProgressE
+00403f37		_ZN3tnp26PPPP_Proto_Read_NoticePingEPNS_18st_PPPP_NoticePingEPcPjS2_
+00403f7c		_ZN3tnp29PPPP_Proto_Send_NoticePingAckEicP11sockaddr_inPNS_18st_PPPP_NoticePingE
+00403fcd		_ZN3tnp19gDeviceTCPLoginSendE
+00403feb		_ZN3tnp19gCurrentReportLevelE
+00404009		_Z28PPPP__SessionHandler_Is_Fullv
+0040402b		_ZN3tnp24PPPP_Proto_Read_NoticeToEPNS_17st_PPPP_MsgNoticeEPcPjS2_PyPtS2_
+00404074		_Z22PPPP__NoticeToCallbackyPcj
+00404093		_ZN3tnp6CRCDecEPhiS0_i
+004040aa		_ZN3tnp28PPPP_Proto_Read_LanNotifyAckEPNS_17st_PPPP_LanNotifyEPcPjS2_
+004040f0		_ZN3tnp10gLoginFlagE
+00404105		_ZN3tnp22gDeviceRecvUDPLoginAckE
+00404126		_Z32PPPP__IncomingConnectionCallbackv
+0040414c		_ZN3tnp22PPPP_Proto_Send_P2PRdyEiP11sockaddr_inPcjS2_
+00404182		_Z26PPPP__Check_Device_Workingv
+004041a2		_Z23PPPP_thread_SuperDevicePv
+004041c0		_ZN3tnp25PPPP_Proto_Send_P2PRdy_EXEiP11sockaddr_inPcjS2_
+004041f9		_ZN3tnp38PPPP_Proto_Generate_SDev_SessionReportEPcjS0_jS0_S0_jS0_cjjjjj
+00404241		_ZN3tnp23PPPP_Proto_Send_SDevLgnEiP11sockaddr_inPcjS2_
+00404278		_Z39PPPP__SendReport_SuperDevice_ExitThreadcc
+004042a6		_ZN3tnp22PPPP_Proto_Send_RlyRdyEiP11sockaddr_inPcjS2_
+004042dc		_Z36PPPP__SendReport_SuperDevice_ConnectPc
+00404307		_ZN3tnp17over_time_receiveEiPciP11sockaddr_inj
+00404336		_ZN3tnp21PPPP_Proto_Send_CloseEicP11sockaddr_in
+00404366		_ZN3tnp26PPPP_Proto_Send_HelloToAckEiP11sockaddr_in
+0040439a		_ZN3tnp31PPPP_Proto_Send_RlyHelloSDevAckEiP11sockaddr_in
+004043d3		_ZN3tnp22PPPP_Proto_Read_RlyPktEPNS_14st_PPPP_RlyPktEPcPjS2_S2_S3_
+00404416		_ZN3tnp30PPPP_Proto_Send_RlyPortAck_KeyEiP11sockaddr_injtc
+00404451		_Z20PPPP__HelloToIpEqualmmmm
+0040446e		_ZN3tnp26PPPP_Proto_Read_RlyPortKeyEPNS_19st_PPPP_RlyPort_KeyEPcPjS2_S2_S2_
+004044ba		_ZN3tnp13AddrIsTheSameEP11sockaddr_inS1_
+004044e3		_ZN3tnp11SendMessageEPciiP11sockaddr_in
+0040450b		_ZN3tnp13PPPP_MakeSha1EPKciS1_iPc
+0040452d		_Z35PPPP__SendSessionReport_SuperDevicecjjjjj
+0040455b		_Z29PPPP_thread_recv_Proto_devicePv
+0040457f		_Z26PPPP_thread_recv_LanSearchPv
+004045a0		_ZN3tnp24gDeviceLostUDPLoginCountE
+004045c3		_ZN3tnp14gListenTimeOutE
+004045dc		_ZN3tnp18gLastSessionIsFullE
+004045f9		_ZN3tnp26PPPP_Proto_Send_DevLgn_KeyEicP11sockaddr_inPcjS2_cPhS1_S2_c
+0040463e		_ZN3tnp25PPPP_Proto_Send_LanNotifyEitPcjS0_
+0040466a		_ZN3tnp17gP2PTcpServerAddrE
+00404686		_ZN3tnp21gCurP2PTCPServerIndexE
+004046a6		_Z33PPPP_thread_recv_Proto_TCP_devicePv
+004046ce		_ZN3tnp20gFlagUserBreakListenE
+004046ed		_ZN3tnp24PPPP__Timer_Thread_CheckEv
+00404711		_Z23PPPP_Listen_To_With_Keyijtc
+00404731		_Z27PPPP_Listen_To_With_Key_TCPij
+00404753		_Z17PPPP_thread_helloPv
+0040476b		PPPP_Listen_With_Key2
+00404781		_ZN3tnp27PPPP_Proto_Send_NoticeToAckEicP11sockaddr_inPcjS2_ytS2_
+004047c2		_ZN3tnp7gKeyMapE
+004047d3		_ZN3tnp11gKeyMapLockE
+004047e9		_ZN3tnp12keymap_ClearEv
+00404801		_ZN3tnp11gSeqNumLockE
+00404817		_ZN3tnp7gSeqNumE
+00404828		_ZN3tnp6gTimerE
+00404838		_ZN3tnp10gTimerLockE
+0040484d		_ZN3tnp16gExitTimerThreadE
+00404868		_ZN3tnp13hthread_timerE
+00404880		_ZN3tnp18PPPP__thread_timerEPv
+0040489f		_ZN3tnp27PPPP__Timer_RemoveMaxElapseEv
+004048c6		_ZN3tnp19PPPP__Timer_TimeoutEv
+004048e5		_ZN3tnp15PPPP__Timer_PopEv
+00404900		_ZN3tnp18PPPP__Timer_DeleteEj
+0040491e		_ZN3tnp17PPPP__Timer_ClearEv
+0040493b		_ZN3tnp21PPPP_Proto_Send_AliveEicP11sockaddr_in
+0040496b		_ZN3tnp17SetSocketNonBlockEi
+00404988		_ZN3tnp14ConnectAddressEiPK11sockaddr_in
+004049b1		_ZN3tnp14SetSocketBlockEi
+004049cb		strerror
+004049d4		select
+004049db		getsockopt
+004049e6		inet_addr
+004049f0		_ZN3tnp23PPPP_Proto_Write_HeaderEPNS_21st_PPPP_SessionHeaderEht
+00404a30		_ZN3tnp13SendToAddressEiPciPK11sockaddr_in
+00404a5b		_ZN3tnp20sll_element_AllocateEjj
+00404a7c		_ZN3tnp7sll_PutEPNS_9__the_SLLEPNS_17__the_SLL_ElementE
+00404ab4		_ZN3tnp7gCRCKeyE
+00404ac5		_ZN3tnp11PPPP_CRCDecEPhiS0_iS0_
+00404ae5		_ZN3tnp31PPPP__ConnectWithNonBlockSocketEiP8sockaddri
+00404b1b		_ZN3tnp26PPPP_thread_recv_Relay_TCPEPv
+00404b42		_ZN3tnp28PPPP_Proto_Send_P2PServerReqEicP11sockaddr_inPcjS2_cS2_
+00404b83		_ZN3tnp17PPPP_EncodeStringEPcS0_i
+00404ba5		_ZN3tnp21PPPP__ResolveHostNameEPcP11sockaddr_in
+00404bd5		_ZN3tnp10sll_DeInitEPNS_9__the_SLLE
+00404bf9		_ZN3tnp13IndexDistanseEtt
+00404c13		_ZN3tnp27PPPP_Proto_Send_BitrateInfoEicP11sockaddr_injj
+00404c4b		_ZN3tnp23PPPP__CalculateLostRateEiPj
+00404c70		_ZN3tnp13MUTEX_TRYLOCKEP15pthread_mutex_t
+00404c9a		_ZN3tnp23PPPP_DRWAck_Read_HeaderEPNS_20st_PPPP_DRWAckHeaderEPhPt
+00404cdb		_ZN3tnp20PPPP_DRW_Read_HeaderEPNS_17st_PPPP_DRWHeaderEPhPt
+00404d16		_ZN3tnp12IndexCompareEtt
+00404d2f		_ZN3tnp16PPPP_DRWAck_SendEicP11sockaddr_inhPtt
+00404d5e		_ZN3tnp24PPPP_Proto_Send_AliveAckEicP11sockaddr_in
+00404d91		_ZN3tnp18sll_Remove_ByIndexEPNS_9__the_SLLEj
+00404dbe		_ZN3tnp22PPPP__CalculateBitrateEiijjPj
+00404de5		_ZN3tnp28PPPP_Calc_P2p_Pkt_Loss_RatioEj
+00404e0d		_ZN3tnp34PPPP_Proto_Send_Alive_with_conuterEjicP11sockaddr_in
+00404e4b		_ZN3tnp13PPPP_DRW_SendEicP11sockaddr_inhtPct
+00404e78		_ZN3tnp15SllIndexCompareEjjj
+00404e95		_ZN3tnp18sll_Search_ByIndexEPKNS_9__the_SLLEjPj
+00404ec5		_ZN3tnp19sll_Search_ByNumberEPKNS_9__the_SLLEj
+00404ef4		pthread_mutex_init
+00404f07		pthread_mutex_destroy
+00404f1d		pthread_mutex_lock
+00404f30		pthread_mutex_trylock
+00404f46		pthread_mutex_unlock
+00404f5b		usleep
+00404f62		fcntl
+00404f68		setsockopt
+00404f73		pthread_create
+00404f82		pthread_join
+00404f8f		_ZN3tnp23pppp_sha1_process_blockEPKvjPNS_13pppp_sha1_ctxE
+00404fc9		_ZN3tnp18pppp_sha1_read_ctxEPKNS_13pppp_sha1_ctxEPv
+00404ffd		_ZN3tnp18pppp_sha1_init_ctxEPNS_13pppp_sha1_ctxE
+0040502e		_ZN3tnp23pppp_sha1_process_bytesEPKvjPNS_13pppp_sha1_ctxE
+00405068		_ZN3tnp20pppp_sha1_finish_ctxEPNS_13pppp_sha1_ctxEPv
+0040509d		feof
+004050a2		ferror
+004050a9		_ZN3tnp11pppp_memxorEPvPKvj
+004050c5		_ZN3tnp14pppp_hmac_sha1EPKviS1_iPv
+004050e8		_ZN3tnp18pppp_bin_to_stringEPKciPc
+0040510b		gettimeofday
+00405118		localtime
+00405122		vsprintf
+0040512b		dump_string
+00405137		fopen
+0040513d		fclose
+00405144		fgets
+0040514a		_ZN3tnp4trimEPc
+0040515a		strcasecmp
+00405165		vsscanf
+0040516d		vsnprintf
+00405177		_ZN3tnp8myrindexEPci
+0040518c		fputs
+00405192		rename
+00405199		_ZN3tnp13CRCSelect4KeyEhhhhhPhS0_S0_S0_
+004051c1		recv
+004051c6		_ZN3tnp10isIPv6OnlyE
+004051db		socket
+004051e2		bind
+004051e7		in6addr_any
+004051f3		connect
+004051fb		sendto
+00405202		recvfrom
+0040520b		_ZN3tnp15RecvFromAddressEiPciP11sockaddr_in
+00405237		ioctl
+0040523d		_ZN3tnp8LanIfNumEv
+00405250		_ZN3tnp5GetIPEiPc
+00405262		inet_aton
+0040526c		_ZN3tnp13PPPP_MakeSha2EPKciS1_iPc
+0040528e		_ZN3tnp21over_time_receive_tcpEiPcij
+004052b3		_ZN3tnp8htonAddrEPK11sockaddr_inPS0_
+004052d8		_ZN3tnp25PPPP_Proto_Write_HeaderV2EPNS_23st_PPPP_SessionHeaderV2EhtcPcj
+00405320		_ZN3tnp16SendMessageByTCPEPcii
+0040533f		_ZN3tnp14PPPP_MakeNonceEPci
+0040535b		_ZN3tnp29PPPP_Proto_Write_P2PServerReqEPNS_20st_PPPP_P2PServerReqEPcjS2_cS2_S2_
+004053ab		_ZN3tnp23PPPP_Proto_Write_DevLgnEPNS_14st_PPPP_DevLgnEPcjS2_cPhP11sockaddr_in
+004053f9		_ZN3tnp11PPPP_CRCEncEPhiS0_iS0_
+00405419		_ZN3tnp23PPPP_Proto_Write_P2PReqEPNS_14st_PPPP_P2PReqEPcjS2_P11sockaddr_in
+00405464		_ZN3tnp22PPPP_Proto_Write_RSLgnEPNS_13st_PPPP_RSLgnEPcjS2_jj
+004054a1		_ZN3tnp23PPPP_Proto_Write_RSLgn1EPNS_14st_PPPP_RSLgn1EPcjS2_jjP11sockaddr_in
+004054ee		_ZN3tnp23PPPP_Proto_Write_RlyReqEPNS_14st_PPPP_RlyReqEPcjS2_P11sockaddr_inj
+0040553a		_ZN3tnp22PPPP_Proto_Write_RlyToEPNS_13st_PPPP_RlyToEP11sockaddr_inj
+0040557e		_ZN3tnp25PPPP_Proto_Write_RlyToAckEPNS_16st_PPPP_RlyToAckEPcjS2_cjc
+004055c2		_ZN3tnp28PPPP_Proto_Write_RlyPort_KeyEPNS_19st_PPPP_RlyPort_KeyEPcjS2_S2_S2_
+0040560f		_ZN3tnp31PPPP_Proto_Write_RlyPortAck_KeyEPNS_22st_PPPP_RlyPortAck_KeyEjtc
+00405659		_ZN3tnp23PPPP_Proto_Write_RlyPktEPNS_14st_PPPP_RlyPktEPcjS2_cj
+00405698		_ZN3tnp25PPPP_Proto_Write_PunchPktEPNS_16st_PPPP_PunchPktEPcjS2_
+004056d9		_ZN3tnp28PPPP_Proto_Write_PunchPkt_EXEPNS_19st_PPPP_PunchPkt_EXEPcjS2_
+00405720		_ZN3tnp23PPPP_Proto_Write_P2PRdyEPNS_14st_PPPP_P2PRdyEPcjS2_
+0040575d		_ZN3tnp26PPPP_Proto_Write_P2PRdy_EXEPNS_17st_PPPP_P2PRdy_EXEPcjS2_
+004057a0		_ZN3tnp16BroadcastMessageEPciit
+004057c0		_ZN3tnp23PPPP_Proto_Write_RlyRdyEPNS_14st_PPPP_RlyRdyEPcjS2_
+004057fd		_ZN3tnp31PPPP_Proto_Write_Connect_ReportEPNS_22st_PPPP_Connect_ReportEPcPhcS2_i
+0040584d		_ZN3tnp23PPPP_Proto_Write_ReportEPNS_14st_PPPP_ReportEPccccsS2_
+0040588d		_ZN3tnp27PPPP_Proto_Write_SDevReportEPNS_19st_PPPP_SDev_ReportEPcjS2_S2_jS2_cS2_
+004058de		_ZN3tnp34PPPP_Proto_Write_SDevSessionReportEPNS_26st_PPPP_SDev_SessionReportEjPcjS2_S2_jS2_cjjjjj
+00405940		_ZN3tnp24PPPP_DRWAck_Write_HeaderEPNS_20st_PPPP_DRWAckHeaderEht
+00405980		_ZN3tnp21PPPP_DRW_Write_HeaderEPNS_17st_PPPP_DRWHeaderEht
+004059ba		_ZN3tnp24PPPP_Proto_Write_SDevLgnEPNS_15st_PPPP_SDevLgnEPcjS2_
+004059f9		_ZN3tnp25PPPP_Proto_Write_ListReq1EPNS_16st_PPPP_ListReq1EPcjS2_
+00405a3a		_ZN3tnp29PPPP_Proto_Write_RlyServerReqEPNS_20st_PPPP_RlyServerReqEPcjS2_
+00405a83		_ZN3tnp28PPPP_Proto_Write_RlyTCPStartEPNS_19st_PPPP_RlyTCPStartEPcjS2_S2_S2_
+00405ad0		_ZN3tnp26PPPP_Proto_Write_RlyTCPReqEPNS_17st_PPPP_RlyTCPReqEPcjS2_P11sockaddr_inS2_
+00405b24		_ZN3tnp29PPPP_Proto_Write_EasyTCPStartEPNS_20st_PPPP_EasyTCPStartEPcjS2_c
+00405b6e		_ZN3tnp22PPPP_Proto_Read_HeaderEPNS_21st_PPPP_SessionHeaderEPhPt
+00405baf		_ZN3tnp28PPPP_Proto_Write_RlyTCPToAckEPNS_19st_PPPP_RlyTCPToAckEPcjS2_S2_cc
+00405bfb		_ZN3tnp26PPPP_Proto_Write_RlyTCPPktEPNS_17st_PPPP_RlyTCPPktEPcc
+00405c3b		_ZN3tnp33PPPP_Proto_Write_MGMDumpLoginDID1EPNS_24st_PPPP_MGMDumpLoginDID1EPcjS2_
+00405c8c		_ZN3tnp36PPPP_Proto_Write_MGMRemoteManagementEPNS_27st_PPPP_MGMRemoteManagementEhhhht
+00405ce2		munmap
+00405ce9		sem_close
+00405cf3		sem_wait
+00405cfc		sem_post
+00405d05		realloc
+00405d0d		shm_open
+00405d16		ftruncate
+00405d20		mmap
+00405d25		sem_open
+00405d2e		fshare_read
+00405d3a		fshare_wait
+00405d46		fshare_read_newest
+00405d59		ms_sleep
+00405d62		librt.so.0
+00405d6d		_DYNAMIC_LINKING
+00405d7e		__RLD_MAP
+00405d88		mq_receive
+00405d93		pthread_sigmask
+00405da3		libdl.so.0
+00405dae		libpthread.so.0
+00405dbe		system
+00405dc5		libm.so.0
+00405dcf		calloc
+00405dd6		getpid
+00405ddd		mq_open
+00405de5		mq_send
+00405ded		CYASSL_MSG
+00405df8		AesSetIV
+00405e01		AesSetKey
+00405e0b		AesCbcDecrypt
+00405e19		stderr
+00405e20		__clz_tab
+00405e2a		libc.so.0
+00405e34		putchar
+00405e3c		sigemptyset
+00405e48		bsearch
+00405e50		prctl
+00405e56		perror
+00405e5d		sigaddset
+00405e67		ctime
+00405e6d		fseek
+00405e73		mktime
+00405e7a		strstr
+00405e81		signal
+00405e88		ftell
+00405e8e		access
+00405e95		fileno
+00405e9c		gmtime
+00405ea3		vfprintf
+00405eac		stdout
+00405eb3		_ftext
+00405eba		_fdata
+00405ec1		_edata
+00405ec8		__bss_start
+00405ed4		_fbss
+00405eda		_end
+00445920	00409d1c,00409d4c,00409d88,00412f84,00412fd0,0041304c,FUN_0040bae0,FUN_004135d4,close_replay_frame,do_auth,do_record_play,do_update,event_log_get,event_log_seach,get_record_speed,get_resolution,get_version,get_video_replay_frame,init_replay_frame,main,myDoIOCtrl,myReleaseUser,p2p_abort_panorama_capture,p2p_ap_mode_set,p2p_ptz_direction_ctrl,p2p_ptz_direction_ctrl_stop,p2p_ptz_home,p2p_ptz_jump_to_point,p2p_ptz_preset_add,p2p_ptz_preset_call,p2p_ptz_preset_del,p2p_ptz_set_cruise,p2p_ptz_set_cruise_period,p2p_ptz_set_cruise_stay_time,p2p_ptz_set_motion_track,p2p_send_auth_result,p2p_send_clr_viewing,p2p_send_connected,p2p_send_ctrl_data,p2p_send_ctrl_error,p2p_send_disconnected,p2p_send_frame_data,p2p_send_stop_viewing,p2p_send_unsupported_version_reply,p2p_send_viewing,p2p_set_abnormal_sound,p2p_set_abnormal_sound_sensitivity,p2p_set_alarm_mode,p2p_set_alarm_sensitivity,p2p_set_alarm_sound,p2p_set_audio_mode,p2p_set_baby_cry,p2p_set_day_night_mode,p2p_set_double_light,p2p_set_encode_mode,p2p_set_high_resolution,p2p_set_immediate_bitrate,p2p_set_lapse_video,p2p_set_ldc,p2p_set_light,p2p_set_mic_volume,p2p_set_mirror_flip,p2p_set_motion_detect,p2p_set_motion_detect_status,p2p_set_motion_record,p2p_set_panorama_capture_state,p2p_set_power,p2p_set_pwd_used_cnt,p2p_set_tnp_check_login_fail,p2p_set_tnp_check_login_success,p2p_set_tnp_connect_success,p2p_set_tnp_init_status,p2p_set_tnp_work_mode,p2p_set_video_backup_state,p2p_set_viewpoint_trace,p2p_set_voice_ctrl,p2p_start_panorama_capture,p2p_sync_info_from_server,parse_msg,refresh_tnp_event_list,reply_ap_mode_info,reply_dev_info,reply_event_list,reply_factory_test_info,set_record_speed,set_resolution,start_speaker,state_statistics,tnp_reply_event_list	p2p_tnp.c
+0044592c	p2p_send_ctrl_data,p2p_send_ctrl_error	p2p_send_ctrl_data, msg_type=0x%02x\n
+00445954	FUN_00408cbc	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+00445998		PPPP MOD [%d:%d:%d.%06d]
+004459b4	FUN_00408f7c,get_filename_by_time	/tmp/record_event
+004459c8	event_log_get	event_log_get: param is error, findNumber %d, head(%d) tail(%d) num(%d)!!! \n
+00445a18	event_log_seach	event_log_seach: mem alloc fail \n
+00445a3c	init_replay_frame	tmp_duration(%d) video_totalsample(%d) audio_totalsample(%d) video_timescale(%d) audio_timescale(%d)  video_sampleid(%d) audio_sampleid(%d) replaytime(%lu) filetime(%lu)\n
+00445ae8	init_replay_frame	malloc(all_buff_size = %d) failed!\n
+00445b0c	init_replay_frame	realloc ok, all_buff_size = %d\n
+00445b2c	init_replay_frame	MP4ReadSample fail video_sampleid(%d) ret(%d) bufsize(%d)\n
+00445b68	init_replay_frame	got i frame\n
+00445b78	init_replay_frame	mp4read = %p\n
+00445b88	init_replay_frame	mp4read_open_file(filename = %s) failed!\n
+00445bb4	close_replay_frame	close mp4file and destroy mp4read\n
+00445bd8	get_video_replay_frame	change file video_sampleid(%d) video_totalsample(%d)\n
+00445c10	FUN_00409970	p2p cur user %d SessionHandle(%d)\n
+00445c34	FUN_00409970	p2p cur viewer(%d) max_user_num(%d) in_packet_loss(%d) out_packet_loss(%d)\n
+00445c80	00409d50	get P2P_SYNC_ABILITY_START
+00445c9c	00409d2c	get P2P_SYNC_ABILITY_END
+00445cb8	00409d9c	unknown msg 0x%04x
+00445ccc	p2p_set_power	p2p_set_power send_msg fail!\n
+00445cec	p2p_set_power	p2p_set_power send_msg ok!\n
+00445d08	00409ed0	msg_index = %llu, content = %s, content_len = %d\n
+00445d3c	00409eec	TurnOn
+00445d44	00409f7c	TurnOff
+00445d4c	00409fb0	OnLine
+00445d54	00409f3c	msg_index = %llu, content_resp = %s, content_resp_len = %d\n
+00445d90	p2p_set_light	p2p_set_light send_msg fail!\n
+00445db0	p2p_set_light	p2p_set_light send_msg ok!\n
+00445dcc	p2p_set_motion_record	p2p_set_motion_record send_msg fail!\n
+00445df4	p2p_set_motion_record	p2p_set_motion_record send_msg ok!\n
+00445e18	p2p_set_mirror_flip	p2p_set_mirror_flip send_msg fail!\n
+00445e3c	p2p_set_mirror_flip	p2p_set_mirror_flip send_msg ok!\n
+00445e60	p2p_set_alarm_mode	p2p_set_alarm_mode %d send_msg fail!\n
+00445e88	p2p_set_alarm_mode	p2p_set_alarm_mode %d send_msg ok!\n
+00445eac	p2p_set_day_night_mode	p2p_set_day_night_mode %d send_msg fail!\n
+00445ed8	p2p_set_day_night_mode	p2p_set_day_night_mode %d send_msg ok!\n
+00445f00	p2p_set_alarm_sensitivity	p2p_set_alarm_sensitivity %d send_msg fail!\n
+00445f30	p2p_set_alarm_sensitivity	p2p_set_alarm_sensitivity %d send_msg ok!\n
+00445f5c	p2p_set_audio_mode	\n\n[Peter] p2p RMM_APP_AUDIO_MODE_SIMPLEX mode\n
+00445f8c	myDoIOCtrl,p2p_set_audio_mode	RMM_APP_MODE_EARPHONE send_msg fail!\n
+00445fb4	p2p_set_audio_mode	\n\n[Peter] p2p RMM_APP_AUDIO_MODE_DUPLEX mode\n
+00445fe4	myDoIOCtrl,p2p_set_audio_mode	RMM_APP_MODE_SPKER send_msg fail!\n
+00446008	p2p_set_audio_mode	\n\n[Peter] p2p other mode\n
+00446024	p2p_set_audio_mode	RMM_APP_MODE_SPKER mode error!\n
+00446044	p2p_set_encode_mode	p2p_set_encode_mode %d send_msg fail!\n
+0044606c	p2p_set_encode_mode	p2p_set_encode_mode %d send_msg ok!\n
+00446094	p2p_set_high_resolution	p2p_set_high_resolution %d send_msg fail!\n
+004460c0	p2p_set_high_resolution	p2p_set_high_resolution %d send_msg ok!\n
+004460ec	p2p_send_connected	p2p_send_connected send_msg fail!\n
+00446110	p2p_send_connected	p2p_send_connected send_msg ok!\n
+00446134	p2p_send_disconnected	p2p_send_disconnected send_msg fail!\n
+0044615c	p2p_send_disconnected	p2p_send_disconnected send_msg ok!\n
+00446180	p2p_send_viewing	p2p_send_viewing send_msg fail!\n
+004461a4	p2p_send_viewing	p2p_send_viewing send_msg ok!\n
+004461c4	p2p_send_stop_viewing	p2p_send_stop_viewing send_msg fail!\n
+004461ec	p2p_send_stop_viewing	p2p_send_stop_viewing send_msg ok!\n
+00446210	p2p_send_clr_viewing	p2p_send_clr_viewing send_msg fail!\n
+00446238	p2p_send_clr_viewing	p2p_send_clr_viewing send_msg ok!\n
+0044625c	p2p_set_tnp_init_status	p2p_set_tnp_init_status %d send_msg fail!\n
+00446288	p2p_set_tnp_init_status	p2p_set_tnp_init_status %d send_msg ok!\n
+004462b4	p2p_set_tnp_work_mode	p2p_set_tnp_work_mode %d send_msg fail!\n
+004462e0	p2p_set_tnp_work_mode	p2p_set_tnp_work_mode %d send_msg ok!\n
+00446308	p2p_set_tnp_check_login_success	p2p_set_tnp_check_login_success send_msg fail!\n
+00446338	p2p_set_tnp_check_login_fail	p2p_set_tnp_check_login_fail send_msg fail!\n
+00446368	p2p_set_tnp_connect_success	p2p_set_tnp_connect_success send_msg fail!\n
+00446394	p2p_set_immediate_bitrate	p2p_set_immediate_bitrate %d send_msg fail!\n
+004463c4	p2p_set_pwd_used_cnt	p2p_set_pwd_used_cnt send_msg fail!\n
+004463ec	FUN_0040acbc	hue, p2p_get_sd_state() return (%d) \n
+00446414	p2p_ptz_direction_ctrl	p2p_ptz_direction_ctrl send_msg fail!\n
+0044643c	p2p_ptz_direction_ctrl_stop	p2p_ptz_direction_ctrl_stop send_msg fail!\n
+00446468	p2p_ptz_home	p2p_ptz_home send_msg fail!\n
+00446488	p2p_ap_mode_set	p2p_ap_mode_set send_msg fail!\n
+004464a8	p2p_ptz_jump_to_point	p2p_ptz_jump_to_point send_msg fail!\n
+004464d0	p2p_set_panorama_capture_state	p2p_set_panorama_capture_state send_msg to dispatch fail!\n
+0044650c	p2p_set_ldc	p2p_set_ldc send_msg fail!\n
+00446528	p2p_set_baby_cry	p2p_set_baby_cry send_msg fail!\n
+0044654c	p2p_set_abnormal_sound	p2p_set_abnormal_sound send_msg fail!\n
+00446574	p2p_set_abnormal_sound_sensitivity	p2p_set_abnormal_sound_sensitivity send_msg fail!\n
+004465a8	p2p_set_mic_volume	p2p_set_mic_volume send_msg fail!\n
+004465cc	p2p_set_alarm_sound,p2p_set_double_light,p2p_set_lapse_video,p2p_set_motion_detect_status,p2p_set_viewpoint_trace	p2p_set_viewpoint_trace send_msg fail!\n
+004465f4	p2p_set_voice_ctrl	p2p_set_voice_ctrl send_msg fail!\n
+00446618	tnp_reply_event_list	p2p_send_ctrl_data, msg_type=0x%02x ret=%d sendlen(%d) payload_len(%d)
+00446660	FUN_0040bae0	%s -c 145 -url "%s/vmanager/ipc/firmware/upgrade" -did %s -sname %s -version %s 
+004466b4	FUN_0040bae0	/backup/cloudAPI
+004466c8	FUN_0040bae0	cmd = %s\n
+004466d4	FUN_0040bae0	ret_string = %s\n
+004466f0	FUN_0040bae0	needUpdate
+00446704	FUN_0040bae0	downloadPath
+00446714	FUN_0040bae0	md5Code
+0044671c	FUN_0040bae0	"version"
+00446728	p2p_set_motion_detect	p2p_set_motion_detect send_msg fail!\n
+00446750	p2p_set_motion_detect	p2p_set_motion_detect send_msg ok!\n
+00446774	p2p_set_video_backup_state	p2p_set_video_backup_state fail!\n
+00446798	p2p_ptz_preset_add	p2p_ptz_preset_add send_msg fail!\n
+004467bc	p2p_ptz_preset_del	p2p_ptz_preset_del send_msg fail!\n
+004467e0	p2p_ptz_preset_call	p2p_ptz_preset_call send_msg fail!\n
+00446804	p2p_ptz_set_cruise_stay_time	p2p_ptz_set_cruise_stay_time send_msg fail!\n
+00446834	p2p_ptz_set_cruise_period	p2p_ptz_set_cruise_period send_msg fail!\n
+00446860	p2p_ptz_set_motion_track	p2p_ptz_set_motion_track send_msg fail!\n
+0044688c	p2p_ptz_set_cruise	p2p_ptz_cruise_start send_msg fail!\n
+004468b4	p2p_ptz_set_cruise	p2p_ptz_cruise_stop send_msg fail!\n
+004468d8	p2p_start_panorama_capture	p2p_start_panorama_capture send_msg to cloud fail!\n
+0044690c	p2p_start_panorama_capture	panorama_capture_state [0x%x]\n
+0044692c	p2p_abort_panorama_capture	p2p_abort_panorama_capture send_msg to cloud fail!\n
+00446960	p2p_sync_info_from_server	p2p_sync_info_from_server send_msg fail!\n
+0044698c	p2p_sync_info_from_server	p2p_sync_info_from_server send_msg ok!\n
+004469b4	reply_dev_info	ls /tmp/update/firmware_m.bin -l|awk '{print $5}'
+004469e8	reply_dev_info	ls /tmp/loadtmp/firmware_m.bin -l|awk '{print $5}'
+00446a1c	reply_dev_info	stStreamCtrl.update_percent(%d)\n
+00446a40	reply_dev_info	reply_dev_info, ret = %d motion_track_switch =%d\n
+00446a74		IOTYPE_USER_IPCAM_DO_MSTAR_AEC_VERIFY_RESP, ret = %d\n
+00446aac	reply_ap_mode_info	reply_ap_mode_info, ret = %d\n
+00446acc	reply_factory_test_info	IOTYPE_USER_IPCAM_GET_FACTORY_TEST_INFO_RESP, ret = %d\n
+00446b04	reply_event_list	IOTYPE_USER_IPCAM_LISTEVENT_RESP, ret = %d\n
+00446b30	reply_event_list	i(%d) j(%d) eventcount(%d) eventnum(%d) leftevent(%d) eventcount(%d) endflag(%d)\n 
+00446b84	set_resolution	IOTYPE_USER_IPCAM_SET_RESOLUTION_RESP, ret = %d\n
+00446bb8	get_resolution	IOTYPE_USER_IPCAM_GET_RESOLUTION_RESP, ret = %d\n
+00446bec	set_record_speed	set_record_speed, param error, speed = 0!\n
+00446c18	set_record_speed	IOTYPE_USER_IPCAM_SET_RECORD_SPEED_RESP, ret = %d\n
+00446c4c	get_record_speed	IOTYPE_USER_IPCAM_GET_RECORD_SPEED_RESP, ret = %d\n
+00446c80	get_version	IOTYPE_USER_IPCAM_GET_VERSION_RESP, ret = %d\n
+00446cb0	do_update	DISPATCH_UPGRADE_MODE\n
+00446cc8	do_update	p2p prepare udpate send_msg fail!\n
+00446cec	do_update	p2p prepare udpate send_msg success!\n
+00446d14	do_update	p2p_set_download_info send_msg fail!\n
+00446d3c	do_update	g_download_info.url =%s %s\n
+00446d58	do_update	p2p get url success send_msg fail!\n
+00446d7c	do_update	p2p get url success  send_msg success!\n
+00446da4	do_update	killall upgrade_firmware;rm -f /tmp/sd/home_r10 /tmp/sd/home_r10m /tmp/update/firmware_m.bin;/home/app/upgrade_firmware "%s" "%s" &
+00446e28	do_update	cloudAPI get_update_url_md5 failed url = %s, md5 = %s\n
+00446e60	do_update	p2p get url failed send_msg fail!\n
+00446e84	do_update	p2p get url failed  send_msg success!\n
+00446eac	do_update	IOTYPE_USER_IPCAM_UPDATE_RSP, ret = %d\n
+00446ed4	p2p_send_frame_data	switch resolution!\n
+00446ee8	send_realtime_audio,send_realtime_video	checkbuf timeout
+00446fe4	do_record_play	record play control [%d] chn %d\n
+00447008	do_record_play	\t   : command=0x%X\n
+0044701c	do_record_play	\t   : Param=%d\n
+0044702c	do_record_play	\t   : stTimeDay=%d-%d-%d W:%d %d:%d:%d\n
+00447054	do_record_play	change resolution
+00447068	do_record_play	change record speed
+0044707c	do_record_play	do file_switch\n
+0044708c	do_record_play	init_replay_frame file(%s) success
+004470b0	do_record_play	init_replay_frame file(%s) fail
+004470d0	do_record_play	got file(%s) fail
+004470e4	start_speaker	io_stream_head type error!\n
+00447100	p2p_send_auth_result	p2p_send_auth_result, index=%d, type=0x%02x, resp_type=0x%02x, result=%d\n
+0044714c	p2p_send_unsupported_version_reply	p2p_send_auth_result, index=%d, type=0x%02x, resp_type=0x%02x\n
+0044718c	do_auth	%[0-9A-Za-z],%s
+0044719c	do_auth	lately used nonce!\n
+004471b0	do_auth	user=xiaoyiuser&nonce=%s
+004471cc	do_auth	send 01 DISPATCH_SET_P2P_PWDWRONG msg\n
+004471f4	do_auth	send 02 DISPATCH_SET_P2P_PWDWRONG msg\n
+0044721c	do_auth	send 03 DISPATCH_SET_P2P_PWDWRONG msg\n
+00447244	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_START_KEY\n
+00447278	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_TNP_IPCAM_START_KEY\n
+004472b0	myDoIOCtrl	myDoIOCtrl(..): %d, reach MAX_VIEWING_NUM\n
+004472dc	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_TNP_IPCAM_START_REPLAY_KEY\n
+00447318	myDoIOCtrl	do_replay\n
+00447324	myDoIOCtrl	do_replay but no sd card\n
+00447340	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_STOP\n
+0044736c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_TNP_EVENT_LIST_REQ\n
+004473a0	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_AUDIOSTART\n
+004473d4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_AUDIOSTOP\n
+00447408	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SPEAKERSTART\n
+0044743c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SPEAKERSTOP\n
+00447470	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_DEVINFO_REQ\n
+004474a4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_AP_INFO_REQ\n
+004474dc	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_LISTEVENT_REQ\n
+00447514	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_RECORD_PLAYCONTROL_KEY p->command(0x%x)\n
+00447564	myDoIOCtrl	do_replay stop\n
+00447574	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_RESOLUTION\n
+004475ac	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_RESOLUTION\n
+004475e4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_RECORD_SPEED\n
+0044761c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_RECORD_SPEED\n
+00447654	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_VERSION\n
+00447688	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_SILENT_MODE\n
+004476c0	myDoIOCtrl	value = %d\n
+004476cc	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_LIGHT\n
+00447700	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_MIRROR_FLIP\n
+00447738	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_RECORD_MOD\n
+00447770	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_MOTION_DETECT\n
+004477ac	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_MOTION_DETECT\n
+004477e8	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_ALARM_MODE\n
+00447820	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_UPDATE_URI\n
+00447858	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_TF_FORMATE\n
+00447890	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_DAYNIGHT_MODE\n
+004478cc	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_ALARM_SENSITIVITY\n
+0044790c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_VIDEO_BACKUP_REQ\n
+00447948	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_VIDEO_BACKUP_REQ\n
+00447984	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_ENCODING_MODE_REQ\n
+004479c4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_HIGH_RESOLUTION_REQ\n
+00447a04	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_PRESET_ADD_REQ\n
+00447a38	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_PRESET_DEL_REQ\n
+00447a6c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_PRESET_CALL_REQ\n
+00447aa4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_SET_CURISE_STAY_TIME_REQ\n
+00447ae4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_SET_CRUISE_PERIOD_REQ\n
+00447b20	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_SET_MOTION_TRACK_REQ\n
+00447b5c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_SET_CRUISE_REQ\n
+00447b90	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_DIRECTION_CTRL\n
+00447bc4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_DIRECTION_CTRL_STOP\n
+00447c00	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_HOME\n
+00447c2c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PTZ_JUMP_TO_POINT\n
+00447c60	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PANORAMA_CAPTURE_START\n
+00447c98	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PANORAMA_CAPTURE_ABORT\n
+00447cd0	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_PANORAMA_CAPTURE_SCHEDULE_POLLING\n
+00447d14	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_GET_FACTORY_TEST_INFO_REQ\n
+00447d58	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_TRIGGER_SYNC_INFO_FROM_SERVER_REQ\n
+00447da4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_LDC\n
+00447dd4	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_BABY_CRY\n
+00447e08	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_MIC_VOLUME\n
+00447e40	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_VIEWPOINT_TRACE\n
+00447e7c	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_VOICE_CTRL_REQ\n
+00447eb8	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_LAPSE_VIDEO, value = %d\n
+00447efc	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_AUDIO_MODE\n
+00447f34	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_ABNORMAL_SOUND\n
+00447f70	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_DOUBLE_LIGHT\n
+00447fa8	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_ALARM_SOUND\n
+00447fe0	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_AP_MODE\n
+00448014	myDoIOCtrl	IOTYPE_USER_IPCAM_SET_AP_MODE nIOCtrlDataSize [%d],expect [%d]\n
+00448054	myDoIOCtrl	myDoIOCtrl(..): %d, IOTYPE_USER_IPCAM_SET_ABNORMAL_SOUND_SENSITIVITY\n
+0044809c	myDoIOCtrl	myDoIOCtrl(..): Unknown command 0x%02x\n
+004480c4	myDoIOCtrl	myDoIOCtrl(..): %d, nIOCtrlType(%u) ability support=n\n
+00448170	myReleaseUser	start PPPP_ForceClose finish %d\n
+00448194	myReleaseUser	finish PPPP_ForceClose finish %d\n
+004481b8	parse_msg	parse_msg: failed %d SessionHandle(%d)!!\n
+004481e4	parse_msg	parse_msg: failed %d !!\n
+00448200	parse_msg	unsupport version\n
+00448214	00412ea0	%s_%d
+0044821c	00412fa0	2 s(%d %d %d)\n
+0044822c	00413064	---%d, force session exit!!\n
+0044824c	00412fe4	---%d, frame_trans exit!!\n
+00448268	refresh_tnp_event_list	prev newest_end_time is %ld\n
+00448288	refresh_tnp_event_list	after newest_end_time is %ld\n
+004482a8	refresh_tnp_event_list	got event(%d)
+004482b8	FUN_004132b8	p2p cur user(%d) max_user_num(%d) in_packet_loss(%d) out_packet_loss(%d)\n
+00448304	state_statistics	check_login fail %d\n
+0044831c	state_statistics	check_login_success = %d, check_login_fail = %d\n
+00448350	state_statistics	too many loginfail force exit %d\n
+0044837c	FUN_004135d4	PPPP_API Version: %x %d.%d.%d.%d\n
+004483a0	FUN_004135d4	PPPP_NetworkDetect() ret = %d\n
+004483c0	FUN_004135d4	-------------- NetInfo: -------------------\n
+004483f0	FUN_004135d4	Internet Reachable     : %s\n
+00448410	FUN_004135d4	P2P Server IP resolved : %s\n
+00448430	FUN_004135d4	P2P Server Hello Ack   : %s\n
+00448450	FUN_004135d4	Local NAT Type         :
+0044846c	FUN_004135d4	 Unknow\n
+00448478	FUN_004135d4	 IP-Restricted Cone\n
+00448490	FUN_004135d4	 Port-Restricted Cone\n
+004484a8	FUN_004135d4	 Symmetric\n
+004484b4	FUN_004135d4	My Wan IP : %s\n
+004484c4	FUN_004135d4	My Lan IP : %s\n
+004484d4	FUN_004135d4	InitStr(%s)\n
+004484e4	FUN_004135d4	did(%s)\n
+004484f0	FUN_004135d4	key(%s)\n
+004484fc	FUN_004135d4	pthread_create state_statistics failed, ret = %d
+00448530	FUN_004135d4	state_statistics failed
+00448548	FUN_004135d4	pthread_create speaker_worker failed, ret = %d
+00448578	FUN_004135d4	speaker_worker failed
+00448590	FUN_004135d4	user_index=%d connected SessionHandle(%d)\n
+004485bc	FUN_004135d4	create tnp_worker fail\n
+004485d4	FUN_004135d4	Invalid DID \n
+004485e4	FUN_004135d4	too many session force exit\n
+00448604	FUN_004135d4	tnp_too_many_session
+0044861c	FUN_004135d4	PPPP_Listen_With_Key failed, ret = %d\n
+00448644	FUN_004135d4	tnp_too_many_user
+00448680	main	block sigpipe error/n
+00448698	main	/tmp/mmap.info
+004486a8	main	open share mem fail!\n
+004486c0	main	/ipc_dispatch
+004486d0	main	init_mqueue dispatch fail!\n
+004486ec	main	/ipc_p2p
+004486f8	main	init_mqueue p2ptnp fail!\n
+00448714	main	fshare_open ok
+00448724	main	/tmp/sd/Factory/wpa_supplicant.conf
+00448748	main	pthread_create p2p_msg_proc failed
+0044876c	main	p2p_msg_proc failed
+00448780	main	MJFKIILIILEHLBHLOPFDPKFIHBCGFGGEHLEJLJIJICAODLANOMJHAPMDOMCOBELOPELMCLPJ
+004487cc	main	MJFBIBLBICELLEHOOKFGPPECGLCJFKHEGKEALBJNIJBJCOAGPIIIBDMDPBDEAELAOGLCCBPBMKCNAHDPAKBM
+00448824	004492ec	http://yi-version.qiniudn.com/@/familymonitor/
+00448854	004492f0	http://115.28.170.6:8084/vfile/download/familymonitor/
+0044888c	004492f4	http://download.xiaoyi.com.tw/smarthomecam/
+004488b8	004492f8	http://download.xiaoyi.com/smarthomecam/
+004488e4	004492fc	http://ds51qrrlkjd6a.cloudfront.net/smarthomecam/
+00448af4	00409d24,00409d5c,00409d90	p2p_msg_proc
+00448b04	00409c14	p2p_msg_proc
+00448b1c	__test	__test
+00448b24	FUN_004135d4	tnp_proc
+00448b30	state_statistics	state_statistics
+00448b44	refresh_tnp_event_list	refresh_tnp_event_list
+00448b5c	00412f8c,00412fd4,00413054	tnp_worker
+00448b68	00412eac	tnp_worker
+00448b74	parse_msg	parse_msg
+00448b80	myReleaseUser	myReleaseUser
+00448b90	p2p_send_ctrl_error	p2p_send_ctrl_error
+00448ba4	myDoIOCtrl	myDoIOCtrl
+00448bb0	myDoIOCtrl	myDoIOCtrl
+00448bbc	do_auth	do_auth
+00448bc4	p2p_send_unsupported_version_reply	p2p_send_unsupported_version_reply
+00448be8	p2p_send_auth_result	p2p_send_auth_result
+00448c00	0040fdc4	speaker_worker
+00448c10	start_speaker	start_speaker
+00448c20	do_record_play	do_record_play
+00448c34	send_realtime_audio	send_realtime_audio
+00448c48	send_realtime_video	send_realtime_video
+00448c5c	p2p_send_frame_data	p2p_send_frame_data
+00448c70	p2p_send_ctrl_data	p2p_send_ctrl_data
+00448c84	do_update	do_update
+00448c90	FUN_0040bae0	get_update_url_md5
+00448ca4	get_version	get_version
+00448cb0	get_record_speed	get_record_speed
+00448cc4	set_record_speed	set_record_speed
+00448cd8	get_resolution	get_resolution
+00448ce8	set_resolution	set_resolution
+00448cf8	tnp_reply_event_list	tnp_reply_event_list
+00448d10	reply_event_list	reply_event_list
+00448d24	reply_factory_test_info	reply_factory_test_info
+00448d3c	reply_ap_mode_info	reply_ap_mode_info
+00448d50		reply_aec_key_verify
+00448d68	reply_dev_info	reply_dev_info
+00448d78	p2p_set_lapse_video	p2p_set_lapse_video
+00448d8c	p2p_set_motion_detect_status	p2p_set_motion_detect_status
+00448dac	p2p_set_double_light	p2p_set_double_light
+00448dc4	p2p_set_alarm_sound	p2p_set_alarm_sound
+00448dd8	p2p_set_voice_ctrl	p2p_set_voice_ctrl
+00448dec	p2p_set_viewpoint_trace	p2p_set_viewpoint_trace
+00448e04	p2p_set_mic_volume	p2p_set_mic_volume
+00448e18	p2p_set_abnormal_sound_sensitivity	p2p_set_abnormal_sound_sensitivity
+00448e3c	p2p_set_abnormal_sound	p2p_set_abnormal_sound
+00448e54	p2p_set_baby_cry	p2p_set_baby_cry
+00448e68	p2p_set_ldc	p2p_set_ldc
+00448e74	p2p_sync_info_from_server	p2p_sync_info_from_server
+00448e90	p2p_abort_panorama_capture	p2p_abort_panorama_capture
+00448eac	p2p_start_panorama_capture	p2p_start_panorama_capture
+00448ec8	p2p_set_panorama_capture_state	p2p_set_panorama_capture_state
+00448ee8	p2p_ptz_jump_to_point	p2p_ptz_jump_to_point
+00448f00	p2p_ap_mode_set	p2p_ap_mode_set
+00448f10	p2p_ptz_home	p2p_ptz_home
+00448f20	p2p_ptz_direction_ctrl_stop	p2p_ptz_direction_ctrl_stop
+00448f3c	p2p_ptz_direction_ctrl	p2p_ptz_direction_ctrl
+00448f54	p2p_ptz_set_cruise	p2p_ptz_set_cruise
+00448f68	p2p_ptz_set_motion_track	p2p_ptz_set_motion_track
+00448f84	p2p_ptz_set_cruise_period	p2p_ptz_set_cruise_period
+00448fa0	p2p_ptz_set_cruise_stay_time	p2p_ptz_set_cruise_stay_time
+00448fc0	p2p_ptz_preset_call	p2p_ptz_preset_call
+00448fd4	p2p_ptz_preset_del	p2p_ptz_preset_del
+00448fe8	p2p_ptz_preset_add	p2p_ptz_preset_add
+00448ffc	p2p_set_pwd_used_cnt	p2p_set_pwd_used_cnt
+00449014	p2p_set_immediate_bitrate	p2p_set_immediate_bitrate
+00449030	p2p_set_tnp_connect_success	p2p_set_tnp_connect_success
+0044904c	p2p_set_tnp_check_login_fail	p2p_set_tnp_check_login_fail
+0044906c	p2p_set_tnp_check_login_success	p2p_set_tnp_check_login_success
+0044908c	p2p_set_tnp_work_mode	p2p_set_tnp_work_mode
+004490a4	p2p_set_tnp_init_status	p2p_set_tnp_init_status
+004490bc	p2p_send_clr_viewing	p2p_send_clr_viewing
+004490d4	p2p_send_stop_viewing	p2p_send_stop_viewing
+004490ec	p2p_send_viewing	p2p_send_viewing
+00449100	p2p_send_disconnected	p2p_send_disconnected
+00449118	p2p_send_connected	p2p_send_connected
+0044912c	p2p_set_high_resolution	p2p_set_high_resolution
+00449144	p2p_set_encode_mode	p2p_set_encode_mode
+00449158	p2p_set_video_backup_state	p2p_set_video_backup_state
+00449174	p2p_set_audio_mode	p2p_set_audio_mode
+00449188	p2p_set_alarm_sensitivity	p2p_set_alarm_sensitivity
+004491a4	p2p_set_day_night_mode	p2p_set_day_night_mode
+004491bc	p2p_set_alarm_mode	p2p_set_alarm_mode
+004491d0	p2p_set_motion_detect	p2p_set_motion_detect
+004491e8	p2p_set_mirror_flip	p2p_set_mirror_flip
+004491fc	p2p_set_motion_record	p2p_set_motion_record
+00449214	p2p_set_light	p2p_set_light
+00449224	p2p_set_power	p2p_set_power
+00449234	get_video_replay_frame	get_video_replay_frame
+0044924c	close_replay_frame	close_replay_frame
+00449260	init_replay_frame	init_replay_frame
+00449274	event_log_seach	event_log_seach
+00449284	event_log_get	event_log_get
+00449300	FUN_00413cfc	PPPP_NetworkDetect() Enter.\n
+00449320	FUN_00413cfc	PPPP_NetworkDetect() Exit.\n
+0044933c	FUN_00413ec0	PPPP_Check() Enter.\n
+00449354	FUN_00413ec0	PPPP_Check() Exit.\n
+00449368	PPPP_Close	PPPP_Close() Enter.\n
+00449380	PPPP_Close	PPPP_Close() Exit.\n
+00449394	FUN_004141a8	PPPP_ForceClose() Enter.\n
+004493b0	FUN_004141a8	gTNPSession[%d].bOnForceClosed=%d\n
+004493d4	FUN_004141a8	%d,%x,ForceClose1 %d
+004493ec	FUN_004141a8	%d,%x,ForceClose2 %d
+00449404	FUN_004141a8	%d,%x,ForceClose3 %d
+0044941c	FUN_004141a8	%d,%x,ForceClose4 %d
+00449434	FUN_004141a8	Call PPPP_Close()\n
+00449448	FUN_004141a8	%d,%x,ForceClose5 %d
+00449460	FUN_004141a8	PPPP_ForceClose() Exit.\n
+0044947c	FUN_0041467c	%d,%x,PPPP_Read1_%d %d
+00449494	FUN_0041467c	%d,bInUse:%d,CloseCode:%d
+004494b0	FUN_0041467c	%d,PSSocket:%d,SSocket:%d
+004494cc	FUN_0041467c	%d,bTCPForSession:%d
+004494e4	FUN_0041467c	%d,bTCPForPS:%d,bCorD:%d
+00449500	FUN_0041467c	%d,bOnForceClosed:%d
+00449518	FUN_0041467c	%d,bMode:%d,bOnClosed:%d
+00449534	FUN_0041467c	%d,bExit_recv_proto:%d
+0044954c	FUN_0041467c	%d,bExit_DRW:%d
+0044955c	FUN_0041467c	%d,bExit_recv_relay_tcp:%d
+00449578	FUN_0041467c	%d,bReadyForDRW:%d
+0044958c	FUN_0041467c	%d,P2PResult:%d,RLYResult:%d
+004495ac	FUN_0041467c	%d,LoginResult:%d
+004495c0	FUN_0041467c	%d,Lock[%d]=%x_%x
+004495d4	FUN_0041467c	PPPP_Read ==> SessionHandle:%d,Channel:%d,bInUse:%d\n
+0044960c	FUN_0041467c	PPPP_Read ==> SessionHandle:%d,Channel:%d,PSSocket:%d,SSocket:%d\n
+00449650	FUN_0041467c	Waiting for Data come in. B. Data read=%d, Total to read=%d, timeout=%d,LL_Recv[Channel:%d].HeadE->Idx=%d,gSession[SessionHandle:%d].ReadIndex=%d\n
+004496e4	FUN_0041467c	Trouble!! sleep time is too long\n
+00449708	FUN_0041467c	%d,%x,PPPP_Read2_%d %d
+00449720	FUN_004157e4	PPPP_Write() Enter.\n
+00449738	FUN_004157e4	%d,%x,PPPP_Write1 %d
+00449750	FUN_004157e4,PPPP_thread_send_DRW	PPPP_Write_Block failed, memory allocate failed\n
+00449784	FUN_004157e4	%d,%x,PPPP_Write2 %d
+0044979c	FUN_004157e4	%d,%x,PPPP_Write3 %d
+004497b4	FUN_004157e4	PPPP_Write() Exit.\n
+004497c8	FUN_004157e4	SendDataReport On Channel:%d\n
+004497e8		DEBUG_LOGFILE:%s\n
+004497fc	FUN_00415fb4	PPPP_Initialize() Enter...\n
+00449818	FUN_00415fb4	P2PServer %d name: %s\n
+00449830	FUN_00415fb4,PPPP__DoNetWorkDetect	0.0.0.0
+00449838	FUN_00415fb4	PPPP_Initialize() Exit...\n
+00449854		PPPP_DeInitialize() Enter.\n
+00449870		PPPP_DeInitialize() Exit.\n
+00449910	PPPP_thread_recv_Proto_app	PPPP_thread_recv_Proto Running.\n
+00449934	PPPP__thread_timer,PPPP_thread_SuperDevice,PPPP_thread_recv_LanSearch,PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MsgType = 0x%02X, Size = %d from %s:%d\n
+0044995c	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MSG_HELLO_ACK WanAddr= %s:%d \n
+0044997c	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MyLocal Addr: %s:%d\n
+00449994	PPPP_thread_recv_Proto_app	MSG_P2P_REQ_ACK, Result = %d \n
+004499b4	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MSG_PUNCH_TO ToAddr= %s:%d \n
+004499d4	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MSG_PUNCH_PKT, ID= %s-%06d-%s\n
+004499f4	PPPP_thread_recv_Proto_app	MSG_P2P_RDY, %s-%d-%s\n
+00449a0c	PPPP_thread_recv_Proto_app	RLYAddr(%d) = %s:%d,Mode:%d,SDev:%d\n
+00449a34	PPPP_thread_recv_Proto_app	MSG_RLY_HELLO_ACK \n
+00449a48	PPPP_TryRelayByUDP,PPPP_thread_recv_Proto_app	Send MSG_RLY_PORT_KEY For Device:%s-%06d-%s\n
+00449a78	PPPP_thread_recv_Proto_app	MSG_RLY_PORT_ACK_KEY MagicWord=0x%08X, Port = %d, Result = %d\n
+00449ab8	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_app	pRlyTCPReqAck->Result:%d\n
+00449ad4	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	gTNPSession[SessionHandle].State is ready, drop msg MSG_RLY_TO\n
+00449b14	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MSG_RLY_TO ToAddr= %s:%d , MagicWord=0x%08X\n
+00449b44	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MSG_RLY_RDY, %s-%d-%s\n
+00449b5c	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_app	Recv illegal Ticket, Ticket = %.*s, RlyServerTicket=%.*s\n
+00449b98	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	gTNPSession[SessionHandle].State is ready, drop msg MSG_RLY_TCP_TO\n
+00449bdc	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	Recv MSG_RLY_TCP_TO ToAddr = %s:%d , Ticket = %.*s\n
+00449c10	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	MSG_REPORT_REQ, ReportLevel:%d\n
+00449c30	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device,PPPP_thread_recv_Relay_TCP	MSG_SESSION_RESPONSE, ResType:%d, Role:%d, Result:%d\n
+00449c68	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	PPPP_Proto_Recv_ALL ret = %d\n
+00449c88	PPPP_thread_recv_Proto_app,PPPP_thread_recv_Proto_device	PPPP_thread_recv_Proto Exit.\n
+00449ca8	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device	PPPP_thread_recv_Proto_TCP Running.\n
+00449cd0	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device	RLYAddr(%d) = %s:%d,Mode:%d\n
+00449cf0	PPPP_thread_recv_Proto_TCP_app	Recv MSG_P2P_TCP_SERVER ToAddr = %s:%d\n
+00449d18	PPPP_thread_recv_Proto_TCP_app	P2PServerIndex == tmpIndex(%d)\n
+00449d38	PPPP_thread_recv_Proto_TCP_app	Connect TCP Error...\n
+00449d50	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device	Timeout, maybe peer socket error...\n
+00449d78	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Relay_TCP	Socket Error...\n
+00449d8c	PPPP_thread_recv_Proto_TCP_app,PPPP_thread_recv_Proto_TCP_device	PPPP_thread_recv_Proto_TCP Exit.\n
+00449db0	PPPP_thread_recv_Proto_TCP_app	tmpIndex(%d) >= gP2PTcpAddrNum(%d)\n
+00449dd4		PPPP_Probe Socket = %d\n
+00449dec		PPPP_Probe Failed to Bind ... socket errno=%d ,UDP Port=%d\n
+00449e28	PPPP_Connect_To,PPPP_Listen_To_With_Key,PPPP__DoNetWorkDetect	Bind UDP Port = %d\n
+00449e3c		PPPP_Probe start work\n
+00449e54		PPPP_Probe server address is %s:%d\n
+00449e78		PPPP_Probe readret:%d\n
+00449e90		PPPP_Probe recv MSG_PROBE_ACK from %s:%d seq:%d guid:%s\n
+00449ecc		PPPP_Probe count:%d\n
+00449ee4		PPPP_Probe recv all ack:%d\n
+00449f00		PPPP_Probe timeout\n
+00449f18		%s:%d_%d_%d;
+00449f28		PPPP_Probe resultBuf size:%d resultBuf:%s\n
+00449f54		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+00449f94		PPPP_CheckDevOnline Socket = %d\n
+00449fb8		PPPP_CheckDevOnline Failed to Bind ... socket errno=%d ,UDP Port=%d\n
+0044a000		PPPP_CheckDevOnline Return:%d\n
+0044a020		PPPP_CheckDevOnline recv MSG_DEV_ONLINE_REQ_ACK from %s:%d lastLgTime:%d result:%d\n
+0044a074		PPPP_CheckDevOnline Recv 3 Offline Msg\n
+0044a09c		lastLgnTimeArray %d,%d,%d,recv_count=%d\n
+0044a0c8		Select LastLgnTime %d\n
+0044a0e0		PPPP_CheckDevOnline timeout\n
+0044a100	PPPP_TryP2P	Send LanSearching & P2P Req\n
+0044a120	PPPP_TryP2P	P2PStartTime:%lld\n
+0044a134	PPPP_TryP2P,PPPP_TryRelay,PPPP_TryRelayByTCP,PPPP_TryRelayByUDP	gTNPSession[%d].bFlagUserBreakConnect=%d, Quit!!\n
+0044a168	PPPP_TryP2P	LanSearch Broadcastng, Counter = %d\n
+0044a190	PPPP_TryP2P	P2P Req, Counter = %d\n
+0044a1a8	PPPP_TryP2P	P2P Req, P2PResult = %d\n
+0044a1c4	PPPP_TryP2P	P2PStopTime:%lld,ConnectTimeP2P:%lld\n
+0044a1ec	PPPP_TryRelayByUDP	Enter Relay By UDP...\n
+0044a204	PPPP_TryRelayByUDP	RelayStartTime(UDP):%lld\n
+0044a220	PPPP_TryRelay,PPPP_TryRelayByTCP,PPPP_TryRelayByUDP	bSessionReady=%d, Quit!!\n
+0044a23c	PPPP_TryRelay,PPPP_TryRelayByTCP,PPPP_TryRelayByUDP	P2PResult=%d, Quit!!\n
+0044a254	PPPP_TryRelay,PPPP_TryRelayByTCP,PPPP_TryRelayByUDP	RLYResult=%d, Quit!!\n
+0044a26c	PPPP_TryRelayByTCP,PPPP_TryRelayByUDP	 RLYResult=%d, try again...\n
+0044a28c	PPPP_TryRelayByUDP	RLYAddr(%d) = %s:%d \n
+0044a2a4	PPPP_TryRelayByUDP	RelayStopTime(UDP):%lld,ConnectTimeRelay(UDP):%lld\n
+0044a2d8	PPPP_TryRelayByTCP	Ask for Relay By TCP...\n
+0044a2f4	PPPP_TryRelayByTCP	RelayStartTime(TCP):%lld\n
+0044a310	PPPP_TryRelayByTCP	PPPP_TryRelayByTCP(SessionHandle:%d,Counter:%d) Enter.\n
+0044a348	PPPP_TryRelayByTCP	PPPP__Start_TCP_For_Session return:%d\n
+0044a370	PPPP_TryRelayByTCP	 gTNPSession[SessionHandle].State=%d...\n
+0044a39c	PPPP_TryRelayByTCP	 STATE_RLY_TCP_CONNECTED(LastStateCounter:)...\n
+0044a3cc	PPPP_TryRelayByTCP	RelayStopTime(TCP):%lld,ConnectTimeRelay(TCP):%lld\n
+0044a400	PPPP_TryRelay	Ask for Relay...\n
+0044a414	PPPP_TryRelay	RelayStartTime:%lld\n
+0044a42c	PPPP_TryRelay	Set bTCPForPS true, gTNPSession[SessionHandle].State is %d\n
+0044a468	PPPP_TryRelay	Set bTCPForPS true,gTNPSession[SessionHandle].P2PResult is %d\n
+0044a4a8	PPPP_TryRelay,PPPP_TryWakeUp	Connect P2PServer Error...\n
+0044a4c4	PPPP_TryRelay	Start TCP app thread...\n
+0044a4e0	PPPP_TryRelay	bit 6 of bEnableLanSearch is '1', so Device Relay is off\n
+0044a51c	PPPP_TryRelay	bit 6 of bEnableLanSearch is '0', so Device Relay is on\n
+0044a558	PPPP_TryRelay	RelayStopTime:%lld,ConnectTimeRelay:%lld\n
+0044a584	PPPP_TryRelay	RLYResult = %d \n
+0044a598	PPPP_Connect_To,PPPP_Listen_To_With_Key,PPPP_TryWakeUp	Failed to Bind ... socket errno=%d\n
+0044a5bc	PPPP_TryWakeUp	WakeUp_ReqAck result = %d \n
+0044a5d8	PPPP_TryWakeUp	recv unexpected msg with type %x \n
+0044a5fc	PPPP_TryWakeUp	PPPP_Proto_Recv_ALL return %d \n
+0044a61c	PPPP_TryWakeUp	Start Tcp Connecting ...\n
+0044a638	PPPP_Proto_Recv_ALL,PPPP_TryWakeUp	Recv 0xF2 from Server, type is 0X%02X \n
+0044a670	PPPP_Connect_To	PPPP_Connect() Enter.\n
+0044a688	PPPP_Connect_To	ConnectStartTime:%lld\n
+0044a6a0	PPPP_Connect_To,PPPP_Listen_With_Key2	0. Select Session Handle \n
+0044a6bc	PPPP_Connect_To,PPPP_Listen_With_Key2	Max Number Session(%d) is reached!! \n
+0044a6e4	PPPP_Connect_To,PPPP_Listen_With_Key2	SessionHandle =%d\n
+0044a6f8	PPPP_Connect_To,PPPP_Listen_With_Key2	1. Read ID\n
+0044a704	PPPP_Connect_To,PPPP_Listen_With_Key2	Prefix=%s\n
+0044a710	PPPP_Connect_To,PPPP_Listen_With_Key2	SN=%06d\n
+0044a71c	PPPP_Connect_To,PPPP_Listen_With_Key2	CheckCode=%s\n
+0044a72c	PPPP_Connect_To	ID = %s-%06d-%s\n
+0044a740	PPPP_Connect_To	ConnectFlag =%d\n
+0044a754	PPPP_Connect_To	SessionHandle =%d, bConnectMode=%d\n
+0044a778	PPPP_Connect_To,PPPP_Listen_To_With_Key	2. Check if need to resolve P2P Server Hostname\n
+0044a7ac	PPPP_Connect_To,PPPP_Listen_To_With_Key	LastResolveTime = 0x%08X, Now = 0x%08X,  (Now - LastResolveTime) = %d \n
+0044a7f4	PPPP_Connect_To	Server string is the same as last \n
+0044a818	PPPP_Connect_To	No need to Do NetWork Detect\n
+0044a838	PPPP_Connect_To,PPPP__DecodeServerString,PPPP__DoNetWorkDetect	 (NG)\n
+0044a840	PPPP_Connect_To,PPPP__DoNetWorkDetect	Get P2PServer...\n
+0044a854	PPPP_Connect_To,PPPP__DoNetWorkDetect	Server1:%s\n
+0044a860	PPPP_Connect_To,PPPP__DoNetWorkDetect	Server2:%s\n
+0044a86c	PPPP_Connect_To,PPPP__DoNetWorkDetect	Server3:%s\n
+0044a878	PPPP_Connect_To	P2PServer Addr(TCP)(%d) = %s:%d \n
+0044a89c	PPPP_Connect_To	wakeup failed with ret %d\n
+0044a8b8	PPPP_Connect_To	wakeup success \n
+0044a8cc	PPPP_Connect_To,PPPP_Listen_To_With_Key	3. Setup Session structure \n
+0044a8ec	PPPP_Connect_To	3.1 Socket = %d\n
+0044a900	PPPP_Connect_To	3.4 Retrive MyLanIP '%s'\n
+0044a91c	PPPP_Connect_To	3.4 ... Done\n
+0044a92c	PPPP_Connect_To	3.5 Retrive MyWanIP '%s'\n
+0044a948	PPPP_Connect_To	3.5 ... Done\n
+0044a958	PPPP_Connect_To,PPPP_Listen_With_Key2	I am %s\n
+0044a964	PPPP_Connect_To,PPPP___Dump_Session_Info	Client
+0044a96c	PPPP_Connect_To,PPPP_Listen_With_Key2,PPPP_Proto_Write_SDevReport	%s-%06d-%s
+0044a978	PPPP_Connect_To,PPPP_Listen_To_With_Key	4. Create UDP recv Thread\n
+0044a994	PPPP_Connect_To	5. Send Hello\n
+0044a9a4	PPPP_Connect_To	8. gTNPSession[SessionHandle].P2PResult:%d,gTNPSession[SessionHandle].RLYResult:%d,gTNPSession[SessionHandle].bSessionReady:%d\n
+0044aa24	PPPP_Connect_To	8. Connect result: Invalid ID\n
+0044aa44	PPPP_Connect_To	8. Connect result: ID is not online\n
+0044aa6c	PPPP_Connect_To	8. Connect result: Invalid prefix of DID\n
+0044aa98	PPPP_Connect_To	8. Connect result: Device Session Full\n
+0044aac0	PPPP_Connect_To	9. Connect result: Signature Error\n
+0044aae4	PPPP_Connect_To	8. Connect result: Invalid nonce\n
+0044ab08	PPPP_Connect_To	8. Connect result: Invalid Key\n
+0044ab28	PPPP_Connect_To	8. Connect result: Invalid Ticket\n
+0044ab4c	PPPP_Connect_To	8. Connect result: TCP connect error\n
+0044ab74	PPPP_Connect_To	8. Connect result: TCP socket error\n
+0044ab9c	PPPP_Connect_To,PPPP_Listen_With_Key2	7. Listen result: Tcp Socket Timeout\n
+0044abc4	PPPP_Connect_To	8. Connect result: PPPP_Connect_Break is called\n
+0044abf8	PPPP_Connect_To	8. Connect result: Time Out\n
+0044ac18	PPPP_Connect_To	8. Connect result: Session is Ready\n
+0044ac40	PPPP_Connect_To	PPPP_Connect() Exit, ret = %d \n
+0044ac68	PPPP_Connect_To	%s:%d
+0044ac70	PPPP_Connect_To	ConnectStopTime:%lld,ConnectTime:%lld\n
+0044ac98	PPPP__GetP2PServerAddrApp	Find addr of targetid %s.\n
+0044acb4		PPPP_Connect_To_With_MasterServer() Enter.\n
+0044ace0		PPPP__GetP2PServerAddr() Error.\n
+0044ad04		p2pserverstr=%s\n
+0044ad18	IBNj3F4L37HiSGpwBgD6	MJFBICLCIFEIKIHOOOEJPPEDGKDBFPHCGNFLLNJEJKBGCDAKPEIHBEMBPDDGAGLCOELACBPBMCCFBIDMAPACCC
+0044ad70	IBNj3F4L37HiSGpwBgD6	IBNj3F4L37HiSGpwBgD6
+0044ad88	FUN_0041dbb0	PPPP_Connect_Break SessionHandle=%d\n
+0044b130	PPPP_thread_recv_LanSearch	PPPP_thread_recv_LanSearch Running.\n
+0044b158	PPPP_thread_recv_LanSearch	setup_listen_port ret : %d\n
+0044b174	PPPP_thread_recv_LanSearch	MSG_LAN_SEARCH\n
+0044b184	PPPP_thread_recv_LanSearch	%x,reason:%d,recv MSG_LAN_NOTIFY
+0044b1a8	PPPP_thread_recv_LanSearch	PPPP_thread_recv_LanSearch Exit.\n
+0044b1cc	PPPP_thread_recv_LanSearch	Recv MSG_LAN_NOTIFY from self, just drop it, ID= %s-%06d-%s\n
+0044b20c	PPPP_thread_recv_LanSearch	Recv MSG_LAN_NOTIFY from another device, ID= %s-%06d-%s\n
+0044b248		PPPP_thread_hello start ...\n
+0044b268		Send Hello to P2P Servers ...\n
+0044b288		Waiting Hello_Ack from P2P Servers ...\n
+0044b2b0		Recv Hello_Ack success ...\n
+0044b2cc		Recv Hello_Ack failed ...\n
+0044b2e8	FUN_0041e554	/home/cloudAPI -c 413 -url "http://hch.xiaoyi.com:8443/upload/log" -filename "/tmp/log.txt" -device_id %s
+0044b354	FUN_0041e554	\n%s %d\n
+0044b35c	PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_device	%d,%x,Recv MSG_RLY_TCP_TO
+0044b378	PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_device	session is full, drop msg MSG_RLY_TCP_TO\n
+0044b3a4	PPPP_thread_recv_Proto_TCP_device	PPPP_Proto_Send_RlyTCPToAck error...\n
+0044b3cc	PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_device	%d,%x,RT_%s
+0044b3d8	PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_device	MSG_DEV_LGN_ACK_KEY, Result = %d, LgnInterval = %d \n
+0044b410	PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_device	MSG_NOTICE_PING, %s-%d-%s\n
+0044b42c	PPPP_thread_recv_Proto_TCP_device	PPPP_Proto_Send_NoticePingAck error...\n
+0044b454	PPPP_thread_recv_Proto_TCP_device,PPPP_thread_recv_Proto_device	MSG_NOTICE_TO, %s-%d-%s MsgIndex:%llu, ContentLen:%u\n
+0044b48c	FUN_0041f63c	PPPP_LoginStatus_Check(bLoginStatus addr=0x%08X) Enter.\n
+0044b4c8	FUN_0041f63c	 Last Successful Login time is %d sec before\n
+0044b4f8	FUN_0041f63c	PPPP_LoginStatus_Check() Exit.\n
+0044b518	FUN_0041f734	PPPP_Share_Bandwidth:%d\n
+0044b534	PPPP__Check_Device_Working	device count is %d\n
+0044b548	PPPP_thread_recv_Proto_device	PPPP_thread_recv_Proto_device Running.\n
+0044b570	PPPP_thread_recv_Proto_device	MSG_DEV_LGN_ACK, Result = %d \n
+0044b590	PPPP_thread_recv_Proto_device	MSG_DEV_LGN_ACK_CRC, Result = %d \n
+0044b5b4	PPPP_thread_recv_Proto_device	MSG_SDEV_RUN\n
+0044b5c4	PPPP_thread_recv_Proto_device	gSDevInfo.bAnotherDeviceInLan is true\n
+0044b5ec	PPPP_thread_recv_Proto_device	%d,%x,AnotherDeviceInLan
+0044b608	PPPP_thread_recv_Proto_device	gSDevInfo.bShareBandwidth is off\n
+0044b62c	PPPP_thread_recv_Proto_device	%d,%x,ShareBandwidthOff
+0044b644	PPPP_thread_recv_Proto_device	device is working\n
+0044b658	PPPP_thread_recv_Proto_device	%d,%x,DeviceWorking
+0044b66c	PPPP_thread_recv_Proto_device	super device will work after %d seconds\n
+0044b698	PPPP_thread_recv_Proto_device	%d,%x,Pause %d
+0044b6a8	PPPP_thread_recv_Proto_device	Recv MSG_LAN_NOTIFY_ACK, ID= %s-%06d-%s\n
+0044b6d4	PPPP_thread_recv_Proto_device	%x,reason:%d,recv MSG_LAN_NOTIFY_ACK
+0044b6fc	PPPP_thread_recv_Proto_device	%d,%x,Recv MSG_PUNCH_TO
+0044b714	PPPP_thread_recv_Proto_device	%d,%x,P_%s
+0044b720	PPPP_thread_recv_Proto_device	%d,%x,Recv PUNCH_PKT Start
+0044b73c	PPPP_thread_recv_Proto_device	Recv st_PPPP_PunchPkt_EX, ID= %s-%06d-%s\n
+0044b768	PPPP_thread_recv_Proto_device	%d,%x,Recv PUNCH_PKT End
+0044b784	PPPP_thread_recv_Proto_device	recv MSG_P2P_RDY_ACK\n
+0044b79c	PPPP_thread_recv_Proto_device	%d,%x,Recv MSG_P2P_RDY_ACK
+0044b7b8	PPPP_thread_recv_Proto_device	%d,%x,Recv MSG_RLY_TO
+0044b7d0	PPPP_thread_recv_Proto_device	session is full, drop msg MSG_RLY_TO\n
+0044b7f8	PPPP_thread_recv_Proto_device	%d,%x,R_%s
+0044b804	PPPP_thread_recv_Proto_device	%d,%x,Recv MSG_RLY_RDY
+0044b81c	PPPP__SendReport_SuperDevice_ExitThread	unknown
+0044b824	PPPP__SendReport_SuperDevice_ExitThread	working
+0044b82c	PPPP__SendReport_SuperDevice_ExitThread	recv data timeout
+0044b840	PPPP__SendReport_SuperDevice_ExitThread	connect timeout
+0044b850	PPPP__SendReport_SuperDevice_ExitThread	login error
+0044b85c	PPPP__SendReport_SuperDevice_ExitThread	socket bind error
+0044b870	PPPP__SendReport_SuperDevice_ExitThread	socket recv error
+0044b884	PPPP__SendReport_SuperDevice_ExitThread	exceed limits
+0044b894	PPPP__SendReport_SuperDevice_ExitThread	another device in lan
+0044b8ac	PPPP__SendReport_SuperDevice_ExitThread	%x,reason:%d(%s),loginack:%d
+0044b8cc	PPPP__SendReport_SuperDevice_ExitThread	%x,reason:%d(%s)
+0044b8e0	PPPP_thread_SuperDevice	PPPP_thread_SuperDevice Running.\n
+0044b904	PPPP_thread_SuperDevice	UDP Port = %d\n
+0044b914	PPPP_thread_SuperDevice	MSG_SDEV_LGN_ACK Success, WanAddr= %s:%d MaxBytes:%llu(%dMB) MaxPeriodSec:%u\n
+0044b964	PPPP_thread_SuperDevice	MSG_SDEV_LGN_ACK Failed with result %d, DelaySec %d, nextworktime %d\n
+0044b9ac	PPPP_thread_SuperDevice	MSG_HELLO_TO, ToAddr1= %s:%d\n
+0044b9cc	PPPP_thread_SuperDevice	MSG_HELLO_TO, ToAddr2= %s:%d\n
+0044b9ec	PPPP_thread_SuperDevice	MSG_RLY_HELLO is not support from %s:%d\n
+0044ba18	PPPP_thread_SuperDevice	<<<DataSize != 0>>>\n
+0044ba30	PPPP_thread_SuperDevice	MSG_RLY_HELLO_SDEV from %s:%d\n
+0044ba50	PPPP_thread_SuperDevice	%x,%s
+0044ba58	PPPP_thread_SuperDevice	Recv MSG_RLY_HELLO_SDEV
+0044ba70	PPPP_thread_SuperDevice	<<<DataSize != %d>>> MSG_RLY_PORT_KEY from %s:%d\n
+0044baa4	PPPP_thread_SuperDevice	Recv MSG_RLY_PORT_KEY from %s:%d with Invalid SN:%d\n
+0044badc	PPPP_thread_SuperDevice	Recv New MSG_RLY_PORT_KEY from %s:%d\n
+0044bb04	PPPP_Proto_Send_DevLgn_Key,PPPP_Proto_Send_EasyTCPStart,PPPP_Proto_Send_P2PServerReq,PPPP_Proto_Send_RlyPort_Key,PPPP_Proto_Send_RlyTCPStart,PPPP_thread_SuperDevice	%.*s:%s-%06d-%s
+0044bb14	PPPP_thread_SuperDevice	Send MSG_RLY_PORT_ACK_KEY with magicword:%x, MyWanAddr.sin_port:%d, Result:%d\n
+0044bb64	PPPP_thread_SuperDevice	%x,%s,Result=%d
+0044bb74	PPPP_thread_SuperDevice	Recv MSG_RLY_PORT_KEY
+0044bb8c	PPPP_thread_SuperDevice	Recv MSG_RLY_PKT,App
+0044bba4	PPPP_thread_SuperDevice	skt=%d, ClientAddr=%s:%d\n
+0044bbc0	PPPP_thread_SuperDevice	Recv MSG_RLY_PKT,Device
+0044bbd8	PPPP_thread_SuperDevice	skt=%d, DeviceAddr=%s:%d\n
+0044bbf4	PPPP_thread_SuperDevice	Send MSG_RLY_RDY To App And Device
+0044bc18	PPPP_thread_SuperDevice	Recv packet from wrong address %s:%d, device:%s-%06d, size:%d\n
+0044bc58	PPPP_thread_SuperDevice	Resend MSG_RLY_RDY to App %s:%d, device:%s-%06d\n
+0044bc8c	PPPP_thread_SuperDevice	Resend MSG_RLY_RDY to Device %s:%d, device:%s-%06d\n
+0044bcc0	PPPP_thread_SuperDevice	Check limits clientPacketSize:%lu,devicePacketSize:%lu,clientDRWSize:%lu,deviceDRWSize:%lu,maxBytes:%llu,timeInterval:%lu,maxPeriodSec:%lu\n
+0044bd4c	PPPP_thread_SuperDevice	Send SessionReport with cause:%d,clientPacketSize:%u,devicePacketSize:%u,clientDRWSize:%lu,deviceDRWSize:%lu,time:%u\n
+0044bdc4	PPPP_thread_SuperDevice	Send MSG_CLOSE To App And Device
+0044bde8	PPPP_thread_SuperDevice	Send MSG_CLOSE To Device
+0044be04	PPPP_thread_SuperDevice	PPPP_thread_SuperDevice Exit.\n
+0044be24	PPPP_thread_SuperDevice	Recv MSG_HELLO_TO
+0044be38	PPPP_thread_SuperDevice	Send MSG_CLOSE To App
+0044be50	PPPP_Listen_To_With_Key	PPPP_Listen_Do_With_Key() Enter.\n
+0044be74	PPPP_Listen_To_With_Key	Fail to create PSSocket\n
+0044be90	PPPP_Listen_To_With_Key,PPPP_Listen_To_With_Key_TCP	 Failed!! CreateWorkerThread on PPPP_thread_recv_Proto_device errror\n
+0044bed8	PPPP_Listen_To_With_Key	5. Create Local LAN Listen Thread\n
+0044befc	PPPP_Listen_To_With_Key	 Failed!! CreateWorkerThread on PPPP_thread_recv_LanSearch errror\n
+0044bf40	PPPP_Listen_To_With_Key,PPPP_Listen_To_With_Key_TCP	6. Send Login every 40 second, if bEnableInternet is set\n
+0044bf7c	PPPP_Listen_To_With_Key	Send Hello\n
+0044bf88	PPPP_Listen_To_With_Key	Send LanNotify\n
+0044bf98	PPPP_Listen_To_With_Key,PPPP_Listen_To_With_Key_TCP	SessionIsFull:%d gLastSessionIsFull:%d \n
+0044bfc4	PPPP_Listen_To_With_Key,PPPP_Listen_To_With_Key_TCP	Send Login: %d sec \n
+0044bfdc	PPPP_Listen_To_With_Key,PPPP_Listen_To_With_Key_TCP	Do NetWork Detect\n
+0044bff0	PPPP_Listen_To_With_Key_TCP	PPPP_Listen_To_With_Key_TCP() Enter.\n
+0044c018	PPPP_Listen_To_With_Key_TCP	tcpp2paddr(%d) = %s:%d \n
+0044c034	PPPP_Listen_To_With_Key_TCP	4. Create TCP recv Thread\n
+0044c050	PPPP_Listen_To_With_Key_TCP	Wait LoginAck Timeout\n
+0044c068	PPPP_Listen_To_With_Key_TCP	close gTNPSession[SessionHandle].PSSocket rt=%d\n
+0044c09c	PPPP_Listen_To_With_Key_TCP	Send_RlyHello failed\n
+0044c0b4	PPPP_Listen_To_With_Key_TCP	close gTNPSession[SessionHandle].PSSocket rt2=%d\n
+0044c0e8	PPPP_Listen_To_With_Key_TCP	construct tcp session failed\n
+0044c108	PPPP_Listen_To_With_Key_TCP	Connect Address %s:%d success\n
+0044c128	PPPP_Listen_To_With_Key_TCP	Connect Address %s:%d failed\n
+0044c148	PPPP_Listen_To_With_Key_TCP	Send_EasyTCPStart failed\n
+0044c164	PPPP_Listen_To_With_Key_TCP	close gTNPSession[SessionHandle].PSSocket \n
+0044c190	PPPP_Listen_With_Key2	bConnectMode=%d\n
+0044c1a4	PPPP_Listen_With_Key2	7. Listen result: Invalid ID\n
+0044c1c4	PPPP_Listen_With_Key2	7. Listen result: ID is Out of date\n
+0044c1ec	PPPP_Listen_With_Key2	7. Listen result: Invalid prefix of DID\n
+0044c218	PPPP_Listen_With_Key2	7. Listen result: Invalid Nonce\n
+0044c23c	PPPP_Listen_With_Key2	7. Listen result: Invalid Key\n
+0044c25c	PPPP_Listen_With_Key2	7. Listen result: Tcp Connect Error\n
+0044c284	PPPP_Listen_With_Key2	7. Listen result: Tcp Socket Error\n
+0044c2a8	PPPP_Listen_With_Key2	7. Listen result: User break listen\n
+0044c2d0	PPPP_Listen_With_Key2	7. Listen result: Time Out\n
+0044c2ec	PPPP_Listen_With_Key2	7. Listen result: Session is Ready\n
+0044c310	PPPP_Listen_With_Key2	8.1 wait recv_proto thread to exit\n
+0044c334	PPPP_Listen_With_Key2	PPPP_Listen_To_With_Key() is done!!, ret =%d \n
+0044c364	PPPP_Listen_With_Key2	%d,%x,Ret %d
+0044c374	PPPP_Listen_With_Key2	sleep %d ms \n
+0044c6c7		?keymap_Search Prefix=%s,SN=%d   get Key=%s\n
+0044c6f4	keymap_Search	keymap_Search Prefix=%s,SN=%d   can not get Key\n
+0044c728	keymap_Dump	keymap Prefix=%s,SN=%d,Key=%s\n
+0044c748	PPPP__Timer_RemoveMaxElapse	remove timer element with SeqNum:%d,Type:0x%02X,ElapseTime:%d\n
+0044c788	PPPP__thread_timer	PPPP__thread_timer Running.\n
+0044c7a8	PPPP__thread_timer	Socket %d TryBindPort error, exit thread\n
+0044c7d4	PPPP__thread_timer	[Failed!!] Send 0x%02X with seq %d to %s:%d\n
+0044c804	PPPP__thread_timer	Send 0x%02X with seq %d to %s:%d\n
+0044c828	PPPP__thread_timer	Recv 0x%02X(MSG_SDEV_SESSIONREPORT_ACK) with seq %d\n
+0044c860	PPPP__thread_timer	Recv 0x%02X(MSG_SENDDATA_REPORT_ACK) with seq %d\n
+0044c894	PPPP__thread_timer	Recv Unexpected Msg 0x%02X\n
+0044c8b0	PPPP__thread_timer	PPPP__thread_timer Exit.\n
+0044c8cc	PPPP_Set_Sig_Key	key:%s\n
+0044c8d4	PPPP__ConnectWithNonBlockSocket	PPPP__ConnectWithNonBlockSocket(socket:%d,addr:(%s:%d))...\n
+0044c910	PPPP__ConnectWithNonBlockSocket	ConnectAddress(socket:%d,addr:(%s:%d)) error,ret:%d,errno:%d,%s\n
+0044c954	PPPP__ConnectWithNonBlockSocket	ConnectAddress(socket:%d,addr:(%s:%d)) timeout\n
+0044c984	PPPP__ConnectWithNonBlockSocket	ConnectAddress(socket:%d,addr:(%s:%d)) failed,so_error:%d,errno:%d,%s\n
+0044c9cc	PPPP__ConnectWithNonBlockSocket	ConnectAddress(socket:%d,addr:(%s:%d)) success\n
+0044c9fc	PPPP__ConnectWithNonBlockSocket	PPPP__ConnectWithNonBlockSocket(socket:%d,addr:(%s:%d)) end\n
+0044ca3c		Enter PPPP__ProbeDID()\n
+0044ca54		1. Check if TargetIP=%s is correct\n
+0044ca78		 Error: Invalid TargetIP\n
+0044ca9c		2. Setup Socket=%d\n
+0044cab0		3. Send MSG_LAN_SEARCH to %s:%d and wait for response : Try %d\n
+0044caf0		SendMessage Error!\n
+0044cb04		MSG_PUNCH_PKT, DID= %s-%06d-%s\n
+0044cb24		PPPP_Proto_Recv_ALL Error!\n
+0044cb40	PPPP_Write_Block	PPPP_Write_Block() Failed.\n
+0044cb5c	PPPP__Start_TCP_For_Session	connect error,errno:%d,%s
+0044cb78	PPPP__ConnectTcpServer	PPPP__ConnectTcpServer timeout\n
+0044cb98	PPPP__ConnectTcpServer	socket() return:%d\n
+0044cbac	PPPP__GetP2PServerAddr	PPPP_Proto_Recv_TCP recv error.\n
+0044cbd0	PPPP__GetP2PServerAddr	MSG_P2P_SERVER_REQ_ACK, Result:%d\n
+0044cbf4	PPPP__GetP2PServerAddr	P2PServer%d = %s:%d\n
+0044cc0c	PPPP__GetP2PServerAddr	%s%s,
+0044cc14	PPPP__GetP2PServerAddr	PPPP_EncodeString() Error.\n
+0044cc30	PPPP__GetP2PServerAddr	ipList=%s\n
+0044cc3c	PPPP__GetP2PServerAddr	serverString=%s\n
+0044cc50	PPPP__ResolveHostName	Resolving Hostname:%s [%s]\n
+0044cc6c	PPPP__ResolveHostName	gethostbyname '%s' failed!!\n
+0044cc8c	PPPP__DecodeServerString	Decode P2PServerString:%s...\n
+0044ccac	PPPP__DecodeServerString	Server %d name: %s\n
+0044ccc0	PPPP__DecodeServerString	 (OK)\n
+0044ccc8	PPPP__DoNetWorkDetect	1. Resolve P2PServer Host Name ...\n
+0044ccec	PPPP__DoNetWorkDetect	....Successfully Done\n
+0044cd04	PPPP__DoNetWorkDetect	....Failed\n
+0044cd10	PPPP__DoNetWorkDetect	2. Send Hello to P2P Servers ...\n
+0044cd34	PPPP__DoNetWorkDetect	3. Waiting Hello_Ack from P2P Servers ...\n
+0044cd60	PPPP__DoNetWorkDetect	Receive Hello_Ack from %s:%d\n
+0044cd80	PPPP__DoNetWorkDetect	 MyWanIP=%s, Port =%d\n
+0044cd98	PPPP__DoNetWorkDetect	4. Get Lan IP ...\n
+0044cdac	PPPP__DoNetWorkDetect	 MyLanIP=%s\n
+0044cdbc	PPPP__DoNetWorkDetect	5. Calculate NATType, WanPorts = %d, %d, %d ...\n
+0044cdf0	PPPP__DoNetWorkDetect	 NATType: %d\n
+0044ce08		%s SessionLock[%d]=%s\n
+0044ce20	PPPP___Dump_Session_Info	-------- Dummp Session Handle: %d --------\n
+0044ce4c	PPPP___Dump_Session_Info	 SSocket = %d\n
+0044ce5c	PPPP___Dump_Session_Info	 RemoteAddr: %s:%d\n
+0044ce70	PPPP___Dump_Session_Info	 MyLocalAddr: %s:%d\n
+0044ce88	PPPP___Dump_Session_Info	 MyWanAddr: %s:%d\n
+0044ce9c	PPPP___Dump_Session_Info	 ConnectTime: %dMS\n
+0044ceb0	PPPP___Dump_Session_Info	 ConnectTimeP2P: %dMS\n
+0044cec8	PPPP___Dump_Session_Info	 ConnectTimeRelay: %dMS\n
+0044cee4	PPPP___Dump_Session_Info	 DID: %s\n
+0044cef0	PPPP___Dump_Session_Info	 I am Client or Device: %s\n
+0044cf0c	PPPP___Dump_Session_Info	TCP Relay
+0044cf18	PPPP___Dump_Session_Info	SDev Relay
+0044cf24	PPPP___Dump_Session_Info	 Connection Mode: %s\n
+0044cf3c	PPPP___Dump_Session_Info	 bExit_recv_proto %d\n
+0044cf54	PPPP___Dump_Session_Info	 bSessionReady %d\n
+0044cf68	PPPP___Dump_Session_Info	 hthread_recv_proto %d\n
+0044cf80	PPPP___Dump_Session_Info	 hthread_recv_LanSearch %d\n
+0044cf9c	PPPP___Dump_Session_Info	 P2PAddr: %s:%d\n
+0044cfb0	PPPP___Dump_Session_Info	 RLYAddr: %s:%d\n
+0044cfc4	PPPP___Dump_Session_Info	 P2PResult :%d, LoginResult :%d, RLYResult = %d\n
+0044cff8	PPPP___Dump_Session_Info	-----End of Dummp Session Handle: %d -----\n
+0044d024	PPPP__Close_Inner	PPPP__Close_Inner() Enter.\n
+0044d040	PPPP__Close_Inner	%d,%x,Send MSG_CLOSE %d
+0044d058	PPPP__Close_Inner	PPPP_Proto_Send_Report DID:%s,State:%d,RetCode:%d\n
+0044d08c	PPPP__Close_Inner	PPPP_Close Called
+0044d0a0	PPPP__Close_Inner	Wait for Send/Recv thread to  exit...
+0044d0c8	PPPP__Close_Inner	 ... Done!!\n
+0044d0d8	PPPP__Close_Inner	Clear data buffers...
+0044d0f8	PPPP__Close_Inner	PPPP__Close_Inner() Exit.\n
+0044d114	PPPP_thread_recv_Relay_TCP	socket recv Error
+0044d128	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	time out 
+0044d134	PPPP_thread_recv_Relay_TCP	PPPP_thread_recv_Relay_TCP Start...\n
+0044d15c	PPPP_thread_recv_Relay_TCP	PPPP_thread_recv_Relay_TCP(SessionHandle:%d,Socket:%d) ==> RecvSize = %d, From %s:%d\n
+0044d1b4	PPPP_thread_recv_Relay_TCP	PPPP_thread_recv_Relay_TCP(SessionHandle:%d,Socket:%d) ==> MsgType = 0x%02X, DataSize = %d, From %s:%d\n
+0044d21c	PPPP_thread_recv_Relay_TCP	Recv MSG_RLY_TCP_START_ACK\n
+0044d238	PPPP_thread_recv_Relay_TCP	Recv MSG_RLY_TCP_START_ACK Ticket:%s, Result:%d\n
+0044d26c	PPPP_thread_recv_Relay_TCP	Send RlyTCPReq through tcp\n
+0044d288	PPPP_thread_recv_Relay_TCP	Recv MSG_RLY_TCP_RESULT\n
+0044d2a4	PPPP_thread_recv_Relay_TCP	Recv MSG_RLY_TCP_RESULT with result %d\n
+0044d2cc	PPPP_thread_recv_Relay_TCP	%d,%x,Recv RLY_TCP_RESULT
+0044d2e8	PPPP_thread_recv_Relay_TCP	Recv MSG_RLY_HELLO_ACK\n
+0044d300	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_DRW_ACK\n
+0044d314	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	PPPP_DRWAck_Read_Header Error!!\n
+0044d338	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_DRW_ACK From Channel:%d\n
+0044d35c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Abnormal packet received!! Wrong channel number= %d, close session\n
+0044d3a0	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Abnormal packet received!! Wrong NumberOfIndex = %d, close session\n
+0044d3e4	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Number Of Index: %d\n
+0044d3fc	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Increase SlidWindowSize to %d\n
+0044d41c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_DRW_ACK From Channel:%d,Index:%d(%d)\n
+0044d44c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Remove from LL_Sent Channel: %d, Index: %d \n
+0044d47c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	A:%d-%d \n
+0044d488	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Remove from LL_ToSend Channel: %d, Index: %d \n
+0044d4b8	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Move previous ones to LL_ToSend \n
+0044d4dc	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	LL_Sent Head Index =%d \n
+0044d4f8	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	LL_Sent Head Index is larger , so break\n
+0044d524	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	LL_Sent Head Index is smaller , so move;\n
+0044d550	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Move previous ones to LL_ToSend Done!!\n
+0044d578	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_DRW\n
+0044d588	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	PPPP_DRW_Read_Header Error!!\n
+0044d5a8	PPPP_thread_recv_Relay_TCP	Recv MSG_DRW From Channel:%d\n
+0044d5c8	PPPP_thread_recv_Relay_TCP	Recv DRW Data ==> Channel:%d,DRW Packet Index:%d\n
+0044d5fc	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Receive PPPP_DRW_MUST_ACK_SIZE MSG_DRW\n
+0044d624	PPPP_thread_recv_Relay_TCP,PPPP_thread_send_DRW	PPPP_DRWAck_Send Error, Channel=%d, NumberOfIndex=%d, Ret=%d\n
+0044d664	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP,PPPP_thread_send_DRW	PPPP_DRWAck_Send Channel=%d, NumberOfIndex=%d\n
+0044d694	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Inset into LL_Recv Channel: %d, Index: %d, Size = %d\n
+0044d6cc	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	LL_Recv Put Failed!!\n
+0044d6e4	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	R:%d-%d,%d\n
+0044d6f0	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_BITRATE_INFO With Bitrate:%u LossRatio:%u\n
+0044d724	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_ALIVE\n
+0044d734	PPPP_thread_recv_Relay_TCP	PPPP_Proto_Send_AliveAck Error, Ret=%d\n
+0044d75c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	%d,%x,Recv MSG_ALIVE
+0044d774	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_ALIVE_ACK\n
+0044d788	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	%d,%x,Recv MSG_ALIVE_ACK
+0044d7a4	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Recv MSG_CLOSE\n
+0044d7b4	PPPP_thread_recv_Relay_TCP	%d,%x,Recv MSG_CLOSE %d
+0044d7cc	PPPP_thread_recv_Relay_TCP	PPPP_Proto_Send_Alive, Ret=%d\n
+0044d7ec	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	%d,%x,Send MSG_ALIVE
+0044d804	PPPP_thread_recv_Relay_TCP,PPPP_thread_send_DRW	PPPP_Proto_Send_Alive Error, Ret=%d\n
+0044d82c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Session AliveCounter = %d , TimeOutCounter = %d\n
+0044d860	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	Session is timeout!!, Due to %s\n
+0044d884	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	%d,%x,MSG_ALIVE Timeout
+0044d89c	PPPP_thread_recv_DRW,PPPP_thread_recv_Relay_TCP	%d,%x,Socket Recv Error
+0044d8b4	PPPP_thread_recv_Relay_TCP	PPPP_thread_recv_Relay_TCP Exit.\n
+0044d8d8	PPPP_thread_recv_DRW	PPPP_thread_recv_DRW Running.\n
+0044d8f8	PPPP_thread_recv_DRW	PPPP_thread_recv_DRW Running\n
+0044d918	PPPP_thread_recv_DRW	PPPP_thread_recv_DRW(SessionHandle:%d) ==> Recv Data, MsgType = 0x%02X, DataSize = %d from %s:%d\n
+0044d97c	PPPP_thread_recv_DRW	Recv MSG_DRW From Channel:%d,index:%d\n
+0044d9a4	PPPP_thread_recv_DRW	PPPP_thread_recv_DRW ==> Channel:%d,DRW Packet Index:%d\n
+0044d9e0	PPPP_thread_recv_DRW	%d,%x,Recv MSG_CLOSE
+0044d9f8	PPPP_thread_recv_DRW	Socket Recv Error...\n
+0044da10	PPPP_thread_recv_DRW	PPPP_Proto_Recv_ALL() ret =%d ==> header Magic or Version error \n
+0044da54	PPPP_thread_recv_DRW	PPPP_Proto_Recv_ALL() ret =%d ==> Size error, byteRecv !=  sizeof(st_PPPP_SessionHeader) + DataSize \n
+0044dabc	PPPP_thread_recv_DRW	PPPP_Proto_Recv_ALL() ret =%d ==> data buf is too small \n
+0044daf8	PPPP_thread_recv_DRW	%d,%x,Socket Recv %d
+0044db10	PPPP_thread_recv_DRW	PPPP_thread_recv_DRW Exit.\n
+0044db2c	PPPP_thread_send_DRW	PPPP_thread_send_DRW Running.\n
+0044db4c	PPPP_thread_send_DRW	PPPP_DRW_Send Error,Channel=%d, Index=%d, Ret=%d\n
+0044db80	PPPP_thread_send_DRW	PPPP_DRW_Send Channel=%d, Index=%d\n
+0044dba4	PPPP_thread_send_DRW	S:%d-%d,%d \n
+0044dbb4	PPPP_thread_send_DRW	LL_Sent[%d].ListCount > %d, so stop send\n
+0044dbe0	PPPP_thread_send_DRW	PPPP_thread_send_DRW Exit.\n
+0044dd2f		ATotal num = %d, Total Size=%d, Max_I=%d\n
+0044dd5c	FUN_0042d95c	Head: Idx=%06d, DataBuf=0x%08X, Size=%d\n
+0044dd88	FUN_0042d95c	Tail: Idx=%06d, DataBuf=0x%08X, Size=%d\n
+0044ddb4	FUN_0042d95c	%d: Idx=%06d, DataBuf=0x%08X, Size=%d\n
+0044dde4	PPPP_MakeNonce	%llu:
+0044de30	PPPP_MakeNonce	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+0044de70	PPPP_DebugTrace	%04d-%02d-%02d %02d:%02d:%02d.%03d
+0044de94	PPPP_DebugTrace	%s TNP <%d> %s
+0044dea4	PPPP_DebugTrace	%s TNPDebugLog <%d> %s
+0044dec0	PPPP_DebugTrace	%s %s
+0044dec8		%s %s %s\n
+0044ded4	FUN_0043125c	~conf.conf
+0044dee4	FUN_0043125c	[%s]\n
+0044deec	FUN_0043125c	%s=%s\n
+0044def4		/etc/~conf.conf
+0044df90	over_time_receive,over_time_receive_tcp	select Error : errno = %d\n
+0044dfac	over_time_receive_tcp	recv error, return %d\n
+0044dfc4	SendMessageByTCP	send(socket:%d) Error : errno = %d,%s\n
+0044dfec	SendMessageByTCP	send(socket:%d) Error : errno = %d,%s   sendcount=%d\n
+0044e024	CloseSocket	CloseSocket:%d\n
+0044e034	CreateSocket	CreateSocket:%d\n
+0044e048	SendMessage	SendToAddress(socket:%d,dest addr = %s:%d) Error : errno = %d,%s\n
+0044e08c	BroadcastMessage	127.0.0.1
+0044e098	BroadcastMessage	169.254
+0044e0a0	PPPP_Proto_Recv_TCP	TNP over_time_receive_tcp(Socket:%d) Error : %d %s\n
+0044e0d4	PPPP_Proto_Send_Hello	[Failed!!] Send MSG_HELLO to %s:%d\n
+0044e0f8	PPPP_Proto_Send_Hello	Send MSG_HELLO to %s:%d\n
+0044e114	PPPP_Proto_Send_Hello_With_Body	[Failed!!] Send MSG_HELLO to %s:%d ID:%s-%06d-%s CorD:%d\n
+0044e150	PPPP_Proto_Send_Hello_With_Body	Send MSG_HELLO to %s:%d ID:%s-%06d-%s CorD:%d\n
+0044e180	FUN_00433bd0	[Failed!!] Send MSG_HELLO_ACK to %s:%d\n
+0044e1a8	FUN_00433bd0	Send MSG_HELLO_ACK to %s:%d\n
+0044e1c8	PPPP_Proto_Send_Probe	[Failed!!] Send MSG_PROBE_START to %s:%d serial:%d guid:%s largepacket:%d bodysize:%d\n
+0044e220	PPPP_Proto_Send_Probe	Send MSG_PROBE_START to %s:%d serial:%d guid:%s largepacket:%d bodysize:%d\n
+0044e26c	PPPP_Proto_Send_ProbeAck2	[Failed!!] Send MSG_PROBE_ACK2 to %s:%d serial:%d guid:%s\n
+0044e2a8	PPPP_Proto_Send_ProbeAck2	Send MSG_PROBE_ACK2 to %s:%d serial:%d guid:%s\n
+0044e2d8	PPPP_Proto_Send_WakeUp	[Failed!!] Send MSG_DEV_WAKEUP_REQ to %s:%d Prefix:%s sn:%d checkcode:%s bTCP:%d\n
+0044e32c	PPPP_Proto_Send_WakeUp	Send MSG_DEV_WAKEUP_REQ to %s:%d Prefix:%s sn:%d checkcode:%s bTCP:%d\n
+0044e374	PPPP_Proto_Send_P2PServerReq	[Failed!!] Send MSG_P2P_SERVER_REQ to %s:%d\n
+0044e3a4	PPPP_Proto_Send_P2PServerReq	Send MSG_P2P_SERVER_REQ to %s:%d\n
+0044e3c8	PPPP_Proto_Send_DevOnline	[Failed!!] Send MSG_DEV_ONLINE_REQ to %s:%d Prefix:%s sn:%d checkcode:%s\n
+0044e414	PPPP_Proto_Send_DevOnline	Send MSG_DEV_ONLINE_REQ to %s:%d Prefix:%s sn:%d checkcode:%s\n
+0044e454		[Failed!!] Send MSG_DEV_LGN to %s:%d\n
+0044e47c		Send MSG_DEV_LGN to %s:%d\n
+0044e498		[Failed!!] Send MSG_DEV_LGN_ACK to %s:%d\n
+0044e4c4		Send MSG_DEV_LGN_ACK to %s:%d\n
+0044e4e4		[Failed!!] Send MSG_DEV_LGN_CRC to %s:%d\n
+0044e510		Send MSG_DEV_LGN_CRC to %s:%d\n
+0044e530		[Failed!!] Send MSG_DEV_LGN_ACK_CRC to %s:%d\n
+0044e560		Send MSG_DEV_LGN_ACK_CRC to %s:%d\n
+0044e584	PPPP_Proto_Send_DevLgn_Key	Send MSG_DEV_LGN_KEY:%02x%02x%02x%02x,length:%d,Prefix:%s,SerialNumber:%d,CheckCode:%s,NONCE:%s,pDevLgn_Key->Nonce:%s,pDevLgn_Key->Signature:%s,NATType:%d\n
+0044e620	PPPP_Proto_Send_DevLgn_Key	[Failed!!] Send MSG_DEV_LGN_KEY to %s:%d\n
+0044e64c	PPPP_Proto_Send_DevLgn_Key	Send MSG_DEV_LGN_KEY to %s:%d\n
+0044e66c		[Failed!!] Send MSG_DEV_LGN_ACK_KEY to %s:%d\n
+0044e69c		Send MSG_DEV_LGN_ACK_KEY to %s:%d\n
+0044e6c0	PPPP_Proto_Send_P2PReq	[Failed!!] Send MSG_P2P_REQ to %s:%d\n
+0044e6e8	PPPP_Proto_Send_P2PReq	Send MSG_P2P_REQ to %s:%d\n
+0044e704		[Failed!!] Send MSG_P2P_REQ_ACK to %s:%d\n
+0044e730		Send MSG_P2P_REQ_ACK to %s:%d\n
+0044e750		[Failed!!] Send MSG_PUNCH_TO to %s:%d\n
+0044e778		Send MSG_PUNCH_TO to %s:%d\n
+0044e794	FUN_00435ca4	[Failed!!] Send MSG_RS_LGN to %s:%d\n
+0044e7bc	FUN_00435ca4	Send MSG_RS_LGN to %s:%d\n
+0044e7d8		[Failed!!] Send MSG_RS_LGN_ACK to %s:%d\n
+0044e804		Send MSG_RS_LGN_ACK to %s:%d\n
+0044e824		[Failed!!] Send MSG_RS_LGN1 to %s:%d\n
+0044e84c		Send MSG_RS_LGN1 to %s:%d\n
+0044e868		[Failed!!] Send MSG_RS_LGN1_ACK to %s:%d\n
+0044e894		Send MSG_RS_LGN1_ACK to %s:%d\n
+0044e8b4	PPPP_Proto_Send_RlyHello	[Failed!!] Send MSG_RLY_HELLO to %s:%d\n
+0044e8dc	PPPP_Proto_Send_RlyHello	Send MSG_RLY_HELLO to %s:%d\n
+0044e8fc		[Failed!!] Send MSG_RLY_HELLO_ACK to %s:%d\n
+0044e928		Send MSG_RLY_HELLO_ACK to %s:%d\n
+0044e94c	PPPP_Proto_Send_RlyHelloSDev	[Failed!!] Send MSG_RLY_HELLO_SDEV to %s:%d\n
+0044e97c	PPPP_Proto_Send_RlyHelloSDev	Send MSG_RLY_HELLO_SDEV to %s:%d\n
+0044e9a0	PPPP_Proto_Send_RlyHelloSDevAck	[Failed!!] Send MSG_RLY_HELLO_SDEV_ACK to %s:%d\n
+0044e9d4	PPPP_Proto_Send_RlyHelloSDevAck	Send MSG_RLY_HELLO_SDEV_ACK to %s:%d\n
+0044e9fc	PPPP_Proto_Send_RlyReq	[Failed!!] Send MSG_RLY_REQ to %s:%d\n
+0044ea24	PPPP_Proto_Send_RlyReq	Send MSG_RLY_REQ to %s:%d\n
+0044ea40		[Failed!!] Send MSG_RLY_REQ_ACK to %s:%d\n
+0044ea6c		Send MSG_RLY_REQ_ACK to %s:%d\n
+0044ea8c		[Failed!!] Send MSG_RLY_TO to %s:%d\n
+0044eab4		Send MSG_RLY_TO to %s:%d\n
+0044ead0	PPPP_Proto_Send_RlyToAck	[Failed!!] Send MSG_RLY_TO_ACK to %s:%d\n
+0044eafc	PPPP_Proto_Send_RlyToAck	Send MSG_RLY_TO_ACK to %s:%d\n
+0044eb1c		[Failed!!] Send MSG_LIST_REQ to %s:%d\n
+0044eb44		Send MSG_LIST_REQ to %s:%d\n
+0044eb60		[Error!!] Send Packet Size large than PPPP_MAX_PACKET_SIZE\n
+0044eb9c		[Error!!] malloc error, not enough memory\n
+0044ebc8		[Failed!!] Send MSG_LIST_REQ_ACK to %s:%d\n
+0044ebf4		Send MSG_LIST_REQ_ACK to %s:%d\n
+0044ec14	PPPP_Proto_Send_RlyPort_Key	[Failed!!] Send MSG_RLY_PORT_KEY to %s:%d\n
+0044ec40	PPPP_Proto_Send_RlyPort_Key	Send MSG_RLY_PORT_KEY to %s:%d\n
+0044ec60	PPPP_Proto_Send_RlyPortAck_Key	[Failed!!] Send MSG_RLY_PORT_ACK_KEY to %s:%d\n
+0044ec90	PPPP_Proto_Send_RlyPortAck_Key	Send MSG_RLY_PORT_ACK_KEY to %s:%d\n
+0044ecb4		[Failed!!] Send MSG_RLY_BYTE_COUNT to %s:%d\n
+0044ece4		Send MSG_RLY_BYTE_COUNT to %s:%d\n
+0044ed08	PPPP_Proto_Send_RlyPkt	[Failed!!] Send MSG_RLY_PKT to %s:%d\n
+0044ed30	PPPP_Proto_Send_RlyPkt	Send MSG_RLY_PKT to %s:%d\n
+0044ed4c	FUN_004381dc	[Failed!!] Send MSG_PUNCH_PKT to %s:%d\n
+0044ed74	FUN_004381dc	Send MSG_PUNCH_PKT to %s:%d\n
+0044ed94	PPPP_Proto_Send_PunchPkt_EX	[Failed!!] Send MSG_PUNCH_PKT_EX to %s:%d\n
+0044edc0	PPPP_Proto_Send_PunchPkt_EX	Send MSG_PUNCH_PKT_EX to %s:%d\n
+0044ede0	PPPP_Proto_Send_P2PRdy	[Failed!!] Send MSG_P2P_RDY to %s:%d\n
+0044ee08	PPPP_Proto_Send_P2PRdy	Send MSG_P2P_RDY to %s:%d\n
+0044ee24	PPPP_Proto_Send_P2PRdy_EX	[Failed!!] Send MSG_P2P_RDY_EX to %s:%d\n
+0044ee50	PPPP_Proto_Send_P2PRdy_EX	Send MSG_P2P_RDY_EX to %s:%d\n
+0044ee70	PPPP_Proto_Send_P2PRdy_Ack	[Failed!!] Send MSG_P2P_RDY_ACK to %s:%d\n
+0044ee9c	PPPP_Proto_Send_P2PRdy_Ack	Send MSG_P2P_RDY_ACK to %s:%d\n
+0044eebc	PPPP_Proto_Send_LanSerch	Broadcast MSG_HELLO to Port: %d\n
+0044eee0	PPPP_Proto_Send_LanNotify	Broadcast MSG_LAN_NOTIFY to Port: %d\n
+0044ef08	PPPP_Proto_Send_LanNotifyAck	[Failed!!] Send MSG_LAN_NOTIFY_ACK to %s:%d\n
+0044ef38	PPPP_Proto_Send_LanNotifyAck	Send MSG_LAN_NOTIFY_ACK to %s:%d\n
+0044ef5c	PPPP_Proto_Send_RlyRdy	[Failed!!] Send MSG_RLY_RDY to %s:%d\n
+0044ef84	PPPP_Proto_Send_RlyRdy	Send MSG_RLY_RDYto %s:%d\n
+0044efa0	PPPP_Proto_Send_Connect_Report	[Failed!!] Send MSG_CONNECT_REPORT to %s:%d\n
+0044efd0	PPPP_Proto_Send_Connect_Report	Send MSG_CONNECT_REPORT to %s:%d\n
+0044eff4	PPPP_Proto_Send_Report	[Failed!!] Send MSG_REPORT to %s:%d with info %s\n
+0044f028	PPPP_Proto_Send_Report	Send MSG_REPORT to %s:%d with info %s\n
+0044f050	PPPP_Proto_Send_SDev_Report	[Failed!!] Send MSG_SDEV_REPORT to %s:%d with info %s\n
+0044f088	PPPP_Proto_Send_SDev_Report	Send MSG_SDEV_REPORT to %s:%d with info %s\n
+0044f0b4	PPPP_DRWAck_Send	PPPP_DRWAck_Send ==> Channel:%d, Ack For DRW Packet Index:%d\n
+0044f0f4	PPPP_DRWAck_Send	[Failed!!%d] Send MSG_DRW_ACK to %s:%d\n
+0044f11c	PPPP_DRWAck_Send	Send MSG_DRW_ACK %s:%d\n
+0044f134	PPPP_DRW_Send	[Failed!!%d] Send MSG_DRW to %s:%d\n
+0044f158	PPPP_DRW_Send	Send MSG_DRW to %s:%d,Channel:%d,Index:%d,DataSize:%d\n
+0044f190	PPPP_Proto_Send_Alive	[Failed!!%d] Send MSG_ALIVE to %s:%d\n
+0044f1b8	PPPP_Proto_Send_AliveAck	[Failed!!%d] Send MSG_ALIVE_ACK to %s:%d\n
+0044f1e4	PPPP_Proto_Send_BitrateInfo	[Failed!!%d] Send MSG_BITRATE_INFO to %s:%d with Bitrate:%u LossRatio:%u\n
+0044f230	PPPP_Proto_Send_Close	[Failed!!] Send MSG_CLOSE to %s:%d\n
+0044f254	PPPP_Proto_Send_Close	Send MSG_CLOSE to %s:%d\n
+0044f270		[Failed!!] Send MSG_MGM_DUMP_LOGIN_DID to %s:%d\n
+0044f2a4		Send MSG_MGM_DUMP_LOGIN_DID to %s:%d\n
+0044f2cc		[Failed!!] Send MSG_MGM_DUMP_LOGIN_DID_DETAIL to %s:%d\n
+0044f304		Send MSG_MGM_DUMP_LOGIN_DID_DETAIL to %s:%d\n
+0044f334		[Failed!!] Send MSG_SDEV_RUN to %s:%d\n
+0044f35c		Send MSG_SDEV_RUN to %s:%d\n
+0044f378	PPPP_Proto_Send_HelloToAck	[Failed!!] Send MSG_HELLO_TO_ACK to %s:%d\n
+0044f3a4	PPPP_Proto_Send_HelloToAck	Send MSG_HELLO_TO_ACK to %s:%d\n
+0044f3c4		[Failed!!] Send MSG_HELLO_TO to %s:%d\n
+0044f3ec		Send MSG_HELLO_TO to %s:%d\n
+0044f408	PPPP_Proto_Send_SDevLgn	[Failed!!] Send MSG_SDEV_LGN to %s:%d\n
+0044f430	PPPP_Proto_Send_SDevLgn	Send MSG_SDEV_LGN %s:%d\n
+0044f44c		[Failed!!] Send MSG_SDEV_LGN_ACK to %s:%d\n
+0044f478		Send MSG_SDEV_LGN_ACK to %s:%d\n
+0044f498		[Failed!!] Send MSG_SDEV_LGN_CRC to %s:%d\n
+0044f4c4		Send MSG_SDEV_LGN_CRC %s:%d\n
+0044f4e4		[Failed!!] Send MSG_SDEV_LGN_ACK_CRC to %s:%d\n
+0044f514		Send MSG_SDEV_LGN_ACK_CRC to %s:%d\n
+0044f538	FUN_0043b5dc	[Failed!!] Send MSG_LIST_REQ1 to %s:%d\n
+0044f560	FUN_0043b5dc	Send MSG_LIST_REQ1 %s:%d\n
+0044f57c	PPPP_Proto_Send_RlyServerReq	[Failed!!] Send MSG_RLY_SERVER_REQ to %s:%d\n
+0044f5ac	PPPP_Proto_Send_RlyServerReq	Send MSG_RLY_SERVER_REQ %s:%d\n
+0044f5cc	PPPP_Proto_Send_RlyTCPStart	[Failed!!] Send MSG_RLY_TCP_START to %s:%d\n
+0044f5f8	PPPP_Proto_Send_RlyTCPStart	Send MSG_RLY_TCP_START to %s:%d\n
+0044f61c	PPPP_Proto_Send_RlyTCPReq	[Failed!!] Send MSG_RLY_TCP_REQ to %s:%d\n
+0044f648	PPPP_Proto_Send_RlyTCPReq	Send MSG_RLY_TCP_REQ to %s:%d\n
+0044f668	PPPP_Proto_Send_EasyTCPStart	[Failed!!] Send MSG_RLY_EASYTCP_START to %s:%d\n
+0044f698	PPPP_Proto_Send_EasyTCPStart	Send MSG_RLY_EASYTCP_START to %s:%d\n
+0044f6c0	PPPP_Proto_Send_SigErrorAck	[Failed!!] Send MSG_SESSION_RESPONSE to %s:%d\n
+0044f6f0	PPPP_Proto_Send_SigErrorAck	Send MSG_SESSION_RESPONSE to %s:%d\n
+0044f714	PPPP_Proto_Recv_ALL	TNP over_time_receive(Socket:%d) Error : %d\n,%s
+0044f744	PPPP_Proto_Send_RlyTCPToAck	[Failed!!] Send MSG_RLY_TCP_TO_ACK to %s:%d\n
+0044f774	PPPP_Proto_Send_RlyTCPToAck	Send MSG_RLY_TCP_TO_ACK to %s:%d\n
+0044f798	PPPP_Proto_Send_RlyTCPPkt	[Failed!!] Send MSG_RLY_TCP_PKT to %s:%d\n
+0044f7c4	PPPP_Proto_Send_RlyTCPPkt	Send MSG_RLY_TCP_PKT to %s:%d\n
+0044f7e4		[Failed!!] Send MSG_QUERY_DID to %s:%d\n
+0044f80c		Send MSG_QUERY_DID to %s:%d\n
+0044f82c		[Failed!!] Send MSG_QUERY_DID_ACK to %s:%d\n
+0044f858		Send MSG_QUERY_DID_ACK to %s:%d\n
+0044f87c	PPPP_Proto_Send_NoticePingAck	[Failed!!] Send MSG_NOTICE_PING_ACK to %s:%d\n
+0044f8ac	PPPP_Proto_Send_NoticePingAck	Send MSG_NOTICE_PING_ACK to %s:%d\n
+0044f8d0	PPPP_Proto_Send_NoticeToAck	[Failed!!] Send MSG_NOTICE_TO_ACK to %s:%d error, ContentLen %d is larger than 1024\n
+0044f928	PPPP_Proto_Send_NoticeToAck	[Failed!!] Send MSG_NOTICE_TO_ACK to %s:%d\n
+0044f954	PPPP_Proto_Send_NoticeToAck	Send MSG_NOTICE_TO_ACK to %s:%d\n
+0044f978	FUN_0043d618	[Failed!!] Send MSG_MGM_DUMP_LOGIN_DID_1 to %s:%d\n
+0044f9ac	FUN_0043d618	Send MSG_MGM_DUMP_LOGIN_DID_1 to %s:%d\n
+0044f9d4		[Failed!!] Send MSG_MGM_LOG_CONTROL to %s:%d\n
+0044fa04		Send MSG_MGM_LOG_CONTROL to %s:%d\n
+0044fa28	FUN_0043d938	[Failed!!] Send MSG_MGM_REMOTE_MANAGEMENT to %s:%d\n
+0044fa5c	FUN_0043d938	Send MSG_MGM_REMOTE_MANAGEMENT %s:%d\n
+0044fa84	try_adjust_buf	fshare.%s.realloc(%d)
+0044fa9c	fshare_create,fshare_open	/fshare_frame_buf
+0044fab0	fshare_create,fshare_open	fshare.%s.shm_open
+0044fac4	fshare_create,fshare_open	fshare.%s.mmap
+0044fad4	fshare_create,fshare_open	/fshare_write_lock
+0044fae8	fshare_create,fshare_open	fshare.%s.sem_open(%s)
+0044fb00	fshare_create,fshare_open	/fshare_read_notify_%d
+0044fb18	fshare_create,fshare_open	/fshare_read_lock
+0044fb2c	fshare_write	fshare.%s: size(%d) > size_max(%d)\n
+0044fb50	try_adjust_buf	try_adjust_buf
+0044fb60	fshare_write	fshare_write
+0044fb70	fshare_open	fshare_open
+0044fb7c	fshare_create	fshare_create
+0044fc20	FUN_004408a0	invalid para, is null\r
+0044fc38	FUN_004408a0	/tmp/logsock
+0044fc48	FUN_004408a0	create socket fail\r
+0044fc5c	dump_string	%s:%d|%s() 
+0044fc68	dump_string	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+0044fc94		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+0044fcd4	FUN_00440c04	killall cloudAPI
+0044fce8		%s : %d ptr %s is NULL pointer\n
+0044fd10		insmod %s
+0044fd1c		ko path
+0044fd24		params
+0044fd2c		insmod %s %s
+0044fd3c		file node
+0044fd6c	get_filename_by_time	%s/%04dY%02dM%02dD%02dH/%02dM%02dS%02d.mp4
+0044fd98	get_filename_by_time	/tmp/sd/record
+0044fe1c	FUN_00441318	%[^"',}]
+0044fe28		total malloc(%d) tmp_malloc(%d %p)\n
+0044fe4c		total free(%p)\n
+0044fe60	get_filename_by_time	get_filename_by_time
+0044fe78		yi_insmod_with_param_openfile
+0044fe98		yi_insmod_with_openfile
+0044feb0		yi_insmod_with_param
+0044fec8		yi_insmod_ko
+00452704		}}}}AesEncrypt encountered improper key, set it up
+00452738	FUN_004427e8	AesDecrypt encountered improper key, set it up
+00452774	FUN_00444e8c	CyaSSL Entering %s
+00452788	FUN_00444f24	CyaSSL Leaving %s, return %d
+004527a8	FUN_00444fc4	CyaSSL error occured, error = %d
+00468150	00468394,Entry Point,PPPP_thread_SuperDevice	superkey_abcdefg9876543210
+004681ec		tnpmastercn.xiaoyi.com

@@ -1,0 +1,15 @@
+## IMPORTS (external)
+platform_device_unregister	<EXTERNAL>
+dev_get_drvdata	<EXTERNAL>
+snd_soc_dai_set_sysclk	<EXTERNAL>
+printk	<EXTERNAL>
+rts_sys_force_reset	<EXTERNAL>
+platform_device_alloc	<EXTERNAL>
+dev_set_drvdata	<EXTERNAL>
+platform_device_add	<EXTERNAL>
+platform_device_put	<EXTERNAL>
+
+## EXPORTS (entry points)
+000106c0	__this_module
+000101dc	cleanup_module
+00010100	init_module

@@ -1,0 +1,21 @@
+# ── Raw firmware images ────────────────────────────────────────────────
+# The MTD block dumps are the verbatim flash and contain this device's
+# CLEARTEXT secrets (Wi-Fi SSID + passphrase, P2P UID/key, cloud bind token,
+# serial, encrypted cloud credential). Never commit them.
+FirmwareDump/*.bin
+FirmwareDump/*.img
+FirmwareDump/*.bin.gz
+# Keep FirmwareDump/README.md and mtd.txt (generic partition map, no secrets).
+
+# Any stray re-dumps elsewhere
+*.mtdblock
+mtdblock*.bin
+
+# ── OS / editor cruft ──────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.swp
+.idea/
+.vscode/

@@ -1,0 +1,46 @@
+## IMPORTS (external)
+preempt_schedule	<EXTERNAL>
+__gpio_set_value	<EXTERNAL>
+mod_timer	<EXTERNAL>
+printk	<EXTERNAL>
+kfree	<EXTERNAL>
+arch_local_irq_save	<EXTERNAL>
+arch_local_irq_restore	<EXTERNAL>
+usecs_to_jiffies	<EXTERNAL>
+gpio_direction_output	<EXTERNAL>
+strlen	<EXTERNAL>
+kmem_cache_alloc	<EXTERNAL>
+init_timer_key	<EXTERNAL>
+gpio_request	<EXTERNAL>
+misc_register	<EXTERNAL>
+gpio_free	<EXTERNAL>
+misc_deregister	<EXTERNAL>
+del_timer	<EXTERNAL>
+__copy_user	<EXTERNAL>
+
+## EXPORTS (entry points)
+000119a4	GPIO_PTZ_MSC316D_MOTOR_1_D4
+000119e0	__this_module
+000119a0	GPIO_PTZ_MSC316D_MOTOR_2_D1
+000113dc	cleanup_module
+000119c4	MOTO_X_GPIO3
+000118a4	stepmotor_fops
+000119c8	MOTO_X_GPIO2
+000119ac	GPIO_PTZ_MSC316D_MOTOR_1_D2
+00011918	y_stepmotor
+00010cf8	init_module
+00011b00	x_stepmotor
+000119bc	MOTO_Y_GPIO1
+000119b0	GPIO_PTZ_MSC316D_MOTOR_1_D1
+000119c0	MOTO_Y_GPIO0
+000119b4	MOTO_Y_GPIO3
+000119b8	MOTO_Y_GPIO2
+00011910	step_motor_array
+00011998	GPIO_PTZ_MSC316D_MOTOR_2_D3
+000119d0	MOTO_X_GPIO0
+000119a8	GPIO_PTZ_MSC316D_MOTOR_1_D3
+0001152c	timing
+000119cc	MOTO_X_GPIO1
+0001199c	GPIO_PTZ_MSC316D_MOTOR_2_D2
+00011880	stepmotor_misc
+00011994	GPIO_PTZ_MSC316D_MOTOR_2_D4

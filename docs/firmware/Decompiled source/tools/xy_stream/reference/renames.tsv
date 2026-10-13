@@ -1,0 +1,3 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00402134	FUN_00402134	ai_get_lpcmstream	true	false	ai_get_lpcmstream
+00402248	FUN_00402248	ai_get_aacstream	true	false	ai_get_aacstream

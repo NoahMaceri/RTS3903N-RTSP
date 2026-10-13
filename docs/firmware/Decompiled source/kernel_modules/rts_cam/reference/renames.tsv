@@ -1,0 +1,3 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+000138c4	FUN_000138c4	Camera	true	false	Camera
+00015e54	FUN_00015e54	__rtscam_update_sensor_fps	true	false	__rtscam_update_sensor_fps

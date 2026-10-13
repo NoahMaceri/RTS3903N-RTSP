@@ -1,0 +1,80 @@
+00010761		_init
+00010767		_gp_disp
+00010776		_ITM_deregisterTMCloneTable
+00010792		_ITM_registerTMCloneTable
+000107ac		__cxa_finalize
+000107bb		_Jv_RegisterClasses
+000107cf		rts_v4l2_open
+000107dd		rts_v4l2_close
+000107ec		check_valid_value
+000107fe		valid_frmsize_stepwise
+00010815		RTS_IS_ERR
+00010820		valid_frmival_stepwise
+00010837		rts_v4l2_get_fmt
+00010848		memset
+00010855		__errno_location
+00010866		strerror
+0001086f		rts_log
+00010877		rts_v4l2_get_frmival
+0001088c		rts_v4l2_enum_fmt
+0001089e		rts_v4l2_enum_frmsizes
+000108b5		rts_v4l2_check_fmt
+000108c8		rts_v4l2_set_fmt
+000108d9		rts_v4l2_enum_frmival
+000108ef		rts_v4l2_check_frmival
+00010906		rts_v4l2_set_frmival
+0001091b		rts_v4l2_request_bufs
+00010931		rts_v4l2_query_buffer
+00010947		rts_v4l2_query_mmap_buf
+00010964		rts_v4l2_munmap_buf
+00010978		munmap
+0001097f		__queue_buffers
+0001098f		rts_v4l2_streamon
+000109a1		rts_v4l2_streamoff
+000109b4		rts_v4l2_get_buffer
+000109c8		rts_v4l2_put_buffer
+000109dc		rts_v4l2_put_buffer_by_index
+000109f9		rts_v4l2_pollin
+00010a09		rts_pollin
+00010a14		rts_v4l2_check_frame
+00010a29		rts_v4l2_queryctrl
+00010a3c		rts_v4l2_query_next_ctrl
+00010a55		rts_v4l2_get_ctrl
+00010a67		rts_v4l2_set_ctrl
+00010a79		rts_v4l2_get_ext_ctrls
+00010a90		rts_v4l2_set_ext_ctrls
+00010aa7		rts_v4l2_get_max_frmsize
+00010ac0		libgcc_s.so.1
+00010ace		libc.so.0
+00010ad8		_ftext
+00010ae6		_edata
+00010aed		__bss_start
+00010b04		librtsv4l2.so.1
+000127bf		'<%s, %d>v4l2 ioctl G_FMT fail. %s\n
+000127e4		<%s, %d>v4l2 ioctl G_PARM fail. %s\n
+00012808		<%s, %d>v4l2 ioctl S_FMT fail. %s\n
+0001282c		<%s, %d>rts v4l2 set fmt (%c%c%c%c %dx%d) fail, not support\n
+0001286c		<%s, %d>v4l2 ioctl S_PARM fail. %s\n
+00012890		<%s, %d>rts v4l2 set framerate (%d/%d) fail, not support\n
+000128cc		<%s, %d>v4l2 ioctl REQBUFS fail, %s\n
+000128f4		<%s, %d>v4l2 ioctl querybuf fail, %s\n
+0001291c		<%s, %d>v4l2 buffer mmap fail, %s\n
+00012940		<%s, %d>queue buffer %d fail, %s\n
+00012964		<%s, %d>v4l2 ioctl STREAMON fail, %s\n
+0001298c		<%s, %d>v4l2 ioctl STREAMOFF fail, %s\n
+000129b4		<%s, %d>v4l2 ioctl DQBUF fail, %s\n
+000129d8		<%s, %d>v4l2 ioctl QBUF %d fail, %s\n
+00012a00		<%s, %d>query buffer %d fail, ret = %d\n
+00012a30		rts_v4l2_put_buffer_by_index
+00012a50		rts_v4l2_put_buffer
+00012a64		rts_v4l2_get_buffer
+00012a78		rts_v4l2_streamoff
+00012a8c		rts_v4l2_streamon
+00012aa0		__queue_buffers
+00012ab0		rts_v4l2_query_mmap_buf
+00012ac8		rts_v4l2_query_buffer
+00012ae0		rts_v4l2_request_bufs
+00012af8		rts_v4l2_set_frmival
+00012b10		rts_v4l2_get_frmival
+00012b28		rts_v4l2_set_fmt
+00012b3c		rts_v4l2_get_fmt

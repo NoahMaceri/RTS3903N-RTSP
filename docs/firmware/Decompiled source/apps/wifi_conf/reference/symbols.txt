@@ -1,0 +1,25 @@
+## IMPORTS (external)
+snprintf	<EXTERNAL>
+usleep	<EXTERNAL>
+perror	<EXTERNAL>
+puts	<EXTERNAL>
+mmap	<EXTERNAL>
+chmod	<EXTERNAL>
+strncat	<EXTERNAL>
+fopen	<EXTERNAL>
+memset	<EXTERNAL>
+fclose	<EXTERNAL>
+strcmp	<EXTERNAL>
+fwrite	<EXTERNAL>
+strlen	<EXTERNAL>
+open	<EXTERNAL>
+close	<EXTERNAL>
+__uClibc_main	<EXTERNAL>
+
+## EXPORTS (entry points)
+00426c90	__ctype_b
+00400660	_init
+00426c60	__RLD_MAP
+004006b0	main
+004019a0	_fini
+00400750	entry

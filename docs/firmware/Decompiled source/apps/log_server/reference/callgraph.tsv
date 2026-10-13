@@ -1,0 +1,42 @@
+00400834	_init	FUN_00400ddc,FUN_00401240
+00400880	_ftext	FUN_00400e20,FUN_00400fe0,__errno_location,bind,close,fclose,fflush,fopen,fprintf,ftell,gettimeofday,localtime,memset,printf,puts,recvfrom,rewind,socket,strerror,strstr,unlink
+00400c40	entry	__uClibc_main
+00400ca0	FUN_00400ca0	
+00400ce0	FUN_00400ce0	
+00400d2c	FUN_00400d2c	FUN_00400ca0
+00400ddc	FUN_00400ddc	FUN_00400ce0
+00400e20	FUN_00400e20	FUN_00400fe0,FUN_004011d0,memset,snprintf,strncmp,strncpy
+00400fb0	FUN_00400fb0	pclose,popen
+00400fe0	FUN_00400fe0	FUN_00400fb0,fileno,fread,pclose,popen,select,strstr
+004011d0	FUN_004011d0	strlen
+00401240	FUN_00401240	
+00401290	__uClibc_main	
+004012b0	_fini	FUN_00400d2c
+004016a0	popen	
+004016b0	printf	
+004016c0	strerror	
+004016d0	pclose	
+004016e0	snprintf	
+004016f0	puts	
+00401700	recvfrom	
+00401710	socket	
+00401720	select	
+00401730	fflush	
+00401740	fprintf	
+00401750	bind	
+00401760	strstr	
+00401770	strncmp	
+00401780	strncpy	
+00401790	unlink	
+004017a0	fread	
+004017b0	gettimeofday	
+004017c0	fopen	
+004017d0	localtime	
+004017e0	memset	
+004017f0	ftell	
+00401800	fclose	
+00401810	rewind	
+00401820	__errno_location	
+00401830	fileno	
+00401840	strlen	
+00401850	close	

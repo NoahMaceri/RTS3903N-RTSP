@@ -1,0 +1,1 @@
+This entire decomp was performed using REA + Ghidra with Opus 5.5 xhigh. I've reviewed most of the documentation for accuracy but take anything in this folder with a grain of salt.

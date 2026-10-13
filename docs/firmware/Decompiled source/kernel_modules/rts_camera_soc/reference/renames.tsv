@@ -1,0 +1,4 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+000140d4	FUN_000140d4	rtscam_soc_get_td_buf	true	false	rtscam_soc_get_td_buf
+00014550	FUN_00014550	__enable_td	true	false	__enable_td
+00014664	FUN_00014664	__disable_td	true	false	__disable_td

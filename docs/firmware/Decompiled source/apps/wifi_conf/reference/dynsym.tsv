@@ -1,0 +1,30 @@
+# DT_NEEDED: librt.so.0, libc.so.0
+0	T0	UND	0	
+1	T0	DEF	412060	_fdata
+2	T3	DEF	1	_DYNAMIC_LINKING
+3	FUNC	UND	0	snprintf
+4	OBJECT	DEF	426c90	__ctype_b
+5	FUNC	UND	0	usleep
+6	FUNC	UND	0	perror
+7	FUNC	UND	0	puts
+8	FUNC	UND	0	mmap
+9	FUNC	UND	0	chmod
+10	FUNC	DEF	400660	_init
+11	T0	DEF	4006b0	_ftext
+12	OBJECT	DEF	426c60	__RLD_MAP
+13	FUNC	UND	0	strncat
+14	FUNC	UND	0	fopen
+15	T0	DEF	426c8c	__bss_start
+16	FUNC	UND	0	memset
+17	FUNC	DEF	4006b0	main
+18	FUNC	UND	0	fclose
+19	FUNC	UND	0	strcmp
+20	FUNC	DEF	4019a0	_fini
+21	FUNC	UND	0	fwrite
+22	T0	DEF	426c8c	_edata
+23	T0	DEF	426cb0	_end
+24	FUNC	UND	0	strlen
+25	FUNC	UND	0	open
+26	T0	DEF	426c8c	_fbss
+27	FUNC	UND	0	close
+28	FUNC	UND	401980	__uClibc_main

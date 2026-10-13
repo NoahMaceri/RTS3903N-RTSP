@@ -1,0 +1,122 @@
+00011504	FUN_00010c80	MS_MHal_GPIO_Pad_Oen
+0001151c	init_module	activate_ports
+00011561		6n_motor %d\n
+00011571		3not init.\n
+00011581		3Does not support this command.(0x%x)
+000115a9		3%s: gpio_direction_output %u failed\n
+000115d1		6%s: setting gpio_direction_output %u\n
+000115f8	init_module	moto, stepmotor_function_init() \n
+0001161c	init_module	\n(strlen(hw)=(%d), strlen(gpio)=(%d) \n
+00011644	init_module	(strlen(hw)=(%d), strlen(gpio)=(%d) params error !!! \n
+0001167c	init_module	hw[%s] \n
+00011688	init_module	gpio[%s] \n
+00011694	init_module	moto not support !!! \n
+000116ad		3kmalloc  stepmotor dev fail.\n
+000116d0	init_module	moto, hw[PTZ_HOR] == HW_REVERSE \n
+000116f4	init_module	moto, hw[PTZ_VER] == HW_REVERSE \n
+00011718	init_module	motor_4
+00011721		3%s: gpio_request %d failed\n
+00011740	init_module	motor_3
+00011748	init_module	motor_2
+00011750	init_module	motor_1
+00011759		3register misc fail \n
+00011771		6successful init\n
+00011784	cleanup_module	moto, stepmotor_function_exit() \n
+000117ac	_elfSectionHeaders::0000023c,init_module	license=GPL
+000117b8		description=GPIO Function Driver
+000117d9		author=GM Technology Corp.
+000117f4		parmtype=gpio:charp
+00011808		parmtype=hw:charp
+0001181c		depends=
+00011825		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.text.unlikely
+.shstrtab::0000004b		.rel.init.text
+.shstrtab::0000005a		.rel.exit.text
+.shstrtab::00000069		.reginfo
+.shstrtab::00000072		.rel.rodata
+.shstrtab::0000007e		.rodata.str1.4
+.shstrtab::0000008d		.modinfo
+.shstrtab::00000096		.rel__param
+.shstrtab::000000a2		.rel.data
+.shstrtab::000000ac		.rel.gnu.linkonce.this_module
+.shstrtab::000000ca		.bss
+.shstrtab::000000cf		.comment
+.shstrtab::000000d8		.rel.pdr
+.shstrtab::000000e1		.gnu.attributes
+.shstrtab::000000f1		.mdebug.abi32
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC21
+.strtab::0000007b		$LC22
+.strtab::00000081		misc_deregister
+.strtab::00000091		GPIO_PTZ_MSC316D_MOTOR_1_D4
+.strtab::000000ad		__this_module
+.strtab::000000bb		GPIO_PTZ_MSC316D_MOTOR_2_D1
+.strtab::000000d7		cleanup_module
+.strtab::000000e6		kfree
+.strtab::000000ec		MOTO_X_GPIO3
+.strtab::000000f9		stepmotor_fops
+.strtab::00000108		gpio_free
+.strtab::00000112		MOTO_X_GPIO2
+.strtab::0000011f		GPIO_PTZ_MSC316D_MOTOR_1_D2
+.strtab::0000013b		y_stepmotor
+.strtab::00000147		init_module
+.strtab::00000153		x_stepmotor
+.strtab::0000015f		kmem_cache_alloc
+.strtab::00000170		MOTO_Y_GPIO1
+.strtab::0000017d		preempt_schedule
+.strtab::0000018e		GPIO_PTZ_MSC316D_MOTOR_1_D1
+.strtab::000001aa		MOTO_Y_GPIO0
+.strtab::000001b7		mod_timer
+.strtab::000001c1		gpio_direction_output
+.strtab::000001d7		printk
+.strtab::000001de		MOTO_Y_GPIO3
+.strtab::000001eb		misc_register
+.strtab::000001f9		param_ops_charp
+.strtab::00000209		__copy_user
+.strtab::00000215		jiffies
+.strtab::0000021d		arch_local_irq_restore
+.strtab::00000234		MOTO_Y_GPIO2
+.strtab::00000241		step_motor_array
+.strtab::00000252		init_timer_key
+.strtab::00000261		GPIO_PTZ_MSC316D_MOTOR_2_D3
+.strtab::0000027d		__gpio_set_value
+.strtab::0000028e		MOTO_X_GPIO0
+.strtab::0000029b		GPIO_PTZ_MSC316D_MOTOR_1_D3
+.strtab::000002b7		timing
+.strtab::000002be		usecs_to_jiffies
+.strtab::000002cf		gpio_request
+.strtab::000002dc		MOTO_X_GPIO1
+.strtab::000002e9		arch_local_irq_save
+.strtab::000002fd		GPIO_PTZ_MSC316D_MOTOR_2_D2
+.strtab::00000319		strlen
+.strtab::00000320		del_timer
+.strtab::0000032a		stepmotor_misc
+.strtab::00000339		kmalloc_caches
+.strtab::00000348		GPIO_PTZ_MSC316D_MOTOR_2_D4

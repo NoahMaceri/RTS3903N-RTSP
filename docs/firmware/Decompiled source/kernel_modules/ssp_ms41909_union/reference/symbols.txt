@@ -1,0 +1,45 @@
+## IMPORTS (external)
+preempt_schedule	<EXTERNAL>
+gpio_request	<EXTERNAL>
+gpio_free	<EXTERNAL>
+gpio_direction_output	<EXTERNAL>
+__gpio_set_value	<EXTERNAL>
+printk	<EXTERNAL>
+mod_timer	<EXTERNAL>
+kfree	<EXTERNAL>
+arch_local_irq_save	<EXTERNAL>
+arch_local_irq_restore	<EXTERNAL>
+usecs_to_jiffies	<EXTERNAL>
+strlen	<EXTERNAL>
+kmem_cache_alloc	<EXTERNAL>
+init_timer_key	<EXTERNAL>
+misc_register	<EXTERNAL>
+misc_deregister	<EXTERNAL>
+del_timer	<EXTERNAL>
+__copy_user	<EXTERNAL>
+
+## EXPORTS (entry points)
+00011dd0	MOTO_H_ON
+00011cb0	__this_module
+00011598	cleanup_module
+000105ac	ssp_gpio_free
+00011c9c	MOTO_X_GPIO3
+00011b24	stepmotor_fops
+00011ca0	MOTO_X_GPIO2
+00011b98	y_stepmotor
+00010e20	init_module
+00011c0c	x_stepmotor
+00011c94	MOTO_Y_GPIO1
+00011ca8	MOTO_HV
+000105dc	ssp_gpio_direction_output
+00010548	ssp_gpio_request
+00011cac	MOTO_V_ON
+00011c98	MOTO_X_GPIO4
+00011c8c	MOTO_Y_GPIO3
+00011c90	MOTO_Y_GPIO2
+00011b90	step_motor_array
+00011718	timing
+00011ca4	MOTO_X_GPIO1
+0001063c	ssp_gpio_set_value
+00011c88	MOTO_Y_GPIO4
+00011b00	stepmotor_misc

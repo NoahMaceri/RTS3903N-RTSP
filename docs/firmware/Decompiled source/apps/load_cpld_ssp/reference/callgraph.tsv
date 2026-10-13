@@ -1,0 +1,32 @@
+0040069c	_init	FUN_0040088c,FUN_004011a0
+004006f0	entry	__uClibc_main
+00400750	FUN_00400750	
+00400790	FUN_00400790	
+004007dc	FUN_004007dc	FUN_00400750
+0040088c	FUN_0040088c	FUN_00400790
+004008d0	FUN_004008d0	fileno,fread,pclose,popen,select
+00400b38	FUN_00400b38	close,lseek,mmap,open,write
+00400c34	FUN_00400c34	FUN_00400b38,memcpy,munmap,puts
+00400d2c	FUN_00400d2c	FUN_004008d0,access,memset,printf,puts,sprintf,strlen
+004010cc	main	FUN_00400c34,FUN_00400d2c,memset,puts
+004011a0	FUN_004011a0	
+004011f0	__uClibc_main	
+00401210	_fini	FUN_004007dc
+00401440	popen	
+00401450	printf	
+00401460	pclose	
+00401470	munmap	
+00401480	memcpy	
+00401490	puts	
+004014a0	select	
+004014b0	lseek	
+004014c0	mmap	
+004014d0	write	
+004014e0	fread	
+004014f0	memset	
+00401500	sprintf	
+00401510	access	
+00401520	fileno	
+00401530	strlen	
+00401540	open	
+00401550	close	

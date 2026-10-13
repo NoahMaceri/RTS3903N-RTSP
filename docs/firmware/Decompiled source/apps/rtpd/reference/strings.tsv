@@ -1,0 +1,122 @@
+000109b9		_gp_disp
+000109c2		_ITM_deregisterTMCloneTable
+000109de		_ITM_registerTMCloneTable
+000109f8		__cxa_finalize
+00010a07		_Jv_RegisterClasses
+00010a1b		memset
+00010a22		usleep
+00010a29		error_at_line
+00010a37		memcpy
+00010a3e		free
+00010a43		sem_wait
+00010a4c		luaL_checkinteger
+00010a5e		lua_pushboolean
+00010a6e		lua_pushinteger
+00010a7e		lua_pushnil
+00010a8a		lua_pushstring
+00010a99		sem_init
+00010aa2		eventfd
+00010aaa		sem_destroy
+00010ab6		pthread_create
+00010ac5		pthread_join
+00010ad2		read
+00010ad7		sem_post
+00010ae0		stderr
+00010ae7		fwrite
+00010aee		luaopen_rtpd
+00010afb		luaL_checkversion_
+00010b0e		lua_createtable
+00010b1e		luaL_setfuncs
+00010b2c		clock_gettime
+00010b3a		mkfifo
+00010b41		fdopen
+00010b48		remove
+00010b4f		__ctype_b
+00010b59		realloc
+00010b61		getaddrinfo
+00010b6d		socket
+00010b74		connect
+00010b7c		freeaddrinfo
+00010b89		send
+00010b8e		recv
+00010b93		memmem
+00010b9a		atoi
+00010b9f		setsockopt
+00010baa		bind
+00010baf		getsockname
+00010bbb		fcntl
+00010bc1		pthread_mutex_lock
+00010bd4		pthread_mutex_unlock
+00010be9		fopen
+00010bef		fscanf
+00010bf6		__errno_location
+00010c07		fclose
+00010c0e		swab
+00010c13		getpeername
+00010c1f		inet_ntop
+00010c29		strlen
+00010c30		sprintf
+00010c38		calloc
+00010c3f		pthread_mutex_init
+00010c52		poll
+00010c57		gettimeofday
+00010c64		fprintf
+00010c6c		fputc
+00010c72		recvfrom
+00010c7b		perror
+00010c82		pthread_mutex_destroy
+00010c98		munmap
+00010c9f		sem_close
+00010ca9		shm_open
+00010cb2		ftruncate
+00010cbc		mmap
+00010cc1		sem_open
+00010cca		snprintf
+00010cd3		ms_sleep
+00010cdc		librt.so.0
+00010ce7		libpthread.so.0
+00010cf7		libc.so.0
+000178f0		fshare_open ok
+00017900		got video main sps_len=%d, ts=%u
+00017960		create thread_avget failed
+0001797c		create thread_rtpd_recv failed
+0001799c		rtpd already started
+000179b4		create rtpd_recv_ievent failed
+000179d4		rtpd_init failed
+000179e8		thread_rtpd_recv: exit\n
+00017a00		thread_avget: exit\n
+00017a14		thread_avget: avget_init failed\n
+00017a38		rtpd already stopped
+00017a50	00028014	start
+00017a58	0002801c	setup
+00017a60	00028024	setuptcp
+00017a74	00028034	locksend
+00017a80	0002803c	unlocksend
+00017a8c	00028044	teardown
+00017ab4		Content-Length: 
+00017ad0		0123456789abcdef
+00017af0		/proc/sys/kernel/random/uuid
+00017b18		open '%s'
+00017b38		fscanf uuid, rv=%d
+00017b50		rtpd_recv.poll
+00017b60		do_recvfrom: [%s] rtp_%d len=%d\n
+00017b84		do_recvfrom: [%s] rtcp_%d len=%d\n
+00017ba8		rtpd_recv: [%s] rtp_%d, len=%d\n
+00017bc8		rtpd_recv: [%s] rtcp_%d, len=%d\n
+00017bec		  RTCP: V=%u P=%u C=%u PT=%u length=%d
+00017c14		 SSRC=%08X\n
+00017c20		    RR: ssrc=%08X fraction=%u lost=%d cycles=%u last_seq=%u jitter=%u lsr=%u dlsr=%u\n
+00017c78		    SDES: src=%08X\n
+00017cc0		fshare.%s.realloc(%d)
+00017cd8		/fshare_frame_buf
+00017cec		fshare.%s.shm_open
+00017d00		fshare.%s.mmap
+00017d10		/fshare_write_lock
+00017d24		fshare.%s.sem_open(%s)
+00017d3c		/fshare_read_notify_%d
+00017d54		/fshare_read_lock
+00017d68		fshare.%s: size(%d) > size_max(%d)\n
+00017d90		try_adjust_buf
+00017da0		fshare_write
+00017db0		fshare_open
+00017dbc		fshare_create

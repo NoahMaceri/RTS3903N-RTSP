@@ -1,0 +1,31 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00401d44	FUN_00401d44	schedule_power_onoff	true	false	schedule_power_onoff
+00402870	FUN_00402870	send_connectting_msg	true	false	send_connectting_msg
+0040290c	FUN_0040290c	send_pwdwrong_msg	true	false	send_pwdwrong_msg
+004029a8	FUN_004029a8	send_success_msg	true	false	send_success_msg
+00402a44	FUN_00402a44	send_bind_fail_msg	true	false	send_bind_fail_msg
+00402ae0	FUN_00402ae0	send_wrong_device_msg	true	false	send_wrong_device_msg
+00402b7c	FUN_00402b7c	send_bind_timeout_msg	true	false	send_bind_timeout_msg
+00402c18	FUN_00402c18	send_connected_msg	true	false	send_connected_msg
+00402cb4	FUN_00402cb4	send_reset_msg	true	false	send_reset_msg
+00402d50	FUN_00402d50	send_reboot_msg	true	false	send_reboot_msg
+00403a9c	FUN_00403a9c	send_saveconfig_msg	true	true	send_saveconfig_msg msg snd success
+00403b38	FUN_00403b38	get_tmp_did	true	false	get_tmp_did
+00403c44	FUN_00403c44	get_productinfo	true	false	get_productinfo
+00404154	FUN_00404154	choose_server	true	true	in choose_server, region_id = %d, api_server = %s, sname = %s, dlproto = %s\n
+00404848	FUN_00404848	link_audio_file	true	false	link_audio_file
+004083dc	FUN_004083dc	save_config	true	false	save_config
+0040881c	FUN_0040881c	set_default	true	true	hue, start_with_reset = 1 @set_default() 
+00408b78	FUN_00408b78	get_config	true	true	hue, start_with_reset = 1 @get_config()->g_sysconf.ssid == 0 
+0040a60c	FUN_0040a60c	dispatch_report_cloud_alarm_status	true	true	dispatch_report_cloud_alarm_status success \n
+0040ad04	FUN_0040ad04	modify_ptz_running_stat	true	false	modify_ptz_running_stat
+0040ad3c	FUN_0040ad3c	h601r_stop	true	false	h601r_stop
+0040ad90	FUN_0040ad90	h601r_get_position	true	false	h601r_get_position
+0040b6d8	FUN_0040b6d8	set_motor_dir_speed	true	false	set_motor_dir_speed
+0040b808	FUN_0040b808	ptz_get_position	true	false	ptz_get_position
+0040ba6c	FUN_0040ba6c	ptz_stop	true	false	ptz_stop
+0040c4f4	FUN_0040c4f4	ptz_cruise_start	true	false	ptz_cruise_start
+0040cbc4	FUN_0040cbc4	h601r_cruise_start	true	false	h601r_cruise_start
+00410b78	FUN_00410b78	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789	true	false	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+0041130c	FUN_0041130c	ssp_uart_init	true	false	ssp_uart_init
+0041195c	FUN_0041195c	ssp_uart_send_cmd	true	false	ssp_uart_send_cmd

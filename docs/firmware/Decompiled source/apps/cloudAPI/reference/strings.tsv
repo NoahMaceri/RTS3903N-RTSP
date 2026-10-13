@@ -1,0 +1,2035 @@
+00400154	0040005c	/lib/ld-uClibc.so.0
+0040206d		_fini
+00402073		__uClibc_main
+00402081		InitSha256
+0040208c		Sha256Update
+00402099		Sha256Final
+004020a5		memcpy
+004020ac		memset
+004020b3		CyaSSL_Malloc
+004020c1		RNG_GenerateBlock
+004020d3		CyaSSL_Free
+004020df		CYASSL_MSG
+004020ea		stderr
+004020f1		fprintf
+004020f9		sprintf
+00402101		malloc
+00402108		realloc
+00402110		strlen
+00402117		memcmp
+0040211e		CyaSSL_Init
+0040212a		InitSSL_Ctx
+00402136		CyaSSL_CTX_free
+00402146		FreeSSL_Ctx
+00402152		InitSSL
+0040215a		FreeSSL
+00402162		GetCipherNames
+00402171		GetCipherNamesSize
+00402184		strncpy
+0040218c		CyaSSL_accept
+0040219a		CyaSSL_connect
+004021a9		__errno_location
+004021ba		SendData
+004021c3		ReceiveData
+004021cf		CyaSSL_write
+004021dc		CyaSSL_read
+004021e8		SendAlert
+004021f2		SetErrorString
+00402201		CyaSSL_ERR_error_string
+00402219		FreeArrays
+00402224		InitMutex
+0040222e		CyaSSL_CertManagerFree
+00402245		FreeSignerTable
+00402255		FreeMutex
+0040225f		UnLockMutex
+0040226b		CyaSSLv23_client_method
+00402283		CyaSSL_CTX_new
+00402292		CyaSSL_CTX_set_default_passwd_cb
+004022b3		CyaSSL_CTX_set_default_passwd_cb_userdata
+004022dd		fputs
+004022e3		MakeSSLv3
+004022ed		MakeTLSv1
+004022f7		MakeTLSv1_1
+00402303		MakeTLSv1_2
+0040230f		InitSuites
+0040231a		InitDecodedCert
+0040232a		ParseCert
+00402334		MakeSigner
+0040233f		FreeSigner
+0040234a		FreeDecodedCert
+0040235a		Base64_Decode
+00402368		ToTraditional
+00402376		ToTraditionalEnc
+00402387		c32to24
+0040238f		Base16_Decode
+0040239d		CyaSSL_EVP_BytesToKey
+004023b3		strncmp
+004023bb		Des_CbcDecryptWithKey
+004023d1		Des3_CbcDecryptWithKey
+004023e8		AesCbcDecryptWithKey
+004023fd		InitRsaKey
+00402408		RsaPrivateKeyDecode
+0040241c		FreeRsaKey
+00402427		DecodeToKey
+00402433		ParseCertRelative
+00402445		fopen
+0040244b		fseek
+00402451		ftell
+00402457		rewind
+0040245e		fclose
+00402465		fread
+0040246b		opendir
+00402473		strncat
+0040247b		stat
+00402480		readdir
+00402488		closedir
+00402491		CyaSSL_CertManagerVerifyBuffer
+004024b0		CyaSSLv3_client_method
+004024c7		CyaSSL_CTX_load_verify_locations
+004024e8		CyaSSL_CTX_use_PrivateKey_file
+00402507		CyaSSL_use_PrivateKey_file
+00402522		SetCipherList
+00402530		InitSSL_Method
+0040253f		SendBuffered
+0040254c		SendClientHello
+0040255c		ProcessReply
+00402569		SendCertificate
+00402579		SendClientKeyExchange
+0040258f		SendCertificateVerify
+004025a5		SendChangeCipher
+004025b6		SendFinished
+004025c3		FreeHandshakeResources
+004025da		SendServerHello
+004025ea		SendServerKeyExchange
+00402600		SendCertificateRequest
+00402617		SendServerHelloDone
+0040262b		Md5Hash
+00402633		LowResTimer
+0040263f		CyaSSL_CertManagerUnloadCAs
+0040265b		CyaSSL_set_rfd
+0040266a		CyaSSL_set_wfd
+00402679		CyaSSL_BIO_s_mem
+0040268a		CyaSSL_BIO_new
+00402699		CyaSSL_free
+004026a5		CyaSSL_BIO_free
+004026b5		CyaSSL_get_error
+004026c6		InitMd5
+004026ce		Md5Update
+004026d8		Md5Final
+004026e1		InitSha
+004026e9		ShaUpdate
+004026f3		ShaFinal
+004026fc		CyaSSL_SHA_Init
+0040270c		CyaSSL_SHA_Update
+0040271e		CyaSSL_SHA_Final
+0040272f		InitSha384
+0040273a		Sha384Update
+00402747		Sha384Final
+00402753		InitSha512
+0040275e		Sha512Update
+0040276b		Sha512Final
+00402777		AesSetKey
+00402781		AesSetIV
+0040278a		Des_SetKey
+00402795		Des_SetIV
+0040279f		Des3_SetKey
+004027ab		Des3_SetIV
+004027b6		Arc4SetKey
+004027c1		AesCbcEncrypt
+004027cf		AesCbcDecrypt
+004027dd		AesCtrEncrypt
+004027eb		Des_CbcEncrypt
+004027fa		Des_CbcDecrypt
+00402809		Des3_CbcEncrypt
+00402819		Des3_CbcDecrypt
+00402829		Arc4Process
+00402835		CyaSSL_MD5_Init
+00402845		CyaSSL_SHA256_Init
+00402858		CyaSSL_SHA384_Init
+0040286b		CyaSSL_SHA512_Init
+0040287e		CyaSSL_MD5_Update
+00402890		CyaSSL_SHA256_Update
+004028a5		CyaSSL_SHA384_Update
+004028ba		CyaSSL_SHA512_Update
+004028cf		CyaSSL_MD5_Final
+004028e0		CyaSSL_SHA256_Final
+004028f4		CyaSSL_SHA384_Final
+00402908		CyaSSL_SHA512_Final
+0040291c		CyaSSL_EVP_DigestFinal
+00402933		HmacSetKey
+0040293e		HmacUpdate
+00402949		HmacFinal
+00402953		InitX509
+0040295c		CopyDecodedToX509
+0040296e		CyaSSL_X509_d2i
+0040297e		CyaSSL_get_current_cipher
+00402998		CyaSSL_CIPHER_get_name
+004029af		CyaSSL_CertManagerNew
+004029c5		CyaSSL_X509_STORE_CTX_init
+004029e0		CyaSSL_X509_STORE_free
+004029f7		CyaSSL_FreeX509
+00402a07		InitRng
+00402a0f		FreeRng
+00402a17		mp_init
+00402a1f		CyaSSL_BN_free
+00402a2e		mp_clear
+00402a37		mp_sub
+00402a3e		mp_mod
+00402a45		CyaSSL_BN_new
+00402a53		mp_set_int
+00402a5e		mp_unsigned_bin_size
+00402a73		mp_count_bits
+00402a81		mp_cmp_d
+00402a8a		mp_cmp
+00402a91		mp_to_unsigned_bin
+00402aa4		mp_read_unsigned_bin
+00402ab9		CyaSSL_BN_bin2bn
+00402aca		mp_copy
+00402ad2		MakeRsaKey
+00402add		CyaSSL_BN_num_bytes
+00402af1		EncodeSignature
+00402b01		RsaSSL_Sign
+00402b0d		mp_sub_d
+00402b16		CyaSSL_EVP_md5
+00402b25		CyaSSL_EVP_sha1
+00402b35		IsAtLeastTLSv1_2
+00402b46		CyaSSL_DeriveTlsKeys
+00402b5b		StoreKeys
+00402b65		CyaSSL_MakeTlsMasterSecret
+00402b80		CyaSSL_SetTlsHmacInner
+00402b97		CyaSSL_GetHmacType
+00402baa		CyaSSL_GetMacSecret
+00402bbe		mp_exptmod
+00402bc9		mp_mulmod
+00402bd3		mp_mul
+00402bda		mp_add
+00402be1		RsaPrivateDecryptInline
+00402bf9		RsaSSL_VerifyInline
+00402c0d		mp_prime_is_prime
+00402c1f		mp_init_multi
+00402c2d		mp_gcd
+00402c34		mp_lcm
+00402c3b		mp_invmod
+00402c45		pthread_mutex_init
+00402c58		pthread_mutex_destroy
+00402c6e		pthread_mutex_lock
+00402c81		pthread_mutex_unlock
+00402c96		memmove
+00402c9e		PBKDF2
+00402ca5		PBKDF1
+00402cac		PKCS12_PBKDF
+00402cb9		gmtime
+00402cc0		ShaHash
+00402cc8		Sha256Hash
+00402cd3		Sha512Hash
+00402cde		Sha384Hash
+00402ce9		RsaPublicKeyDecode
+00402cfc		tolower
+00402d04		Base64_Encode
+00402d12		mp_add_d
+00402d1b		CyaSSL_Realloc
+00402d2a		__udivdi3
+00402d34		EmbedReceive
+00402d41		EmbedSend
+00402d4b		SSL_ResourceFree
+00402d5c		SetKeysSide
+00402d68		CyaSSL_negotiate
+00402d79		CTaoCryptGetErrorString
+00402d91		CyaSSL_ERR_reason_error_string
+00402db0		strchr
+00402db7		strstr
+00402dbe		SetCipherSpecs
+00402dcd		DeriveKeys
+00402dd8		RsaPublicEncrypt
+00402de9		MakeMasterSecret
+00402dfa		RsaEncryptSize
+00402e09		recv
+00402e0e		CyaSSL_dtls
+00402e1a		CyaSSL_get_using_nonblock
+00402e34		send
+00402e39		libpthread.so.0
+00402e49		_DYNAMIC_LINKING
+00402e5a		__RLD_MAP
+00402e64		system
+00402e6b		siglongjmp
+00402e76		exit
+00402e7b		strcmp
+00402e82		gettimeofday
+00402e8f		sigaction
+00402e99		sscanf
+00402ea0		calloc
+00402ea7		__sigsetjmp
+00402eb3		clock_gettime
+00402ec1		librt.so.0
+00402ecc		socket
+00402ed3		__clz_tab
+00402edd		libc.so.0
+00402ee7		strcpy
+00402eee		strtok_r
+00402ef7		strerror
+00402f00		geteuid
+00402f08		inet_pton
+00402f12		stat64
+00402f19		__xpg_basename
+00402f28		snprintf
+00402f31		__ctype_b
+00402f3b		getenv
+00402f42		qsort
+00402f48		fgets
+00402f4e		__xpg_strerror_r
+00402f5f		fcntl64
+00402f67		strtoll
+00402f6f		strtoul
+00402f77		fflush
+00402f7e		strncasecmp
+00402f8a		freeaddrinfo
+00402f97		gmtime_r
+00402fa0		alarm
+00402fa6		strtol
+00402fad		strrchr
+00402fb5		bind
+00402fba		if_nametoindex
+00402fc9		setsockopt
+00402fd4		memchr
+00402fdb		strcasecmp
+00402fe6		strdup
+00402fed		localtime
+00402ff7		srand
+00402ffd		poll
+00403002		getpwuid_r
+0040300d		getpeername
+00403019		getifaddrs
+00403024		fputc
+0040302a		getsockopt
+00403035		freeifaddrs
+00403041		getaddrinfo
+0040304d		fwrite
+00403054		inet_ntop
+0040305e		atoi
+00403063		__fputc_unlocked
+00403074		getsockname
+00403080		fopen64
+00403088		stdin
+0040308e		stdout
+00403095		_ftext
+0040309c		_fdata
+004030a3		_edata
+004030aa		__bss_start
+004030b6		_fbss
+004030bc		_end
+00499610	FUN_00405fc4	usage: [-c cmd] [-key developer key] [-keySec developer secret key]\n       [-token oatho token] [-tokenSec oatho secret token] [-path folder path]\n       [-filename uploadfile name] [-username username] [-password password]\n       [-verification_code verification_code] [-authid authid] [-device_id device_id]\n\n       [-function web portal function] [-command web portal command]\n       [-uid web portal uid] [-webaccount web portal webaccount]\n       [-version web portal version] [-model web portal model]\n       [-port web portal port] [-SensorID web portal SensorID] \n       [-EventStat web portal EventStat] [-EventTime web portal EventTime] \n       [-Fileexttype avi or jpg] [-Filefullname full path with file name] \n       [-Duration video duration] [-pthread multiple download thread]\n\n       [-h help] [-d debug mod]\n
+0049994c	FUN_00405fc4	       [-c cmd] :\n
+00499960	FUN_00405fc4	          0=CMD_INVALID\n
+0049997c	FUN_00405fc4	          1=CMD_do_requestToken\n
+004999a0	FUN_00405fc4	          2=CMD_do_authorize\n
+004999c0	FUN_00405fc4	          3=CMD_do_accessToken\n
+004999e0	FUN_00405fc4	          4=CMD_do_account_info\n
+00499a04	FUN_00405fc4	          5=CMD_do_create_folder\n
+00499a28	FUN_00405fc4	          6=CMD_do_getupload_url\n
+00499a4c	FUN_00405fc4	          7=CMD_do_upload_file\n
+00499a6c	FUN_00405fc4	          8=CMD_do_del_file\n
+00499a8c	FUN_00405fc4	          9=CMD_do_get_file_info\n
+00499ab0	FUN_00405fc4	          10=CMD_do_xouth\n
+00499acc	FUN_00405fc4	          11=CMD_do_verificationURL\n
+00499af4	FUN_00405fc4	          12=CMD_do_register\n
+00499b14	FUN_00405fc4	          128=CMD_do_login\n
+00499b30	FUN_00405fc4	          129=CMD_do_logout\n
+00499b50	FUN_00405fc4	          130=CMD_do_tokenrenew\n
+00499b74	FUN_00405fc4	          131=CMD_do_heartbeat\n
+00499b94	FUN_00405fc4	          132=CMD_do_event\n
+00499bb0	FUN_00405fc4	          133=CMD_do_getcloudaccount\n
+00499bd8	FUN_00405fc4	          134=CMD_do_updatefilelist\n
+00499c00	FUN_00405fc4	          135=CMD_do_reset\n
+00499c1c	FUN_00405fc4	          136=CMD_do_syntime\n
+00499c3c	FUN_00405fc4	          137=CMD_do_bindkey\n
+00499c5c	FUN_00405fc4	          138=CMD_do_login_v4\n
+00499c7c	FUN_00405fc4	          139=CMD_do_reset_v4\n
+00499c9c	FUN_00405fc4	          140=CMD_do_need_upgrade\n
+00499cc0	FUN_00405fc4	          141=CMD_do_tnp_on_line\n
+00499ce4	FUN_00405fc4	          142=CMD_do_get_dev_info\n
+00499d08	FUN_00405fc4	          143=CMD_do_check_region\n
+00499d2c	FUN_00405fc4	          144=CMD_do_update_upgrade_log\n
+00499d58	FUN_00405fc4	          145=CMD_do_force_upgrade\n
+00499d7c	FUN_00405fc4	          192=CMD_do_report_tnp_on_line_status\n
+00499dac	FUN_00405fc4	          193=CMD_do_report_cloud_alarm_status\n
+00499ddc	FUN_00405fc4	          200=CMD_do_ftplist\n
+00499dfc	FUN_00405fc4	          201=CMD_do_ftpupload\n
+00499e1c	FUN_00405fc4	          300=CMD_do_multi_download\n
+00499e44	FUN_00405fc4	          301=CMD_do_get_firmware_md5\n
+00499e6c	FUN_00405fc4	          302=CMD_do_update_event\n
+00499e90	FUN_00405fc4	          303=CMD_do_add_device\n
+00499eb4	FUN_00405fc4	          304=CMD_do_update_event_v4\n
+00499edc	FUN_00405fc4	          305=CMD_do_gen_presigned_url\n
+00499f04	FUN_00405fc4	          306=CMD_do_gen_presigned_url_v5\n
+00499f30	FUN_00405fc4	          310=CMD_do_apply_sn\n
+00499f50	FUN_00405fc4	          311=CMD_do_check_did\n
+00499f70	FUN_00405fc4	          312=CMD_do_get_ststoken\n
+00499f94	FUN_00405fc4	          410=CMD_do_qiniu_upload\n
+00499fb8	FUN_00405fc4	          411=CMD_do_event_upload\n
+00499fdc	FUN_00405fc4	          412=CMD_do_yi_info_report\n
+0049a004	FUN_00405fc4	          413=CMD_do_log_upload\n
+0049a028	FUN_00405fc4	       [-d debug] :\n
+0049a040	FUN_00405fc4	          0=Close Debug\n
+0049a05c	FUN_00405fc4	          1=Open Debug\n
+0049a074	FUN_00405fc4	=> Send header
+0049a084	FUN_00405fc4	=> Send data
+0049a094	FUN_00405fc4	=> Send SSL data
+0049a0a8	FUN_00405fc4	<= Recv header
+0049a0b8	FUN_00405fc4	<= Recv data
+0049a0c8	FUN_00405fc4	<= Recv SSL data
+0049a0dc	FUN_00405fc4	== Info: %s
+0049a0e8	FUN_00405fc4	%s, %10.10ld bytes (0x%8.8lx)\n
+0049a108	FUN_00405fc4	%4.4lx: 
+0049a114	FUN_00405fc4	%02x 
+0049a120	FUN_00406834	/home/tmpfs/API_DEBUG
+0049a138	FUN_00406834	rm /home/tmpfs/API_DEBUG -f
+0049a154	FUN_00406834	\n[%02d:%02d:%02d.%06d]:
+0049a16c	FUN_00406834	%03d: 
+0049a178	FUN_00406834	%02d: 
+0049a180	FUN_00406834	 %02x
+0049a188	FUN_00406ac8	key(%s)\n
+0049a194	FUN_00406ac8	info(%s)\n
+0049a1a0	FUN_00406ac8	aes result
+0049a1ac	FUN_00406ac8	decinfo(%s)\n
+0049a1bc	FUN_00408e74,FUN_00427480	%%%02X
+0049a1c4	FUN_004091f4	%s&%s&%s
+0049a1dc	FUN_00409400,FUN_0040ced4	%s&%s
+0049a1f4	FUN_00409538	inpwd=%s\n
+0049a200	FUN_00409538	outbuf=%s\n
+0049a20c		trans_sha1_string=%s\n
+0049a224	FUN_004097cc	%04d%02d%02dT%02d%02d%02d
+0049a244	FUN_00409924	http://openapi.kuaipan.cn/open/verificationURL
+0049a274	FUN_00409924,FUN_00409b70,FUN_00409db4,FUN_0040a010,FUN_0040a284,FUN_0040a490,FUN_0040a6d4	HMAC-SHA1
+0049a280	FUN_00409924	oauth_consumer_key=%s&oauth_nonce=%s&oauth_signature_method=%s&oauth_timestamp=%s&oauth_version=%s
+0049a2e8	FUN_00409924	%s?oauth_consumer_key=%s&oauth_signature_method=%s&oauth_signature=%s&oauth_timestamp=%s&oauth_nonce=%s&oauth_version=%s
+0049a364	FUN_00409924,FUN_00409b70,FUN_00409db4,FUN_0040a010,FUN_0040a284,FUN_0040a490,FUN_0040a6d4,FUN_0040a970,FUN_0040abc4,FUN_0040aee4,FUN_0040b080,FUN_0040b230,FUN_0040b3dc,FUN_0040b574,FUN_0040b670,FUN_0040b7bc,FUN_0040b994,FUN_0040bacc,FUN_0040bbfc,FUN_0040bdc8,FUN_0040bf2c,FUN_0040c0b8,FUN_0040c260,FUN_0040c408,FUN_0040c5e0,FUN_0040c834,FUN_0040cafc,FUN_0040ccd8,FUN_0040ced4,FUN_0040d0e8,FUN_0040d22c,FUN_0040d3e4,FUN_0040d59c,FUN_0040d744,FUN_0040d8b0,FUN_0040db78,FUN_0040dca4,FUN_0040e45c,FUN_0040e628,FUN_0040e850	curl_easy_perform() failed: %s\n
+0049a384	FUN_00409b70	http://openapi.kuaipan.cn/1/account_info
+0049a3b0	FUN_00409b70,FUN_0040a284,FUN_0040a490	oauth_consumer_key=%s&oauth_nonce=%s&oauth_signature_method=%s&oauth_timestamp=%s&oauth_token=%s&oauth_version=%s
+0049a424	FUN_00409b70,FUN_0040a284,FUN_0040a490	%s?oauth_nonce=%s&oauth_timestamp=%s&oauth_consumer_key=%s&oauth_signature_method=%s&oauth_version=%s&oauth_token=%s&oauth_signature=%s
+0049a4ac	FUN_00409db4	http://openapi.kuaipan.cn/1/fileops/create_folder
+0049a4e0	FUN_00409db4,FUN_0040a010	oauth_consumer_key=%s&oauth_nonce=%s&oauth_signature_method=%s&oauth_timestamp=%s&oauth_token=%s&oauth_version=%s&path=%s&root=app_folder
+0049a56c	FUN_00409db4,FUN_0040a010	%s?oauth_nonce=%s&oauth_timestamp=%s&oauth_consumer_key=%s&oauth_signature_method=%s&oauth_version=%s&oauth_token=%s&oauth_signature=%s&root=app_folder&path=%s
+0049a60c	FUN_0040a010	http://openapi.kuaipan.cn/1/fileops/delete
+0049a640	FUN_0040a284	http://openapi.kuaipan.cn/1/metadata/app_folder
+0049a670	FUN_0040a490	http://api-content.dfs.kuaipan.cn/1/fileops/upload_locate
+0049a6ac	FUN_0040a6d4	1/fileops/upload_file
+0049a6c4	FUN_0040a6d4	oauth_consumer_key=%s&oauth_nonce=%s&oauth_signature_method=%s&oauth_timestamp=%s&oauth_token=%s&oauth_version=%s&overwrite=%s&path=%s&root=app_folder
+0049a75c	FUN_0040a6d4	%s?oauth_nonce=%s&oauth_timestamp=%s&oauth_consumer_key=%s&oauth_signature_method=%s&oauth_version=%s&oauth_token=%s&oauth_signature=%s&overwrite=%s&path=%s&root=app_folder
+0049a80c	FUN_0040a970	seq=9&uid=%s&password=%s&version=%s&model=0&port=0&mac=%s
+0049a848	FUN_0040a970,FUN_0040aee4,FUN_0040b670,FUN_0040c5e0	rockteco2014
+0049a858	FUN_0040a970	%s?hmac=%s&seq=9&uid=%s&password=%s&version=%s&model=0&port=0&mac=%s&packetloss=%s&p2pconnect=%s&p2pconnect_success=%s&tfstat=%s&ext_info={"p2p_encrypt":"true"}
+0049a8fc	FUN_0040a970,FUN_0040abc4,FUN_0040aee4,FUN_0040b080,FUN_0040b230,FUN_0040b3dc,FUN_0040b670,FUN_0040b994,FUN_0040bacc,FUN_0040bbfc,FUN_0040bdc8,FUN_0040c5e0,FUN_0040c834,FUN_0040cafc,FUN_0040ccd8,FUN_0040ced4,FUN_0040d0e8,FUN_0040d22c,FUN_0040d3e4,FUN_0040d744,FUN_0040e45c,FUN_0040e850	req_info=%s\n
+0049a90c	FUN_0040a970,FUN_0040abc4,FUN_0040aee4,FUN_0040b080,FUN_0040b230,FUN_0040b3dc,FUN_0040b994,FUN_0040bacc,FUN_0040bbfc,FUN_0040bdc8,FUN_0040bf2c,FUN_0040c5e0,FUN_0040c834,FUN_0040cafc,FUN_0040ccd8,FUN_0040ced4,FUN_0040d22c,FUN_0040d3e4,FUN_0040d744,FUN_0040e45c,FUN_0040e850	/backup/ca/ca.crt
+0049a920	FUN_0040abc4	{"p2p_encrypt":"%s","ssid":"%s","mac":"%s","ip":"%s","signal_quality":"%s","ap_mode":"%s"}
+0049a984	FUN_0040abc4	seq=9&uid=%s&password=%s&version=%s&model=0&port=0&mac=%s&packetloss=%s&p2pconnect=%s&p2pconnect_success=%s&tfstat=%s&timestamp=%u
+0049aa08	FUN_0040abc4	%s?hmac=%s&seq=9&uid=%s&password=%s&version=%s&model=0&port=0&mac=%s&packetloss=%s&p2pconnect=%s&p2pconnect_success=%s&tfstat=%s&timestamp=%u&ext_info=%s
+0049aaa4	FUN_0040aee4	seq=9&uid=%s
+0049aab4	FUN_0040aee4	%s?hmac=%s&seq=9&uid=%s
+0049aacc	FUN_0040b080,FUN_0040d22c,FUN_0040d3e4	seq=9&uid=%s&timestamp=%u
+0049aae8	FUN_0040b080,FUN_0040d22c,FUN_0040d3e4	%s?hmac=%s&seq=9&uid=%s&timestamp=%u
+0049ab10	FUN_0040b230	seq=9&uid=%s&bindkey=%s&timestamp=%d
+0049ab38	FUN_0040b230	%s?hmac=%s&seq=9&uid=%s&bindkey=%s&timestamp=%d
+0049ab68	FUN_0040b3dc	seq=9&uid=%s&timestamp=%d
+0049ab84	FUN_0040b3dc	%s?hmac=%s&seq=9&uid=%s&timestamp=%d
+0049abac	FUN_0040b574	%s?&uid=%s
+0049abb8	FUN_0040b670	%s?hmac=%s&seq=9
+0049abcc	FUN_0040b7bc	Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s&Version=%s&Model=%s&Port=%s
+0049ac20	FUN_0040b7bc	%s?Function=%s&Command=%s&Hmac=%s&Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s&Version=%s&Model=%s&Port=%s
+0049ac94	FUN_0040b994	%s?version=%s&uid=%s&sname=%s&protocol=%s
+0049acc0	FUN_0040bacc	%s?version=%s&did=%s&sname=%s
+0049ace0	FUN_0040bbfc	seq=9&uid=%s&version=%s&timestamp=%u
+0049ad08	FUN_0040bbfc	%s?hmac=%s&seq=9&uid=%s&version=%s&timestamp=%u
+0049ad38	FUN_0040bdc8	%s?did=%s&device_version=%s&mac=%s&heart_time=%s&p2p_status=%s
+0049ad78	FUN_0040bf2c	req_info = %s\n
+0049ad88	FUN_0040bf2c	Content-Type: application/json
+0049ada8	FUN_0040c0b8,FUN_0040c260,FUN_0040d59c	Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s
+0049ade0	FUN_0040c0b8,FUN_0040c260,FUN_0040d59c	%s?Function=%s&Command=%s&Hmac=%s&Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s
+0049ae38	FUN_0040c408	Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s&SensorID=%s&EventStat=%s&EventTime=%s
+0049ae94	FUN_0040c408	%s?Function=%s&Command=%s&Hmac=%s&Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s&SensorID=%s&EventStat=%s&EventTime=%s
+0049af14	FUN_0040c5e0	seq=9&uid=%s&type=0&sub_type=1&time=%s&local_video=%s&pic_urls=%s&video_urls=%s
+0049af64	FUN_0040c5e0	%s?hmac=%s&seq=9&uid=%s&type=0&sub_type=1&time=%s&local_video=%s&pic_urls=%s&video_urls=%s
+0049afc0	FUN_0040c834	seq=9&uid=%s&type=%s&sub_type=%s&time=%s&local_video=%s&pic_urls=%s&video_urls=%s&pic_pwd=%s&video_pwd=%s&timestamp=%u
+0049b038	FUN_0040c834	%s?hmac=%s&seq=9&uid=%s&type=%s&sub_type=%s&time=%s&local_video=%s&pic_urls=%s&video_urls=%s&pic_pwd=%s&video_pwd=%s&timestamp=%u
+0049b0bc	FUN_0040cafc	seq=9&uid=%s&suffix=%s&time=%s&timestamp=%u
+0049b0e8	FUN_0040cafc	%s?hmac=%s&seq=9&uid=%s&suffix=%s&time=%s&timestamp=%u
+0049b120	FUN_0040ccd8	seq=9&uid=%s&type=%s&sub_type=%s&suffix=%s&time=%s&timestamp=%u
+0049b160	FUN_0040ccd8	%s?hmac=%s&seq=9&uid=%s&type=%s&sub_type=%s&suffix=%s&time=%s&timestamp=%u
+0049b1ac	FUN_0040ced4	seq=1&userid=%s&token=%s&uid=%s&name=%s&message=%s
+0049b1e0	FUN_0040ced4	%s?hmac=%s&seq=1&userid=%s&token=%s&uid=%s&name=%s&message=%s
+0049b220	FUN_0040d0e8	%s?did=%s&vendor=%s&timestamp=%s&token=%s
+0049b24c	FUN_0040d0e8	/home/app/ca/gd_bundle-g2-g1.crt
+0049b270	FUN_0040d744	%s?seq=%s&did=%s&currentCode=%s&targetCode=%s&region=%s&status=%s
+0049b2b4	FUN_0040d8b0	Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s&EventTime=%s&Fileexttype=%s&Filefullname=%s&Duration=%s
+0049b324	FUN_0040d8b0	%s?Function=%s&Command=%s&Hmac=%s&Time=%s&Nonce=%s&Seq=%s&UID=%s&Webaccount=%s&Token=%s&EventTime=%s&Fileexttype=%s&Filefullname=%s&Duration=%s
+0049b3b4	FUN_0040db78,FUN_0040dca4	CWD %s
+0049b3bc	FUN_0040dca4	fail open '%s': %s\n
+0049b3d8	FUN_0040e030	devid
+0049b3e0	FUN_0040e030	devlog
+0049b3e8	FUN_0040e030	POST error:
+0049b3f4	FUN_0040e190	xiaomi
+0049b3fc	FUN_0040e190	{"accessKeyId":"access_key_id"}
+0049b41c	FUN_0040e334	%s&uid=%s
+0049b428	FUN_0040e334	req_info=%s
+0049b434	FUN_0040e45c	seq=9&uid=%s&filename=%s&timestamp=%u
+0049b45c	FUN_0040e45c	%s?hmac=%s&seq=9&uid=%s&filename=%s&timestamp=%u
+0049b494	FUN_0040e628	fail\n
+0049b4b0	main	-keySec
+0049b4b8	main	-token
+0049b4c0	main	-tokenSec
+0049b4cc	main	-path
+0049b4dc	main	-filename
+0049b4e8	main	-overwrite
+0049b4f4	main	-function
+0049b500	main	-command
+0049b514	main	-webaccount
+0049b520	main	-version
+0049b52c	main	-model
+0049b534	main	-port
+0049b53c	main	-SensorID
+0049b548	main	-EventStat
+0049b554	main	-EventTime
+0049b560	main	-username
+0049b56c	main	-password
+0049b578	main	-verification_code
+0049b58c	main	-authid
+0049b594	main	-device_id
+0049b5a0	main	-Fileexttype
+0049b5b0	main	-Filefullname
+0049b5c0	main	-Duration
+0049b5cc	main	-pthread
+0049b5d8	main	-filetype
+0049b5e4	main	-reftoken
+0049b5f0	main	-media_id
+0049b5fc	main	-content
+0049b608	main	-number
+0049b610	main	-ssid
+0049b624	main	-signal_quality
+0049b634	main	-packetloss
+0049b640	main	-p2pconnect
+0049b64c	main	-p2pconnect_success
+0049b660	main	-tfstat
+0049b668	main	-userid
+0049b670	main	-name
+0049b678	main	-message
+0049b684	main	-vendor
+0049b68c	main	-timestamp
+0049b698	main	-sname
+0049b6a0	main	-protocol
+0049b6ac	main	-type
+0049b6b4	main	-sub_type
+0049b6c0	main	-suffix
+0049b6c8	main	-time
+0049b6d0	main	-pic_url
+0049b6dc	main	-video_url
+0049b6e8	main	-pic_pwd
+0049b6f4	main	-video_pwd
+0049b700	main	-oss_scene_type
+0049b720	main	-currentCode
+0049b730	main	-targetCode
+0049b73c	main	-region
+0049b744	main	-status
+0049b74c	main	-heart_time
+0049b758	main	-p2p_status
+0049b764	main	-param
+0049b76c	main	-apmode
+0049b780	main	Need key
+0049b78c	main	Need keySec
+0049b798	main	Need token
+0049b7a4	main	Need tokenSec
+0049b7b4	main	Need path
+0049b7c0	main	Need filename
+0049b7d0	main	Need url
+0049b7dc	main	Need overwrite
+0049b7ec	main	Need username
+0049b7fc	main	Need password
+0049b80c	main	Need verification_code
+0049b824	main	Need authid
+0049b830	main	Need device_id
+0049b840	main	Need uid
+0049b84c	main	Need version
+0049b85c	main	Need mac
+0049b868	main	Need packetloss
+0049b878	main	Need p2pconnect
+0049b888	main	Need p2pconnect_success
+0049b8a0	main	Need tfstat
+0049b8ac	main	Need ssid
+0049b8b8	main	Need ip
+0049b8c0	main	Need signal_quality
+0049b8d4	main	Need apmode
+0049b8e0	main	Need sname
+0049b8ec	main	Need protocol
+0049b8fc	main	Need did
+0049b908	main	Need heart_time
+0049b918	main	Need p2p_status
+0049b928	main	Need param
+0049b934	main	Need function
+0049b944	main	Need command
+0049b954	main	Need webaccount
+0049b964	main	Need model
+0049b970	main	Need port
+0049b97c	main	Need SensorID
+0049b98c	main	Need EventStat
+0049b99c	main	Need EventTime
+0049b9ac	main	Need seq
+0049b9b8	main	Need currentCode
+0049b9cc	main	Need targetCode
+0049b9dc	main	Need region
+0049b9e8	main	Need status
+0049b9f4	main	\ndo_hmac_sha_test:\n
+0049ba08	main	got key=%s\n
+0049ba14	main	got encode string=%s\n
+0049ba2c	main	result=
+0049ba34	main	base64_encode=%s\n
+0049ba48	main	hmac=%s\n
+0049ba54	main	123456789012345
+0049ba64	main	Need pic_url
+0049ba74	main	Need video_url
+0049ba84	main	Need type
+0049ba90	main	Need sub_type
+0049baa0	main	Need pic_pwd
+0049bab0	main	Need video_pwd
+0049bac0	main	Need suffix
+0049bacc	main	Need time
+0049bad8	main	Need userid
+0049bae4	main	Need name
+0049baf0	main	Need message
+0049bb00	main	Need vendor
+0049bb0c	main	Need timestamp
+0049bb1c	004be4a0,FUN_00408ff4	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+0049bbc0	FUN_0040ea38	------------------------%08x%08x
+0049bbe4	FUN_0040ec80	; filename="%s"
+0049bbf4	FUN_0040eedc	application/octet-stream
+0049bc10	FUN_0040f950	Content-Type: multipart/form-data
+0049bc34	FUN_0040f950	%s; boundary=%s\r\n
+0049bc48	FUN_0040f950	--%s\r\n
+0049bc50	FUN_0040f950	Content-Disposition: form-data; name="
+0049bc7c	FUN_0040f950	\r\nContent-Type: multipart/mixed; boundary=%s\r\n
+0049bcac	FUN_0040f950	\r\n--%s\r\nContent-Disposition: attachment
+0049bcd4	FUN_0040f950	\r\nContent-Type: %s
+0049bcf8	FUN_0040f950	couldn't open file "%s"
+0049bd10	FUN_0040f950	\r\n--%s--
+0049bd30	0049bdf0,FUN_0040eedc	image/gif
+0049bd44	0049bdf8,0049be00	image/jpeg
+0049bd50	0049bdfc	.jpeg
+0049bd60	0049be08	text/plain
+0049bd6c	0049be0c	.html
+0049bd74	0049be10	text/html
+0049bd88	0049be18	application/xml
+0049be20	FUN_004103f4	[%s %s %s]
+0049be2c	FUN_00410624	Send failure: %s
+0049be40	FUN_00410740	Recv failure: %s
+0049be54	FUN_00410818	Write callback asked for PAUSE when not supported!
+0049be88	FUN_00410818	Failed writing body (%zu != %zu)
+0049beac	FUN_00410818	Failed writing header
+0049bec4	0049bee0,0049bee4	Header
+0049bf74	FUN_00410ed4	(nil)
+0049bf7c	FUN_00410ed4	(nil)
+0049bf84	FUN_00410ed4	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ
+0049bfac		0123456789abcdefghijklmnopqrstuvwxyz
+0049bfe0	FUN_004123f0	CONNECT_ONLY is required!
+0049bffc	FUN_004123f0	Failed to get recent socket
+0049c018	FUN_004126f8	easy handle already used in multi handle
+0049c044	FUN_004130f8	getpeername() failed with errno %d: %s
+0049c06c	FUN_004130f8,FUN_00413494	getsockname() failed with errno %d: %s
+0049c094	FUN_004130f8	ssrem inet_ntop() failed with errno %d: %s
+0049c0c0	FUN_004130f8	ssloc inet_ntop() failed with errno %d: %s
+0049c0ec	FUN_00413494	sa_addr inet_ntop() failed with errno %d: %s
+0049c11c	FUN_00413494	  Trying %s...\n
+0049c12c	FUN_00413494	Could not set TCP_NODELAY: %s\n
+0049c14c	FUN_00413494	TCP_NODELAY set\n
+0049c160	FUN_00413494	Failed to set SO_KEEPALIVE on fd %d\n
+0049c188	FUN_00413494	Failed to set TCP_KEEPIDLE on fd %d\n
+0049c1b0	FUN_00413494	Failed to set TCP_KEEPINTVL on fd %d\n
+0049c1dc	FUN_00413494	host!
+0049c1e4	FUN_00413494	Couldn't bind to interface '%s'
+0049c204	FUN_00413494	Local Interface %s is ip %s using address family %i\n
+0049c23c	FUN_00413494	SO_BINDTODEVICE %s failed with errno %d: %s; will do regular bind\n
+0049c280	FUN_00413494	Name '%s' family %i resolved to '%s' family %i\n
+0049c2b0	FUN_00413494	Local port: %hu\n
+0049c2c4	FUN_00413494	Bind to local port %hu failed, trying next\n
+0049c2f0	FUN_00413494	bind failed with errno %d: %s
+0049c310	FUN_00413494	Immediate connect fail for %s: %s\n
+0049c334	FUN_00413494	Couldn't bind to '%s'
+0049c34c	FUN_00413cd0,FUN_00414048	Connection time-out
+0049c360	FUN_00413cd0	After %ldms connect time, move on!\n
+0049c384	FUN_00413cd0	Connection failed\n
+0049c398	FUN_00413cd0	connect to %s port %ld failed: %s\n
+0049c3bc	FUN_00413cd0	Failed to connect to %s port %ld: %s
+0049c470	FUN_00414cfc	Curl_poll(%d ds, %d ms)\n
+0049c48c	FUN_0041547c	Internal error clearing splay node = %d\n
+0049c4b8	FUN_0041547c	Internal error removing splay node = %d\n
+0049c4e4	FUN_00415c98	Pipe broke: handle 0x%p, url = %s\n
+0049c508	FUN_00415c98	In state %d with no easy_conn, bail out!\n
+0049c534	FUN_00415c98	Resolving timed out after %ld milliseconds
+0049c560	FUN_00415c98	Connection timed out after %ld milliseconds
+0049c58c	FUN_00415c98,FUN_00428520	Operation timed out after %ld milliseconds with %lld out of %lld bytes received
+0049c5dc	FUN_00415c98,FUN_00428520	Operation timed out after %ld milliseconds with %lld bytes received
+0049c620	FUN_00415c98	Hostname was found in DNS cache\n
+0049c644	FUN_00415c98,FUN_0041aacc	Hostname in DNS cache was stale, zapped\n
+0049c690	0049d3ec,0049d3fc,0049d410,0049d41c,0049d43c,0049d44c,0049d454,0049d464,0049d480,FUN_004174a0	Unknown error
+0049c6a0		CURLSHcode unknown
+0049c6b4	FUN_00417528	Unknown error %d
+0049c6c8	0049d360,0049d37c,0049d39c	No error
+0049c6d4	0049d364	Unknown share option
+0049c6ec	0049d368	Share currently in use
+0049c704	0049d36c	Invalid share handle
+0049c71c	0049d370,0049d388,0049d408,0049f654	Out of memory
+0049c72c	0049d374	Feature not enabled in this library
+0049c750	0049d378	Please call curl_multi_perform() soon
+0049c778	0049d380	Invalid multi handle
+0049c790	0049d384	Invalid easy handle
+0049c7a4	0049d38c	Internal error
+0049c7b4	0049d390	Invalid socket argument
+0049c7cc	0049d394	Unknown option
+0049c7dc	0049d398	The easy handle is already added to a multi handle
+0049c810	0049d3a0	Unsupported protocol
+0049c828	0049d3a4	Failed initialization
+0049c840	0049d3a8	URL using bad/illegal format or missing URL
+0049c86c	0049d3ac	A requested feature, protocol or option was not found built-in in this libcurl due to a build-time decision.
+0049c8dc	0049d3b0	Couldn't resolve proxy name
+0049c8f8	0049d3b4	Couldn't resolve host name
+0049c914	0049d3b8	Couldn't connect to server
+0049c930	0049d3bc	FTP: weird server reply
+0049c948	0049d3c0	Access denied to remote resource
+0049c96c	0049d3c4	FTP: The server failed to connect to data port
+0049c99c	0049d3c8	FTP: unknown PASS reply
+0049c9b4	0049d3cc	FTP: Accepting server connect has timed out
+0049c9e0	0049d3d0	FTP: unknown PASV reply
+0049c9f8	0049d3d4	FTP: unknown 227 response format
+0049ca1c	0049d3d8	FTP: can't figure out the host in the PASV response
+0049ca50	0049d3dc	Error in the HTTP2 framing layer
+0049ca74	0049d3e0	FTP: couldn't set file type
+0049ca90	0049d3e4	Transferred a partial file
+0049caac	0049d3e8	FTP: couldn't retrieve (RETR failed) the specified file
+0049cae4	0049d3f0	Quote command returned error
+0049cb04	0049d3f4	HTTP response code said error
+0049cb24	0049d3f8	Failed writing received data to disk/application
+0049cb58	0049d400	Upload failed (at start/before it took off)
+0049cb84	0049d404	Failed to open/read local data from file/application
+0049cbbc	0049d40c	Timeout was reached
+0049cbd0	0049d414	FTP: command PORT failed
+0049cbec	0049d418	FTP: command REST failed
+0049cc08	0049d420	Requested range was not delivered by the server
+0049cc38	0049d424	Internal problem setting up the POST
+0049cc60	0049d428	SSL connect error
+0049cc74	0049d42c	Couldn't resume download
+0049cc90	0049d430	Couldn't read a file:// file
+0049ccb0	0049d434	LDAP: cannot bind
+0049ccc4	0049d438	LDAP: search failed
+0049ccd8	0049d440	A required function in the library was not found
+0049cd0c	0049d444	Operation was aborted by an application callback
+0049cd40	0049d448	A libcurl function was given a bad argument
+0049cd6c	0049d450	Failed binding local connection end
+0049cd90	0049d458	Number of redirects hit maximum amount
+0049cdb8	0049d45c	An unknown option was passed in to libcurl
+0049cde4	0049d460	Malformed telnet option
+0049cdfc	0049d468	SSL peer certificate or SSH remote key was not OK
+0049ce30	0049d46c	Server returned nothing (no headers, no data)
+0049ce60	0049d470	SSL crypto engine not found
+0049ce7c	0049d474	Can not set SSL crypto engine as default
+0049cea8	0049d478	Failed sending data to the peer
+0049cec8	0049d47c	Failure when receiving data from the peer
+0049cef4	0049d484	Problem with the local SSL certificate
+0049cf1c	0049d488	Couldn't use specified SSL cipher
+0049cf40	0049d48c	Peer certificate cannot be authenticated with given CA certificates
+0049cf84	0049d490	Unrecognized or bad HTTP Content or Transfer-Encoding
+0049cfbc	0049d494	Invalid LDAP URL
+0049cfd0	0049d498,FUN_00420d88	Maximum file size exceeded
+0049cfec	0049d49c	Requested SSL level failed
+0049d008	0049d4a0	Send failed since rewinding of the data stream failed
+0049d040	0049d4a4	Failed to initialise SSL crypto engine
+0049d068	0049d4a8	Login denied
+0049d078	0049d4ac	TFTP: File Not Found
+0049d090	0049d4b0	TFTP: Access Violation
+0049d0a8	0049d4b4	Disk full or allocation exceeded
+0049d0cc	0049d4b8	TFTP: Illegal operation
+0049d0e4	0049d4bc	TFTP: Unknown transfer ID
+0049d100	0049d4c0	Remote file already exists
+0049d11c	0049d4c4	TFTP: No such user
+0049d130	0049d4c8	Conversion failed
+0049d144	0049d4cc	Caller must register CURLOPT_CONV_ callback options
+0049d178	0049d4d0	Problem with the SSL CA cert (path? access rights?)
+0049d1ac	0049d4d4	Remote file not found
+0049d1c4	0049d4d8	Error in the SSH layer
+0049d1dc	0049d4dc	Failed to shut down the SSL connection
+0049d204	0049d4e0	Socket not ready for send/recv
+0049d224	0049d4e4	Failed to load CRL file (path? access rights?, format?)
+0049d25c	0049d4e8	Issuer check against peer certificate failed
+0049d28c	0049d4ec	FTP: The server did not accept the PRET command.
+0049d2c0	0049d4f0	RTSP CSeq mismatch or invalid CSeq
+0049d2e4	0049d4f4	RTSP session error
+0049d2f8	0049d4f8	Unable to parse FTP file list
+0049d318	0049d4fc	Chunk callback failed
+0049d330	0049d500	The max connection limit is reached
+0049d518	FUN_004186ac,FUN_0041c63c,FUN_0041c748	FALSE
+0049d520	FUN_004186ac	Conn: %ld (%p) Receive pipe weight: (%lld/%zu), penalized: %s\n
+0049d560	FUN_004188f8	Site %s:%d is pipeline blacklisted\n
+0049d584	FUN_00418b0c	Server %s is not blacklisted\n
+0049d5a4	FUN_00418b0c	Server %s is blacklisted\n
+0049d5c0	FUN_00418f58	WARNING: Using weak random seed\n
+0049d5e8	00419b00	SSL write: %s, errno %d
+0049d600	FUN_00419b30	SSL read: %s, errno %d
+0049d628	FUN_00419c80	SSL connection timeout
+0049d640	FUN_00419c80	CyaSSL does not support SSLv2
+0049d660	FUN_00419c80	CyaSSL cannot be configured to use TLS 1.0-1.2, TLS 1.0 is used exclusively\n
+0049d6b0	FUN_00419c80	SSL: couldn't create a method!
+0049d6d0	FUN_00419c80	SSL: couldn't create a context!
+0049d6f0	FUN_00419c80	error setting certificate verify locations:\n  CAfile: %s\n  CApath: %s
+0049d738	FUN_00419c80	error setting certificate verify locations, continuing anyway:\n
+0049d778	FUN_00419c80	successfully set certificate verify locations:\n
+0049d7a8	FUN_00419c80	  CAfile: %s\n  CApath: %s\n
+0049d7c4	FUN_00419c80	unable to use client certificate (no key or wrong pass phrase?)
+0049d804	FUN_00419c80	unable to set private key
+0049d820	FUN_00419c80	SSL: couldn't create a context (handle)!
+0049d84c	FUN_00419c80	SSL: SSL_set_session failed: %s
+0049d86c	FUN_00419c80	SSL re-using session ID\n
+0049d888	FUN_00419c80	SSL: SSL_set_fd failed
+0049d8a0	FUN_00419c80	select/poll on SSL socket, errno: %d
+0049d8c8	FUN_00419c80	CyaSSL: Connecting to %s:%d\n
+0049d8e8	FUN_00419c80	\tsubject alt name(s) or common name do not match "%s"\n
+0049d920	FUN_00419c80	\tCA signer not available for verification\n
+0049d94c	FUN_00419c80	CA signer not available for verification, continuing anyway\n
+0049d98c	FUN_00419c80	SSL_connect failed with error %d: %s
+0049d9b4	FUN_00419c80	SSL connected\n
+0049d9c4	FUN_00419c80	old SSL session ID is stale, removing\n
+0049d9ec	FUN_00419c80	failed to store ssl session
+0049da08	FUN_0041a3ec	CyaSSL/%s
+0049da14	FUN_0041a3ec	3.3.0
+0049da48	FUN_0041a68c	%s:%d
+0049da58	FUN_0041aacc	Hostname was %sfound in DNS cache\n
+0049da7c	FUN_0041ac94	name lookup timed out
+0049da94	FUN_0041ac94	Previous alarm fired off!
+0049dab0	FUN_0041b020	%255[^:]:%d:%255s
+0049dac4	FUN_0041b020	Resolve %s found illegal!\n
+0049dae0	FUN_0041b020	Added %s:%d:%s to DNS cache\n
+0049db00	FUN_0041b1d0	--:--:--
+0049db0c	FUN_0041b1d0	%2lld:%02lld:%02lld
+0049db20	FUN_0041b1d0	%3lldd %02lldh
+0049db30	FUN_0041b1d0	%7lldd
+0049db38	FUN_0041b3f4	%5lld
+0049db40	FUN_0041b3f4	%4lldk
+0049db48	FUN_0041b3f4	%2lld.%0lldM
+0049db58	FUN_0041b3f4	%4lldM
+0049db60	FUN_0041b3f4	%2lld.%0lldG
+0049db70	FUN_0041b3f4	%4lldG
+0049db78	FUN_0041b3f4	%4lldT
+0049db80	FUN_0041b3f4	%4lldP
+0049db88		Callback aborted
+0049db9c		** Resuming transfer from byte position %lld\n
+0049dbcc		  %% Total    %% Received %% Xferd  Average Speed   Time    Time     Time  Current\n                                 Dload  Upload   Total   Spent    Left  Speed\n
+0049dc70		\r%3lld %s  %3lld %s  %3lld %s  %s  %s %s %s %s %s
+0049dcef		@#HttpOnly_
+0049dcfc	FUN_0041c63c	unknown
+0049dd04	FUN_0041c63c	%s%s%s\t%s\t%s\t%s\t%lld\t%s\t%s
+0049dd20	FUN_0041c748	Replaced
+0049dd2c	FUN_0041c748	Added
+0049dd50	FUN_0041c748	secure
+0049dd58	FUN_0041c748	httponly
+0049dd64	FUN_0041c748	domain
+0049dd6c	FUN_0041c748	skipped cookie with bad tailmatch domain: %s\n
+0049dd9c	FUN_0041c748	version
+0049dda4	FUN_0041c748	max-age
+0049ddac	FUN_0041c748	expires
+0049ddb8	FUN_0041c748	%s cookie %s="%s" for domain %s, path %s, expire %lld\n
+0049ddf8	FUN_0041d294,FUN_00420d88,FUN_004229a8	Set-Cookie:
+0049de08	FUN_0041db04	# Netscape HTTP Cookie File\n# http://curl.haxx.se/docs/http-cookies.html\n# This file was generated by libcurl! Edit at your own risk.\n\n
+0049de90	FUN_0041db04	#\n# Fatal libcurl error\n
+0049deac	FUN_0041db04	WARNING: failed to save cookies in %s\n
+0049df00	FUN_0041dfb8	Rewind stream after send\n
+0049df1c	FUN_0041dfb8	NTLM send, close instead of sending %lld bytes\n
+0049df4c	FUN_0041e1d4	Empty reply from server
+0049df6c	FUN_0041e4a4	Avoided giant realloc for header (max is %d)!
+0049df9c	FUN_0041e4a4	Failed to alloc memory for big header!
+0049dfc4	FUN_0041e7e4,FUN_00420d88	The requested URL returned error: %d
+0049dfec	FUN_0041e9f8,FUN_0041ecc4	Basic
+0049dff4	FUN_0041e9f8,FUN_0041ecc4,FUN_0042b320	Digest
+0049dffc	FUN_0041e9f8	Authorization:
+0049e00c	FUN_0041e9f8,FUN_0042b7dc	%s:%s
+0049e014	FUN_0041e9f8	%sAuthorization: Basic %s\r\n
+0049e030	FUN_0041e9f8	%s auth using %s with user '%s'\n
+0049e054	FUN_0041e9f8	Server
+0049e05c	FUN_0041ecc4	Ignoring duplicate digest auth header.\n
+0049e084	FUN_0041ecc4	Authentication problem. Ignoring this.\n
+0049e0ac	FUN_004035b0,FUN_0041f794	Expect:
+0049e0b4	FUN_004035b0,FUN_0041f794	100-continue
+0049e0c4	FUN_004035b0	Expect: 100-continue\r\n
+0049e0dc	FUN_0041f3e4,FUN_0041f794	Host:
+0049e0e4	FUN_0041f3e4,FUN_0041f794,FUN_00420d88	Content-Type:
+0049e0f4	FUN_0041f3e4	Content-Length
+0049e104	FUN_0041f3e4	Connection
+0049e110	FUN_0041f664	Invalid TIMEVALUE
+0049e124	FUN_0041f664	%s, %02d %s %4d %02d:%02d:%02d GMT
+0049e148	FUN_0041f664	If-Modified-Since: %s\r\n
+0049e160	FUN_0041f664	If-Unmodified-Since: %s\r\n
+0049e17c	FUN_0041f664	Last-Modified: %s\r\n
+0049e198	FUN_0041f794	Transfer-Encoding: chunked\r\n
+0049e1bc	FUN_0041f794	Accept: */*\r\n
+0049e1d4	FUN_0041f794	Proxy-Connection: Keep-Alive\r\n
+0049e1f8	FUN_0041f794	User-Agent:
+0049e204	FUN_0041f794	Referer:
+0049e210	FUN_0041f794	Referer: %s\r\n
+0049e220	FUN_0041f794	Accept-Encoding:
+0049e234	FUN_0041f794	Accept-Encoding: %s\r\n
+0049e24c	FUN_0041f794,FUN_00420d88	Transfer-Encoding:
+0049e260	FUN_0041f794,FUN_00420d88	chunked
+0049e268	FUN_0041f794	Chunky upload is not supported by HTTP 1.0
+0049e294	FUN_0041f794	Host: %s%s%s\r\n
+0049e2a4	FUN_0041f794	Host: %s%s%s:%hu\r\n
+0049e2b8	FUN_0041f794	Accept:
+0049e2c0	FUN_0041f794	Could not seek stream
+0049e2d8	FUN_0041f794	Could only read %lld bytes from the input
+0049e304	FUN_0041f794	File already completely uploaded
+0049e328	FUN_0041f794,FUN_00420d88	Content-Range:
+0049e338	FUN_0041f794	Range: bytes=%s\r\n
+0049e34c	FUN_0041f794	Content-Range: bytes 0-%lld/%lld\r\n
+0049e370	FUN_0041f794	Content-Range: bytes %s%lld/%lld\r\n
+0049e394	FUN_0041f794	Content-Range: bytes %s/%lld\r\n
+0049e3b8	FUN_0041f794,FUN_00420d88	Proxy-Connection:
+0049e3cc	FUN_0041f794	%s HTTP/%s\r\n%s%s%s%s%s%s%s%s%s%s%s
+0049e3f0	FUN_0041f794	Cookie: 
+0049e3fc	FUN_0041f794	%s%s=%s
+0049e404	FUN_0041f794	Content-Length: 0\r\n\r\n
+0049e41c	FUN_0041f794	Failed sending POST request
+0049e438	FUN_0041f794	Internal HTTP POST error!
+0049e454	FUN_0041f794,FUN_00420d88	Content-Length:
+0049e464	FUN_0041f794	Content-Length: %lld\r\n
+0049e47c	FUN_0041f794	Could not get Content-Type header line!
+0049e4a4	FUN_0041f794	Failed sending PUT request
+0049e4c0	FUN_0041f794	Content-Type: application/x-www-form-urlencoded\r\n
+0049e4fc	FUN_0041f794	Failed sending HTTP POST request
+0049e520	FUN_0041f794	Failed sending HTTP request
+0049e53c	FUN_0041f794	upload completely sent off: %lld out of %lld bytes\n
+0049e570	FUN_00420d88	Received 101\n
+0049e580	FUN_00420d88	no chunk, no close, no size. Assume close to signal end\n
+0049e5bc	FUN_00420d88	HTTP error before end of send, stop sending\n
+0049e5ec	FUN_00420d88	Keep sending data to get tossed away!\n
+0049e614	FUN_00420d88	 HTTP/%d.%d %3d
+0049e624	FUN_00420d88	 HTTP %3d
+0049e630	FUN_00420d88	 RTSP/%d.%d %3d
+0049e648	FUN_00420d88	The requested URL returned error: %s
+0049e670	FUN_00420d88	HTTP 1.0, assume close after body\n
+0049e694	FUN_00420d88	Negative content-length: %lld, closing after transfer\n
+0049e6cc	FUN_00420d88	Server:
+0049e6d4	FUN_00420d88	keep-alive
+0049e6e0	FUN_00420d88	HTTP/1.0 proxy connection set to keep alive!\n
+0049e710	FUN_00420d88	close
+0049e718	FUN_00420d88	HTTP/1.1 proxy connection set close!\n
+0049e740	FUN_00420d88	Connection:
+0049e74c	FUN_00420d88	HTTP/1.0 connection set to keep alive!\n
+0049e774	FUN_00420d88,FUN_004229a8	identity
+0049e780	FUN_00420d88	deflate
+0049e790	FUN_00420d88	x-gzip
+0049e798	FUN_00420d88	compress
+0049e7a4	FUN_00420d88	x-compress
+0049e7b0	FUN_00420d88	Content-Encoding:
+0049e7c4	FUN_00420d88	Last-Modified:
+0049e7d4	FUN_00420d88	WWW-Authenticate:
+0049e7e8	FUN_00420d88	Proxy-authenticate:
+0049e7fc	FUN_00420d88	Location:
+0049e80c	0049e830,FUN_0042505c	HTTPS
+0049e8c0	FUN_0040365c	IDN support not present, can't parse Unicode domains\n
+0049e904	FUN_004229a8	FLUSH
+0049e90c	FUN_004229a8	CURLOPT_SSL_VERIFYHOST no longer supports 1 as value!
+0049e944	FUN_00424784	Closing connection %ld\n
+0049e95c	FUN_0042485c	Connection %ld seems to be dead!\n
+0049e980	FUN_00424a94	Connected to %s (%s) port %ld (#%ld)\n
+0049e9a8	FUN_00424ef8	User-Agent: %s\r\n
+0049e9f0	FUN_0042505c	%15[^:]:%[^\n]
+0049ea00	FUN_0042505c	%15[^\n:]://%[^\n/?]%[^\n]
+0049ea18	FUN_0042505c	%[^\n/?]%[^\n]
+0049ea28	FUN_0042505c	<url> malformed
+0049ea40	FUN_0042505c	DICT.
+0049ea48	FUN_0042505c	LDAP.
+0049ea50	FUN_0042505c	IMAP.
+0049ea58	FUN_0042505c	SMTP.
+0049ea68	FUN_0042505c	Rebuilt URL to: %s\n
+0049ea80	FUN_0042505c	Please URL encode %% as %%25, see RFC 6874.\n
+0049eab0	FUN_0042505c	Invalid network interface: %s; %s\n
+0049ead4	FUN_0042505c	Protocol "%s" not supported or disabled in libcurl
+0049eb08	FUN_0042505c	%s://%s
+0049eb10	FUN_0042505c	[%*45[0123456789abcdefABCDEF:.]%c
+0049eb34	FUN_0042505c	;type=%c
+0049eb40	FUN_0042505c	%s://%s%s%s:%hu%s%s%s
+0049eb58	FUN_0042505c	Port number out of range
+0049eb74	FUN_0042505c	Couldn't find host %s in the .netrc file; using defaults\n
+0049ebb0	FUN_0042505c	anonymous
+0049ebbc	FUN_0042505c	ftp@example.com
+0049ebcc	FUN_0042505c	Found bundle for host %s: %p\n
+0049ebec	FUN_0042505c	Server doesn't support pipelining\n
+0049ec10	FUN_0042505c	Connection #%ld isn't open enough, can't reuse\n
+0049ec40	FUN_0042505c	Found connection %ld, with requests in the pipe (%zu)\n
+0049ec78	FUN_0042505c	We can reuse, but we want a new connection anyway\n
+0049ecac	FUN_0042505c	Re-using existing connection! (#%ld) with host %s\n
+0049ece0	FUN_0042505c	No connections available.\n
+0049ecfc	FUN_0042505c	NTLM picked AND auth done set, clear picked!\n
+0049ed2c	FUN_0042505c	NTLM-proxy picked AND auth done set, clear picked!\n
+0049ed68	FUN_0042505c	Couldn't resolve host '%s'
+0049ed84	FUN_0042505c	Couldn't resolve proxy '%s'
+0049eda0	FUN_0042505c	Invalid IPv6 address format\n
+0049edc0	FUN_00426e10	Connection cache is full, closing the oldest one.\n
+0049edf4	FUN_00426e10	Connection #%ld to host %s left intact\n
+0049ee1c	0049ee3c	<no protocol>
+0049ee90	FUN_00427364	Operation too slow. Less than %ld bytes/sec transferred the last %ld seconds
+0049eee8	FUN_00427880	.netrc
+0049eef4	FUN_00427880	machine
+0049eefc	FUN_00427880	login
+0049ef04	FUN_00427880	password
+0049f038	FUN_00428184	operation aborted by callback
+0049f058	FUN_00428184	Read callback asked for PAUSE when not supported!
+0049f08c	FUN_00428184	read function returned funny value
+0049f0b8	FUN_00428360	seek callback returned error %d
+0049f0d8	FUN_00428360	the ioctl callback returned %d\n
+0049f0f8	FUN_00428360	ioctl callback returned error %d
+0049f11c	FUN_00428360	necessary data rewind wasn't possible
+0049f144	FUN_00428490	The requested document is not new enough\n
+0049f170	FUN_00428490	The requested document is not old enough\n
+0049f19c	FUN_00428520	select/poll returned error
+0049f1b8	FUN_00428520	Rewinding stream by : %zd bytes on url %s (zero-length body)\n
+0049f1f8	FUN_00428520	Excess found in a non pipelined read: excess = %zd url = %s (zero-length body)\n
+0049f248	FUN_00428520	Ignoring the response-body\n
+0049f264	FUN_00428520	HTTP server doesn't seem to support byte ranges. Cannot resume.
+0049f2a4	FUN_00428520	Simulate a HTTP 304 response!\n
+0049f2c4	FUN_00428520	Failed writing data
+0049f2d8	FUN_00428520	%s in chunked-encoding
+0049f2f0	FUN_00428520	Leftovers after chunking: %zu bytes\n
+0049f318	FUN_00428520	Rewinding %zu bytes\n
+0049f330	FUN_00428520	Rewinding stream by : %zu bytes on url %s (size = %lld, maxdownload = %lld, bytecount = %lld, nread = %zd)\n
+0049f39c	FUN_00428520	Excess found in a non pipelined read: excess = %zu, size = %lld, maxdownload = %lld, bytecount = %lld\n
+0049f404	FUN_00428520	we are done reading and this is set to close, stop send\n
+0049f440	FUN_00428520	Failed to alloc scratch buffer!
+0049f460	FUN_00428520	We are completely uploaded and fine\n
+0049f488	FUN_00428520	Done waiting for 100-continue\n
+0049f4a8	FUN_00428520	transfer closed with %lld bytes remaining to read
+0049f4dc	FUN_00428520	transfer closed with outstanding read data remaining
+0049f514	FUN_004296dc	No URL set!
+0049f520	FUN_00429830	Maximum (%ld) redirects followed
+0049f544	FUN_00429830	%15[^?&/:]://%c
+0049f558	FUN_00429830	Issue another request to this URL: '%s'\n
+0049f584	FUN_00429830	Switch from POST to GET\n
+0049f5a0	FUN_00429830	Disables POST, goes with %s\n
+0049f5c0	FUN_00429d68	Re-used connection seems dead, get a new one\n
+0049f5f0	FUN_00429e10	Connection died, retrying a fresh connect\n
+0049f664	0049f640	Too long hexadecimal number
+0049f680	0049f644	Illegal or missing hexadecimal sequence
+0049f6a8	0049f648	Malformed encoding found
+0049f6c4	0049f64c	Write error
+0049f6d0	0049f650	Bad content-encoding found
+0049f6ec	FUN_0042b320	nonce
+0049f6f4	FUN_0042b320	stale
+0049f6fc	FUN_0042b320	realm
+0049f704	FUN_0042b320	opaque
+0049f71c	FUN_0042b320,FUN_0042b7dc	auth-int
+0049f728	FUN_0042b320	algorithm
+0049f734	FUN_0042b320	MD5-sess
+0049f744	FUN_0042b7dc	Proxy-
+0049f74c	FUN_0042b7dc	%08x%08x%08x%08x
+0049f760	FUN_0042b7dc	%s:%s:%s
+0049f76c	FUN_0042b7dc	%s:%.*s
+0049f774	FUN_0042b7dc	d41d8cd98f00b204e9800998ecf8427e
+0049f798	FUN_0042b7dc	%s:%s:%08x:%s:%s:%s
+0049f7ac	FUN_0042b7dc	%sAuthorization: Digest username="%s", realm="%s", nonce="%s", uri="%.*s", cnonce="%s", nc=%08x, qop=%s, response="%s"
+0049f824	FUN_0042b7dc	%sAuthorization: Digest username="%s", realm="%s", nonce="%s", uri="%.*s", response="%s"
+0049f880	FUN_0042b7dc	%s, opaque="%s"
+0049f890	FUN_0042b7dc	%s, algorithm="%s"
+0049f920	FUN_0042cf94	Curl_ipv4_resolve_r failed for %s\n
+0049f944	FUN_0042d020	%31[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]
+0049f980	FUN_0042d020	%02d:%02d:%02d
+0049f990	FUN_0042d020	%02d:%02d
+0049f9cc	0049fdc0,FUN_0042d020	Monday
+0049f9d4	0049fdc4,FUN_0042d020	Tuesday
+0049f9dc	0049fdc8	Wednesday
+0049f9e8	0049fdcc	Thursday
+0049f9f4	0049fdd0	Friday
+0049f9fc	0049fdd4	Saturday
+0049fa08	0049fdd8	Sunday
+0049fe90	FUN_0042e360	%c%c==
+0049fe98	FUN_0042e360	%c%c%c=
+0049fea0	FUN_0042e360	%c%c%c%c
+0049feb0		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_
+0049fef4	FUN_0042e568,FUN_0042e770	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+0049ff40	FUN_0042ff74	/dev/urandom
+0049ff50	FUN_0042ff74	/dev/random
+004a0060	Sha256Hash	InitSha256 failed
+004a0074	Sha256Hash	Sha256Update failed
+004a0088	Sha256Hash	Sha256Final failed
+004a00a4	FUN_00431d8c	CyaSSL Entering %s
+004a00b8	FUN_00431e24	CyaSSL Leaving %s, return %d
+004a00d8	FUN_00431ec4	CyaSSL error occured, error = %d
+004a0100		CLNTSRVRclient finished
+004a0118		server finished
+004a0128	CyaSSL_CTX_new	CYASSL_CTX_new
+004a0138	CyaSSL_CTX_new	Init CTX failed
+004a0148	CyaSSL_CTX_new	Alloc CTX failed, method freed
+004a0168	CyaSSL_CTX_free	SSL_CTX_free
+004a0178	FUN_00432578	SSL_new
+004a0180	CyaSSL_free	SSL_free
+004a018c	FUN_00432724	SSL_set_fd
+004a0198	FUN_004329fc	SSL_get_fd
+004a01a4	CyaSSL_get_using_nonblock	CyaSSL_get_using_nonblock
+004a01c0	FUN_00432b44	CyaSSL_set_using_nonblock
+004a01dc	CyaSSL_negotiate	CyaSSL_negotiate
+004a01f0	CyaSSL_write	SSL_write()
+004a01fc	FUN_00432e3c	CyaSSL_read_internal()
+004a0214	FUN_00432f7c	CyaSSL_peek()
+004a0224	CyaSSL_read	CyaSSL_read()
+004a0234	FUN_0043309c	CyaSSL_send()
+004a0244	FUN_004331a0	CyaSSL_recv()
+004a0254	FUN_004332a4	SSL_shutdown()
+004a0264	FUN_004332a4	quiet shutdown, no close notify sent
+004a028c	CyaSSL_get_error	SSL_get_error
+004a029c	FUN_004335b8	SSL_want_read
+004a02ac	FUN_00433638	SSL_want_write
+004a02bc	CyaSSL_ERR_error_string	ERR_error_string
+004a02d0	FUN_00433758	CyaSSL_ERR_error_string_n
+004a02ec	FUN_00433758	Error buffer too short, truncating
+004a0310	CyaSSL_CertManagerNew	CyaSSL_CertManagerNew
+004a0328	CyaSSL_CertManagerNew	Bad mutex init
+004a0338	CyaSSL_CertManagerFree	CyaSSL_CertManagerFree
+004a0350	CyaSSL_CertManagerUnloadCAs	CyaSSL_CertManagerUnloadCAs
+004a036c	FUN_00433ca4	CyaSSL_CertPemToDer
+004a0380	FUN_00433ca4,FUN_00433fa4	Bad pem der args
+004a0394	FUN_00433ca4	Bad cert type
+004a03a4	FUN_00433ca4,FUN_00433fa4	Bad Pem To Der
+004a03b4	FUN_00433ca4,FUN_00433fa4	Bad der length
+004a03c4	FUN_00433fa4	CyaSSL_KeyPemToDer
+004a03d8	FUN_00434244	CyaSSL_ERR_print_errors_fp
+004a03f4	FUN_004342e0	SSL_pending
+004a0400	FUN_00434470	CyaSSL_SetMinVersion
+004a0418	FUN_00434470,FUN_004345c8,FUN_0043f8a8,FUN_0043fc8c,FUN_0043ff14,FUN_004460e4,FUN_004481b0,FUN_004482b0	Bad function argument
+004a0430	FUN_004345c8	CyaSSL_SetVersion
+004a0444	FUN_00434d58	Adding a CA
+004a0450	FUN_00434d58	    Parsed new CA
+004a0464	FUN_00434d58	    Can't add as CA if not actually one
+004a048c	FUN_00434d58	    Doesn't have key usage certificate signing
+004a04bc	FUN_00434d58	    Already have this CA, not adding again
+004a04e8	FUN_00434d58	    CA Mutex Lock failed
+004a0504	FUN_00434d58	    Freeing Parsed CA
+004a051c	FUN_00434d58	    Freeing der CA
+004a0530	FUN_00434d58	        OK Freeing der CA
+004a054c	FUN_00434d58	AddCA
+004a0554	CyaSSL_Init	CyaSSL_Init
+004a0560	CyaSSL_Init,FUN_0043a040	Bad Lock Mutex count
+004a0578	004be510,FUN_00435434	-----BEGIN CERTIFICATE-----
+004a0594	004be514,FUN_00435434	-----END CERTIFICATE-----
+004a05b0	004be518,FUN_00435434	-----BEGIN CERTIFICATE REQUEST-----
+004a05d4	004be51c,FUN_00435434	-----END CERTIFICATE REQUEST-----
+004a05f8	004be520,FUN_00435434	-----BEGIN DH PARAMETERS-----
+004a0618	004be524,FUN_00435434	-----END DH PARAMETERS-----
+004a0634	004be528,FUN_00435434	-----BEGIN X509 CRL-----
+004a0650	004be52c,FUN_00435434	-----END X509 CRL-----
+004a0668	004be530,FUN_00435434	-----BEGIN RSA PRIVATE KEY-----
+004a0688	004be534,FUN_00435434	-----END RSA PRIVATE KEY-----
+004a06a8	004be538,FUN_00435434	-----BEGIN PRIVATE KEY-----
+004a06c4	004be53c,FUN_00435434	-----END PRIVATE KEY-----
+004a06e0	004be540,FUN_00435434	-----BEGIN ENCRYPTED PRIVATE KEY-----
+004a0708	004be544,FUN_00435434	-----END ENCRYPTED PRIVATE KEY-----
+004a072c	004be548,FUN_00435434	-----BEGIN EC PRIVATE KEY-----
+004a074c	004be54c,FUN_00435434	-----END EC PRIVATE KEY-----
+004a076c	004be550,FUN_00435434	-----BEGIN DSA PRIVATE KEY-----
+004a078c	004be554,FUN_00435434	-----END DSA PRIVATE KEY-----
+004a07ac	FUN_00435434	Couldn't find PEM header
+004a07dc	FUN_00435434	Proc-Type
+004a0804	FUN_00435df8	Growing Tmp Chain Buffer
+004a0820	FUN_00435df8	Processing Cert Chain
+004a0838	FUN_00435df8	   Cert Chain bigger than buffer
+004a085c	FUN_00435df8	We got one good PEM so stuff at end ok
+004a0884	FUN_00435df8	   Error in Cert in Chain
+004a08a0	FUN_00435df8	   Consumed another Cert in Chain
+004a08c4	FUN_00435df8	Finished Processing Cert Chain
+004a08e8	004be58c,CyaSSL_EVP_BytesToKey,FUN_00435df8,FUN_0043e67c,FUN_0043e960	DES-CBC
+004a08f0	004be590,CyaSSL_EVP_BytesToKey,FUN_00435df8,FUN_0043e6dc,FUN_0043e960	DES-EDE3-CBC
+004a0900	CyaSSL_EVP_BytesToKey,FUN_00435df8,FUN_0043e960	AES-128-CBC
+004a090c	CyaSSL_EVP_BytesToKey,FUN_00435df8,FUN_0043e960	AES-192-CBC
+004a0918	CyaSSL_EVP_BytesToKey,FUN_00435df8,FUN_0043e960	AES-256-CBC
+004a0924	FUN_00435df8	Need context for CA load
+004a0940	FUN_00435df8	Checking cert signature type
+004a0960	FUN_00435df8	Decode to key failed
+004a0978	FUN_00435df8	ECDSA cert signature
+004a0990	FUN_00435df8	Not ECDSA cert signature
+004a09ac	FUN_00436f80	Processing CA PEM file
+004a09c4	FUN_00436f80	We got one good PEM file so stuff at end ok
+004a09f0	FUN_00436f80	   Processed a CA
+004a0a04	CyaSSL_CertManagerVerifyBuffer	CyaSSL_CertManagerVerifyBuffer
+004a0a24	FUN_00437308	CyaSSL_CertManagerEnableOCSP
+004a0a44	FUN_00437394	CyaSSL_CertManagerDisableOCSP
+004a0a68	FUN_00437414,FUN_00437a34,FUN_00444a90	Getting dynamic buffer
+004a0a80	CyaSSL_CTX_load_verify_locations	CyaSSL_CTX_load_verify_locations
+004a0aa4	CyaSSL_CTX_load_verify_locations	opendir path verify locations failed
+004a0acc	CyaSSL_CTX_load_verify_locations	stat on name failed
+004a0ae0	FUN_00437a34	CyaSSL_CertManagerVerify
+004a0afc	FUN_00437a34	CertManagerVerify file bad size
+004a0b1c	FUN_00437d44	CyaSSL_CertManagerLoadCA
+004a0b38	FUN_00437d44	No CertManager error
+004a0b50	FUN_00437d44	CTX new failed
+004a0b60	FUN_00437ec4	CyaSSL_CertManagerEnableCRL
+004a0b7c	FUN_00437f50	CyaSSL_CertManagerDisableCRL
+004a0b9c	FUN_00437fd0	SSL_CTX_check_private_key
+004a0bb8	FUN_00438030	CyaSSL_CTX_der_load_verify_locations
+004a0be0	FUN_00438104	CyaSSL_CTX_use_certificate_file
+004a0c00	CyaSSL_CTX_use_PrivateKey_file	CyaSSL_CTX_use_PrivateKey_file
+004a0c20	FUN_00438264	CyaSSL_CTX_use_certificate_chain_file
+004a0c48	FUN_00438314	CyaSSL_use_certificate_file
+004a0c64	CyaSSL_use_PrivateKey_file	CyaSSL_use_PrivateKey_file
+004a0c80	FUN_0043848c	CyaSSL_use_certificate_chain_file
+004a0ca4	FUN_00438548	SSL_CTX_use_RSAPrivateKey_file
+004a0cc4	FUN_004385d0	CyaSSL_use_RSAPrivateKey_file
+004a0ce4	FUN_00438658	CyaSSL_CTX_set_verify
+004a0cfc	FUN_00438724	CyaSSL_set_verify
+004a0d10	FUN_004387f0	CyaSSL_SetCertCbCtx
+004a0d24	FUN_004388b8	SSL_get_session
+004a0d34	FUN_0043894c	SSL_set_session
+004a0d44	FUN_004389e4	CyaSSL_SetServerID
+004a0d58	FUN_004389e4	SetSession failed
+004a0d6c	FUN_004389e4	Valid ServerID not cached already
+004a0d90	FUN_00438bb4	SSL_library_init
+004a0da4	FUN_00438c3c	SSL_CTX_set_session_cache_mode
+004a0dc4	FUN_00438cd8	CyaSSL_CTX_set_cipher_list
+004a0de0	FUN_00438d68	CyaSSL_set_cipher_list
+004a0df8	CyaSSLv3_client_method	SSLv3_client_method
+004a0e0c	CyaSSL_connect	SSL_connect()
+004a0e1c	CyaSSL_connect	connect state: Advanced from buffered send
+004a0e48	CyaSSL_connect	connect state: CLIENT_HELLO_SENT
+004a0e6c	CyaSSL_connect	connect state: HELLO_AGAIN
+004a0e88	CyaSSL_connect	connect state: HELLO_AGAIN_REPLY
+004a0eac	CyaSSL_connect	connect state: FIRST_REPLY_DONE
+004a0ecc	CyaSSL_connect	sent: certificate
+004a0ee0	CyaSSL_connect	connect state: FIRST_REPLY_FIRST
+004a0f04	CyaSSL_connect	sent: client key exchange
+004a0f20	CyaSSL_connect	connect state: FIRST_REPLY_SECOND
+004a0f44	CyaSSL_connect	sent: certificate verify
+004a0f60	CyaSSL_connect	connect state: FIRST_REPLY_THIRD
+004a0f84	CyaSSL_connect	sent: change cipher spec
+004a0fa0	CyaSSL_connect	connect state: FIRST_REPLY_FOURTH
+004a0fc4	CyaSSL_connect	sent: finished
+004a0fd4	CyaSSL_connect	connect state: FINISHED_DONE
+004a0ff4	CyaSSL_connect	connect state: SECOND_REPLY_DONE
+004a1018	CyaSSL_connect	Unknown connect state ERROR
+004a1060	FUN_004396b0	SSLv3_server_method
+004a1074	CyaSSL_accept	SSL_accept()
+004a1084	CyaSSL_accept	accept error: don't have server cert and key
+004a10b4	CyaSSL_accept	accept state: Advanced from buffered send
+004a10e0	CyaSSL_accept	accept state ACCEPT_CLIENT_HELLO_DONE
+004a1108	CyaSSL_accept	accept state HELLO_VERIFY_SENT
+004a1128	CyaSSL_accept	accept state ACCEPT_FIRST_REPLY_DONE
+004a1150	CyaSSL_accept	accept state SERVER_HELLO_SENT
+004a1170	CyaSSL_accept	accept state CERT_SENT
+004a1188	CyaSSL_accept	accept state KEY_EXCHANGE_SENT
+004a11a8	CyaSSL_accept	accept state CERT_REQ_SENT
+004a11c4	CyaSSL_accept	accept state SERVER_HELLO_DONE
+004a11e4	CyaSSL_accept	accept state  ACCEPT_SECOND_REPLY_DONE
+004a120c	CyaSSL_accept	accept state  CHANGE_CIPHER_SENT
+004a1230	CyaSSL_accept	accept state ACCEPT_FINISHED_DONE
+004a1254	CyaSSL_accept	accept state ACCEPT_THIRD_REPLY_DONE
+004a127c	CyaSSL_accept	Unknown accept state ERROR
+004a12cc	FUN_0043a040	CyaSSL_Cleanup
+004a12dc	FUN_0043a368	GetSessionClient
+004a12f0	FUN_0043a368,FUN_0043a794,FUN_0043ac88	Hash session failed
+004a1304	FUN_0043a368	Lock session mutex failed
+004a1320	FUN_0043a368,FUN_0043a794	Bad idx
+004a1328	FUN_0043a368	Found a serverid match for client
+004a134c	FUN_0043a368,FUN_0043a794	Session valid
+004a135c	FUN_0043a368,FUN_0043a794	Session timed out
+004a1370	FUN_0043a368	ServerID not a match from client table
+004a1398	FUN_0043a794	Found a session match
+004a13b0	FUN_0043a794	SessionID not a match at this idx
+004a13d4	FUN_0043ac88	Adding client cache entry
+004a13f0	FUN_0043b400	CyaSSL_check_domain_name
+004a140c	FUN_0043b54c	CyaSSL_set_compression
+004a1424	FUN_0043b5ac	CyaSSL_writev
+004a1434	FUN_0043b7c0	CyaSSL_CTX_load_verify_buffer
+004a1454	FUN_0043b8b8	CyaSSL_CTX_use_certificate_buffer
+004a1478	FUN_0043b95c	CyaSSL_CTX_use_PrivateKey_buffer
+004a149c	FUN_0043ba04	CyaSSL_CTX_use_certificate_chain_buffer
+004a14c4	FUN_0043baa8	CyaSSL_use_certificate_buffer
+004a14e4	FUN_0043bb58	CyaSSL_use_PrivateKey_buffer
+004a1504	FUN_0043bc0c	CyaSSL_use_certificate_chain_buffer
+004a1528	FUN_0043bcbc	Null function arg
+004a153c	FUN_0043bcbc	Unloading cert
+004a154c	FUN_0043bcbc	Unloading cert chain
+004a1564	FUN_0043bcbc	Unloading key
+004a1574	FUN_0043be90	CyaSSL_CTX_UnloadCAs
+004a158c	FUN_0043bf28	CyaSSL_add_all_algorithms
+004a15a8	FUN_0043bfc8,FUN_0043c03c	CyaSSL_CTX_set_quiet_shutdown
+004a15c8	FUN_0043c0b0	SSL_set_bio
+004a15d4	FUN_0043c318	SSL_set_accept_state
+004a15ec	FUN_0043c4bc	SSL_CTX_set_options
+004a1600	CyaSSL_set_rfd	SSL_set_rfd
+004a160c	CyaSSL_set_wfd	SSL_set_wfd
+004a1618	FUN_0043c620	RSA_generate_key
+004a162c	FUN_0043c72c	BIO_f_buffer
+004a163c	FUN_0043c798	BIO_set_write_buffer_size
+004a1658	FUN_0043c7fc	BIO_f_ssl
+004a1664	FUN_0043c868	BIO_new_socket
+004a1674	FUN_0043c94c	BIO_eof
+004a167c	FUN_0043c9c8	BIO_set_ssl
+004a1688	CyaSSL_BIO_new	BIO_new
+004a1690	CyaSSL_BIO_free	BIO_free
+004a169c	FUN_0043ce28	BIO_free_all
+004a16ac	FUN_0043cec8	BIO_read
+004a16b8	FUN_0043d044	BIO_write
+004a16c4	FUN_0043d1c0	BIO_push
+004a16d0	FUN_0043d23c	BIO_flush
+004a16dc	CyaSSL_CTX_set_default_passwd_cb_userdata	SSL_CTX_set_default_passwd_cb_userdata
+004a1704	CyaSSL_CTX_set_default_passwd_cb	SSL_CTX_set_default_passwd_cb
+004a1724	CyaSSL_EVP_BytesToKey	EVP_BytesToKey
+004a1734	CyaSSL_MD5_Init	MD5_Init
+004a1740	CyaSSL_MD5_Update	CyaSSL_MD5_Update
+004a1754	CyaSSL_MD5_Final	MD5_Final
+004a1760	CyaSSL_SHA_Init	SHA_Init
+004a176c	CyaSSL_SHA_Update	SHA_Update
+004a1778	CyaSSL_SHA_Final	SHA_Final
+004a1784	FUN_0043dc64	SHA1_Init
+004a1790	FUN_0043dcd4	SHA1_Update
+004a179c	FUN_0043dd54	SHA1_Final
+004a17a8	CyaSSL_SHA256_Init	SHA256_Init
+004a17b4	CyaSSL_SHA256_Update	SHA256_Update
+004a17c4	CyaSSL_SHA256_Final	SHA256_Final
+004a17d4	CyaSSL_SHA384_Init	SHA384_Init
+004a17e0	CyaSSL_SHA384_Update	SHA384_Update
+004a17f0	CyaSSL_SHA384_Final	SHA384_Final
+004a1800	CyaSSL_SHA512_Init	SHA512_Init
+004a180c	CyaSSL_SHA512_Update	SHA512_Update
+004a181c	CyaSSL_SHA512_Final	SHA512_Final
+004a182c	CyaSSL_EVP_md5	EVP_md5
+004a1834	CyaSSL_EVP_sha1	EVP_sha1
+004a1840	FUN_0043e2c4	EVP_sha256
+004a184c	FUN_0043e324	EVP_sha384
+004a1858	FUN_0043e384	EVP_sha512
+004a1864	FUN_0043e3e4	EVP_CIPHER_MD_CTX_init
+004a187c	FUN_0043e43c	CyaSSL_EVP_aes_128_cbc
+004a1894	FUN_0043e49c	CyaSSL_EVP_aes_192_cbc
+004a18ac	FUN_0043e4fc	CyaSSL_EVP_aes_256_cbc
+004a18c4	FUN_0043e55c	CyaSSL_EVP_aes_128_ctr
+004a18dc	FUN_0043e5bc	CyaSSL_EVP_aes_192_ctr
+004a18f4	FUN_0043e61c	CyaSSL_EVP_aes_256_ctr
+004a190c	FUN_0043e67c	CyaSSL_EVP_des_cbc
+004a1920	FUN_0043e6dc	CyaSSL_EVP_des_ede3_cbc
+004a1938	FUN_0043e73c	CyaSSL_EVP_rc4
+004a1948	FUN_0043e79c	CyaSSL_EVP_enc_null
+004a195c	FUN_0043e7fc	EVP_MD_CTX_cleanup
+004a1970	FUN_0043e85c	EVP_CIPHER_CTX_init
+004a1984	FUN_0043e8e0	EVP_CIPHER_CTX_cleanup
+004a199c	FUN_0043e960	CyaSSL_EVP_CipherInit
+004a19b4	FUN_0043e960	no ctx
+004a19bc	FUN_0043e960	no type set
+004a19c8	004be574,FUN_0043e43c,FUN_0043e960	AES128-CBC
+004a19d4	004be578,FUN_0043e49c,FUN_0043e960	AES192-CBC
+004a19e0	004be57c,FUN_0043e4fc,FUN_0043e960	AES256-CBC
+004a19ec	004be580,FUN_0043e55c,FUN_0043e960	AES128-CTR
+004a19f8	FUN_0043e960	AES-128-CTR
+004a1a04	004be584,FUN_0043e5bc,FUN_0043e960	AES192-CTR
+004a1a10	FUN_0043e960	AES-192-CTR
+004a1a1c	004be588,FUN_0043e61c,FUN_0043e960	AES256-CTR
+004a1a28	FUN_0043e960	AES-256-CTR
+004a1a44	FUN_0043e960	NULL cipher
+004a1a50	FUN_0043f7a4	CyaSSL_EVP_CIPHER_CTX_key_length
+004a1a74	FUN_0043f820	CyaSSL_EVP_CIPHER_CTX_set_key_length
+004a1a9c	FUN_0043f8a8	CyaSSL_EVP_Cipher
+004a1ab0	FUN_0043f8a8	no init
+004a1ab8	FUN_0043f8a8,FUN_0043fc8c,FUN_0043ff14,FUN_004485cc	AES CBC
+004a1ac0	FUN_0043f8a8,FUN_0043fc8c,FUN_0043ff14,FUN_004485cc	AES CTR
+004a1ac8	FUN_0043f8a8,FUN_0043fc8c,FUN_0043ff14,FUN_004485cc	bad type
+004a1ad4	FUN_0043f8a8	CyaSSL_EVP_Cipher failure
+004a1af0	FUN_0043f8a8	CyaSSL_EVP_Cipher success
+004a1b38	FUN_0043fc8c	CyaSSL_StoreExternalIV
+004a1b50	FUN_0043fc8c,FUN_0043ff14,FUN_004485cc	DES CBC
+004a1b58	FUN_0043fc8c,FUN_0043ff14,FUN_004485cc	DES EDE3 CBC
+004a1b94	FUN_0043ff14	CyaSSL_SetInternalIV
+004a1bd8	FUN_0044019c	EVP_DigestInit
+004a1be8	004be568,FUN_0043e2c4,FUN_0044019c,FUN_00447998,FUN_0044840c	SHA256
+004a1bf0	004be56c,FUN_0043e324,FUN_0044019c,FUN_0044840c	SHA384
+004a1bf8	004be570,FUN_0043e384,FUN_0044019c,FUN_0044840c	SHA512
+004a1c04	FUN_004403fc	EVP_DigestUpdate
+004a1c18	CyaSSL_EVP_DigestFinal	EVP_DigestFinal
+004a1c28	FUN_004407e8	EVP_DigestFinal_ex
+004a1c44	FUN_00440ac8	DES_key_sched
+004a1c54	FUN_00440b4c	DES_cbc_encrypt
+004a1c64	FUN_00440c50	DES_ncbc_encrypt
+004a1c78	FUN_00440e08	SSL_CTX_set_mode
+004a1c8c	FUN_00440f74	SSL_get_peer_certificate
+004a1ca8	CyaSSL_FreeX509	CyaSSL_FreeX509
+004a1cb8	FUN_00441064	CyaSSL_X509_get_next_altname
+004a1cd8	FUN_00441130	X509_get_issuer_name
+004a1cf0	FUN_00441194	X509_get_subject_name
+004a1d08	FUN_004411f8	CyaSSL_X509_get_isCA
+004a1d20	FUN_00441294	CyaSSL_X509_ext_isSet_by_NID
+004a1d98	FUN_004413bc	CyaSSL_X509_ext_get_critical_by_NID
+004a1e14	FUN_004414e4	CyaSSL_X509_get_isSet_pathLength
+004a1e38	FUN_00441580	CyaSSL_X509_get_pathLength
+004a1e54	FUN_00441620	CyaSSL_X509_get_keyUsage
+004a1e70	FUN_004416c0	CyaSSL_X509_get_authorityKeyID
+004a1e90	FUN_00441830	CyaSSL_X509_get_subjectKeyID
+004a1eb0	FUN_004419a0	CyaSSL_X509_NAME_entry_count
+004a1ed0	FUN_00441a3c	CyaSSL_X509_NAME_get_text_by_NID
+004a1f18	FUN_00441ce4	CyaSSL_X509_NAME_oneline
+004a1f34	FUN_00441e4c	CyaSSL_X509_get_signature_type
+004a1f54	FUN_00441ec8	CyaSSL_X509_get_signature
+004a1f70	FUN_00441fc0	CyaSSL_X509_get_serial_number
+004a1f90	FUN_004420b4	CyaSSL_X509_get_der
+004a1fa4	FUN_00442154	CyaSSL_X509_version
+004a1fb8	FUN_004421d0	CyaSSL_X509_notBefore
+004a1fd0	FUN_0044224c	CyaSSL_X509_notAfter
+004a1fe8	CyaSSL_X509_d2i	CyaSSL_X509_d2i
+004a1ff8	FUN_00442480	CyaSSL_X509_d2i_fp
+004a200c	FUN_00442480	Bad tell on FILE
+004a2020	FUN_00442654	CyaSSL_X509_load_certificate
+004a2040	FUN_00442d1c	SSL_get_version
+004a2050	FUN_00442d1c	SSLv3
+004a2058	FUN_00442d1c	TLSv1
+004a2060	FUN_00442d1c	TLSv1.1
+004a2068	FUN_00442d1c	TLSv1.2
+004a2070	FUN_00442d1c	unknown
+004a2080	FUN_00442d1c	DTLSv1.2
+004a208c	FUN_00442e98	SSL_get_current_cipher_suite
+004a20ac	CyaSSL_get_current_cipher	SSL_get_current_cipher
+004a20c4	CyaSSL_CIPHER_get_name	SSL_CIPHER_get_name
+004a20d8	CyaSSL_CIPHER_get_name	SSL_RSA_WITH_RC4_128_SHA
+004a20f4	CyaSSL_CIPHER_get_name	SSL_RSA_WITH_RC4_128_MD5
+004a2110	CyaSSL_CIPHER_get_name	SSL_RSA_WITH_3DES_EDE_CBC_SHA
+004a2130	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_AES_128_CBC_SHA
+004a2150	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_AES_256_CBC_SHA
+004a2170	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_AES_128_CBC_SHA256
+004a2190	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_AES_256_CBC_SHA256
+004a21b0	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_NULL_SHA
+004a21c8	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_NULL_SHA256
+004a21e4	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+004a2208	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+004a222c	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+004a2250	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_AES_256_CBC_SHA
+004a2274	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_AES_128_GCM_SHA256
+004a2294	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_AES_256_GCM_SHA384
+004a22b4	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+004a22d8	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+004a22fc	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
+004a2320	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_CAMELLIA_256_CBC_SHA
+004a2344	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_CAMELLIA_128_CBC_SHA256
+004a236c	CyaSSL_CIPHER_get_name	TLS_RSA_WITH_CAMELLIA_256_CBC_SHA256
+004a2394	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+004a23bc	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA
+004a23e4	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA256
+004a2410	CyaSSL_CIPHER_get_name	TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256
+004a2758	FUN_00443218	CyaSSL_get_cipher
+004a276c	CyaSSL_BIO_s_mem	BIO_s_mem
+004a2778	FUN_004437f8	CyaSSL_X509_STORE_add_cert
+004a2794	FUN_00444948	CyaSSL_SESSION_get_timeout
+004a27b0	FUN_004449ac	CyaSSL_SESSION_get_time
+004a27c8	FUN_00444a90	CyaSSL_cmp_peer_cert_to_file
+004a27e8	FUN_00444db4	CyaSSL_RAND_seed
+004a27fc	FUN_00444db4	CyaSSL Init Global RNG failed
+004a281c	FUN_00444e84	RAND_bytes
+004a2828	FUN_00444e84,FUN_00445e38	Bad RNG_GenerateBlock
+004a2840	FUN_00444fe0	CyaSSL_BN_CTX_new
+004a2854	FUN_00445040	CyaSSL_BN_CTX_init
+004a2868	FUN_00445098	CyaSSL_BN_CTX_free
+004a287c	FUN_004450f0	InitCyaSSL_BigNum
+004a2890	CyaSSL_BN_new	CyaSSL_BN_new
+004a28a0	CyaSSL_BN_new	CyaSSL_BN_new malloc mpi failure
+004a28c4	CyaSSL_BN_new	CyaSSL_BN_new malloc CYASSL_BIGNUM failure
+004a28f0	CyaSSL_BN_free	CyaSSL_BN_free
+004a2900	FUN_004453f4	CyaSSL_BN_clear_free
+004a2918	FUN_00445464	CyaSSL_BN_sub
+004a2928	FUN_00445464	CyaSSL_BN_sub mp_sub failed
+004a2944	FUN_00445568	CyaSSL_BN_mod
+004a2954	FUN_00445568	CyaSSL_BN_mod mp_mod failed
+004a2970	FUN_00445670	CyaSSL_BN_value_one
+004a2984	CyaSSL_BN_num_bytes	CyaSSL_BN_num_bytes
+004a2998	FUN_004457dc	CyaSSL_BN_num_bits
+004a29ac	FUN_00445884	CyaSSL_BN_is_zero
+004a29c0	FUN_0044591c	CyaSSL_BN_is_one
+004a29d4	FUN_004459e0	CyaSSL_BN_is_odd
+004a29e8	FUN_00445aa4	CyaSSL_BN_cmp
+004a29f8	FUN_00445b78	CyaSSL_BN_bn2bin
+004a2a0c	FUN_00445b78	NULL bn error
+004a2a1c	FUN_00445b78	mp_to_unsigned_bin error
+004a2a38	CyaSSL_BN_bin2bn	CyaSSL_BN_bin2bn
+004a2a4c	CyaSSL_BN_bin2bn	mp_read_unsigned_bin failure
+004a2a6c	CyaSSL_BN_bin2bn	CyaSSL_BN_bin2bn wants return bignum
+004a2a94	FUN_00445dd4	CyaSSL_BN_mask_bits
+004a2aa8	FUN_00445e38	CyaSSL_BN_rand
+004a2ab8	FUN_00445e38,FUN_004472f0,FUN_00448934	Bad function arguments
+004a2ad0	FUN_00445e38	mp read bin failed
+004a2ae4	FUN_00446080	CyaSSL_BN_is_bit_set
+004a2afc	FUN_004460e4	CyaSSL_BN_hex2bn
+004a2b10	FUN_004460e4	Bad Base16_Decode error
+004a2b28	FUN_004460e4	BN new failed
+004a2b38	FUN_004460e4	Bad bin2bn error
+004a2b4c	FUN_004462e4	CyaSSL_BN_dup
+004a2b5c	FUN_004462e4	bn NULL error
+004a2b6c	FUN_004462e4	bn new error
+004a2b7c	FUN_004462e4,FUN_00446a6c	mp_copy error
+004a2b8c	FUN_0044644c	CyaSSL_BN_copy
+004a2b9c	FUN_004464b0	CyaSSL_BN_set_word
+004a2bb0	FUN_00446514	CyaSSL_BN_dec2bn
+004a2bc4	FUN_00446578	CyaSSL_BN_bn2dec
+004a2bd8	FUN_00446660	CyaSSL_RSA_new
+004a2be8	FUN_00446660	CyaSSL_RSA_new malloc RsaKey failure
+004a2c10	FUN_00446660	CyaSSL_RSA_new malloc CYASSL_RSA failure
+004a2c3c	FUN_00446660	InitRsaKey CYASSL_RSA failure
+004a2c5c	FUN_00446858	CyaSSL_RSA_free
+004a2c6c	FUN_00446a6c	Entering SetIndividualExternal
+004a2c8c	FUN_00446a6c	mpi NULL error
+004a2c9c	FUN_00446a6c	SetIndividualExternal alloc failed
+004a2cc0	FUN_00446bc4	Entering SetRsaExternal
+004a2cd8	FUN_00446bc4	rsa key NULL error
+004a2cec	FUN_00446bc4	rsa n key error
+004a2cfc	FUN_00446bc4	rsa e key error
+004a2d0c	FUN_00446bc4	rsa d key error
+004a2d1c	FUN_00446bc4	rsa p key error
+004a2d2c	FUN_00446bc4	rsa q key error
+004a2d3c	FUN_00446bc4	rsa dP key error
+004a2d50	FUN_00446bc4	rsa dQ key error
+004a2d64	FUN_00446bc4	rsa u key error
+004a2d74	FUN_00446f98	CyaSSL_RSA_generate_key_ex
+004a2d90	FUN_00446f98	RNG init failed
+004a2da0	FUN_00446f98	MakeRsaKey failed
+004a2db4	FUN_00446f98,FUN_00448934	SetRsaExternal failed
+004a2dcc	FUN_0044711c	CyaSSL_RSA_blinding_on
+004a2de4	FUN_00447180	CyaSSL_RSA_public_encrypt
+004a2e00	FUN_004471ec	CyaSSL_RSA_private_decrypt
+004a2e1c	FUN_00447258	CyaSSL_RSA_size
+004a2e2c	FUN_004472f0	CyaSSL_RSA_sign
+004a2e3c	FUN_004472f0	No RSA internal set
+004a2e50	FUN_004472f0	Bad md type
+004a2e5c	FUN_004472f0	Bad RSA size
+004a2e6c	FUN_004472f0	Bad RNG Init, trying global
+004a2e88	FUN_004472f0	Global RNG no Init
+004a2e9c	FUN_004472f0	Bad Encode Signature
+004a2eb4	FUN_004472f0	Bad Rsa Sign
+004a2ec4	FUN_004472f0	CyaSSL_RSA_sign success
+004a2edc	FUN_0044764c	CyaSSL_RSA_public_decrypt
+004a2ef8	FUN_004476b8	CyaSSL_RsaGenAdd
+004a2f0c	FUN_004476b8	rsa no init error
+004a2f20	FUN_004476b8	mp_init error
+004a2f30	FUN_004476b8	mp_sub_d error
+004a2f40	FUN_004476b8	mp_mod error
+004a2f50	FUN_00447998	CyaSSL_HMAC_Init
+004a2f64	FUN_00447998	no ctx on init
+004a2f74	FUN_00447998	init has type
+004a2f84	FUN_00447998	md5 hmac
+004a2f90	FUN_00447998	sha256 hmac
+004a2f9c	FUN_00447998	sha hmac
+004a2fa8	FUN_00447998	bad init type
+004a2fb8	FUN_00447998	keying hmac
+004a2fc4	FUN_00447bf4	CyaSSL_HMAC_Update
+004a2fd8	FUN_00447bf4	updating hmac
+004a2fe8	FUN_00447cb0	CyaSSL_HMAC_Final
+004a2ffc	FUN_00447cb0	final hmac
+004a3008	FUN_00447cb0	setting output len
+004a301c	FUN_00447cb0	bad hmac type
+004a302c	FUN_00447e0c	CyaSSL_HMAC_cleanup
+004a3040	FUN_00447e64	CyaSSL_get_digestbynid
+004a3058	FUN_00447e64	Bad digest id value
+004a306c	FUN_00447f44	CyaSSL_EVP_PKEY_get1_RSA
+004a3088	FUN_00447fa4	CyaSSL_EVP_PKEY_get1_DSA
+004a30a4	FUN_00448004	CyaSSL_EVP_X_STATE
+004a30b8	FUN_00448004	returning arc4 state
+004a30d0	FUN_00448004,FUN_004480dc	bad x state type
+004a30e4	FUN_004480dc	CyaSSL_EVP_X_STATE_LEN
+004a30fc	FUN_004480dc	returning arc4 state size
+004a3118	FUN_004481b0	CyaSSL_3des_iv
+004a3128	FUN_004482b0	CyaSSL_aes_ctr_iv
+004a313c	FUN_004483b0	CyaSSL_ripemd160
+004a3150	FUN_0044840c	CyaSSL_EVP_MD_size
+004a3164	FUN_0044840c	No md type arg
+004a3174	FUN_004485cc	CyaSSL_EVP_CIPHER_CTX_iv_length
+004a31c0	FUN_0044876c	CyaSSL_OPENSSL_free
+004a31d4	FUN_004487f0	CyaSSL_PEM_write_bio_RSAPrivateKey
+004a31f8	FUN_0044885c	CyaSSL_PEM_write_bio_DSAPrivateKey
+004a321c	FUN_004488c8	CyaSSL_PEM_read_bio_PrivateKey
+004a323c	FUN_00448934	CyaSSL_RSA_LoadDer
+004a3250	FUN_00448934	RsaPrivateKeyDecode failed
+004a326c	004be558,CyaSSL_ERR_error_string	Please supply a buffer for error string
+004a3294	004be55c,FUN_0043d958	SSLeay CyaSSL compatibility
+004a32b0	FUN_00449444	CLNTSRVRclient finished
+004a32c8	FUN_00449444	server finished
+004a32d8	CyaSSL_MakeTlsMasterSecret	master secret
+004a32e8	CyaSSL_DeriveTlsKeys	key expansion
+004a3380	FUN_0044bc1c	RsaUnPad error, bad formatting
+004a5bd4		}}}}AesEncrypt encountered improper key, set it up
+004a5c08	FUN_0044e888	AesDecrypt encountered improper key, set it up
+004a64e0	ShaHash	InitSha failed
+004a676e		DlInitSha512 failed
+004a6784	Sha512Hash	Sha512Update failed
+004a6798	Sha512Hash	Sha512Final failed
+004a67ac	Sha384Hash	InitSha384 failed
+004a67c0	Sha384Hash	Sha384Update failed
+004a67d4	Sha384Hash	Sha384Final failed
+004a67f0	FUN_0046639c	GetLength bad index on input
+004a6810	FUN_0046639c	GetLength bad long length
+004a682c	FUN_0046639c	GetLength value exceeds buffer length
+004a6854	FUN_00466748	GetMyVersion
+004a6864	FUN_0046695c	GetExplicitVersion
+004a6878	FUN_00466d38	GetAlgoId
+004a6884	FUN_004693a0	Getting Cert Name
+004a6898	FUN_004693a0,FUN_004710a0	Trying optional prefix...
+004a68b4	FUN_004693a0,FUN_004710a0	Got optional prefix
+004a68c8	FUN_004693a0	Cert name lacks set header, trying sequence
+004a68f4	FUN_004693a0	ASN Name too big, skipping
+004a693c	FUN_004693a0	/serialNumber=
+004a694c	FUN_004693a0	ASN name too big, skipping
+004a6968	FUN_004693a0	/emailAddress=
+004a6978	FUN_004693a0,FUN_0046d5b8	\tOut of Memory
+004a6988	FUN_004693a0	/UID=
+004a6990	FUN_0046b024	Only Zulu time supported for this profile
+004a69bc	DecodeToKey	Got Cert Header
+004a69cc	DecodeToKey	Got Algo ID
+004a69d8	DecodeToKey	Got Subject Name
+004a69ec	DecodeToKey	Got Key
+004a69f4	FUN_0046c090	Unknown Hash Algo
+004a6a08	FUN_0046c090	Unknown Block Algo
+004a6a1c	FUN_0046c090	Unknown Signature Algo
+004a6a34	FUN_0046c090	Unknown Key Algo
+004a6a48	FUN_0046c090	Unknown Algo type
+004a6a9c	FUN_0046c7b4	Verify Signautre has unsupported type
+004a6ac4	FUN_0046c7b4	Verify Signautre is too big
+004a6ae0	FUN_0046c7b4	InitRsaKey failed
+004a6af4	FUN_0046c7b4	ASN Key decode error RSA
+004a6b10	FUN_0046c7b4	Rsa SSL verify error
+004a6b28	FUN_0046c7b4	Rsa SSL verify match encode error
+004a6b4c	FUN_0046c7b4	Verify Key type unknown
+004a6b64	FUN_0046d5b8	DecodeAltNames
+004a6b74	FUN_0046d5b8	\tBad Sequence
+004a6b84	FUN_0046d5b8	\tfail: str length
+004a6b98	FUN_0046d5b8	\tUnsupported name type, skipping
+004a6bbc	FUN_0046d5b8	\tfail: unsupported name length
+004a6bdc	FUN_0046db84	DecodeBasicCaConstraint
+004a6bf4	FUN_0046db84	\tfail: bad SEQUENCE
+004a6c08	FUN_0046db84	\tfail: constraint not BOOLEAN
+004a6c28	FUN_0046db84	\tfail: length
+004a6c38	FUN_0046db84	\tfail: pathlen not INTEGER
+004a6c54	FUN_0046db84	\tfail: pathlen too long
+004a6c6c	FUN_0046de2c	DecodeCrlDist
+004a6c7c	FUN_0046de2c	\tThere are more CRL Distribution Point records, but we only use the first one.
+004a6ccc	FUN_0046e234	DecodeAuthInfo
+004a6cdc	FUN_0046e45c	DecodeAuthKeyId
+004a6cec	FUN_0046e45c	\tfail: should be a SEQUENCE\n
+004a6d0c	FUN_0046e45c	\tinfo: OPTIONAL item 0, not available\n
+004a6d34	FUN_0046e45c,FUN_0046e6ec,FUN_0046f238	\tfail: extension data length
+004a6d54	FUN_0046e6ec	DecodeSubjKeyId
+004a6d64	FUN_0046e6ec,FUN_0046f238	\tfail: should be an OCTET STRING
+004a6d88	FUN_0046e918	DecodeKeyUsage
+004a6d98	FUN_0046e918	\tfail: key usage expected bit string
+004a6dc0	FUN_0046e918	\tfail: key usage bad length
+004a6ddc	FUN_0046eb14	DecodeExtKeyUsage
+004a6df0	FUN_0046eb14,FUN_0046ed48,FUN_0046f004,FUN_0046f238	\tfail: should be a SEQUENCE
+004a6e0c	FUN_0046ed48,FUN_0046f004	\tinvalid length
+004a6e1c	FUN_0046ed48	allocate error
+004a6e2c	FUN_0046f004	DecodeNameConstraints
+004a6e44	FUN_0046f004	\tinvalid subtree
+004a6e58	FUN_0046f238	DecodeCertExtensions
+004a6e70	FUN_0046f238	\tfail: OBJECT ID
+004a6e84	FUN_0046f238	\tfail: critical boolean length
+004a6ea4		Certificate Policy extension not supported yet.
+004a6ed4		Inhibit anyPolicy extension not supported yet.
+004a7094	ParseCertRelative	Parsed Past Key
+004a70a4	ParseCertRelative	    v1 and v2 certs not allowed extensions
+004a70d0	ParseCertRelative	About to verify certificate signature
+004a70f8	ParseCertRelative	Confirm signature failed
+004a7114	ParseCertRelative	Confirm name constraint failed
+004a7134	ParseCertRelative	No CA signer to verify with
+004a7150	FUN_00470568	SetSerialNumber
+004a7160	FUN_004706b4	-----BEGIN CERTIFICATE-----\n
+004a7180	FUN_004706b4	-----END CERTIFICATE-----\n
+004a719c	FUN_004706b4	-----BEGIN RSA PRIVATE KEY-----\n
+004a71c0	FUN_004706b4	-----END RSA PRIVATE KEY-----\n
+004a71e0	FUN_004710a0	GetNameHash
+004a72cc		 !"#$%&'()*+,-./0123Bad Base64 Decode data, too small
+004a7304	Base64_Decode	Bad Base64 Decode data, too big
+004a7324	Base64_Decode	Bad end of line in Base64 Decode
+004a7348	FUN_00471854	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/Escape buffer max too small
+004a7820	ProcessReply,SendFinished	CLNTSRVRclient finished
+004a7838		server finished
+004a7848	InitSSL_Ctx	Mutex error on CTX init
+004a7860	InitSSL_Ctx	Bad Cert Manager New
+004a7878	FreeSSL_Ctx	Couldn't lock count mutex
+004a7894	FreeSSL_Ctx	CTX ref count down to 0, doing full free
+004a78c0	FreeSSL_Ctx	CTX ref count not 0 yet, no free
+004a78e4	InitSuites	InitSuites pointer error
+004a7900	InitSSL	Couldn't lock CTX count mutex
+004a7920	InitSSL	Arrays Memory error
+004a7934	InitSSL	RNG Memory error
+004a7948	InitSSL	RNG Init error
+004a7958	InitSSL	Suites Memory error
+004a796c	InitSSL	PeerRsaKey Memory error
+004a7984	InitSSL	Server missing certificate and/or private key
+004a79b4	FUN_00484c8c	Your IO Recv callback is null, please set
+004a79f8	FUN_00484df4	Shrinking output buffer\n
+004a7a14	FUN_00484eb8	Shrinking input buffer\n
+004a7a2c	SendBuffered	Your IO Send callback is null, please set
+004a7a58	SendBuffered	SendBuffered() out of bounds read
+004a7a7c	FUN_00485264	growing output buffer\n
+004a7a94	FUN_0048548c	growing input buffer\n
+004a7aac	FUN_004856cc	CheckAvailableSize() called with negative number
+004a7ae0	FUN_004857a4	Client attempting to connect with different version
+004a7b14	FUN_004857a4	Server attempting to accept with different version
+004a7b48	FUN_004857a4	SSL version error
+004a7b5c	FUN_004857a4	Unknown Record Type
+004a7b70	FUN_00485aa8,FUN_00485c50,FUN_0048c2d4,FUN_0048c76c,FUN_0048c8e4	666666666666666666666666666666666666666666666666\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Unsupported cipher suite, CipherRequires ECC
+004a7c00	FUN_0048607c	Unsupported cipher suite, CipherRequires
+004a82e4	FUN_00486ea0	Checking AltNames
+004a82f8	FUN_00486ea0	    individual AltName check
+004a8318	FUN_004878e8	Loading peer's cert chain
+004a8334	FUN_004878e8	    Put another cert into chain
+004a8354	FUN_004878e8	Chain cert is not a CA, not adding as one
+004a8380	FUN_004878e8	Chain cert not verified by option, not adding as CA
+004a83b4	FUN_004878e8	Adding CA from chain
+004a83cc	FUN_004878e8	Failed to verify CA from chain
+004a83ec	FUN_004878e8	Verified CA from chain and already had it
+004a8418	FUN_004878e8	Verifying Peer's cert
+004a8430	FUN_004878e8	Verified Peer's cert
+004a8448	FUN_004878e8	Got Peer cert ASN PARSE ERROR, fatal
+004a8470	FUN_004878e8	Failed to verify Peer's cert
+004a8490	FUN_004878e8	\tCallback override available, will continue
+004a84bc	FUN_004878e8	\tNo callback override available, fatal
+004a84e4	FUN_004878e8	KeyUse Digital Sig not set
+004a8500	FUN_004878e8	ExtKeyUse Server Auth not set
+004a8520	FUN_004878e8	ExtKeyUse Client Auth not set
+004a8540	FUN_004878e8	DomainName match on common name failed
+004a8568	FUN_004878e8	DomainName match on alt names failed too
+004a8594	FUN_004878e8	Verify callback overriding error!
+004a85b8	FUN_004878e8	Verify callback overriding valid certificate!
+004a85e8	FUN_004878e8	Ignoring CRL problem based on verify setting
+004a8618	FUN_00488858	Verify finished error on hashes
+004a8638		Duplicate HelloRequest received
+004a8658		Duplicate ClientHello received
+004a8678		Duplicate ServerHello received
+004a8698		Duplicate HelloVerifyRequest received
+004a86c0		Duplicate SessionTicket received
+004a86e4		Duplicate Certificate received
+004a8704		No ServerHello before Cert
+004a8720		No ClientHello before Cert
+004a873c		Duplicate ServerKeyExchange received
+004a8764		Duplicate CertificateRequest received
+004a878c		Duplicate ServerHelloDone received
+004a87b0		No Cert required
+004a87c4		No Certificate before ServerHelloDone
+004a87ec		No KeyExchange required
+004a8804		No ServerKeyExchange before ServerDone
+004a882c		Duplicate CertificateVerify received
+004a8854		No Cert before CertVerify
+004a8870		Duplicate ClientKeyExchange received
+004a8898		No ClientHello before ClientKeyExchange
+004a88c0		Duplicate Finished received
+004a88dc		Finished received before ChangeCipher
+004a8904		Duplicate ChangeCipher received
+004a8924		No ServerHelloDone before ChangeCipher
+004a894c		No ClientKeyExchange before ChangeCipher
+004a8978	FUN_00488a40	Unknown message type
+004a8a70	FUN_004892a4	DoHandShakeMsgType
+004a8a84	FUN_004892a4	Sanity Check on handshake message type received failed
+004a8abc	FUN_004892a4	HandShake message after handshake complete
+004a8ae8	FUN_004892a4	First server message not server hello
+004a8b10	FUN_004892a4	Server hello done received before server hello in DTLS
+004a8b48	FUN_004892a4	First client message not client hello
+004a8b70		processing hello request
+004a8b8c		processing hello verify request
+004a8bac		processing server hello
+004a8bc4		processing certificate request
+004a8be4		processing server key exchange
+004a8c04		processing certificate
+004a8c1c		processing server hello done
+004a8c3c		processing finished
+004a8c50		processing client hello
+004a8c68		processing client key exchange
+004a8c88		processing certificate verify
+004a8ca8	FUN_004892a4	Unknown handshake message type
+004a8cc8	FUN_004892a4	DoHandShakeMsgType()
+004a8d34	FUN_00489a08	DoHandShakeMsg()
+004a8d48	FUN_00489b98	Encrypt ciphers not setup
+004a8d64	FUN_00489b98	CyaSSL Encrypt programming error
+004a8d88	FUN_00489d24	Decrypt ciphers not setup
+004a8da4	FUN_00489d24	CyaSSL Decrypt programming error
+004a8dc8	FUN_00489eb0	Block ciphertext not block size
+004a8de8	FUN_00489eb0	Ciphertext not minimum size
+004a8e04	FUN_0048a3c4	Bad round type
+004a8e30	FUN_0048a86c,FUN_0048b294	Plain Len not long enough for pad/mac
+004a8e58	FUN_0048a86c	PadCheck failed
+004a8e68	FUN_0048a86c	Verify MAC compare failed
+004a8e84	FUN_0048aca0	Received App data before a handshake completed
+004a8eb4	FUN_0048aca0	App data buffer error, malicious input?
+004a8edc	FUN_0048ae84	Got alert
+004a8ee8	FUN_0048ae84	    close notify
+004a8efc	ProcessReply	ProcessReply retry in error state, not allowed
+004a8f2c	ProcessReply	received record layer msg
+004a8f48	ProcessReply	got CHANGE CIPHER SPEC
+004a8f60	ProcessReply	Malicious or corrupted ChangeCipher msg
+004a8f88	ProcessReply	client didn't send cert verify
+004a8fa8	ProcessReply	got app DATA
+004a8fb8	ProcessReply	got ALERT!
+004a8fc4	ProcessReply	More messages in record
+004a8fdc	ProcessReply	Bundled encrypted messages, remove middle pad
+004a900c	ProcessReply	More records in input
+004a9024	ProcessReply	Bad process input state, programming error
+004a9050	FUN_0048cdb4	Oops, want to write past output buffer size
+004a907c	SendData	handshake not complete, trying to finish
+004a90a8	SendData	output buffer was full, trying to send again
+004a90d8	SendData	sent write buffered data
+004a90f4	SendData	error: write() after WANT_WRITE with short size
+004a9124	SendData	Paritial Write on, only sending one record
+004a9150	ReceiveData	ReceiveData()
+004a9160	ReceiveData	User calling CyaSSL_read in error state, not allowed
+004a9198	ReceiveData	Handshake not complete, trying to finish
+004a91c4	ReceiveData	Zero return, no more data coming
+004a91e8	ReceiveData	Peer reset or closed, connection done
+004a9210		unsupported cipher suite
+004a922c		input state error
+004a9240		bad index to key rounds
+004a9258		out of memory
+004a9268		verify problem on finished
+004a9284		verify mac problem
+004a9298		parse error on header
+004a92b0		wrong client/server type
+004a92cc		peer didn't send cert
+004a92e4		weird handshake type
+004a92fc		error state on socket
+004a9314		expected data, not there
+004a9330		don't have enough data to complete task
+004a9358		unknown type in record hdr
+004a9374		error during decryption
+004a938c		revcd alert fatal error
+004a93a4		error during encryption
+004a93bc		fread problem
+004a93cc		need peer's key
+004a93dc		need the private key
+004a93f4		server missing DH params
+004a9410		error during rsa priv op
+004a942c		can't match cipher suite
+004a9448		build message failure
+004a9460		client hello malformed
+004a9478		peer subject name mismatch
+004a9494		non-blocking socket wants data to be read
+004a94c0		handshake layer not ready yet, complete first
+004a94f0		premaster secret version mismatch error
+004a9518		record layer version error
+004a9534		non-blocking socket write buffer full
+004a955c		malformed buffer input error
+004a957c		verify problem on certificate
+004a959c		verify problem based on signature
+004a95c0		psk client identity error
+004a95dc		psk server hint error
+004a95f4		psk key callback error
+004a960c		NTRU key error
+004a961c		NTRU drbg error
+004a962c		NTRU encrypt error
+004a9640		NTRU decrypt error
+004a9654		zlib init error
+004a9664		zlib compress error
+004a9678		zlib decompress error
+004a9690		gettimeofday() error
+004a96a8		getitimer() error
+004a96bc		sigaction() error
+004a96d0		setitimer() error
+004a96e4		record layer length error
+004a9700		cant decode peer key
+004a9718		peer sent close notify alert
+004a9738		Bad ECC Curve Type or unsupported
+004a975c		Bad ECC Curve or unsupported
+004a977c		Bad ECC Peer Key
+004a9790		ECC Make Key failure
+004a97a8		ECC Export Key failure
+004a97c0		ECC DHE shared failure
+004a97d8		Not a CA by basic constraint error
+004a97fc		Bad path for opendir error
+004a9818		Bad Cert Manager error
+004a9830		OCSP Cert revoked
+004a9844		CRL Cert revoked
+004a9858		CRL missing, not loaded
+004a9870		CRL monitor already running
+004a988c		Thread creation problem
+004a98a4		OCSP need URL
+004a98b4		OCSP Cert unknown
+004a98c8		OCSP Responder lookup fail
+004a98e4		Maximum Chain Depth Exceeded
+004a9904		DTLS Cookie Error
+004a9918		DTLS Sequence Error
+004a992c		Suites Pointer Error
+004a9944		No PEM Header Error
+004a9958		Out of order message, fatal
+004a9974		Bad KEA type found
+004a9988		Sanity check on ciphertext failed
+004a99ac		Receive callback returned more than requested
+004a99dc		Generate Cookie Error
+004a99f4		Need peer certificate verify Error
+004a9a18		fwrite Error
+004a9a28		Cache restore header match Error
+004a9a4c		Unrecognized host name Error
+004a9a6c		Key Use digitalSignature not set Error
+004a9a94		Key Use keyEncipherment not set Error
+004a9abc		Ext Key Use server/client auth not set Error
+004a9aec		Send Callback Out of Bounds Read Error
+004a9b14		Invalid Renegotiation Error
+004a9b30		Session Ticket Too Long Error
+004a9b50		Session Ticket Error
+004a9b68		Peer sent different cert during SCR
+004a9b8c		Session Secret Callback Error
+004a9bac		Finished received from peer before Change Cipher Error
+004a9be4		Sanity Check on message order Error
+004a9c08		Duplicate HandShake message Error
+004a9c2c	CyaSSL_ERR_reason_error_string	unknown error number
+004aa434	004be318	RC4-SHA
+004aa43c	004be31c	RC4-MD5
+004aa444	004be320	DES-CBC3-SHA
+004aa454	004be324	AES128-SHA
+004aa460	004be328	AES256-SHA
+004aa46c	004be32c	AES128-SHA256
+004aa47c	004be330	AES256-SHA256
+004aa48c	SetCipherList	SetCipherList parameter error
+004aa4b0	SetCipherList	CHACHA
+004aa4c0	SetCipherList	ECDSA
+004aa4d0	SendClientHello	Bad suites pointer in SendClientHello
+004aa4f8	FUN_0048fdf0	Server using higher version, fatal error
+004aa524	FUN_0048fdf0	server using lower version
+004aa540	FUN_0048fdf0	    no downgrade allowed, fatal error
+004aa568	FUN_0048fdf0,FUN_00492164	    version below minimum allowed, fatal error
+004aa598	FUN_0048fdf0,FUN_00492164	    downgrading to SSLv3
+004aa5b4	FUN_0048fdf0,FUN_00492164	    downgrading to TLSv1
+004aa5d0	FUN_0048fdf0,FUN_00492164	    downgrading to TLSv1.1
+004aa5ec	FUN_0048fdf0,FUN_00492164	Invalid session ID size
+004aa604	FUN_0048fdf0	Server refused compression, turning off
+004aa62c	FUN_0048fdf0	Unsupported cipher suite, DoServerHello
+004aa654	FUN_0048fdf0	Server denied resumption attempt
+004aa678	FUN_00490480	VerifyClientSuite
+004aa68c	FUN_00490480,FUN_00491a04	Requires PSK
+004aa69c	FUN_00490480,FUN_00491a04	Don't have PSK
+004aa6ac	FUN_00491a04	VerifyServerSuite
+004aa6c0	FUN_00491a04	Suites pointer error
+004aa6d8	FUN_00491a04	Requires RSA
+004aa6e8	FUN_00491a04	Don't have RSA
+004aa6f8	FUN_00491a04	Requires DHE
+004aa708	FUN_00491a04	Don't have DHE
+004aa718	FUN_00491a04	Requires ECCDSA
+004aa728	FUN_00491a04	Don't have ECCDSA
+004aa73c	FUN_00491a04	Requires static ECC
+004aa750	FUN_00491a04	Don't have static ECC
+004aa768	FUN_00491a04	Requires NTRU
+004aa778	FUN_00491a04	Don't have NTRU
+004aa788	FUN_00491a04	Requires RSA Signature
+004aa7a0	FUN_00491a04	Don't have RSA Signature
+004aa7bc	FUN_00491ee4	MatchSuite
+004aa7c8	FUN_00491ee4	Verified suite validity
+004aa7e0	FUN_00491ee4	Could not verify suite validity, continue
+004aa80c	FUN_00492164	Client trying to connect with lesser version
+004aa83c	FUN_00492164	Client wants to resume session
+004aa85c	FUN_00492164	Not matching compression, turning off
+004aa884	FUN_00492164	Session lookup for resume failed
+004aa8a8	FUN_00492164	Unsupported cipher suite, ClientHello
+004aa8d0	FUN_00492c80	Doing RSA peer cert verify
+004aa8ec	FUN_00492c80	Oops, peer sent RSA key but not in verify
+004aa918	FUN_00493230	Client received client keyexchange, attack?
+004aa944	FUN_00493230	Client sending keyexchange at wrong time
+004aa970	FUN_00493230	client didn't present peer cert
+004aa990	FUN_00493230	RSA explicit size doesn't match
+004aa9b0	FUN_00493230	RSA message too big
+004aa9c4	FUN_00493230	Bad kea type
+004aa9e0		CLNTSRVRclient finished
+004aa9f8		server finished
+004aaa08	EmbedReceive	Embed Receive error
+004aaa1c	EmbedReceive	    Would block
+004aaa2c	EmbedReceive	    Socket timeout
+004aaa40	EmbedReceive,EmbedSend	    Connection reset
+004aaa58	EmbedReceive,EmbedSend	    Socket interrupted
+004aaa70	EmbedReceive	    Connection refused
+004aaa88	EmbedReceive	    Connection aborted
+004aaaa0	EmbedReceive,EmbedSend	    General error
+004aaab4	EmbedReceive	Embed receive connection closed
+004aaad4	EmbedSend	Embed Send error
+004aaae8	EmbedSend	    Would Block
+004aaaf8	EmbedSend	    Socket EPIPE
+004aab10		CLNTSRVRclient finished
+004aab28		server finished
+004aab38	SetCipherSpecs	SetCipherSpecs() client has an unusuable suite
+004aab68	SetCipherSpecs	Unsupported cipher suite, SetCipherSpecs ChaCha
+004aab98	SetCipherSpecs	Unsupported cipher suite, SetCipherSpecs ECC
+004aabc8	SetCipherSpecs	Unsupported cipher suite, SetCipherSpecs
+004aad08	FUN_004944f0	Set Prefix error, bad input
+004aad40		opening random device error
+004aad5c		reading random device error
+004aad78		windows crypt init error
+004aad94		windows crypt generation error
+004aadb4		random device read would block error
+004aaddc		Bad mutex, operation failed
+004aadf8		mp_init error state
+004aae0c		mp_read error state
+004aae20		mp_exptmod error state
+004aae38		mp_to_xxx error state, can't convert
+004aae60		mp_sub error state, can't subtract
+004aae84		mp_add error state, can't add
+004aaea4		mp_mul error state, can't multiply
+004aaec8		mp_mulmod error state, can't multiply mod
+004aaef4		mp_mod error state, can't mod
+004aaf14		mp_invmod error state, can't inv mod
+004aaf3c		mp_cmp error state
+004aaf50		mp zero result, not expected
+004aaf70		out of memory error
+004aaf84		RSA wrong block type for RSA function
+004aafac		RSA buffer error, output too small or input too big
+004aafe0		Buffer error, output too small or input too big
+004ab010		Setting Cert AlogID error
+004ab02c		Setting Cert Public Key error
+004ab04c		Setting Cert Date validity error
+004ab070		Setting Cert Subject name error
+004ab090		Setting Cert Issuer name error
+004ab0b0		Setting basic constraint CA true error
+004ab0d8		Setting extensions error
+004ab0f4		ASN parsing error, invalid input
+004ab118		ASN version error, invalid number
+004ab13c		ASN get big int error, invalid data
+004ab160		ASN key init error, invalid input
+004ab184		ASN object id error, invalid id
+004ab1a4		ASN tag error, not null
+004ab1bc		ASN expect error, not zero
+004ab1d8		ASN bit string error, wrong id
+004ab1f8		ASN oid error, unknown sum id
+004ab218		ASN date error, bad size
+004ab234		ASN date error, current date before
+004ab258		ASN date error, current date after
+004ab27c		ASN signature error, mismatched oid
+004ab2a0		ASN time error, unkown time type
+004ab2c4		ASN input error, not enough data
+004ab2e8		ASN sig error, confirm failure
+004ab308		ASN sig error, unsupported hash type
+004ab330		ASN sig error, unsupported key type
+004ab354		ASN NTRU key decode error, invalid input
+004ab380		X.509 Critical extension ignored
+004ab3a4		ECC input argument wrong type, invalid input
+004ab3d4		ECC ASN1 bad key data, invalid input
+004ab3fc		ECC curve sum OID unsupported, invalid input
+004ab42c		Bad function argument
+004ab444		Feature not compiled in
+004ab45c		Unicode password too big
+004ab478		No password provided by user
+004ab498		Alt Name problem, too big
+004ab4b4		AES-GCM Authentication check fail
+004ab4d8		AES-CCM Authentication check fail
+004ab4fc		Cavium Init type error
+004ab514		Compress Init error
+004ab528		Compress error
+004ab538		DeCompress Init error
+004ab550		DeCompress error
+004ab564		Bad alignment error, no alloc help
+004ab588		ASN no signer error to confirm failure
+004ab5b0		ASN CRL sig error, confirm failure
+004ab5d4		ASN CRL no signer error to confirm failure
+004ab600		ASN OCSP sig error, confirm failure
+004ab624		Bad ecc encrypt state operation
+004ab644		Bad padding, message wrong length
+004ab668		Setting cert request attributes error
+004ab690		PKCS#7 error: mismatched OID value
+004ab6b4		PKCS#7 error: no matching recipient found
+004ab6e0		FIPS mode not allowed error
+004ab6fc		Name Constraint error
+004ab714		Random Number Generator failed
+004ab734		FIPS Mode HMAC Minimum Key Length error
+004ab75c		Rsa Padding error
+004ab770		Output length only set, not for other use error
+004ab7a0		In Core Integrity check FIPS error
+004ab7c4		AES Known Answer Test check FIPS error
+004ab7ec		DES3 Known Answer Test check FIPS error
+004ab814		HMAC Known Answer Test check FIPS error
+004ab83c		RSA Known Answer Test check FIPS error
+004ab864		DRBG Known Answer Test check FIPS error
+004ab88c		DRBG Continuous Test FIPS error
+004ab8ac		AESGCM Known Answer Test check FIPS error
+004ab8d8	CTaoCryptGetErrorString	unknown error number
+004be4a4		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+004be5c0	FUN_004982cc	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789

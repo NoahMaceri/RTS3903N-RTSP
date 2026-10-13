@@ -1,0 +1,296 @@
+00010cf5		_gp_disp
+00010cfe		_fini
+00010d04		_ITM_deregisterTMCloneTable
+00010d20		_ITM_registerTMCloneTable
+00010d3a		__cxa_finalize
+00010d49		_Jv_RegisterClasses
+00010d5d		__assert
+00010d66		osd2_alloc_dma
+00010d75		rts_log
+00010d7d		__dump_blk_cmd
+00010d8c		rts_dump_blk_cmd
+00010d9d		__make_attribute
+00010dae		__get_color_mode_val
+00010dc3		__write_each_blk_info_cmd
+00010ddd		memset
+00010de4		rts_osd2_set_cmd
+00010df5		__write_enable_blk_info_cmd
+00010e11		__dump_frame_cmd
+00010e22		rts_dump_frame_cmd
+00010e35		__write_frame_info_cmd
+00010e4c		__write_color_table_info_cmd
+00010e69		__check_blk_valid_num
+00010e7f		__init_osd2_blocks
+00010e92		__init_osd2_pameters
+00010ea7		__alloc_osd2_dma_buf
+00010ebc		rts_isp_alloc_dma
+00010ece		RTS_IS_ERR
+00010ed9		rts_isp_set_dma_info
+00010eee		__free_osd2_dma_buf
+00010f02		rts_isp_free_dma
+00010f13		__init_osd2_color_table
+00010f2b		osd2_set_default_color_table
+00010f48		rts_osd2_release
+00010f59		pthread_mutex_destroy
+00010f6f		osd2_ewl_release
+00010f80		rts_free
+00010f89		rts_osd2_init
+00010f97		rts_hw_id
+00010fa1		__rts_calloc
+00010fae		osd2_ewl_init
+00010fbc		pthread_mutex_init
+00010fcf		rts_osd2_update
+00010fdf		rts_osd2_config_block
+00010ff5		pthread_mutex_lock
+00011008		rts_isp_mem_sync_cpu
+0001101d		rts_memcpy
+00011028		rts_isp_mem_sync_device
+00011040		rts_test_bit
+0001104d		rts_set_bit
+00011059		rts_clear_bit
+00011067		pthread_mutex_unlock
+0001107c		rts_osd2_query_block
+00011091		rts_osd2_enable_block
+000110a7		rts_osd2_disable_block
+000110be		rts_osd2_set_attr
+000110d0		rts_osd2_get_attr
+000110e2		__dump_color_table_reg
+000110f9		osd2_ewl_read_reg
+0001110b		printf
+00011112		osd2_encode_frame
+00011124		rts_osd2_set_register
+0001113a		osd2_ewl_start_hw
+0001114c		osd2_ewl_wait_hw_ready
+00011163		rts_osd2_encode
+00011173		osd2_ewl_reserve_hw
+00011187		osd2_ewl_release_hw
+0001119b		rts_osd2_set_color_table
+000111b4		rts_osd2_get_color_table
+000111cd		rts_osd2_get_blk_max_num
+000111e6		rts_osd2_set_adma_copy
+000111fd		rts_osd2_get_adma_copy
+00011214		rts_osd2_set_epoll_hook
+0001122c		osd2_ewl_set_epoll_hook
+00011244		rts_osd2_check_done
+00011258		osd2_ewl_check_done
+0001126c		rts_osd2_make_rdy
+0001127e		osd2_ewl_make_rdy
+00011290		rts_osd2_use_sigio
+000112a3		osd2_ewl_use_sigio
+000112b6		osd2_ewl_write_reg
+000112c9		rts_osd2_get_register
+000112df		osd2_dump_register
+000112f2		rts_osd2_get_cmd
+00011303		osd2_dump_color_table
+00011319		rts_reg_osd2_done
+0001132b		rts_reg_osd2_close
+0001133e		pthread_cond_destroy
+00011353		pthread_cond_init
+00011365		rts_wq_lock_allocation
+0001137c		rts_wq_lock_set_name
+00011391		rts_reg_read_reg
+000113a2		rts_reg_write_reg
+000113b4		rts_wq_lock_wait
+000113c5		rts_reg_osd2_open
+000113d7		rts_wq_lock_post
+000113e8		rts_reg_handle_sigio
+000113fd		pthread_cond_signal
+00011411		rts_reg_get_handle
+00011424		pthread_cond_wait
+00011436		sigemptyset
+00011442		sigaddset
+0001144c		pthread_sigmask
+0001145c		sigtimedwait
+00011469		rts_delay
+00011473		librtsisp.so.1
+00011482		librtscamkit.so.1
+00011494		libm.so.0
+0001149e		librtsgeom.so.1
+000114ae		librtsv4l2.so.1
+000114be		libgcc_s.so.1
+000114cc		libc.so.0
+000114d6		_ftext
+000114dd		_fdata
+000114e4		_edata
+000114eb		__bss_start
+000114f7		_fbss
+000114fd		_end
+00011502		librtsosd2.so.0
+00015d38		/media/sdk/pocket_sdk_v2.3/clean/users/rtscore/rtstream/librtsisp/rtsosd2/src/rtsosd2.c
+00015d94		buffer
+00015da4		<%s, %d>alloc osd command fail, ret = %d\n
+00015dd0		blk cmd phy addr: %08x\n
+00015de8		<%s, %d>write each blk info cmd fail\n
+00015e10		frame cmd phy addr: %08x\n
+00015e2c		<%s, %d>check osd blk[%d] area and framesize fail,\n\tblk_start: [%d %d], blk_end: [%d %d], framesize: [%d %d]\n
+00015e9c		osd2 inner
+00015ea8		pdata
+00015eb0		<%s, %d>alloc color table dma failed
+00015ee0		config
+00015ee8		<%s, %d>init ewl fail\n
+00015f00		<%s, %d>alloc osd2 dma buf fail\n
+00015f24		<%s, %d>init color table fail\n
+00015f44		<%s, %d>invalid config\n
+00015f5c		<%s, %d>osd2 block index(%d) cann't be minus\n
+00015f8c		<%s, %d>alloc osd blk dma fail, ret = %d\n
+00015fb8		osd2 pict
+00015fc4		<%s, %d>osd block config is invalid, ret = %d\n
+00015ffc		<%s, %d>invalid osd block attr, ret = %d\n
+00016028		reg:[%04x]: %08x\n
+0001603c		<%s, %d>write enable blk info cmd fail\n
+00016064		<%s, %d>osd2 encode frame fail, ret = %d\n
+00016090		frame
+00016098		<%s, %d>invalid frame for osd\n
+000160b8		<%s, %d>invalid frame length for osd\n
+000160e0		<%s, %d>write frame info fail\n
+00016100		<%s, %d>write color table fail\n
+00016120		<%s, %d>HW unavailable\n
+00016138		<%s, %d>osd encode frame fail\n
+00016158		<%s, %d>fail to assert : %s\n
+00016180		rts_osd2_use_sigio
+00016194		rts_osd2_use_sigio
+000161a8		rts_osd2_make_rdy
+000161bc		rts_osd2_make_rdy
+000161d0		rts_osd2_check_done
+000161e4		rts_osd2_check_done
+000161f8		rts_osd2_set_epoll_hook
+00016210		rts_osd2_set_epoll_hook
+00016228		rts_osd2_get_adma_copy
+00016240		rts_osd2_set_adma_copy
+00016258		rts_osd2_get_color_table
+00016274		rts_osd2_set_color_table
+00016290		rts_osd2_encode
+000162a0		rts_osd2_encode
+000162b0		osd2_encode_frame
+000162c4		osd2_encode_frame
+000162d8		rts_osd2_get_attr
+000162ec		rts_osd2_set_attr
+00016300		rts_osd2_set_attr
+00016314		rts_osd2_disable_block
+0001632c		rts_osd2_enable_block
+00016344		rts_osd2_enable_block
+0001635c		rts_osd2_query_block
+00016374		rts_osd2_query_block
+0001638c		__check_osd2_blk
+000163a0		rts_osd2_config_block
+000163b8		rts_osd2_config_block
+000163d0		rts_osd2_init
+000163e0		rts_osd2_init
+000163f0		__init_osd2_color_table
+00016408		__init_osd2_color_table
+00016420		__alloc_osd2_dma_buf
+00016438		__init_osd2_cmd
+00016448		__init_osd2_cmd
+00016458		__check_blk_valid_num
+00016470		__check_osd2_blk_and_famesize
+00016490		__write_enable_blk_info_cmd
+000164ac		__write_each_blk_info_cmd
+000164c8		__dump_blk_cmd
+000164d8		osd2_alloc_dma
+000164f4		/media/sdk/pocket_sdk_v2.3/clean/users/rtscore/rtstream/librtsisp/rtsosd2/src/rtsosd2registers.c
+00016558		<%s, %d>Can't find register(%d).\n
+0001657c		<%s, %d>register(%d) isn't writable.\n
+000165a4		<%s, %d>register(%d) isn't readable.\n
+000165d8		write 1 to start osd cmd
+000165f4	000270c4,osd2_dump_register	write 1 to stop osd and reset
+00016614		osd2 cmd address
+00016634		osd2 uv mode
+00016644		osd2 y r coefficient
+0001665c		osd2 y g coefficient
+00016674		osd2 y b coefficient
+0001668c		osd2 u r coefficient
+000166a4		osd2 u g coefficient
+000166bc		osd2 u b coefficient
+000166d4		osd2 v r coefficient
+000166ec		osd2 v g coefficient
+00016704		osd2 v b coefficient
+0001671c		osd2 yuv slice width
+00016734		osd2 argb8888 slice width
+00016750		osd2 painter cs
+00016760		osd2 painter idle
+00016774		osd2 buf overfl int flag
+00016790		osd2 color up done int flag
+000167ac		osd2 block done int flag
+000167c8		osd2 busrd mismatch int flag
+000167e8		osd2 cmd error
+000167f8		osd2 valid error
+0001680c		osd2 cmd done
+0001681c		osd2 painter done
+00016830		osd2 busrd count
+00016844		osd2 busrd length
+00016858		osd2 colormap cs
+0001686c		osd2 layer cs
+0001687c		osd2 bus write cs
+00016890		osd2 bus read cs
+000168a4		osd2 block read cs
+000168b8		osd2 uv read write buffer cs
+000168d8		osd2 ye read write buffer cs
+000168f8		osd2 yo read write buffer cs
+00016918		osd2 painter cpu mode
+00016930		osd2 painter color start
+0001694c		osd2 painter block start
+00016968		osd2 nowait bufwr empty
+00016980		osd2 buf addr osd
+000169a0		rts_osd2_get_register
+000169b8		rts_osd2_get_register
+000169d0		rts_osd2_set_register
+000169e8		rts_osd2_set_register
+00016a00		/media/sdk/pocket_sdk_v2.3/clean/users/rtscore/rtstream/librtsisp/rtsosd2/src/rtsosd2cmd.c
+00016a5c		<%s, %d>Can't find cmd(%d).\n
+00016a7c		<%s, %d>cmd(%d) isn't writable.\n
+00016aa0		<%s, %d>cmd(%d) isn't readable.\n
+00016ac4		0x%08x\tframe:%s\n
+00016ad8		0x%08x\tblock:%s\n
+00016aec		cmd code
+00016af8		cmd attibute
+00016b08		frame width
+00016b14		frame height
+00016b24		frame Y addr
+00016b34		frame UV addr
+00016b44		link addr
+00016b50		block start X
+00016b60		block start Y
+00016b70		block width
+00016b7c		block height
+00016b8c		block start addr
+00016ba0		block overlay mode
+00016bb4		block color mode
+00016bc8		block pure color RGB
+00016be0		block special config
+00016bf8		color table address
+00016c10		rts_osd2_get_cmd
+00016c24		rts_osd2_get_cmd
+00016c38		rts_osd2_set_cmd
+00016c4c		rts_osd2_set_cmd
+00016c60		%d %d %d: %02x\n
+00016c70		<%s, %d>Can't find color(%d).\n
+00016c90		<%s, %d>invalid rgba index\n
+00016cb0		osd2_get_color_table
+00016cc8		osd2_set_color_table
+00016d70		<%s, %d>osd2 ewl: failed to alloc ewl instance\n
+00016da0		<%s, %d>ewl allocate wq lock fail, ret = %d\n
+00016dd0		<%s, %d>ewl %s fail, return NULL\n
+00016df4		/media/sdk/pocket_sdk_v2.3/clean/users/rtscore/rtstream/librtsisp/rtsosd2/ewl/ewl_osd2_common.c
+00016e54		ewl->reginst
+00016e64		<%s, %d>ewl : failed to open osd2 encoder\n
+00016e90		<%s, %d>wq lock wait fail, ret = %d\n
+00016eb8		<%s, %d>osd painter is busy\n
+00016ed8		<%s, %d>get epoll hook fail, ret = %d\n
+00016f00		osd2_ewl_use_sigio
+00016f14		osd2_ewl_use_sigio
+00016f28		osd2_ewl_set_epoll_hook
+00016f40		osd2_ewl_set_epoll_hook
+00016f58		osd2_ewl_wait_rdy
+00016f6c		osd2_ewl_wait_hw_ready
+00016f84		osd2_ewl_wait_hw_ready
+00016f9c		osd2_ewl_make_rdy
+00016fb0		osd2_ewl_make_rdy
+00016fc4		osd2_ewl_check_done
+00016fd8		osd2_ewl_check_done
+00016fec		osd2_ewl_start_hw
+00017000		osd2_ewl_release_hw
+00017014		osd2_ewl_reserve_hw
+00017028		osd2_ewl_reserve_hw
+0001703c		osd2_ewl_write_reg
+00017050		osd2_ewl_read_reg
+00017064		osd2_ewl_init

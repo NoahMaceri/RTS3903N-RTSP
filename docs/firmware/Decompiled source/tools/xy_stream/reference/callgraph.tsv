@@ -1,0 +1,106 @@
+004015b8	_init	FUN_00401f0c,FUN_00403d20
+00401600	main	FUN_0040243c,__rts_malloc,apply_capture_aac,fclose,fopen,fread,free,fseek,ftell,init_aac_audio_server,init_main_stream,init_raw_stream,init_stream_info,init_sub_stream,memcpy,memset,pthread_create,puts,release_stream,rts_av_disable_chn,rts_av_enable_chn,rts_av_get_chn_status,rts_av_init,rts_av_poll,rts_av_put_buffer,rts_av_recv,rts_av_release,rts_av_send,rts_av_set_buffer_profile,rts_av_start_recv,rts_av_stop_recv,rts_log,rts_queue_empty,rts_queue_pop,rts_set_log_mask,save_mjpeg,send_aac_frame,signal,stop_aac_audio_server,strcmp,usleep
+00401d70	entry	__uClibc_main
+00401dd0	FUN_00401dd0	
+00401e10	FUN_00401e10	
+00401e5c	FUN_00401e5c	FUN_00401dd0
+00401f0c	FUN_00401f0c	FUN_00401e10
+00401f50	FUN_00401f50	
+00402090	Snapshot	
+004020b0	FUN_004020b0	rts_av_get_buffer,rts_queue_push_back
+004020f4	FUN_004020f4	sleep
+00402134	ai_get_lpcmstream	fclose,fopen,fwrite,printf,rts_av_poll,rts_av_put_buffer,rts_av_recv,rts_log,usleep
+00402248	ai_get_aacstream	fclose,feof,fopen,fread,fwrite,rts_av_poll,rts_av_put_buffer,rts_av_recv,rts_av_send,rts_av_set_buffer_profile,rts_log,rts_queue_empty,rts_queue_pop,usleep
+0040243c	FUN_0040243c	rts_av_get_isp_ctrl,rts_av_set_isp_ctrl,rts_log
+00402570	FUN_00402570	rts_av_delete_buffer,rts_av_set_buffer_callback,rts_queue_clear,rts_queue_destroy
+00402610	init_stream_info	
+00402630	release_stream	rts_av_destroy_chn,rts_av_disable_chn
+004026e8	main_stream_recv	FUN_00401f50,rts_av_poll,rts_av_put_buffer,rts_av_recv,usleep
+00402778	sub_stream_recv	FUN_00401f50,rts_av_poll,rts_av_put_buffer,rts_av_recv,usleep
+00402808	FUN_00402808	main_stream_recv,sub_stream_recv
+00402854	raw_stream_recv	rts_av_poll,rts_av_put_buffer,rts_av_recv,usleep
+004028c8	init_main_stream	rts_av_bind,rts_av_create_h264_chn,rts_av_create_isp_chn,rts_av_create_mjpeg_chn,rts_av_create_osd_chn,rts_av_enable_chn,rts_av_set_profile,rts_av_start_recv,rts_log
+00402bac	init_sub_stream	rts_av_bind,rts_av_create_h264_chn,rts_av_create_isp_chn,rts_av_create_osd_chn,rts_av_enable_chn,rts_av_set_profile,rts_av_start_recv,rts_log
+00402df8	init_raw_stream	rts_av_create_isp_chn,rts_av_enable_chn,rts_av_set_profile,rts_av_start_recv,rts_log
+00402f14	apply_capture_aac	rts_av_start_recv
+00402f58	stop_capture_aac	
+00402f78	init_aac_audio_server	FUN_00402570,RTS_IS_ERR,aacDecoder_Close,aacDecoder_Open,rts_av_bind,rts_av_create_audio_aec_chn,rts_av_create_audio_capture_chn,rts_av_create_audio_encode_chn,rts_av_create_audio_mixer_chn,rts_av_create_audio_playback_chn,rts_av_create_audio_resample_chn,rts_av_destroy_chn,rts_av_enable_chn,rts_av_get_buffer,rts_av_init,rts_av_new_buffer,rts_av_put_buffer,rts_av_query_aec_ctrl,rts_av_release,rts_av_release_aec_ctrl,rts_av_set_aec_ctrl,rts_av_set_buffer_callback,rts_av_set_profile,rts_av_start_recv,rts_av_start_send,rts_log,rts_queue_init,strcpy
+00403704	send_aac_frame	RTS_IS_ERR,__rts_malloc,aacDecoder_DecodeFrame,aacDecoder_Fill,aacDecoder_GetStreamInfo,memcpy,rts_av_set_profile,rts_free,rts_log,usleep
+00403a88	stop_aac_audio_server	FUN_00402570,aacDecoder_Close,rts_av_destroy_chn,rts_av_disable_chn,rts_av_release,rts_av_set_buffer_callback,rts_av_stop_recv,rts_av_stop_send
+00403c2c	msg_proc	
+00403c34	rmm_init_jpeg	
+00403c3c	save_mjpeg	fclose,fopen,fwrite,rts_log,snprintf
+00403d20	FUN_00403d20	
+00403d70	__uClibc_main	
+00403d90	_fini	FUN_00401e5c
+004047a0	printf	
+004047b0	rts_queue_empty	
+004047c0	fread	
+004047d0	feof	
+004047e0	rts_av_enable_chn	
+004047f0	rts_av_new_buffer	
+00404800	rts_av_stop_recv	
+00404810	free	
+00404820	rts_av_disable_chn	
+00404830	rts_av_delete_buffer	
+00404840	rts_av_bind	
+00404850	rts_av_set_buffer_callback	
+00404860	rts_av_set_aec_ctrl	
+00404870	rts_av_get_chn_status	
+00404880	memcpy	
+00404890	rts_av_start_send	
+004048a0	rts_free	
+004048b0	usleep	
+004048c0	aacDecoder_Fill	
+004048d0	rts_av_send	
+004048e0	rts_av_create_h264_chn	
+004048f0	memset	
+00404900	aacDecoder_DecodeFrame	
+00404910	rts_av_poll	
+00404920	rts_av_get_buffer	
+00404930	rts_av_stop_send	
+00404940	rts_av_set_profile	
+00404950	aacDecoder_Open	
+00404960	rts_av_create_audio_mixer_chn	
+00404970	strcpy	
+00404980	rts_av_release	
+00404990	rts_av_create_isp_chn	
+004049a0	rts_av_get_isp_ctrl	
+004049b0	rts_av_query_aec_ctrl	
+004049c0	rts_set_log_mask	
+004049d0	rts_av_destroy_chn	
+004049e0	fwrite	
+004049f0	puts	
+00404a00	fopen	
+00404a10	rts_log	
+00404a20	rts_queue_init	
+00404a30	rts_av_init	
+00404a40	snprintf	
+00404a50	rts_av_create_mjpeg_chn	
+00404a60	rts_av_create_audio_aec_chn	
+00404a70	__rts_malloc	
+00404a80	rts_av_put_buffer	
+00404a90	pthread_create	
+00404aa0	rts_av_create_audio_capture_chn	
+00404ab0	fseek	
+00404ac0	fclose	
+00404ad0	rts_av_recv	
+00404ae0	rts_av_create_audio_resample_chn	
+00404af0	aacDecoder_GetStreamInfo	
+00404b00	rts_av_release_aec_ctrl	
+00404b10	sleep	
+00404b20	signal	
+00404b30	rts_av_create_osd_chn	
+00404b40	aacDecoder_Close	
+00404b50	rts_queue_clear	
+00404b60	RTS_IS_ERR	
+00404b70	rts_av_set_buffer_profile	
+00404b80	rts_av_set_isp_ctrl	
+00404b90	rts_queue_pop	
+00404ba0	rts_queue_push_back	
+00404bb0	rts_av_start_recv	
+00404bc0	rts_queue_destroy	
+00404bd0	strcmp	
+00404be0	rts_av_create_audio_encode_chn	
+00404bf0	ftell	
+00404c00	rts_av_create_audio_playback_chn	

@@ -1,0 +1,10 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+00401f60	FUN_00401f60	thread_short_record	true	false	thread_short_record
+004023b8	FUN_004023b8	send_mp4rcd_heartbeat_msg	true	false	send_mp4rcd_heartbeat_msg
+00402454	FUN_00402454	send_mp4rcd_costtime_msg	true	false	send_mp4rcd_costtime_msg
+004024f4	FUN_004024f4	record_file	true	false	record_file
+0040329c	FUN_0040329c	recordevent_add_file_info	true	false	recordevent_add_file_info
+00403300	FUN_00403300	mmap_init	true	false	mmap_init
+00403a14	FUN_00403a14	try_adjust_buf	true	false	try_adjust_buf
+00403b78	FUN_00403b78	fshare_create	true	false	fshare_create
+00403e68	FUN_00403e68	fshare_open	true	false	fshare_open

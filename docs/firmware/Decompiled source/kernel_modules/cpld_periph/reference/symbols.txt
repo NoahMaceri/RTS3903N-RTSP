@@ -1,0 +1,46 @@
+## IMPORTS (external)
+gpio_request	<EXTERNAL>
+gpio_free	<EXTERNAL>
+gpio_direction_output	<EXTERNAL>
+gpio_direction_input	<EXTERNAL>
+__gpio_get_value	<EXTERNAL>
+__gpio_set_value	<EXTERNAL>
+add_timer	<EXTERNAL>
+printk	<EXTERNAL>
+msleep	<EXTERNAL>
+__copy_user	<EXTERNAL>
+strlen	<EXTERNAL>
+misc_register	<EXTERNAL>
+init_timer_key	<EXTERNAL>
+proc_create_data	<EXTERNAL>
+remove_proc_entry	<EXTERNAL>
+misc_deregister	<EXTERNAL>
+del_timer	<EXTERNAL>
+
+## EXPORTS (entry points)
+000117a4	PORT_IR_CUT_DN_CATHODE
+000100fc	cpld_gpio_free
+000117ac	PORT_FACTORY_DEFAULT
+000117c0	__this_module
+000118e0	LED_WHITE_ON
+0001178c	PORT_LED_RED
+000101a0	cpld_gpio_get_value
+00011784	PORT_LED_ETHERNET
+00010fac	cleanup_module
+0001017c	cpld_gpio_direction_input
+000100d8	cpld_gpio_request
+00011798	PORT_WIFI_PWR
+00010888	init_module
+000117a0	PORT_IR_CUT_DN_ANODE
+000117a8	PORT_AUDIO_ENABLE
+00010120	cpld_gpio_direction_output
+00011790	PORT_IR_LED
+00011770	LED_GREEN
+00011794	PORT_SDIO_ENABLE
+00011778	LED_ETH_ON
+0001177c	IR_ON
+0001179c	PORT_WHITE_LIGHT_PIN
+00011788	PORT_LED_GREEN
+00011780	AUDIO_ON
+00011774	LED_RED
+000101c4	cpld_gpio_set_value

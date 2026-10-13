@@ -1,0 +1,282 @@
+00014570	rtscam_mem_check	rtscam_mem_check
+00014584	rtscam_mem_free	rtscam_mem_free
+00014594	rtscam_mem_init	rtscam_mem_init
+000145f1		3rtscam:maping dma memory fail, error =  %d\n
+00014621		3rtscam:invalid src 0x%lx 0x%lx\n
+00014645		3rtscam:invalid dst 0x%lx 0x%lx\n
+00014669		3prep dma sg failed\n
+00014681		3dma submit failed\n
+00014699		3dma transfer never finish\n
+000146b9		3dma transfer failed\n
+000146d1		3rtscam:rtscam_mem_alloc fail, len = %lu\n
+000146fd		3rtscam:find mem fail\n
+0001471c	FUN_000108f4,FUN_00010c44	   address\t
+00014728	FUN_000108f4,FUN_00010c44	      size\t
+00014734	FUN_000108f4,FUN_00010c44	offset\t
+0001473c	FUN_000108f4,FUN_00010c44	 count\t
+00014744	FUN_000108f4,FUN_00010c44	 pid\t
+0001474c	FUN_000108f4,FUN_00010c44	info\n
+00014754	FUN_000108f4,FUN_00010c44	%3d\t0x%08x\t%10d\t%6ld\t%6ld\t%4d\t%s\n
+00014778	FUN_00010a80	total : %12ld\n
+00014788	FUN_00010a80	used  : %12ld\n
+00014798	FUN_00010a80	left  : %12ld\n
+000147a8	FUN_00010a80	%08lx
+000147b9		3rtscam:no vma for address 0x%lx\n
+000147dd		6rtscam:unknown[rtsmem] unlocked ioctl 0x%08x, '%c' 0x%x\n
+00014819		3rtscam:isp mem platform_data is NULL\n
+00014841		3rtscam:Couldn't allocate isp mem device object\n
+00014875		6rtscam:isp resvd mem addr : 0x%08x, size : 0x%x\n
+000148a9		3rtscam:rtscam_mem_init fail : %d\n
+000148cd		3no dma channel\n
+000148e1		3rtscam:request_dma_chan fail : %d\n
+00014908	rts_isp_mem_probe	rtsmem
+00014911		6rtscam:unknown[rtsmem] ioctl 0x%08x, '%c' 0x%x\n
+00014949		6rtscam:0x%08x\t%10d\t%4d is inuse\n
+0001496c		rts_isp_mem
+00014978		memlist
+00014988		meminfo
+00014991		6rtscam:[%4d]++++%8ld %8ld\n
+000149b1		3rtscam:<%s, %d>invalid memory for free\n
+000149dd		3rtscam:find mem fail\n
+000149f5		3rtscam:invalid mem size\n
+00014a11		6rtscam:[%4d]----%8ld %8ld\n
+00014a31		3rtscam:invalid vaddr : 0x%08lx\n
+00014a55		3rtscam:invalid offset: 0x%08lx\n
+00014a79		3rtscam:invalid phy_addr : 0x%08lx\n
+00014aa1		6rtscam:enum isp dma %d fail\n
+00014ac1		6rtscam:%s v:0x%08lx p:0x%08lx s:0x%08x\n
+00014aed		3rtscam:no vma for address 0x%lx\n
+00014b11		3no page for address 0x%lx\n
+00014b31		3got only %d of %d user pages\n
+00014b51		3rtscam:size is zero\n
+00014b69		3rtscam:failed to allocate pages table\n
+00014b95		3rtscam:vma at 0x%lx is too small for 0x%lx bytes\n
+00014bc9		3rtscam:failed to get user pages\n
+00014bed		3rtscam:failed to allocate sg table\n
+00014c15		3rtscam:failed to initialize sg table\n
+00014c3d		3failed to map scatterlist\n
+00014c5d		3rtscam:find mem fail at %s\n
+00014c7d		3rtscam:memory out of range at %s\n
+00014ca1		3rtscam:invalid 0x%08lx : 0x%08lx for mmap\n
+00014cd1		3rtscam:invalid cpu_addr : 0x%08lx\n
+00014cf9		3rtscam:maping dma memory fail, error =  %d\n
+00014d29		3No buffer to map\n
+00014d3d		3Remapping memory failed, error: %d\n
+00014d64	FUN_000131cc,FUN_00013300,FUN_0001350c,FUN_00013b08	/work/zzd/r10/users/drivers/video/rts-dma-contig.c
+00014d99		3trying to unpin a not attached buffer\n
+00014dc5		3dmabuf buffer is already unpinned\n
+00014ded		3trying to pin a non attached buffer\n
+00014e15		3dmabuf buffer is already pinned\n
+00014e39		3contiguous chunk is too small %lu/%lu b\n
+00014e65		3Error getting dmabuf scatterlist\n
+00014e89		3failed to map scatterlist\n
+00014ea8	FUN_00013b08	failed to alloc sg table\n
+00014ec4	FUN_00013b08	failed to get scatterlist from DMA API\n
+00014eec		alloc memory of size %ld failed\n
+00014f10		isp frame
+00014f1d		3failed to attach dmabuf\n
+00014f39		3failed to allocate pages table\n
+00014f5d		3no vma for address %lu\n
+00014f79		3vma at %lu is too small for %lu bytes\n
+00014fa5		3failed to copy vma\n
+00014fbd		3failed to get user pages\n
+00014fd9		3failed to allocate sg table\n
+00014ff9		3failed to initialize sg table\n
+0001501d		3contiguous mapping is too small %lu/%lu\n
+00015048	_elfSectionHeaders::0000023c	alias=platform:rts_isp_mem
+00015063		version=0.0.1
+00015071		license=GPL v2
+00015080		author=Ming Qian <ming_qian@realsil.com.cn>
+000150ac		description=Realsil ISP Memory device driver
+000150d9		license=GPL
+000150e5		author=Pawel Osciak <pawel@osciak.com>
+0001510c		description=DMA-contig memory handling routines for videobuf2
+0001514c		srcversion=27EFD0114707B3D583CACDC
+00015170		depends=rts_cam
+00015180		vermagic=3.10.27 preempt mod_unload RLX 32BIT 
+000151b0	0001003c,_elfSectionHeaders::00000264	rts_put_mem_info
+000151c1	00010034	rts_get_mem_info
+000151d2	000100cc	rtscam_mem_set_info
+000151e6	000100d4	rtscam_put_sg_buf
+000151f8	00010044	rtscam_get_sg_buf
+0001520a	0001004c	rtscam_get_user_pages
+00015220	000100dc	rtscam_vaddr_is_io
+00015233	000100e4	rtscam_vma_is_io
+00015244	000100bc	rtscam_mem_put_bitmap
+0001525a	0001008c	rtscam_mem_get_bitmap
+00015270	00010074	rtscam_mem_find
+00015280	0001006c	rtscam_mem_enum
+00015290	000100b4	rtscam_mem_mmap
+000152a0	0001009c	rtscam_mem_get_total_size
+000152ba	000100a4	rtscam_mem_get_used_size
+000152d3	00010094	rtscam_mem_get_left_size
+000152ec	0001005c	rtscam_mem_convert_d2v
+00015303	00010064	rtscam_mem_convert_v2d
+0001531a	00010084	rtscam_mem_free_V2
+0001532d	0001007c	rtscam_mem_free
+0001533d	00010054	rtscam_mem_alloc
+0001534e	000100c4	rtscam_mem_release
+00015361	000100ac	rtscam_mem_init
+00015371	0001001c	rts_dma_contig_cleanup_ctx
+0001538c	00010024	rts_dma_contig_init_ctx
+000153a4	0001002c	rts_dma_contig_memops
+000154bc		rts_cam_mem
+.comment::00000001		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000045		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::00000089		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.comment::000000cd		GCC: (Realtek RSDK-4.8.5p1 Build 2521) 4.8.5 20150209 (prerelease)
+.shstrtab::00000001		.symtab
+.shstrtab::00000009		.strtab
+.shstrtab::00000011		.shstrtab
+.shstrtab::0000001b		.note.gnu.build-id
+.shstrtab::0000002e		.rel.text
+.shstrtab::00000038		.rel.init.text
+.shstrtab::00000047		.rel.exit.text
+.shstrtab::00000056		.rel__ksymtab_gpl
+.shstrtab::00000068		.reginfo
+.shstrtab::00000071		.rel.rodata
+.shstrtab::0000007d		.rodata.str1.4
+.shstrtab::0000008c		.modinfo
+.shstrtab::00000095		__ksymtab_strings
+.shstrtab::000000a7		.rel.data
+.shstrtab::000000b1		.rel.gnu.linkonce.this_module
+.shstrtab::000000cf		.bss
+.shstrtab::000000d4		.comment
+.shstrtab::000000dd		.rel.pdr
+.shstrtab::000000e6		.gnu.attributes
+.shstrtab::000000f6		.mdebug.abi32
+.strtab::00000001		$LC0
+.strtab::00000006		$LC1
+.strtab::0000000b		$LC2
+.strtab::00000010		$LC3
+.strtab::00000015		$LC4
+.strtab::0000001a		$LC5
+.strtab::0000001f		$LC6
+.strtab::00000024		$LC7
+.strtab::00000029		$LC8
+.strtab::0000002e		$LC9
+.strtab::00000033		$LC10
+.strtab::00000039		$LC11
+.strtab::0000003f		$LC12
+.strtab::00000045		$LC13
+.strtab::0000004b		$LC14
+.strtab::00000051		$LC15
+.strtab::00000057		$LC16
+.strtab::0000005d		$LC17
+.strtab::00000063		$LC18
+.strtab::00000069		$LC19
+.strtab::0000006f		$LC20
+.strtab::00000075		$LC22
+.strtab::0000007b		$LC21
+.strtab::00000081		$LC23
+.strtab::00000087		$LC24
+.strtab::0000008d		$LC25
+.strtab::00000093		$LC26
+.strtab::00000099		$LC27
+.strtab::0000009f		$LC28
+.strtab::000000a5		$LC29
+.strtab::000000ab		$LC30
+.strtab::000000b1		$LC31
+.strtab::000000b7		$LC32
+.strtab::000000bd		$LC33
+.strtab::000000c3		$LC34
+.strtab::000000c9		rtscam_devdata
+.strtab::000000d8		rtscam_vm_ops
+.strtab::000000e6		rtscam_mem_convert_v2d
+.strtab::000000fd		dev_get_drvdata
+.strtab::0000010d		dev_attr_memlist
+.strtab::0000011e		rtscam_mem_release
+.strtab::00000131		rts_isp_mem_probe
+.strtab::00000143		rtscam_mem_init
+.strtab::00000153		platform_driver_unregister
+.strtab::0000016e		rts_dma_contig_memops
+.strtab::00000184		__this_module
+.strtab::00000192		rtscam_usercopy
+.strtab::000001a2		rtscam_mem_check
+.strtab::000001b3		sg_free_table
+.strtab::000001c1		finish_wait
+.strtab::000001cd		dma_buf_export_named
+.strtab::000001e2		sg_alloc_table_from_pages
+.strtab::000001fc		__iounmap
+.strtab::00000206		scnprintf
+.strtab::00000210		put_page
+.strtab::00000219		vb2_common_vm_ops
+.strtab::0000022b		cleanup_module
+.strtab::0000023a		prepare_to_wait
+.strtab::0000024a		rtscam_mem_alloc
+.strtab::0000025b		remap_pfn_range
+.strtab::0000026b		kfree
+.strtab::00000271		dma_release_channel
+.strtab::00000285		rtscam_mem_free_V2
+.strtab::00000298		rtscam_mem_set_info
+.strtab::000002ac		dev_attr_meminfo
+.strtab::000002bd		__wake_up
+.strtab::000002c7		rtscam_ge_unregister_device
+.strtab::000002e3		get_device
+.strtab::000002ee		dma_buf_attach
+.strtab::000002fd		rtscam_mem_mmap
+.strtab::0000030d		__dma_request_channel
+.strtab::00000323		init_module
+.strtab::0000032f		rtscam_vaddr_is_io
+.strtab::00000342		rtscam_debug
+.strtab::0000034f		schedule_timeout
+.strtab::00000360		msecs_to_jiffies
+.strtab::00000371		get_user_pages
+.strtab::00000380		rtscam_mem_get_bitmap
+.strtab::00000396		put_device
+.strtab::000003a1		dma_buf_map_attachment
+.strtab::000003b8		rtscam_get_user_pages
+.strtab::000003ce		kmem_cache_alloc
+.strtab::000003df		vzalloc
+.strtab::000003e7		find_vma
+.strtab::000003f0		sg_alloc_table
+.strtab::000003ff		device_create_file
+.strtab::00000412		rtscam_ge_device_alloc
+.strtab::00000429		__ioremap
+.strtab::00000433		dma_buf_unmap_attachment
+.strtab::0000044c		rtscam_mem_free
+.strtab::0000045c		platform_driver_register
+.strtab::00000475		rts_isp_mem_remove
+.strtab::00000488		rts_put_mem_info
+.strtab::00000499		vb2_get_vma
+.strtab::000004a5		mutex_lock
+.strtab::000004b0		warn_slowpath_null
+.strtab::000004c3		strlcpy
+.strtab::000004cb		sscanf
+.strtab::000004d2		printk
+.strtab::000004d9		dev_err
+.strtab::000004e1		follow_pfn
+.strtab::000004ec		dma_common_get_sgtable
+.strtab::00000503		rtscam_vma_is_io
+.strtab::00000514		rts_isp_mem_fops
+.strtab::00000525		rts_dma_contig_init_ctx
+.strtab::0000053d		rtscam_mem_realloc
+.strtab::00000550		dev_attr_memctrl
+.strtab::00000561		rtscam_ge_register_device
+.strtab::0000057b		rtscam_mem_enum
+.strtab::0000058b		rtscam_mem_convert_d2v
+.strtab::000005a2		vfree
+.strtab::000005a8		mutex_unlock
+.strtab::000005b5		rtscam_mem_find
+.strtab::000005c5		rtscam_put_sg_buf
+.strtab::000005d7		rts_get_mem_info
+.strtab::000005e8		sg_next
+.strtab::000005f0		mips_dma_map_ops
+.strtab::00000601		rtscam_get_sg_buf
+.strtab::00000613		set_page_dirty_lock
+.strtab::00000627		rtscam_mem_put_bitmap
+.strtab::0000063d		dma_buf_detach
+.strtab::0000064c		rts_dma_contig_cleanup_ctx
+.strtab::00000667		rtscam_ge_device_release
+.strtab::00000680		rtscam_mem_get_total_size
+.strtab::0000069a		autoremove_wake_function
+.strtab::000006b3		devm_kzalloc
+.strtab::000006c0		rtscam_mem_get_used_size
+.strtab::000006d9		dev_set_drvdata
+.strtab::000006e9		m_rmdev
+.strtab::000006f1		mem_map
+.strtab::000006f9		rtscam_mem_get_left_size
+.strtab::00000712		__kmalloc
+.strtab::0000071c		kmalloc_caches
+.strtab::0000072b		device_remove_file
+.strtab::0000073e		vb2_put_vma

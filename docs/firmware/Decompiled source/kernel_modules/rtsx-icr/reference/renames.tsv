@@ -1,0 +1,9 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+000105e0	FUN_000105e0	rtsx_icr_ocp_register_set	true	false	rtsx_icr_ocp_register_set
+0001078c	FUN_0001078c	rtsx_icr_ocp_register_get	true	false	rtsx_icr_ocp_register_get
+00010c84	FUN_00010c84	rtsx_icr_resp_type	true	false	rtsx_icr_resp_type
+0001125c	FUN_0001125c	dump_reg_range	true	false	dump_reg_range
+00011828	FUN_00011828	rtsx_icr_ip_register_get	true	false	rtsx_icr_ip_register_get
+00011a08	FUN_00011a08	rtsx_icr_ip_register_set	true	false	rtsx_icr_ip_register_set
+00011f58	FUN_00011f58	rtsx_icr_check_resp	true	false	rtsx_icr_check_resp
+0001426c	FUN_0001426c	sdmmc_request	true	false	sdmmc_request

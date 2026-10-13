@@ -1,0 +1,5 @@
+# addr	old_name	new_name	unique	corroborated	evidence_string
+0001654c	FUN_0001654c	md5_init	true	false	md5_init
+00016724	FUN_00016724	md5_done	true	false	md5_done
+0001724c	FUN_0001724c	sha1_init	true	false	sha1_init
+00017424	FUN_00017424	sha1_done	true	false	sha1_done

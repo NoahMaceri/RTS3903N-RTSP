@@ -1,0 +1,54 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+0040061d		_init
+00400629		__uClibc_main
+00400637		libc.so.0
+00400641		_DYNAMIC_LINKING
+00400652		__RLD_MAP
+0040065c		popen
+00400662		strerror
+0040066b		pclose
+00400672		snprintf
+00400680		recvfrom
+00400689		socket
+00400690		select
+0040069e		fprintf
+004006ab		strstr
+004006c2		unlink
+004006c9		fread
+004006cf		gettimeofday
+004006dc		fopen
+004006e2		localtime
+004006ec		memset
+004006f3		ftell
+004006f9		fclose
+00400700		rewind
+00400707		fileno
+0040070e		strlen
+00400715		__errno_location
+00400726		_ftext
+00400734		_edata
+0040073b		__bss_start
+004012e8	FUN_00400e20	ps | grep -w %d | grep -v grep | awk '{print $5}'
+0040131c	_ftext	/tmp/logsock
+0040132c	_ftext	create socket fail\r
+00401340	_ftext	bind socket error(%d), %s\n
+0040135c	_ftext	/tmp/sd/log.txt
+00401370	_ftext	open %s error(%d),%s\n
+00401388	_ftext	/tmp/sd/log_oss.txt
+0040139c	_ftext	cat /sys/block/mmcblk0/device/cid
+004013c4	_ftext	%02d-%02d %02d:%02d:%02d.%03lu %s
+004013e8		invalid para, is null\r
+0040140c		%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00401438		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00401480	FUN_00400fe0	killall cloudAPI
+00401494		%s : %d ptr %s is NULL pointer\n
+004014bc		insmod %s
+004014c8		ko path
+004014d0		params
+004014d8		insmod %s %s
+004014e8		file node
+004014f4		/tmp/record_event
+00401558		/tmp/sd/record
+004015e8		total malloc(%d) tmp_malloc(%d %p)\n
+0040160c		total free(%p)\n
+0040161c		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

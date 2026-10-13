@@ -1,0 +1,164 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+00400c77		__uClibc_main
+00400c85		librt.so.0
+00400c90		_DYNAMIC_LINKING
+00400ca1		__RLD_MAP
+00400cab		mq_send
+00400cb3		mq_open
+00400cc0		memset
+00400cc7		socket
+00400cce		malloc
+00400ce7		libc.so.0
+00400cf1		putchar
+00400cf9		popen
+00400cff		pclose
+00400d06		usleep
+00400d19		system
+00400d20		vsnprintf
+00400d2a		select
+00400d37		rename
+00400d3e		write
+00400d44		ctime
+00400d50		strstr
+00400d57		sendto
+00400d65		fread
+00400d6b		gettimeofday
+00400d78		fopen
+00400d7e		localtime
+00400d88		ftell
+00400d8e		srand
+00400d9b		sprintf
+00400da3		access
+00400daf		fileno
+00400db6		strlen
+00400dbd		vfprintf
+00400dc6		stdout
+00400dcd		_ftext
+00400ddb		_edata
+00400de2		__bss_start
+00400df9		t_malloc_size
+00400e07		create_sharemem
+00400e17		yi_insmod_with_param_openfile
+00400e35		_gp_disp
+00400e3e		t_free_size
+00400e4a		get_event_mmap
+00400e59		mqueue_send
+00400e65		system_cmd
+00400e70		rm_enter
+00400e79		get_cur_ms
+00400e84		yi_insmod_with_openfile
+00400e9c		trans_json
+00400ea7		get_upgrade_file
+00400eb8		yi_insmod_with_param
+00400ecd		g_download_upgrade_info
+00400ee5		yi_insmod_ko
+00400ef2		NonceBase
+00400efc		filesize
+00400f05		gen_nonce
+00400f0f		write_log
+00400f22		__start
+00400f2a		memset_s
+00400f33		_ITM_registerTMCloneTable
+00400f4d		md5_check_file
+00400f5c		calc_timecost_init
+00400f6f		get_sharemem
+00400f7c		calc_timecost_result
+00400f91		_ITM_deregisterTMCloneTable
+00400fad		mymktime
+00400fb6		system_cmd_withret_timeout
+00400fd1		base64_decode
+00400fdf		init_mqueue
+00400feb		common_event_info
+00400ffd		trans_json_ex
+0040100b		dump_string
+00401017		get_cur_time_ms
+00401027		__data_start
+00401034		_Jv_RegisterClasses
+00401048		ms_sleep
+00401051		malloc_s
+0040105a		InitLogClient
+00401068		dump_mem
+00401071		g_stSockLog
+0040107d		get_filename_by_time
+00403a90	md5_check_file	md5sum %s | awk '{print $1}'
+00403ab0	md5_check_file	calc_md5 = %s, md5 = %s\n
+00403acc	get_upgrade_file	%s/%s
+00403ad4	_ftext,get_upgrade_file	/tmp/update
+00403ae0	get_upgrade_file	firmware_m.bin
+00403af0	get_upgrade_file	%s.tmp
+00403af8	get_upgrade_file	%s -c 300 -url %shome_r10m -filename %s
+00403b20	get_upgrade_file	/backup/cloudAPI
+00403b34	get_upgrade_file	downloading file(%s)\n
+00403b4c	get_upgrade_file	success
+00403b54	get_upgrade_file	download fail
+00403b64	get_upgrade_file	download success
+00403b78	get_upgrade_file	md5_check_file fail!
+00403b90	get_upgrade_file	md5_check_file success
+00403ba8	get_upgrade_file	get_upgrade_file ok!
+00403bc0	_ftext	/backup/upgrade_conf
+00403bdc	_ftext	download_upgrade open upgrade_conf failed!
+00403c08	_ftext	g_upgrade_conf =%s %s %s %s
+00403c24	_ftext	/backup/wifi_conf "%s" "%s"
+00403c40	_ftext	/tmp/wpa_supplicant.conf
+00403c5c	_ftext	wifi_conf set wpa_supplicant.conf failed!
+00403c88	_ftext	wpa_cli -i wlan0 status
+00403ca0	_ftext	wpa_state=COMPLETED
+00403cb4	_ftext	ip_address=
+00403cc0	_ftext	bssid=
+00403cc8	_ftext	bssid = (%s)\n
+00403cd8	_ftext	ip = (%s)\n
+00403ce4	_ftext	cat /tmp/gw1
+00403cf4	_ftext	gw = (%s)\n
+00403d00	_ftext	arping %s -I wlan0 -c 1|grep "reply from"|sed -n 1p|cut -d[ -f2 | cut -d] -f1 | tr a-z A-Z
+00403d5c	_ftext	gwmac = (%s)\n
+00403d6c	_ftext	cat /tmp/mask
+00403d7c	_ftext	mask = (%s)\n
+00403d8c	_ftext	ifconfig wlan0|grep HWaddr|awk '{print $5}'
+00403db8	_ftext	mac = (%s)\n
+00403dc4	_ftext	reboot: ifconfig timeout no usb dev cause reboot1 !!! 
+00403dfc	_ftext	reboot -f
+00403e08	_ftext	wifi have connected!
+00403e20	_ftext	wpa_cli -i wlan0 mib|grep dot11RSNA4WayHandshakeFailures|cut -d= -f2
+00403e68	_ftext	wpa may crashed, now reset
+00403e84	_ftext	lsusb|grep "0a5c"
+00403e98	_ftext	no usb dev
+00403ea4	_ftext	reboot: lsusb|grep cause reboot !!! 
+00403ecc	_ftext	/backup/script/killwifi.sh 1
+00403eec	_ftext	/backup/script/wificonnect.sh
+00403f0c	_ftext	timeout reset wifi
+00403f20	_ftext	wifi disconnected, now reconnect wifi
+00403f48	_ftext	wpa connected , now dhcp
+00403f64	_ftext	/backup/script/wifidhcp.sh
+00403f80	_ftext	wpa connected , now dhcp finish
+00403fa0	_ftext	long time no ip, now reset
+00403fbc	_ftext	wifi connected ok!
+00403fd0	_ftext	rm -rf %s;mkdir %s
+00403fe4	_ftext	get_upgradefile_ok
+00403ff8	_ftext	download firmware try too much times
+00404020	_ftext	wifi password wrong
+00404034	_ftext	wifi pwd error!
+00404044	InitLogClient	invalid para, is null\r
+0040405c	InitLogClient	/tmp/logsock
+0040406c	InitLogClient	create socket fail\r
+00404080	dump_string	%s:%d|%s() 
+0040408c	dump_string	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+004040b8		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+004040f8	system_cmd_withret_timeout	killall cloudAPI
+0040410c	yi_insmod_ko	%s : %d ptr %s is NULL pointer\n
+00404134	yi_insmod_ko	insmod %s
+00404140		ko path
+00404148		params
+00404150		insmod %s %s
+00404160		file node
+0040416c		/tmp/record_event
+004041d0		/tmp/sd/record
+00404254	trans_json	%[^"',}]
+00404260		total malloc(%d) tmp_malloc(%d %p)\n
+00404284	free_s	total free(%p)\n
+00404294	base64_decode	ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/
+004042e0		get_filename_by_time
+004042f8		yi_insmod_with_param_openfile
+00404318		yi_insmod_with_openfile
+00404330		yi_insmod_with_param
+00404348	yi_insmod_ko	yi_insmod_ko
+00414770		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789

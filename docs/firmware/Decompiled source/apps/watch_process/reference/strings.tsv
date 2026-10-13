@@ -1,0 +1,73 @@
+00400134	0040005c	/lib/ld-uClibc.so.0
+0040070d		_init
+00400719		__uClibc_main
+00400727		librt.so.0
+00400732		_DYNAMIC_LINKING
+00400743		__RLD_MAP
+00400752		memset
+00400759		malloc
+0040076b		socket
+00400772		libc.so.0
+0040077c		putchar
+0040078a		popen
+00400790		pclose
+00400797		usleep
+004007aa		system
+004007b1		vsnprintf
+004007bb		select
+004007cd		strstr
+004007dc		sendto
+004007ea		fread
+004007f0		gettimeofday
+004007fd		fopen
+00400803		localtime
+0040080d		ftell
+00400813		fclose
+0040081a		access
+00400826		fileno
+0040082d		strlen
+00400834		vfprintf
+0040083d		stdout
+00400844		_ftext
+00400852		_edata
+00400859		__bss_start
+00401940	FUN_00401100	[%[^]]
+00401948	_ftext	/dev/pid_list
+00401958	_ftext	insmod /home/app/localko/pid_list.ko
+00401980	_ftext	/tmp/mmap.info
+00401990	_ftext	watch_process.c
+004019a0	_ftext	create_sharemem MMAP_FILE_NAME fail
+004019c4	_ftext	Open /dev/pid_list error!\n
+004019e0	_ftext	/home/app/wp_cmd
+004019f8	_ftext	check_interval:
+00401a08	_ftext	check_interval=%d\n
+00401a1c	_ftext	process:
+00401a34	_ftext	process=%s;cmd=%s;\n
+00401a48	_ftext	no /home/app/wp_cmd\n
+00401a60	_ftext	%s crashed!
+00401a6c	_ftext	reboot
+00401a74	_ftext	killall mp4record;
+00401a88	_ftext	/home/app/localbin/reboot_by_watchdog
+00401ab0	_ftext	cloud
+00401ab8	_ftext	p2p_tnp
+00401ac0	_ftext	init fail
+00401ad0	_ftext	check_watch_info
+00401ae4	_ftext	get_watch_info
+00401b00	FUN_00401180	invalid para, is null\r
+00401b18	FUN_00401180	/tmp/logsock
+00401b28	FUN_00401180	create socket fail\r
+00401b3c	FUN_0040129c	%s:%d|%s() 
+00401b48	FUN_0040129c	%02d-%02d %02d:%02d:%02d.%03d %s:%d|%s() 
+00401b74		\nDUMP MEM [%d:%d:%d.%06d] size(%d):
+00401bb4	FUN_004014e4	killall cloudAPI
+00401bc8		%s : %d ptr %s is NULL pointer\n
+00401bf0		insmod %s
+00401bfc		ko path
+00401c04		params
+00401c0c		insmod %s %s
+00401c1c		file node
+00401c28		/tmp/record_event
+00401c8c		/tmp/sd/record
+00401d1c		total malloc(%d) tmp_malloc(%d %p)\n
+00401d40		total free(%p)\n
+00401d50		ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/

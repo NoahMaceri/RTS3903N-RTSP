@@ -1,0 +1,133 @@
+00401070	_init	FUN_0040153c,FUN_00405da0
+004010c0	main	FUN_00401790,FUN_00402828,FUN_00402960,FUN_00403ed4,FUN_004049a0,FUN_00404bf0,FUN_00404d88,FUN_00405244,FUN_00405338,FUN_004053e0,memset,recordevent_init_read,resume_bak,sigaction,sigemptyset,signal,sleep
+004013a0	entry	__uClibc_main
+00401400	FUN_00401400	
+00401440	FUN_00401440	
+0040148c	FUN_0040148c	FUN_00401400
+0040153c	FUN_0040153c	FUN_00401440
+004015cc	recordevent_init_read	FUN_00404d88,FUN_00405244
+00401634	FUN_00401634	localtime_r
+00401790	FUN_00401790	localtime_r
+0040180c	FUN_0040180c	access,snprintf
+004018f0	FUN_004018f0	fcntl
+0040193c	create_file	FUN_004018f0,FUN_004047c0,FUN_00404d88,access,close,fstat,localtime_r,open,remove,snprintf,strrchr
+00401c9c	do_copy	FUN_00404838,FUN_00404a18,FUN_00404d88,FUN_004057d8,__errno_location,close,memcpy,pselect,read,remove,rename,write
+00402828	FUN_00402828	FUN_0040180c,free,malloc,pthread_cond_destroy,pthread_cond_init,pthread_create,pthread_mutex_destroy,pthread_mutex_init,sem_destroy,sem_init,sigemptyset,strncpy
+00402960	FUN_00402960	pthread_cond_signal,pthread_mutex_lock,pthread_mutex_unlock
+00402aa0	recordbak_pause	FUN_00404d88,clock_gettime,fclose,fopen,pthread_cond_signal,pthread_kill,pthread_mutex_lock,pthread_mutex_unlock,sem_timedwait,send_mq_msg
+00402ce4	recordbak_resume	FUN_00404d88,pthread_cond_signal,pthread_mutex_lock,pthread_mutex_unlock
+00402d88	umount_cifs	FUN_00404d88,system
+00402dc4	FUN_00402dc4	localtime_r,time
+00402e34	XiaoMi	FUN_00405448,atoi,atoll,snprintf,strncpy,strstr
+00403160	FUN_00403160	statfs
+0040322c	get_dir_size	FUN_00404d88,ftw
+004032ec	try_clean_disk	FUN_00404a78,FUN_00404d88,closedir,localtime_r,opendir,readdir,snprintf,strcmp,time
+00403560	pause_bak	FUN_00404d88,recordbak_pause
+00403608	mount_cifs	FUN_00404d88,snprintf,system
+0040368c	FUN_0040368c	FUN_00403160,get_dir_size,mount_cifs,snprintf,strcmp,umount_cifs
+0040381c	FUN_0040381c	pause_bak,umount_cifs
+0040387c	FUN_0040387c	FUN_00404fd0,FUN_00405448,atoi,strstr
+00403930	FUN_00403930	FUN_0040387c,XiaoMi
+004039a0	send_mq_msg	FUN_00404d88,FUN_004051c0,FUN_00405218,memcpy,strlen
+00403abc	mount_fail	FUN_0040368c,send_mq_msg,snprintf
+00403c3c	check_disk_space	FUN_00403160,FUN_00404d88,get_dir_size,pause_bak,send_mq_msg,snprintf,try_clean_disk
+00403ed4	FUN_00403ed4	FUN_00402dc4,FUN_0040387c,FUN_00404d88,XiaoMi,access,memset,mkdir,mount_fail,send_mq_msg,sleep,system,umount_cifs
+00404158	resume_bak	FUN_00402dc4,FUN_0040381c,FUN_00403930,FUN_004047c0,FUN_00404838,FUN_00404d88,access,check_disk_space,get_dir_size,localtime_r,mount_cifs,mount_fail,pause_bak,recordbak_resume,snprintf,strcmp,time,try_clean_disk,umount_cifs
+004047c0	FUN_004047c0	mkdir
+00404838	FUN_00404838	clock_gettime
+004048b0	FUN_004048b0	localtime_r,mktime,time
+004049a0	FUN_004049a0	close,mmap,open
+00404a18	FUN_00404a18	
+00404a78	FUN_00404a78	FUN_00404a78,closedir,memcpy,opendir,readdir,remove,strlen
+00404bf0	FUN_00404bf0	__errno_location,flock,open
+00404c6c	FUN_00404c6c	memset,puts,socket
+00404d88	FUN_00404d88	FUN_00404c6c,getpid,gettimeofday,localtime,memset,printf,putchar,sendto,snprintf,strlen,time,vfprintf,vsnprintf
+00404fa0	FUN_00404fa0	pclose,popen
+00404fd0	FUN_00404fd0	FUN_00404fa0,fileno,fread,pclose,popen,select,strstr
+004051c0	FUN_004051c0	mq_open
+00405218	FUN_00405218	mq_send
+00405244	FUN_00405244	close,mmap,open,usleep
+00405338	FUN_00405338	close,lseek,mmap,open,write
+004053e0	FUN_004053e0	select
+00405448	FUN_00405448	strlen,strstr
+004057d8	FUN_004057d8	
+00405da0	FUN_00405da0	
+00405e10	_fini	FUN_0040148c
+00406cc0	__PLT_HEAD	
+00406ce0	putchar	putchar
+00406cf0	clock_gettime	
+00406d00	pthread_cond_signal	pthread_cond_signal
+00406d10	popen	
+00406d20	printf	printf
+00406d30	pthread_create	
+00406d40	sigemptyset	sigemptyset
+00406d50	pclose	pclose
+00406d60	snprintf	
+00406d70	sem_timedwait	
+00406d80	usleep	usleep
+00406d90	getpid	
+00406da0	memcpy	memcpy
+00406db0	puts	
+00406dc0	sem_destroy	sem_destroy
+00406dd0	system	system
+00406de0	malloc	
+00406df0	remove	remove
+00406e00	sleep	
+00406e10	vsnprintf	vsnprintf
+00406e20	mq_send	
+00406e30	statfs	
+00406e40	sem_post	sem_post
+00406e50	socket	socket
+00406e60	select	
+00406e70	readdir	readdir
+00406e80	lseek	
+00406e90	sigaddset	sigaddset
+00406ea0	mmap	mmap
+00406eb0	rename	
+00406ec0	strrchr	strrchr
+00406ed0	write	write
+00406ee0	fstat	
+00406ef0	sem_init	sem_init
+00406f00	mktime	
+00406f10	strstr	strstr
+00406f20	pthread_kill	
+00406f30	flock	flock
+00406f40	signal	
+00406f50	read	read
+00406f60	strncpy	strncpy
+00406f70	sendto	
+00406f80	pthread_sigmask	pthread_sigmask
+00406f90	pthread_cond_init	pthread_cond_init
+00406fa0	sigaction	
+00406fb0	fread	fread
+00406fc0	gettimeofday	
+00406fd0	fopen	fopen
+00406fe0	localtime	
+00406ff0	memset	memset
+00407000	ftw	
+00407010	fclose	fclose
+00407020	time	
+00407030	opendir	opendir
+00407040	strcmp	
+00407050	pthread_mutex_unlock	pthread_mutex_unlock
+00407060	pselect	
+00407070	localtime_r	localtime_r
+00407080	access	
+00407090	pthread_mutex_destroy	pthread_mutex_destroy
+004070a0	pthread_mutex_lock	
+004070b0	pthread_cond_wait	pthread_cond_wait
+004070c0	__errno_location	__errno_location
+004070d0	atoi	
+004070e0	pthread_cond_destroy	pthread_cond_destroy
+004070f0	fileno	
+00407100	pthread_mutex_init	pthread_mutex_init
+00407110	strlen	
+00407120	open	open
+00407130	atoll	
+00407140	closedir	closedir
+00407150	fcntl	fcntl
+00407160	mq_open	
+00407170	mkdir	mkdir
+00407180	close	
+00407190	vfprintf	vfprintf
+004071a0	free	
